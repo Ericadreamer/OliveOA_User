@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.erica.oliveoa_user">
+    package="com.example.activitytest">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -13,9 +13,21 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name="com.example.activitytest.LoginActivity" />
-        <activity android:name="com.example.activitytest.MainActivity"></activity>
+        android:theme="@android:style/Theme.NoTitleBar">
+
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true"
+            android:theme="@style/LoginTheme"/>
+       <!-- <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>-->
+
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme"/>
+
     </application>
 
 </manifest>

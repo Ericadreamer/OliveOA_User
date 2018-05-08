@@ -9,11 +9,11 @@
 
     <ImageView
         android:id="@+id/login_logo"
-        android:layout_width="@dimen/dp_120"
-        android:layout_height="@dimen/dp_120"
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="@dimen/dp_100"
         android:layout_gravity="center"
         android:src="@drawable/ic_login_logo"
-        android:layout_marginTop="@dimen/dp_80" />
+        android:layout_marginTop="@dimen/dp_60" />
 
     <TextView
         android:id="@+id/user_port"
@@ -29,7 +29,7 @@
         android:layout_height="@dimen/item_height_normal"
         android:layout_marginRight="@dimen/margin_large"
         android:layout_marginLeft="@dimen/margin_large"
-        android:layout_marginTop="@dimen/dp_60" >
+        android:layout_marginTop="@dimen/dp_50" >
 
         <ImageView
             android:id="@+id/img_account"
@@ -104,7 +104,7 @@
             android:id="@+id/iv_see_password"
             android:layout_width="@dimen/image_height_litter"
             android:layout_height="@dimen/image_height_litter"
-            android:src="@drawable/ic_login_eye"
+            android:src="@drawable/ic_login_see_pw"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:scaleType="fitXY"
@@ -118,6 +118,42 @@
             android:layout_toRightOf="@+id/img_pw"
             android:background="@color/orange_light"/>
     </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_large"
+        android:layout_marginRight="@dimen/margin_large"
+        android:layout_marginTop="@dimen/margin_small"
+        android:paddingBottom="@dimen/margin_small"
+        android:paddingTop="@dimen/margin_small"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <CheckBox
+            android:id="@+id/checkBox_password"
+            android:padding="@dimen/dp_10"
+            android:textSize="@dimen/text_size_normal"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/check_password"
+            android:textColor="@color/top_bar_normal_bg"
+            android:checked="false"/>
+
+        <CheckBox
+            android:id="@+id/checkBox_login"
+            android:padding="@dimen/dp_10"
+            android:textSize="@dimen/text_size_normal"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/check_login"
+            android:textColor="@color/top_bar_normal_bg" android:checked="false"/>
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/btn_login"

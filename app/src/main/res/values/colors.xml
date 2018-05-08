@@ -3,6 +3,10 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="LoginPrimary">#edb674</color>
+    <color name="LoginPrimaryDark">#373c3e</color>
+    <color name="LoginAccent">#808080</color>
+
     <color name="orange_main">#ec6f1a</color>   <!--主橙色-->
     <color name="orange_light">#ffd39b</color>  <!--浅橙色-->
     <color name="orange_deep">#ff6f3a</color>   <!--深橙色-->
@@ -17,4 +21,9 @@
     <color name="tv_gray">@android:color/darker_gray</color>
     <color name="tv_color">#ffffff</color>
     <color name="list_glide">#50e0e0e0</color>
+
+    <color name="top_bar_normal_bg">#ec6f1a</color>
+
+    <color name="transparent_half">#a0000000</color>
+    <color name="transparent_half_orange">#a0ec6f1a</color>
 </resources>

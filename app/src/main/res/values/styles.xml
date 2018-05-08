@@ -1,14 +1,17 @@
 <resources>
 
-    <!-- Base application theme.
+    <!-- Base application theme.-->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!- Customize your theme here. -
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>-->
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/primary_material_dark</item>
+        <item name="colorPrimaryDark">@color/primary_dark_material_dark</item>
+        <item name="colorAccent">@color/accent_material_dark</item>
+    </style>
 
-    <style name="BaseStyle" parent="@android:style/Theme.Holo.Light">
+    <style name="LoginTheme" parent="Theme.AppCompat.Light.DarkActionBar" >
+        <item name="colorPrimary">@color/LoginPrimary</item>
+        <item name="colorPrimaryDark">@color/LoginPrimaryDark</item>
+        <item name="colorAccent">@color/LoginAccent</item>
         <item name="android:windowNoTitle">true</item>
     </style>
 
