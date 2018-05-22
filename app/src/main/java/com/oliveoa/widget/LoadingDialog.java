@@ -1,12 +1,11 @@
-package com.example.activitytest.widget;
+package com.oliveoa.widget;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.example.activitytest.R;
-
+import com.oliveoa.view.R;
 
 /**
  * 加载对话框
@@ -57,3 +56,4 @@ public class LoadingDialog extends ProgressDialog {
     }
 
 }
+

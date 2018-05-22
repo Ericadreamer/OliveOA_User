@@ -1,4 +1,4 @@
-package com.example.activitytest.util;
+package com.oliveoa.util;
 
 import Decoder.BASE64Decoder;
 import Decoder.BASE64Encoder;
@@ -6,10 +6,10 @@ import Decoder.BASE64Encoder;
 import java.io.IOException;
 
 /**
- * 使用Base64来保存和获取密码数据
+ *使用Base64来保存和获取密码数据
  */
-public class Base64Utils {
 
+public class Base64Utils {
 
     /**
      * BASE64解密
@@ -19,9 +19,9 @@ public class Base64Utils {
      * @throws Exception
      */
     public static String decryptBASE64(String key) {
-        int decodetime = 5;//压缩和解压的次数，防止被简单破解
+        int decodetime = 5;//压缩和解压缩的次数，防止被简单破解
         byte[] bt;
-        key = key.trim().replace(" ", "");//去掉空格
+        key = key.trim().replace(" ", ""); //去掉空格
         try {
             while (decodetime > 0) {
                 bt = (new BASE64Decoder()).decodeBuffer(key);
@@ -29,11 +29,12 @@ public class Base64Utils {
                 decodetime--;
             }
 
-            return key;//如果出现乱码可以改成： String(bt, "utf-8")或 gbk
-        } catch (IOException e) {
+            return key;//如果出现乱码可改成：String(bt,"utf-8")或gbk
+        }catch (IOException e) {
             e.printStackTrace();
             return "";
         }
+
     }
 
     /**
@@ -55,4 +56,5 @@ public class Base64Utils {
 
         return key;
     }
+
 }

@@ -1,24 +1,27 @@
-package com.example.activitytest;
+package com.oliveoa.view;
 
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
-import com.example.activitytest.util.Base64Utils;
-import com.example.activitytest.util.SharedPreferencesUtils;
-import com.example.activitytest.widget.LoadingDialog;
+
+import com.oliveoa.common.HttpResponseObject;
+import com.oliveoa.controller.LoginService;
+import com.oliveoa.pojo.UserInfo;
+import com.oliveoa.util.Base64Utils;
+import com.oliveoa.util.SharedPreferencesUtils;
+import com.oliveoa.widget.LoadingDialog;
 
 /**
- * Create by Guo on 5/7/2018.
  * 登录界面
+ * Creat by Guo, 2018/5/16
  */
 
-public class LoginActivity extends Activity
-        implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
+public class LoginActivity extends AppCompatActivity
+        implements View.OnClickListener, CompoundButton.OnCheckedChangeListener{
     //布局内的控件
     private EditText et_name;
     private EditText et_password;
@@ -176,15 +179,15 @@ public class LoginActivity extends Activity
 
     /**
      * 模拟登录情况
-     * 用户名csdn，密码123456，就能登录成功，否则登录失败
+     * 用户名cat，密码123456，就能登录成功，否则登录失败
      */
     private void login() {
 
         //先做一些基本的判断，比如输入的用户命为空，密码为空，网络不可用多大情况，都不需要去链接服务器了，而是直接返回提示错误
-      if (getAccount().isEmpty()){
-          showToast("你输入的账号为空！");
-          return;
-      }
+        if (getAccount().isEmpty()){
+            showToast("你输入的账号为空！");
+            return;
+        }
 
         if (getPassword().isEmpty()){
             showToast("你输入的密码为空！");
@@ -199,6 +202,13 @@ public class LoginActivity extends Activity
                 super.run();
                 setLoginBtnClickable(false);//点击登录后，设置登录按钮不可点击状态
 
+                String idvalu1e = et_name.getText().toString().trim();
+                String pwdvalue = et_password.getText().toString().trim();
+                LoginService loginService = new LoginService();
+                HttpResponseObject<UserInfo> httpResponseObject = loginService.login(idvalu1e,pwdvalue);
+                System.out.println("httpResponseObject.getStatus() = "+httpResponseObject.getStatus());
+
+
 
                 //睡眠3秒
                 try {
@@ -208,13 +218,20 @@ public class LoginActivity extends Activity
                 }
 
                 //判断账号和密码
-                if (getAccount().equals("csdn") && getPassword().equals("123456")) {
+                /*if (getAccount().equals("cat") && getPassword().equals("123456")) {
                     showToast("登录成功");
                     loadCheckBoxState();//记录下当前用户记住密码和自动登录的状态;
 
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     finish();//关闭页面
                 } else {
+                    showToast("输入的登录账号或密码不正确");
+                }*/
+                if(httpResponseObject.getStatus()==0){
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }else{
                     showToast("输入的登录账号或密码不正确");
                 }
 
@@ -405,3 +422,4 @@ public class LoginActivity extends Activity
     }
 
 }
+

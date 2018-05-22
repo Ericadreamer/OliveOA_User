@@ -23,4 +23,9 @@
     <string name="login">登录</string>
     <string name="loading">正在加载数据</string>
 
+    <!--首页-->
+    <string name="home">应用</string>
+    <string name="application">我的申请</string>
+
+
 </resources>
