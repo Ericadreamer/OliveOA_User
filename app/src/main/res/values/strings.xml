@@ -14,7 +14,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="port">User Port</string>
+    <string name="port">User Client</string>
     <string name="account">请输入登录的账号</string>
     <string name="password">请输入登录密码</string>
     <string name="check_password">记住密码</string>
@@ -26,6 +26,10 @@
     <!--首页-->
     <string name="home">应用</string>
     <string name="application">我的申请</string>
+    <string name="adhibition">应用</string>
+    <string name="notice">公告</string>
+    <string name="address_book">通讯录</string>
+    <string name="mine">我的</string>
 
 
 </resources>
