@@ -26,4 +26,13 @@
 
     <color name="transparent_half">#a0000000</color>
     <color name="transparent_half_orange">#a0ec6f1a</color>
+
+    <!-- TabLayout -->
+    <color name="white">#FFFFFF</color>
+    <color name="tab_indicator">#d6d6d6</color>
+    <color name="tab_tv_normal">#bbbbbb</color>
+    <color name="tab_tv_selected">#ff964a</color>
+    <color name="tab_bg">#fcfcfc</color>
+    <color name="tab_div">#d6d6d6</color>
+
 </resources>

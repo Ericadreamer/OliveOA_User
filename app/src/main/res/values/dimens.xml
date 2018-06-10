@@ -42,6 +42,10 @@
     <dimen name="title_bar_height">48dp</dimen>
     <dimen name="title_bar_weight">60dp</dimen>
 
+    <!-- TabLayout -->
+    <dimen name="tab_div_height">1dp</dimen>
+    <dimen name="tab_height">60dp</dimen>
+
 
     <!-- 适配尺寸 -->
 

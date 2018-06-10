@@ -33,6 +33,7 @@ android {
                             'src/main/res/layouts/main',
                             'src/main/res/layouts/login',
                             'src/main/res/layouts/adhibition',
+                            'src/main/res/layouts/tablayoutbottom',
                             'src/main/res/layouts',
                             'src/main/res'
                     ]

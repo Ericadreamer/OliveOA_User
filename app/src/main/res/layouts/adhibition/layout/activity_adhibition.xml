@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:button="@null"
-            android:drawableTop="@drawable/ic_menu_official"
+            android:drawableTop="@drawable/ic_menu_notify"
             android:text="工作日程"
             android:textAlignment="center"/>
         <RadioButton
@@ -56,7 +56,7 @@
 
     </LinearLayout>
 
-    <!--<LinearLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:button="@null"
-            android:drawableTop="@drawable/ic_menu_application"
+            android:drawableTop="@drawable/ic_menu_official"
             android:text="公文管理"
             android:textAlignment="center"/>
         <RadioButton
@@ -77,7 +77,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:button="@null"
-            android:drawableTop="@drawable/ic_menu_official"
+            android:drawableTop="@drawable/ic_menu_meeting"
             android:text="会议管理"
             android:textAlignment="center"/>
         <RadioButton
@@ -86,90 +86,13 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:button="@null"
-            android:drawableTop="@drawable/ic_menu_examine"
+            android:drawableTop="@drawable/ic_menu_note"
             android:text="便签"
             android:textAlignment="center"/>
 
 
-    </LinearLayout>-->
-
-    //底部导航栏
-    <LinearLayout
-        android:layout_gravity="bottom"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@color/primary_material_dark">
-
-        <RadioGroup
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-
-
-            <RadioButton
-                android:id="@+id/nav_button0"
-                android:text="@string/adhibition"
-                android:textColor="#fff"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:button="@null"
-                android:paddingTop="3dp"
-                android:paddingBottom="1dp"
-                android:drawableTop="@drawable/selector_nav_btn_icon1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
-            <RadioButton
-                android:id="@+id/nav_button1"
-                android:text="@string/notice"
-                android:textColor="#fff"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:button="@null"
-                android:paddingTop="3dp"
-                android:paddingBottom="1dp"
-                android:drawableTop="@drawable/selector_nav_btn_icon2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
-            <RadioButton
-                android:id="@+id/nav_button2"
-                android:text="@string/address_book"
-                android:textColor="#fff"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:button="@null"
-                android:paddingTop="3dp"
-                android:paddingBottom="1dp"
-                android:drawableTop="@drawable/selector_nav_btn_icon3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
-            <RadioButton
-                android:id="@+id/nav_button3"
-                android:text="@string/mine"
-                android:textColor="#fff"
-                android:textSize="12sp"
-                android:gravity="center"
-                android:button="@null"
-                android:paddingTop="3dp"
-                android:paddingBottom="1dp"
-                android:drawableTop="@drawable/selector_nav_btn_icon4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
-
-
-
-
-
-
-        </RadioGroup>
-
-
-
     </LinearLayout>
+
 
 </LinearLayout>
 

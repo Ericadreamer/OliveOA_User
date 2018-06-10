@@ -33,24 +33,34 @@
             android:name=".LoginActivity"
             android:exported="true"
             android:theme="@style/LoginTheme" />
-        <activity
+        <!--<activity
             android:name=".AdhibitionActivity"
             android:label="@string/adhibition"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".notice.NoticeActivity"
             android:label="@string/notice"
-            android:theme="@style/AppTheme">
-        </activity>
+            android:theme="@style/AppTheme"></activity>
         <activity
             android:name=".addressbook.AddressBookActivity"
             android:label="@string/address_book"
-            android:theme="@style/AppTheme">
-        </activity>
+            android:theme="@style/AppTheme"></activity>
         <activity
             android:name=".mine.MineActivity"
             android:label="@string/mine"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".TabLayoutBottomActivity"/>-->
+        <activity
+            android:name=".TabLayoutBottomActivity"
+            android:theme="@style/AppTheme"
+            android:allowBackup="true"
+            android:supportsRtl="true">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
     </application>
 
 </manifest>
