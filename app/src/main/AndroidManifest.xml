@@ -33,7 +33,8 @@
             android:name=".LoginActivity"
             android:exported="true"
             android:theme="@style/LoginTheme" />
-        <!--<activity
+        <!--
+        <activity
             android:name=".AdhibitionActivity"
             android:label="@string/adhibition"
             android:theme="@style/AppTheme" />
@@ -49,19 +50,24 @@
             android:name=".mine.MineActivity"
             android:label="@string/mine"
             android:theme="@style/AppTheme" />
-        <activity android:name=".TabLayoutBottomActivity"/>-->
+        <activity android:name=".TabLayoutBottomActivity"/>
+        -->
         <activity
             android:name=".TabLayoutBottomActivity"
-            android:theme="@style/AppTheme"
-            android:label="@string/home_name"
             android:allowBackup="true"
-            android:supportsRtl="true">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+            android:label="@string/home_name"
+            android:supportsRtl="true"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+        <activity android:name=".myapplication.SelectApplicationActivity" />
+        <activity android:name=".LoadingViewActivity" />
+        <activity android:name=".myapplication.BaseActivity" />
+        <activity android:name=".myapplication.MyApplicationActivity"></activity>
     </application>
 
 </manifest>

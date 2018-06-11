@@ -20,10 +20,16 @@
 
     //功能按钮
     <LinearLayout
+        android:id="@+id/radio_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:orientation="vertical">
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:background="#fff">
+        android:layout_marginTop="@dimen/dp_20">
 
 
         <RadioButton
@@ -33,6 +39,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:button="@null"
+            android:drawablePadding="@dimen/dp_6"
             android:drawableTop="@drawable/ic_menu_application"
             android:text="我的申请" />
         <RadioButton
@@ -42,6 +49,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:button="@null"
+            android:drawablePadding="@dimen/dp_6"
             android:drawableTop="@drawable/ic_menu_notify"
             android:text="工作日程" />
         <RadioButton
@@ -51,6 +59,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:button="@null"
+            android:drawablePadding="@dimen/dp_6"
             android:drawableTop="@drawable/ic_menu_examine"
             android:text="审批" />
 
@@ -61,7 +70,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:background="#fff">
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginBottom="@dimen/dp_20">
 
 
         <RadioButton
@@ -71,6 +81,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:button="@null"
+            android:drawablePadding="@dimen/dp_6"
             android:drawableTop="@drawable/ic_menu_official"
             android:text="公文管理" />
         <RadioButton
@@ -80,6 +91,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:button="@null"
+            android:drawablePadding="@dimen/dp_6"
             android:drawableTop="@drawable/ic_menu_meeting"
             android:text="会议管理" />
         <RadioButton
@@ -88,11 +100,13 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:button="@null"
+            android:gravity="center"
+            android:drawablePadding="@dimen/dp_6"
             android:drawableTop="@drawable/ic_menu_note"
             android:text="便签" />
 
     </LinearLayout>
 
-
+    </LinearLayout>
 </LinearLayout>
 

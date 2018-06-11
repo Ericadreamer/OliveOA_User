@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 public class AdhibitionActivity extends Fragment {
 
-    private RadioGroup rgGroup;
     private RadioButton application,schedule,approval,document,meeting,note;
     private Context mContext;
 
@@ -90,28 +89,28 @@ public class AdhibitionActivity extends Fragment {
         });
 
         Drawable drawableApplication = getResources().getDrawable(R.drawable.ic_menu_application);
-        drawableApplication.setBounds(0, 0, 120, 120);//第一0是距左右边距离，第二0是距上下边距离，第三69长度,第四宽度
+        drawableApplication.setBounds(0, 0, 165, 165);//第一0是距左右边距离，第二0是距上下边距离，第三69长度,第四宽度
         application.setCompoundDrawables(null, drawableApplication, null, null);//只放上面
 
         Drawable drawableSchedule = getResources().getDrawable(R.drawable.ic_menu_notify);
-        drawableApplication.setBounds(0, 0, 120, 120);//第一0是距左右边距离，第二0是距上下边距离，第三69长度,第四宽度
+        drawableSchedule.setBounds(0, 0, 165, 165);//第一0是距左右边距离，第二0是距上下边距离，第三69长度,第四宽度
         schedule.setCompoundDrawables(null, drawableSchedule, null, null);//只放上面
 
         Drawable drawableApproval = getResources().getDrawable(R.drawable.ic_menu_examine);
-        drawableApplication.setBounds(0, 0, 120, 120);//第一0是距左右边距离，第二0是距上下边距离，第三69长度,第四宽度
+        drawableApproval.setBounds(0, 0, 165, 165);//第一0是距左右边距离，第二0是距上下边距离，第三69长度,第四宽度
         approval.setCompoundDrawables(null, drawableApproval, null, null);//只放上面
 
         Drawable drawableDocument = getResources().getDrawable(R.drawable.ic_menu_official);
-        drawableApplication.setBounds(0, 0, 120, 120);//第一0是距左右边距离，第二0是距上下边距离，第三69长度,第四宽度
+        drawableDocument.setBounds(0, 0, 165, 165);//第一0是距左右边距离，第二0是距上下边距离，第三69长度,第四宽度
         document.setCompoundDrawables(null, drawableDocument, null, null);//只放上面
 
         Drawable drawableMeeting = getResources().getDrawable(R.drawable.ic_menu_meeting);
-        drawableApplication.setBounds(0, 0, 120, 120);//第一0是距左右边距离，第二0是距上下边距离，第三69长度,第四宽度
+        drawableMeeting.setBounds(0, 0, 165, 165);//第一0是距左右边距离，第二0是距上下边距离，第三69长度,第四宽度
         meeting.setCompoundDrawables(null, drawableMeeting, null, null);//只放上面
 
         Drawable drawableNote = getResources().getDrawable(R.drawable.ic_menu_note);
-        drawableApplication.setBounds(0, 0, 120, 120);//第一0是距左右边距离，第二0是距上下边距离，第三69长度,第四宽度
-        note.setCompoundDrawables(null, drawableApplication, null, null);//只放上面
+        drawableNote.setBounds(0, 0, 165, 165);//第一0是距左右边距离，第二0是距上下边距离，第三69长度,第四宽度
+        note.setCompoundDrawables(null, drawableNote, null, null);//只放上面
 
 
 
