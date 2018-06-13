@@ -16,7 +16,10 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.oliveoa.view.R;
+import com.oliveoa.view.myapplication.AddApplicationActivity;
 import com.oliveoa.view.myapplication.MyApplicationActivity;
+import com.oliveoa.view.myapplication.WaitActivity;
+import com.oliveoa.view.myapplication.WaitActivity1;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -40,15 +43,6 @@ public class AdhibitionActivity extends Fragment {
         application.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final Intent it = new Intent(getActivity(), MyApplicationActivity.class);
-                Timer timer = new Timer();
-                TimerTask task = new TimerTask() {
-                    @Override
-                    public void run() {
-                        startActivity(it); //执行
-                    }
-                };
-                timer.schedule(task, 1000 * 0); //0秒后
                 //Toast.makeText(mContext, "您点击了我的申请", Toast.LENGTH_SHORT).show();
                 applicationinfo();
             }
@@ -136,7 +130,15 @@ public class AdhibitionActivity extends Fragment {
     }
     //我的申请
     private void applicationinfo() {
-
+        final Intent it = new Intent(getActivity(), WaitActivity1.class);
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                startActivity(it); //执行
+            }
+        };
+        timer.schedule(task, 1000 * 0); //0秒后
     }
 
     //工作日程

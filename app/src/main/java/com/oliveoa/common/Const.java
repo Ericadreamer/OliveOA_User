@@ -35,9 +35,9 @@ public class Const {
     //请假申请
     public static final String LAPPLICATION_ADD = HOSTPATH +"/oliveoa/employee/application/add_leave_application.do";
     public static final String LAPPLICATION_APPROVED = HOSTPATH +"/oliveoa/employee/application/approved_leave_application.do";
-    public static final String LAPPLICATION_ALL_SEARCH = HOSTPATH +"/oliveoa/employee/application/get_leave_application_need_approved.do";
-    public static final String LAPPLICATION_NEEDAPPROVED_SEARCH = HOSTPATH +"/oliveoa/employee/application/get_leave_application_Isubmit.do";
-    public static final String LAPPLICATION_SUBMIT_SEARCH = HOSTPATH +"/oliveoa/employee/application/get_leave_application_details.do";
+    public static final String LAPPLICATION_ALL_SEARCH = HOSTPATH +"/oliveoa/employee/application/get_leave_application_details.do";
+    public static final String LAPPLICATION_NEEDAPPROVED_SEARCH = HOSTPATH +"/oliveoa/employee/application/get_leave_application_need_approved.do";
+    public static final String LAPPLICATION_SUBMIT_SEARCH = HOSTPATH +"/oliveoa/employee/application/get_leave_application_Isubmit.do";
 
     //工作日程
     public static final String WORK_ASSIGING = HOSTPATH +"/oliveoa/employee/work/issue_work.do";

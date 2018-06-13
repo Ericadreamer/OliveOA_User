@@ -37,7 +37,7 @@ public class PassActivity extends Fragment {
 
     private void initView() {
         tvname = (TextView) rootview.findViewById(R.id.item_name);
-        addPasslistView = (LinearLayout) rootview.findViewById(R.id.wait_list);
+        //addPasslistView = (LinearLayout) rootview.findViewById(R.id.wait_list);
     }
 
     //添加ViewItem

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.oliveoa.common.Const;
 import com.oliveoa.common.LeaveApplicationHttpResponseObject;
+import com.oliveoa.jsonbean.LeaveApplicationJsonBean;
 import com.oliveoa.jsonbean.StatusAndMsgJsonBean;
 import com.oliveoa.pojo.BusinessTripApplication;
 import com.oliveoa.pojo.LeaveApplication;
@@ -97,7 +98,7 @@ public class LeaveApplicationService {
     }
 
     //获取待我审核的请假申请
-    public ArrayList<LeaveApplication> getlapplicationunapproved(String s){
+    public LeaveApplicationJsonBean getlapplicationunapproved(String s){
         try {
             OkHttpClient client = new OkHttpClient();
             FormBody body = new FormBody.Builder()
@@ -113,10 +114,10 @@ public class LeaveApplicationService {
 
             String json = response.body().string();
             Gson gson = new Gson();
-            java.lang.reflect.Type type = new TypeToken<ArrayList<LeaveApplication>>() {
+            java.lang.reflect.Type type = new TypeToken<LeaveApplicationJsonBean>() {
             }.getType();
-            ArrayList<LeaveApplication> leaveapplications = gson.fromJson(json, type);
-            System.out.println("ArrayList<LeaveApplication> = " + leaveapplications);
+            LeaveApplicationJsonBean leaveapplications = gson.fromJson(json, type);
+            System.out.println("LeaveApplicationJsonBean = " + leaveapplications);
 
             return leaveapplications;
         } catch (IOException e) {
@@ -128,7 +129,7 @@ public class LeaveApplicationService {
     }
 
     //获取我提交的请假申请
-    public ArrayList<LeaveApplication> getlapplicationsubmited(String s){
+    public LeaveApplicationJsonBean getlapplicationsubmited(String s){
         try {
             OkHttpClient client = new OkHttpClient();
             FormBody body = new FormBody.Builder()
@@ -144,10 +145,10 @@ public class LeaveApplicationService {
 
             String json = response.body().string();
             Gson gson = new Gson();
-            java.lang.reflect.Type type = new TypeToken<ArrayList<LeaveApplication>>() {
+            java.lang.reflect.Type type = new TypeToken<LeaveApplicationJsonBean>() {
             }.getType();
-            ArrayList<LeaveApplication> leaveApplications = gson.fromJson(json, type);
-            System.out.println("ArrayList<LeaveApplication> = " + leaveApplications);
+            LeaveApplicationJsonBean leaveApplications = gson.fromJson(json, type);
+            System.out.println("LeaveApplicationJsonBean = " + leaveApplications);
 
             return leaveApplications;
         } catch (IOException e) {

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.oliveoa.common.BusinessTripApplicationHttpResponseObject;
 import com.oliveoa.common.Const;
+import com.oliveoa.jsonbean.BusinessTripApplicationJsonBean;
 import com.oliveoa.jsonbean.MessageJsonbean;
 import com.oliveoa.jsonbean.StatusAndMsgJsonBean;
 import com.oliveoa.pojo.BusinessTripApplication;
@@ -127,7 +128,7 @@ public class BusinessTripApplicationService {
     }
 
     //获取待我审核的出差申请
-    public ArrayList<BusinessTripApplication> getbtapplicationunapproved(String s){
+    public BusinessTripApplicationJsonBean getbtapplicationunapproved(String s){
 
         try {
             OkHttpClient client = new OkHttpClient();
@@ -144,10 +145,10 @@ public class BusinessTripApplicationService {
 
             String json = response.body().string();
             Gson gson = new Gson();
-            java.lang.reflect.Type type = new TypeToken<ArrayList<BusinessTripApplication>>() {
+            java.lang.reflect.Type type = new TypeToken<BusinessTripApplicationJsonBean>() {
             }.getType();
-            ArrayList<BusinessTripApplication> btapplication = gson.fromJson(json, type);
-            System.out.println("BusinessTripApplicationHttpResponseObject = " + btapplication);
+            BusinessTripApplicationJsonBean btapplication = gson.fromJson(json, type);
+            System.out.println("BusinessTripApplicationJsonBean = " + btapplication);
 
 
             return btapplication;
@@ -160,7 +161,7 @@ public class BusinessTripApplicationService {
     }
 
     //获取我提交的出差申请
-    public ArrayList<BusinessTripApplication> getbtapplicationsubmited(String s){
+    public BusinessTripApplicationJsonBean getbtapplicationsubmited(String s){
         try {
             OkHttpClient client = new OkHttpClient();
             FormBody body = new FormBody.Builder()
@@ -176,10 +177,10 @@ public class BusinessTripApplicationService {
 
             String json = response.body().string();
             Gson gson = new Gson();
-            java.lang.reflect.Type type = new TypeToken<ArrayList<BusinessTripApplication>>() {
+            java.lang.reflect.Type type = new TypeToken<BusinessTripApplicationJsonBean>() {
             }.getType();
-            ArrayList<BusinessTripApplication> btapplication = gson.fromJson(json, type);
-            System.out.println("BusinessTripApplication[] = " + btapplication);
+            BusinessTripApplicationJsonBean btapplication = gson.fromJson(json, type);
+            System.out.println("BusinessTripApplicationJsonBean = " + btapplication);
 
 
             return btapplication;

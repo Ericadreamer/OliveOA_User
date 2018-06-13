@@ -16,6 +16,10 @@
     <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
     <!-- 查询快捷方式 -->
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <!-- 允许程序从非系统拨号器里输入电话号码 -->
+    <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission>
+    <!--允许程序写入外部存储，如SD卡上写文件-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
 
     <application
         android:allowBackup="true"
@@ -138,6 +142,9 @@
             android:name=".workschedule.LeadershipApprovalActivity"
             android:exported="true"
             android:theme="@style/HomeTheme"></activity>
+        <activity android:name=".myapplication.WaitActivity1"
+            android:exported="true"
+            android:theme="@style/HomeTheme"/>
     </application>
 
 </manifest>
