@@ -1,9 +1,189 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.oliveoa.view.workschedule.ProtocolWorkActivity">
+    android:background="#f0f0f0"
+    android:layout_gravity="center_vertical"
+    android:gravity="center"
+    tools:context="com.oliveoa.view.myapplication.OvertimeActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:windowSoftInputMode="adjustResize">
+
+        //标题栏
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/LoginPrimaryDark"
+            android:orientation="horizontal"
+            >
+            <ImageView
+                android:id="@+id/iback"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_back"
+                android:background="@null"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="20dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="工作拟定"
+                android:textAlignment="center"
+                android:layout_weight="1"
+                android:textColor="#ffffff"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical" />
+            <ImageView
+                android:id="@+id/isave"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@null"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="20dp"
+                android:src="@drawable/ic_save"/>
+
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                //加班时间
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_100"
+                    android:background="#fff"
+                    android:layout_marginBottom="@dimen/dp_10"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_30"
+                        android:text="工作时间"
+                        android:gravity="center|left"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:textSize="@dimen/text_size_normal"
+                        android:textColor="@color/tv_gray_deep"
+                        android:layout_marginTop="@dimen/dp_5"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:layout_marginRight="@dimen/dp_20">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/dp_40"
+                            android:layout_weight="1"
+                            android:background="@color/line"
+                            android:layout_gravity="center"
+                            android:layout_marginRight="@dimen/dp_20"
+                            android:onClick="onYearMonthDayPicker1">
+                            <TextView
+                                android:id="@+id/start"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:hint="选择开始时间"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="@dimen/text_size_normal"/>
+
+                        </LinearLayout>
+                        <View
+                            android:layout_width="@dimen/dp_30"
+                            android:layout_height="@dimen/dp_2"
+                            android:layout_gravity="center"
+                            android:background="@color/tv_gray"
+                            android:layout_marginRight="@dimen/dp_20"
+                            >
+                        </View>
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/dp_40"
+                            android:layout_weight="1"
+                            android:background="@color/line"
+                            android:layout_gravity="center"
+                            android:onClick="onYearMonthDayPicker2">
+                            <TextView
+                                android:id="@+id/end"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:hint="选择结束时间"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="@dimen/text_size_normal"/>
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                //加班原因
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_200"
+                    android:orientation="vertical"
+                    android:background="#fff"
+                    android:layout_marginBottom="@dimen/dp_10">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_30"
+                        android:text="加班原因（必填）"
+                        android:gravity="center|left"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:textSize="@dimen/text_size_normal"
+                        android:textColor="@color/tv_gray_deep"
+                        android:layout_marginTop="@dimen/dp_5"/>
+                    <com.oliveoa.util.LinesEditView
+                        android:id="@+id/reason"
+                        android:layout_margin="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+                </LinearLayout>
+
+                //批阅人
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_80"
+                    android:orientation="vertical"
+                    android:background="#fff"
+                    android:layout_marginBottom="@dimen/dp_10">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_30"
+                        android:text="批阅人"
+                        android:gravity="center|left"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:textSize="@dimen/text_size_normal"
+                        android:textColor="@color/tv_gray_deep"
+                        android:layout_marginTop="@dimen/dp_5"/>
+                    <TextView
+                        android:id="@+id/approve_person"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_30"
+                        android:text="部门经理"
+                        android:gravity="center|left"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:textSize="@dimen/text_size_normal"
+                        android:textColor="@color/colorPrimary"
+                        android:layout_marginTop="@dimen/dp_5"/>
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+</RelativeLayout>

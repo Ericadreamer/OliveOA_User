@@ -17,9 +17,9 @@
     <!-- 查询快捷方式 -->
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
     <!-- 允许程序从非系统拨号器里输入电话号码 -->
-    <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission>
-    <!--允许程序写入外部存储，如SD卡上写文件-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <!-- 允许程序写入外部存储，如SD卡上写文件 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -129,22 +129,43 @@
         <activity
             android:name=".workschedule.MyWorkActivity"
             android:exported="true"
-            android:theme="@style/HomeTheme"/>
+            android:theme="@style/HomeTheme" />
         <activity
             android:name=".workschedule.ProtocolWorkActivity"
             android:exported="true"
-            android:theme="@style/HomeTheme"/>
+            android:theme="@style/HomeTheme" />
         <activity
             android:name=".workschedule.WorkAllocationActivity"
             android:exported="true"
-            android:theme="@style/HomeTheme"/>
+            android:theme="@style/HomeTheme" />
         <activity
             android:name=".workschedule.LeadershipApprovalActivity"
             android:exported="true"
-            android:theme="@style/HomeTheme"></activity>
-        <activity android:name=".myapplication.WaitActivity1"
+            android:theme="@style/HomeTheme" />
+        <activity
+            android:name=".myapplication.WaitActivity1"
+            android:exported="true"
+            android:theme="@style/HomeTheme" />
+        <activity
+            android:name=".mine.PersonalDetailsActivity"
             android:exported="true"
             android:theme="@style/HomeTheme"/>
+        <activity
+            android:name=".mine.PersonalDetailsEditActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme"/>
+        <activity
+            android:name=".mine.PasswordEditActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme"/>
+        <activity
+            android:name=".mine.AboutsUsActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme"/>
+        <activity
+            android:name=".mine.AdviseActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme"></activity>
     </application>
 
 </manifest>
