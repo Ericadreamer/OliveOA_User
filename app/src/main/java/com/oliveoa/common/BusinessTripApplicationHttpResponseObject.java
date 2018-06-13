@@ -1,19 +1,19 @@
 package com.oliveoa.common;
 
-public class HttpResponseObject<T> {
+import java.util.ArrayList;
+
+public class BusinessTripApplicationHttpResponseObject<T>{
     private int status;
     private String msg;
     private T data;
-    private String cookies;
 
-    public HttpResponseObject() {
+    public BusinessTripApplicationHttpResponseObject() {
     }
 
-    public HttpResponseObject(int status, String msg, T data, String cookies) {
+    public BusinessTripApplicationHttpResponseObject(int status, String msg, T data) {
         this.status = status;
         this.msg = msg;
         this.data = data;
-        this.cookies = cookies;
     }
 
     public int getStatus() {
@@ -40,21 +40,12 @@ public class HttpResponseObject<T> {
         this.data = data;
     }
 
-    public String getCookies() {
-        return cookies;
-    }
-
-    public void setCookies(String cookies) {
-        this.cookies = cookies;
-    }
-
     @Override
     public String toString() {
-        return "HttpResponseObject{" +
+        return "BusinessTripApplicationHttpResponseObject{" +
                 "status=" + status +
                 ", msg='" + msg + '\'' +
                 ", data=" + data +
-                ", cookies='" + cookies + '\'' +
                 '}';
     }
 }

@@ -1,9 +1,13 @@
 package com.oliveoa.pojo;
 
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Keep;
+
 /* JSON 数据抽象为实体类 */
-public class UserInfo {
+@Entity
+@Keep
+public class ContactInfo {
     private String name;
-    private String password;
     private String sex;
     private String birth;
     private String tel;
@@ -17,12 +21,11 @@ public class UserInfo {
     private long createtime;
     private long updatetime;
 
-    public UserInfo() {
+    public ContactInfo() {
     }
 
-    public UserInfo(String name, String password, String sex, String birth, String tel, String email, String address, String eid, String dcid, String pcid, String id, int orderby, long createtime, long updatetime) {
+    public ContactInfo(String name, String sex, String birth, String tel, String email, String address, String eid, String dcid, String pcid, String id, int orderby, long createtime, long updatetime) {
         this.name = name;
-        this.password = password;
         this.sex = sex;
         this.birth = birth;
         this.tel = tel;
@@ -43,14 +46,6 @@ public class UserInfo {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getSex() {
@@ -153,7 +148,6 @@ public class UserInfo {
     public String toString() {
         return "UserInfo{" +
                 "name='" + name + '\'' +
-                ", password='" + password + '\'' +
                 ", sex='" + sex + '\'' +
                 ", birth='" + birth + '\'' +
                 ", tel='" + tel + '\'' +

@@ -1,18 +1,15 @@
 package com.oliveoa.pojo;
 
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Keep;
 
-/**
- *  我的申请审批流程,上级意见结果
- *  OvertimeApplicationApprovedOpinionList
- */
 @Entity
 @Keep
-public class OvertimeApplicationApprovedOpinionList {
-    private String oaaocid;
-    private String oaaopid;
-    private String oaid;
+public class LeaveApplicationApprovedOpinionList {
+    private String laaocid;
+    private String laaopid;
+    private String laid;
     private String eid;
     private int isapproved;
     private String opinion;
@@ -20,13 +17,13 @@ public class OvertimeApplicationApprovedOpinionList {
     private long createtime;
     private long updatetime;
 
-    public OvertimeApplicationApprovedOpinionList() {
+    public LeaveApplicationApprovedOpinionList() {
     }
 
-    public OvertimeApplicationApprovedOpinionList(String oaaocid, String oaaopid, String oaid, String eid, int isapproved, String opinion, int orderby, long createtime, long updatetime) {
-        this.oaaocid = oaaocid;
-        this.oaaopid = oaaopid;
-        this.oaid = oaid;
+    public LeaveApplicationApprovedOpinionList(String laaocid, String laaopid, String laid, String eid, int isapproved, String opinion, int orderby, long createtime, long updatetime) {
+        this.laaocid = laaocid;
+        this.laaopid = laaopid;
+        this.laid = laid;
         this.eid = eid;
         this.isapproved = isapproved;
         this.opinion = opinion;
@@ -35,28 +32,28 @@ public class OvertimeApplicationApprovedOpinionList {
         this.updatetime = updatetime;
     }
 
-    public String getOaaocid() {
-        return oaaocid;
+    public String getLaaocid() {
+        return laaocid;
     }
 
-    public void setOaaocid(String oaaocid) {
-        this.oaaocid = oaaocid;
+    public void setLaaocid(String laaocid) {
+        this.laaocid = laaocid;
     }
 
-    public String getOaaopid() {
-        return oaaopid;
+    public String getLaaopid() {
+        return laaopid;
     }
 
-    public void setOaaopid(String oaaopid) {
-        this.oaaopid = oaaopid;
+    public void setLaaopid(String laaopid) {
+        this.laaopid = laaopid;
     }
 
-    public String getOaid() {
-        return oaid;
+    public String getLaid() {
+        return laid;
     }
 
-    public void setOaid(String oaid) {
-        this.oaid = oaid;
+    public void setLaid(String laid) {
+        this.laid = laid;
     }
 
     public String getEid() {
@@ -109,10 +106,10 @@ public class OvertimeApplicationApprovedOpinionList {
 
     @Override
     public String toString() {
-        return "OvertimeApplicationApprovedOpinionList{" +
-                "oaaocid='" + oaaocid + '\'' +
-                ", oaaopid='" + oaaopid + '\'' +
-                ", oaid='" + oaid + '\'' +
+        return "LeaveApplicationApprovedOpinionList{" +
+                "laaocid='" + laaocid + '\'' +
+                ", laaopid='" + laaopid + '\'' +
+                ", laid='" + laid + '\'' +
                 ", eid='" + eid + '\'' +
                 ", isapproved=" + isapproved +
                 ", opinion='" + opinion + '\'' +

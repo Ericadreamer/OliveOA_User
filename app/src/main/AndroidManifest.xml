@@ -8,6 +8,14 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <!-- 开启设备访问网络权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 添加快捷方式 -->
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+    <!-- 移除快捷方式 -->
+    <uses-permission android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" />
+    <!-- 查询快捷方式 -->
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
 
     <application
         android:allowBackup="true"
@@ -49,7 +57,10 @@
             android:name=".myapplication.AddApplicationActivity"
             android:exported="true"
             android:theme="@style/HomeTheme" />
-        <activity android:name=".LoadingViewActivity" />
+        <activity
+            android:name=".LoadingViewActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme" />
         <!-- <activity android:name=".myapplication.BaseActivity" /> -->
         <activity
             android:name=".myapplication.MyApplicationActivity"

@@ -17,4 +17,10 @@ public class LogoutJsonBean {
         this.status = status;
     }
 
+    @Override
+    public String toString() {
+        return "LogoutJsonBean{" +
+                "status=" + status +
+                '}';
+    }
 }

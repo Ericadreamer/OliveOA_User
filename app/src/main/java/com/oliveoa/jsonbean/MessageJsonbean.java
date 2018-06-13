@@ -1,19 +1,21 @@
-package com.oliveoa.common;
+package com.oliveoa.jsonbean;
 
-public class HttpResponseObject<T> {
+import com.oliveoa.pojo.Message;
+
+import java.util.ArrayList;
+
+public class MessageJsonbean {
     private int status;
     private String msg;
-    private T data;
-    private String cookies;
+    private ArrayList<Message> data;
 
-    public HttpResponseObject() {
+    public MessageJsonbean() {
     }
 
-    public HttpResponseObject(int status, String msg, T data, String cookies) {
+    public MessageJsonbean(int status, String msg, ArrayList<Message> data) {
         this.status = status;
         this.msg = msg;
         this.data = data;
-        this.cookies = cookies;
     }
 
     public int getStatus() {
@@ -32,29 +34,20 @@ public class HttpResponseObject<T> {
         this.msg = msg;
     }
 
-    public T getData() {
+    public ArrayList<Message> getData() {
         return data;
     }
 
-    public void setData(T data) {
+    public void setData(ArrayList<Message> data) {
         this.data = data;
-    }
-
-    public String getCookies() {
-        return cookies;
-    }
-
-    public void setCookies(String cookies) {
-        this.cookies = cookies;
     }
 
     @Override
     public String toString() {
-        return "HttpResponseObject{" +
+        return "MessageJsonbean{" +
                 "status=" + status +
                 ", msg='" + msg + '\'' +
                 ", data=" + data +
-                ", cookies='" + cookies + '\'' +
                 '}';
     }
 }

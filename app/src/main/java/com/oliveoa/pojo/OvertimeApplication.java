@@ -1,11 +1,16 @@
 package com.oliveoa.pojo;
 
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Keep;
+
+@Entity
+@Keep
 public class OvertimeApplication {
     private String oaid;
     private String eid;
     private String reason;
-    private String begintime;
-    private String endtime;
+    private long begintime;
+    private long endtime;
     private int orderby;
     private long createtime;
     private long updatetime;
@@ -13,7 +18,7 @@ public class OvertimeApplication {
     public OvertimeApplication() {
     }
 
-    public OvertimeApplication(String oaid, String eid, String reason, String begintime, String endtime, int orderby, long createtime, long updatetime) {
+    public OvertimeApplication(String oaid, String eid, String reason, long begintime, long endtime, int orderby, long createtime, long updatetime) {
         this.oaid = oaid;
         this.eid = eid;
         this.reason = reason;
@@ -48,19 +53,19 @@ public class OvertimeApplication {
         this.reason = reason;
     }
 
-    public String getBegintime() {
+    public long getBegintime() {
         return begintime;
     }
 
-    public void setBegintime(String begintime) {
+    public void setBegintime(long begintime) {
         this.begintime = begintime;
     }
 
-    public String getEndtime() {
+    public long getEndtime() {
         return endtime;
     }
 
-    public void setEndtime(String endtime) {
+    public void setEndtime(long endtime) {
         this.endtime = endtime;
     }
 

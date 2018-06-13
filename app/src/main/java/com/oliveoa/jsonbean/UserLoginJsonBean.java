@@ -1,13 +1,13 @@
 package com.oliveoa.jsonbean;
 
-import com.oliveoa.pojo.UserInfo;
+import com.oliveoa.pojo.ContactInfo;
 
 public class UserLoginJsonBean {
     private int status;
     private String msg;
-    private UserInfo data;
+    private ContactInfo data;
 
-    public UserLoginJsonBean(int status, String msg, UserInfo data) {
+    public UserLoginJsonBean(int status, String msg, ContactInfo data) {
         this.status = status;
         this.msg = msg;
         this.data = data;
@@ -21,8 +21,8 @@ public class UserLoginJsonBean {
 
     public void setMsg(String msg) { this.msg = msg; }
 
-    public UserInfo getData() { return data; }
-    public void setData(UserInfo data) { this.data = data; }
+    public ContactInfo getData() { return data; }
+    public void setData(ContactInfo data) { this.data = data; }
 
     @Override
     public String toString() {

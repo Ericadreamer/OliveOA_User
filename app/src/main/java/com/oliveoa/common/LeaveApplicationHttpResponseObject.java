@@ -1,19 +1,20 @@
 package com.oliveoa.common;
 
-public class HttpResponseObject<T> {
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Keep;
+
+public class LeaveApplicationHttpResponseObject<T> {
     private int status;
     private String msg;
     private T data;
-    private String cookies;
 
-    public HttpResponseObject() {
+    public LeaveApplicationHttpResponseObject() {
     }
 
-    public HttpResponseObject(int status, String msg, T data, String cookies) {
+    public LeaveApplicationHttpResponseObject(int status, String msg, T data) {
         this.status = status;
         this.msg = msg;
         this.data = data;
-        this.cookies = cookies;
     }
 
     public int getStatus() {
@@ -40,21 +41,12 @@ public class HttpResponseObject<T> {
         this.data = data;
     }
 
-    public String getCookies() {
-        return cookies;
-    }
-
-    public void setCookies(String cookies) {
-        this.cookies = cookies;
-    }
-
     @Override
     public String toString() {
-        return "HttpResponseObject{" +
+        return "LeaveApplicationHttpResponseObject{" +
                 "status=" + status +
                 ", msg='" + msg + '\'' +
                 ", data=" + data +
-                ", cookies='" + cookies + '\'' +
                 '}';
     }
 }

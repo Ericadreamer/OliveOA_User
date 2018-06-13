@@ -1,18 +1,18 @@
 package com.oliveoa.jsonbean;
 
 import com.oliveoa.pojo.IssueWork;
-import com.oliveoa.pojo.UserInfo;
+import com.oliveoa.pojo.ContactInfo;
 
 import java.util.ArrayList;
 
 public class IssueWorkJsonBean {
     private ArrayList<IssueWork> issueWorks;
-    private ArrayList<UserInfo> employeeslist;
+    private ArrayList<ContactInfo> employeeslist;
 
     public IssueWorkJsonBean() {
     }
 
-    public IssueWorkJsonBean(ArrayList<IssueWork> issueWorks, ArrayList<UserInfo> employeeslist) {
+    public IssueWorkJsonBean(ArrayList<IssueWork> issueWorks, ArrayList<ContactInfo> employeeslist) {
         this.issueWorks = issueWorks;
         this.employeeslist = employeeslist;
     }
@@ -25,11 +25,11 @@ public class IssueWorkJsonBean {
         this.issueWorks = issueWorks;
     }
 
-    public ArrayList<UserInfo> getEmployeeslist() {
+    public ArrayList<ContactInfo> getEmployeeslist() {
         return employeeslist;
     }
 
-    public void setEmployeeslist(ArrayList<UserInfo> employeeslist) {
+    public void setEmployeeslist(ArrayList<ContactInfo> employeeslist) {
         this.employeeslist = employeeslist;
     }
 

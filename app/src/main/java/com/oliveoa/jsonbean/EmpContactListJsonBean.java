@@ -1,25 +1,25 @@
 package com.oliveoa.jsonbean;
 
 import com.oliveoa.pojo.DutyInfo;
-import com.oliveoa.pojo.UserInfo;
+import com.oliveoa.pojo.ContactInfo;
 
 public class EmpContactListJsonBean {
-    private UserInfo employee;
+    private ContactInfo employee;
     private DutyInfo position;
 
     public EmpContactListJsonBean() {
     }
 
-    public EmpContactListJsonBean(UserInfo employee, DutyInfo position) {
+    public EmpContactListJsonBean(ContactInfo employee, DutyInfo position) {
         this.employee = employee;
         this.position = position;
     }
 
-    public UserInfo getEmployee() {
+    public ContactInfo getEmployee() {
         return employee;
     }
 
-    public void setEmployee(UserInfo employee) {
+    public void setEmployee(ContactInfo employee) {
         this.employee = employee;
     }
 

@@ -1,5 +1,10 @@
 package com.oliveoa.pojo;
 
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Keep;
+
+@Entity
+@Keep
 public class WorkDetail {
     private String swid;
     private String seid;

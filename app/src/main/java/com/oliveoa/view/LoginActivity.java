@@ -1,16 +1,15 @@
 package com.oliveoa.view;
 
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.*;
 
 import com.oliveoa.common.HttpResponseObject;
 import com.oliveoa.controller.LoginService;
-import com.oliveoa.pojo.UserInfo;
+import com.oliveoa.pojo.ContactInfo;
 import com.oliveoa.util.Base64Utils;
 import com.oliveoa.util.SharedPreferencesUtils;
 import com.oliveoa.widget.LoadingDialog;
@@ -194,7 +193,7 @@ public class LoginActivity extends AppCompatActivity
             return;
         }
         //登录一般都是请求服务器来判断密码是否正确，要请求网络，要子线程
-        showLoading();//显示加载框
+        //showLoading();//显示加载框
         Thread loginRunnable = new Thread() {
 
             @Override
@@ -205,30 +204,18 @@ public class LoginActivity extends AppCompatActivity
                 String idvalu1e = et_name.getText().toString().trim();
                 String pwdvalue = et_password.getText().toString().trim();
                 LoginService loginService = new LoginService();
-                HttpResponseObject<UserInfo> httpResponseObject = loginService.login(idvalu1e,pwdvalue);
+                HttpResponseObject<ContactInfo> httpResponseObject = loginService.login(idvalu1e,pwdvalue);
                 System.out.println("httpResponseObject.getStatus() = "+httpResponseObject.getStatus());
 
-
-
-                //睡眠3秒
-                try {
-                    Thread.sleep(3000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                //判断账号和密码
-                /*if (getAccount().equals("cat") && getPassword().equals("123456")) {
-                    showToast("登录成功");
-                    loadCheckBoxState();//记录下当前用户记住密码和自动登录的状态;
-
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                    finish();//关闭页面
-                } else {
-                    showToast("输入的登录账号或密码不正确");
-                }*/
                 if(httpResponseObject.getStatus()==0){
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//                    //睡眠3秒
+//                    try {
+//                        Thread.sleep(3000);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+                    saveUserinfo(httpResponseObject);
+                    Intent intent = new Intent(LoginActivity.this, LoadingViewActivity.class);
                     startActivity(intent);
                     finish();
                 }else{
@@ -236,12 +223,10 @@ public class LoginActivity extends AppCompatActivity
                 }
 
                 setLoginBtnClickable(true);  //这里解放登录按钮，设置为可以点击
-                hideLoading();//隐藏加载框
+                //hideLoading();//隐藏加载框
             }
         };
         loginRunnable.start();
-
-
     }
 
 
@@ -339,28 +324,28 @@ public class LoginActivity extends AppCompatActivity
     /**
      * 显示加载的进度款
      */
-    public void showLoading() {
-        if (mLoadingDialog == null) {
-            mLoadingDialog = new LoadingDialog(this, getString(R.string.loading), false);
-        }
-        mLoadingDialog.show();
-    }
+//    public void showLoading() {
+//        if (mLoadingDialog == null) {
+//            mLoadingDialog = new LoadingDialog(this, getString(R.string.loading), false);
+//        }
+//        mLoadingDialog.show();
+//    }
 
 
     /**
      * 隐藏加载的进度框
      */
-    public void hideLoading() {
-        if (mLoadingDialog != null) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    mLoadingDialog.hide();
-                }
-            });
-
-        }
-    }
+//    public void hideLoading() {
+//        if (mLoadingDialog != null) {
+//            runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    mLoadingDialog.hide();
+//                }
+//            });
+//
+//        }
+//    }
 
 
     /**
@@ -419,6 +404,16 @@ public class LoginActivity extends AppCompatActivity
             }
         });
 
+    }
+
+    /**
+     *  数据存储到SharedPreferences文件中
+     *
+     */
+    public void saveUserinfo( HttpResponseObject<ContactInfo> user){
+        SharedPreferences.Editor editor = getSharedPreferences("data",MODE_PRIVATE).edit();
+        editor.putString("sessionid",user.getCookies());
+        editor.apply();
     }
 
 }
