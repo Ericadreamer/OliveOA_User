@@ -17,10 +17,10 @@
     <!-- 字体大小 -->
     <dimen name="text_size_tiny">10sp</dimen>
     <dimen name="text_size_small">12sp</dimen>
-    <dimen name="text_size_normal">14dp</dimen>
-    <dimen name="text_size_medium">16dp</dimen>
-    <dimen name="text_size_large">18dp</dimen>
-    <dimen name="text_size_most">25dp</dimen>
+    <dimen name="text_size_normal">14sp</dimen>
+    <dimen name="text_size_medium">16sp</dimen>
+    <dimen name="text_size_large">18sp</dimen>
+    <dimen name="text_size_most">25sp</dimen>
 
     <!-- item 大小 -->
     <dimen name="item_height_litter">30dp</dimen>

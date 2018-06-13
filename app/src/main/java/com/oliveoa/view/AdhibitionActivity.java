@@ -1,6 +1,7 @@
 package com.oliveoa.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
@@ -13,6 +14,12 @@ import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+
+import com.oliveoa.view.R;
+import com.oliveoa.view.myapplication.MyApplicationActivity;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class AdhibitionActivity extends Fragment {
@@ -33,7 +40,16 @@ public class AdhibitionActivity extends Fragment {
         application.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mContext, "您点击了我的申请", Toast.LENGTH_SHORT).show();
+                final Intent it = new Intent(getActivity(), MyApplicationActivity.class);
+                Timer timer = new Timer();
+                TimerTask task = new TimerTask() {
+                    @Override
+                    public void run() {
+                        startActivity(it); //执行
+                    }
+                };
+                timer.schedule(task, 1000 * 0); //0秒后
+                //Toast.makeText(mContext, "您点击了我的申请", Toast.LENGTH_SHORT).show();
                 applicationinfo();
             }
         });

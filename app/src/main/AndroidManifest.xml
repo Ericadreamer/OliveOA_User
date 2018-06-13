@@ -33,25 +33,6 @@
             android:name=".LoginActivity"
             android:exported="true"
             android:theme="@style/LoginTheme" />
-        <!--
-        <activity
-            android:name=".AdhibitionActivity"
-            android:label="@string/adhibition"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name=".notice.NoticeActivity"
-            android:label="@string/notice"
-            android:theme="@style/AppTheme"></activity>
-        <activity
-            android:name=".addressbook.AddressBookActivity"
-            android:label="@string/address_book"
-            android:theme="@style/AppTheme"></activity>
-        <activity
-            android:name=".mine.MineActivity"
-            android:label="@string/mine"
-            android:theme="@style/AppTheme" />
-        <activity android:name=".TabLayoutBottomActivity"/>
-        -->
         <activity
             android:name=".TabLayoutBottomActivity"
             android:allowBackup="true"
@@ -64,10 +45,55 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".myapplication.SelectApplicationActivity" />
+        <activity
+            android:name=".myapplication.AddApplicationActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme" />
         <activity android:name=".LoadingViewActivity" />
-        <activity android:name=".myapplication.BaseActivity" />
-        <activity android:name=".myapplication.MyApplicationActivity"></activity>
+        <!-- <activity android:name=".myapplication.BaseActivity" /> -->
+        <activity
+            android:name=".myapplication.MyApplicationActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme" />
+        <activity
+            android:name=".myapplication.OvertimeActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme" />
+        <activity
+            android:name=".myapplication.LeaveActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme" />
+        <activity
+            android:name=".myapplication.BusinessActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme" />
+        <activity
+            android:name=".myapplication.MeetingActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme" />
+        <activity
+            android:name=".myapplication.DimissionActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme" />
+        <activity
+            android:name=".myapplication.RegularWorkerActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme" />
+        <activity
+            android:name=".myapplication.AdjustPostActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme" />
+        <activity
+            android:name=".myapplication.RecruitmentActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme" />
+        <activity
+            android:name=".myapplication.GoodsActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme" />
+        <activity android:name=".myapplication.OvertimeInfoActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme"></activity>
     </application>
 
 </manifest>

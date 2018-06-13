@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#373c3e</color>
+    <color name="colorPrimaryDark">#373c3e</color>
     <color name="colorAccent">#FF4081</color>
     <color name="LoginPrimary">#edb674</color>
     <color name="LoginPrimaryDark">#373c3e</color>
@@ -34,5 +34,8 @@
     <color name="tab_tv_selected">#ff964a</color>
     <color name="tab_bg">#fcfcfc</color>
     <color name="tab_div">#d6d6d6</color>
+
+    <color name="textcolor">#898989</color>
+    <color name="transparent">#0000</color>
 
 </resources>

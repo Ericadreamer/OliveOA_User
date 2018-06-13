@@ -5,11 +5,11 @@ import android.os.Bundle;
 
 import com.oliveoa.view.R;
 
-public class SelectApplicationActivity extends AppCompatActivity {
+public class OvertimeInfoActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_select_application);
+        setContentView(R.layout.activity_overtime_info);
     }
 }

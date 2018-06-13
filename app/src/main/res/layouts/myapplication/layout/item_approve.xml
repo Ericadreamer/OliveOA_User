@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_48"
+    android:orientation="horizontal"
+    android:background="#fff"
+    android:descendantFocusability="blocksDescendants">
+
+    <TextView
+        android:id="@+id/person_this"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_30"
+        android:layout_weight="1"
+        android:text="那只喵"
+        android:gravity="center|left"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:textSize="@dimen/text_size_normal"
+        android:textColor="@color/tv_gray_deep" />
+    <TextView
+        android:id="@+id/person_that"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@null"
+        android:gravity="center_vertical|end"
+        android:layout_marginRight="20dp"
+        android:text="哪只蕉"
+        android:singleLine="true"
+        android:textColor="@color/orange_main" />
+</LinearLayout>

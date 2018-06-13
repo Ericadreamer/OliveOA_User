@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f0f0f0"
+    android:layout_gravity="center_vertical"
+    android:gravity="center"
+    tools:context="com.oliveoa.view.myapplication.AddApplicationActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:windowSoftInputMode="adjustResize">
+
+    //标题栏
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/LoginPrimaryDark"
+        android:orientation="horizontal"
+        >
+        <ImageView
+            android:id="@+id/iback"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_back"
+            android:background="@null"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="20dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="选择流程"
+            android:textAlignment="center"
+            android:layout_weight="1"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_gravity="center_vertical" />
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@null"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="20dp"/>
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/pass_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            //加班申请
+            <LinearLayout
+                android:id="@+id/overtime"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_60"
+                android:orientation="horizontal"
+                android:background="#fff">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_34"
+                    android:layout_height="@dimen/dp_34"
+                    android:src="@drawable/overtime_pic"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dp_20"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/overtime"
+                    android:textColor="@color/colorPrimary"
+                    android:gravity="center|left"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:textSize="@dimen/text_size_medium"/>
+
+            </LinearLayout>
+            //请假申请
+            <LinearLayout
+                android:id="@+id/leave"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_60"
+                android:orientation="horizontal"
+                android:background="#fff">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_34"
+                    android:layout_height="@dimen/dp_34"
+                    android:src="@drawable/leave_pic"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dp_20"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/leave"
+                    android:textColor="@color/colorPrimary"
+                    android:gravity="center|left"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:textSize="@dimen/text_size_medium"/>
+
+            </LinearLayout>
+            //出差申请
+            <LinearLayout
+                android:id="@+id/business"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_60"
+                android:orientation="horizontal"
+                android:background="#fff">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_34"
+                    android:layout_height="@dimen/dp_34"
+                    android:src="@drawable/business_pic"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dp_20"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/business"
+                    android:textColor="@color/colorPrimary"
+                    android:gravity="center|left"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:textSize="@dimen/text_size_medium"/>
+
+            </LinearLayout>
+            //会议申请
+            <LinearLayout
+                android:id="@+id/meeting"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_60"
+                android:orientation="horizontal"
+                android:background="#fff">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_34"
+                    android:layout_height="@dimen/dp_34"
+                    android:src="@drawable/meeting_pic"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dp_20"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/meeting"
+                    android:textColor="@color/colorPrimary"
+                    android:gravity="center|left"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:textSize="@dimen/text_size_medium"/>
+
+            </LinearLayout>
+            //离职申请
+            <LinearLayout
+                android:id="@+id/dimission"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_60"
+                android:orientation="horizontal"
+                android:background="#fff">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_34"
+                    android:layout_height="@dimen/dp_34"
+                    android:src="@drawable/dimission_pic"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dp_20"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/dimission"
+                    android:textColor="@color/colorPrimary"
+                    android:gravity="center|left"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:textSize="@dimen/text_size_medium"/>
+
+            </LinearLayout>
+            //转正申请
+            <LinearLayout
+                android:id="@+id/regular_work"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_60"
+                android:orientation="horizontal"
+                android:background="#fff">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_34"
+                    android:layout_height="@dimen/dp_34"
+                    android:src="@drawable/regular_pic"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dp_20"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/regular_work"
+                    android:textColor="@color/colorPrimary"
+                    android:gravity="center|left"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:textSize="@dimen/text_size_medium"/>
+
+            </LinearLayout>
+            //调岗申请
+            <LinearLayout
+                android:id="@+id/adjust_post"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_60"
+                android:orientation="horizontal"
+                android:background="#fff">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_34"
+                    android:layout_height="@dimen/dp_34"
+                    android:src="@drawable/adjust_pic"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dp_20"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/adjust_post"
+                    android:textColor="@color/colorPrimary"
+                    android:gravity="center|left"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:textSize="@dimen/text_size_medium"/>
+
+            </LinearLayout>
+            //招聘申请
+            <LinearLayout
+                android:id="@+id/recruitment"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_60"
+                android:orientation="horizontal"
+                android:background="#fff">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_34"
+                    android:layout_height="@dimen/dp_34"
+                    android:src="@drawable/recruitment_pic"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dp_20"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/recruitment"
+                    android:textColor="@color/colorPrimary"
+                    android:gravity="center|left"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:textSize="@dimen/text_size_medium"/>
+
+            </LinearLayout>
+            //物品申请
+            <LinearLayout
+                android:id="@+id/goods"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_60"
+                android:orientation="horizontal"
+                android:background="#fff">
+
+                <ImageView
+                    android:layout_width="@dimen/dp_34"
+                    android:layout_height="@dimen/dp_34"
+                    android:src="@drawable/goods_pic"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dp_20"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/goods"
+                    android:textColor="@color/colorPrimary"
+                    android:gravity="center|left"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:textSize="@dimen/text_size_medium"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+    </LinearLayout>
+</RelativeLayout>

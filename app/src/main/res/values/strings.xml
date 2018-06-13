@@ -32,5 +32,21 @@
     <string name="mine">我的</string>
     <string name="home_name">OliveOA</string>
 
+    <!--我的申请-->
+    <string name="wait">待审批</string>
+    <string name="pass">审批通过</string>
+    <string name="refuse">审批拒绝</string>
+    <string name="overtime">加班申请</string>
+    <string name="leave">请假申请</string>
+    <string name="business">出差申请</string>
+    <string name="meeting">会议申请</string>
+    <string name="dimission">离职申请</string>
+    <string name="regular_work">转正申请</string>
+    <string name="adjust_post">调岗申请</string>
+    <string name="recruitment">招聘申请</string>
+    <string name="goods">物品申请</string>
+    <string name="application_info">申请详情</string>
+    <string name="progress">审批进度</string>
+
 
 </resources>
