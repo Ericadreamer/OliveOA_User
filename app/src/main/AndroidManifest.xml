@@ -117,9 +117,25 @@
         <activity
             android:name=".myapplication.BusinessInfoActivity"
             android:exported="true"
-            android:theme="@style/HomeTheme"/>
+            android:theme="@style/HomeTheme" />
         <activity
             android:name=".myapplication.BusinessSelectActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme" />
+        <activity
+            android:name=".workschedule.MyWorkActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme"/>
+        <activity
+            android:name=".workschedule.ProtocolWorkActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme"/>
+        <activity
+            android:name=".workschedule.WorkAllocationActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme"/>
+        <activity
+            android:name=".workschedule.LeadershipApprovalActivity"
             android:exported="true"
             android:theme="@style/HomeTheme"></activity>
     </application>

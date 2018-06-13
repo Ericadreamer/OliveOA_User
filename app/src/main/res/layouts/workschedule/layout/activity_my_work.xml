@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com.oliveoa.view/tools"
+    android:id="@+id/dl_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f0f0f0"
+    android:layout_gravity="center_vertical"
+    android:gravity="center"
+    tools:context=".RedactDepartmentActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:windowSoftInputMode="adjustResize">
+
+        //标题栏
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/LoginPrimaryDark"
+            android:orientation="horizontal"
+            >
+            <ImageView
+                android:id="@+id/iback"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_back"
+                android:background="@null"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="20dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="工作日程"
+                android:textAlignment="center"
+                android:layout_weight="1"
+                android:textColor="#ffffff"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical" />
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@null"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="20dp"/>
+
+        </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/radio_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_20">
+
+
+            <RadioButton
+                android:id="@+id/protocol_work"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:button="@null"
+                android:drawablePadding="@dimen/dp_6"
+                android:drawableTop="@drawable/protocol_work_pic"
+                android:text="工作拟定" />
+            <RadioButton
+                android:id="@+id/leadership_approval"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:button="@null"
+                android:drawablePadding="@dimen/dp_6"
+                android:drawableTop="@drawable/leadership_approval_pic"
+                android:text="领导批阅" />
+            <RadioButton
+                android:id="@+id/allocation"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:button="@null"
+                android:drawablePadding="@dimen/dp_6"
+                android:drawableTop="@drawable/allocation_pic"
+                android:text="工作审批" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+    </LinearLayout>
+    </ScrollView>
+    </LinearLayout>
+</RelativeLayout>
