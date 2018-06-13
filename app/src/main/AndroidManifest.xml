@@ -102,7 +102,24 @@
             android:name=".myapplication.GoodsActivity"
             android:exported="true"
             android:theme="@style/HomeTheme" />
-        <activity android:name=".myapplication.OvertimeInfoActivity"
+        <activity
+            android:name=".myapplication.OvertimeInfoActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme" />
+        <activity
+            android:name=".myapplication.SelectPersonApprovingActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme" />
+        <activity
+            android:name=".myapplication.LeaveSelectActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme" />
+        <activity
+            android:name=".myapplication.BusinessInfoActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme"/>
+        <activity
+            android:name=".myapplication.BusinessSelectActivity"
             android:exported="true"
             android:theme="@style/HomeTheme"></activity>
     </application>

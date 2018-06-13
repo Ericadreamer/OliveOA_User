@@ -11,13 +11,12 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.oliveoa.view.MainActivity;
 import com.oliveoa.view.R;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class SelectPersonApprovingActivity extends AppCompatActivity {
+public class BusinessSelectActivity extends AppCompatActivity {
 
     private ExpandableListView exlist_staff;
     private ImageView back;
@@ -26,13 +25,12 @@ public class SelectPersonApprovingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_select_person_approving);
-
+        setContentView(R.layout.activity_business_select);
         initView();
     }
 
     private void initView() {
-        mContext = SelectPersonApprovingActivity.this;
+        mContext = BusinessSelectActivity.this;
 
         exlist_staff = (ExpandableListView) findViewById(R.id.exlist_staff);
         back =(ImageView)findViewById(R.id.iback);
@@ -40,7 +38,7 @@ public class SelectPersonApprovingActivity extends AppCompatActivity {
         exlist_staff.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-                Log.i("" + SelectPersonApprovingActivity.this, "group " + groupPosition);
+                Log.i("" + BusinessSelectActivity.this, "group " + groupPosition);
                 return false;
             }
         });
@@ -48,7 +46,7 @@ public class SelectPersonApprovingActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(SelectPersonApprovingActivity.this, OvertimeActivity.class);
+                Intent intent = new Intent(BusinessSelectActivity.this, BusinessActivity.class);
                 startActivity(intent);
                 finish();
                 //Toast.makeText(mContext, "你点击了返回", Toast.LENGTH_SHORT).show();
@@ -88,6 +86,4 @@ public class SelectPersonApprovingActivity extends AppCompatActivity {
             System.exit(0);
         }
     }
-
-
 }

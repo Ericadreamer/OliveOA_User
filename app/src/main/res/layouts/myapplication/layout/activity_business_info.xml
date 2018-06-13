@@ -139,7 +139,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center|left"
-                            android:text="请假申请"
+                            android:text="出差申请"
                             android:textColor="@color/tv_gray_deep"
                             android:layout_marginRight="@dimen/dp_20"
                             />
@@ -155,7 +155,7 @@
                             android:layout_width="80dp"
                             android:layout_height="match_parent"
                             android:gravity="center"
-                            android:text="请假类型"
+                            android:text="出差地点"
                             android:textColor="@color/colorPrimary"
                             android:layout_marginLeft="@dimen/dp_10"
                             />
@@ -164,7 +164,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center|left"
-                            android:text="产假"
+                            android:text="泰国"
                             android:textColor="@color/tv_gray_deep"
                             android:layout_marginRight="@dimen/dp_20"
                             />
@@ -180,7 +180,7 @@
                             android:layout_width="80dp"
                             android:layout_height="match_parent"
                             android:gravity="center"
-                            android:text="请假时间"
+                            android:text="出差时间"
                             android:textColor="@color/colorPrimary"
                             android:layout_marginLeft="@dimen/dp_10"
                             />
@@ -207,7 +207,7 @@
                         android:layout_width="80dp"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text="请假原因"
+                        android:text="出差事由"
                         android:textColor="@color/colorPrimary"
                         android:layout_marginLeft="@dimen/dp_10"
                         android:layout_marginTop="@dimen/dp_10"/>

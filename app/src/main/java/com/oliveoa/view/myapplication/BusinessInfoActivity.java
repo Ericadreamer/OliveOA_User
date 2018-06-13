@@ -1,57 +1,46 @@
 package com.oliveoa.view.myapplication;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.oliveoa.view.MainActivity;
 import com.oliveoa.view.R;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class SelectPersonApprovingActivity extends AppCompatActivity {
+public class BusinessInfoActivity extends AppCompatActivity {
 
-    private ExpandableListView exlist_staff;
     private ImageView back;
-    private Context mContext;
+    private TextView tname,tplace,tstatus,ttime,treason;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_select_person_approving);
+        setContentView(R.layout.activity_business_info);
 
         initView();
     }
 
     private void initView() {
-        mContext = SelectPersonApprovingActivity.this;
+        back = (ImageView) findViewById(R.id.iback);
+        tname = (TextView) findViewById(R.id.person_approving);
+        tplace = (TextView) findViewById(R.id.leave_type);
+        tstatus = (TextView) findViewById(R.id.status);
+        ttime = (TextView) findViewById(R.id.time);
+        treason = (TextView) findViewById(R.id.reason);
 
-        exlist_staff = (ExpandableListView) findViewById(R.id.exlist_staff);
-        back =(ImageView)findViewById(R.id.iback);
-
-        exlist_staff.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-            @Override
-            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-                Log.i("" + SelectPersonApprovingActivity.this, "group " + groupPosition);
-                return false;
-            }
-        });
-
-        back.setOnClickListener(new View.OnClickListener() {
+        back.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(SelectPersonApprovingActivity.this, OvertimeActivity.class);
+                Intent intent = new Intent(BusinessInfoActivity.this, MyApplicationActivity.class);
                 startActivity(intent);
                 finish();
-                //Toast.makeText(mContext, "你点击了返回", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -66,13 +55,14 @@ public class SelectPersonApprovingActivity extends AppCompatActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+
     /**
      * 双击退出函数
      */
     private static Boolean isESC = false;
 
     private void exitBy2Click() {
-        Timer tExit ;
+        Timer tExit;
         if (!isESC) {
             isESC = true; // 准备退出
             Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
@@ -88,6 +78,4 @@ public class SelectPersonApprovingActivity extends AppCompatActivity {
             System.exit(0);
         }
     }
-
-
 }

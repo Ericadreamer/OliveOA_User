@@ -1,21 +1,29 @@
 package com.oliveoa.view.myapplication;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.oliveoa.util.LinesEditView;
 import com.oliveoa.view.R;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
+import cn.qqtheme.framework.picker.DateTimePicker;
+
 public class BusinessActivity extends AppCompatActivity {
 
     private ImageView back,save;
+    private TextView tstartTime,tendTime,treason,taddPerson,tplace;
+    private LinearLayout addPersonList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +38,26 @@ public class BusinessActivity extends AppCompatActivity {
         back = (ImageView) findViewById(R.id.iback);
         save = (ImageView) findViewById(R.id.isave);
 
-        //点击事件
+        tstartTime = (TextView) findViewById(R.id.start);
+        tendTime = (TextView) findViewById(R.id.end);
+        taddPerson = (TextView) findViewById(R.id.person_add);
+        tplace = (TextView) findViewById(R.id.business_place);
+        addPersonList = (LinearLayout) findViewById(R.id.approve_list);
+
+        initData();
+
+        LinesEditView linesEditView = new LinesEditView(BusinessActivity.this);
+        String test = linesEditView.getContentText();
+
+        taddPerson.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(BusinessActivity.this, BusinessSelectActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,6 +81,61 @@ public class BusinessActivity extends AppCompatActivity {
     }
     private void save() {
 
+    }
+
+    //年月日时分选择器
+    public void onYearMonthDayTimePicker1(View view) {
+        DateTimePicker picker = new DateTimePicker(this, DateTimePicker.HOUR_24);
+        picker.setDateRangeStart(1996, 1, 1);
+        picker.setDateRangeEnd(2025, 12, 31);
+        picker.setTimeRangeStart(9, 0);
+        picker.setTimeRangeEnd(20, 30);
+        // picker.setTopLineColor(0x99FF0000);
+        picker.setDividerColor(Color.rgb(0, 178, 238));//设置分割线的颜色
+        picker.setLabelTextColor(Color.GRAY);
+        picker.setTopLineColor(Color.GRAY);
+        picker.setSubmitTextSize(16);
+        picker.setCancelTextSize(16);
+        picker.setTitleTextColor(Color.BLACK);
+        picker.setTitleText("年月日时分选择");
+        picker.setOnDateTimePickListener(new DateTimePicker.OnYearMonthDayTimePickListener() {
+            @Override
+            public void onDateTimePicked(String year, String month, String day, String hour, String minute) {
+                tstartTime.setText(year+"-"+month+"-"+day + " " + hour + ":" + minute);
+                //showToast(year + "-" + month + "-" + day + " " + hour + ":" + minute);
+            }
+        });
+        picker.show();
+    }
+
+    //年月日时分选择器
+    public void onYearMonthDayTimePicker2(View view) {
+        DateTimePicker picker = new DateTimePicker(this, DateTimePicker.HOUR_24);
+        picker.setDateRangeStart(1996, 1, 1);
+        picker.setDateRangeEnd(2025, 12, 31);
+        picker.setTimeRangeStart(9, 0);
+        picker.setTimeRangeEnd(20, 30);
+        // picker.setTopLineColor(0x99FF0000);
+        picker.setDividerColor(Color.rgb(0, 178, 238));//设置分割线的颜色
+        picker.setLabelTextColor(Color.GRAY);
+        picker.setTopLineColor(Color.GRAY);
+        picker.setSubmitTextSize(16);
+        picker.setCancelTextSize(16);
+        picker.setTitleTextColor(Color.BLACK);
+        picker.setTitleText("年月日时分选择");
+        picker.setOnDateTimePickListener(new DateTimePicker.OnYearMonthDayTimePickListener() {
+            @Override
+            public void onDateTimePicked(String year, String month, String day, String hour, String minute) {
+                tendTime.setText(year+"-"+month+"-"+day + " " + hour + ":" + minute);
+                //showToast(year + "-" + month + "-" + day + " " + hour + ":" + minute);
+            }
+        });
+        picker.show();
+    }
+
+    //重写showToast
+    private void showToast(String s) {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
     @Override
