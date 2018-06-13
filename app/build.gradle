@@ -18,7 +18,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             lintOptions {
                 checkReleaseBuilds false
-                abortOnError false }
+                abortOnError false
+            }
         }
     }
 
@@ -45,7 +46,7 @@ android {
         }
     }
 
-    greendao{
+    greendao {
         schemaVersion 1
         daoPackage 'com.oliveoa.greendao'
         targetGenDir 'src/main/java'

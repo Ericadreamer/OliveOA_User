@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -16,6 +17,7 @@ import java.util.TimerTask;
 public class AddApplicationActivity extends AppCompatActivity {
 
     private LinearLayout overtime,leave,businessTrip,meeting,dimission,regularWorker,adjustPost,recruitment,goods;
+    private ImageView back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +28,7 @@ public class AddApplicationActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        back = (ImageView) findViewById(R.id.iback);
         overtime = (LinearLayout) findViewById(R.id.overtime);
         leave = (LinearLayout) findViewById(R.id.leave);
         businessTrip = (LinearLayout) findViewById(R.id.business);
@@ -37,6 +40,15 @@ public class AddApplicationActivity extends AppCompatActivity {
         goods = (LinearLayout) findViewById(R.id.goods);
 
         //点击事件
+        back.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AddApplicationActivity.this, MyApplicationActivity.class);
+                startActivity(intent);
+                finish();
+
+            }
+        });
         overtime.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
             @Override
             public void onClick(View view) {
@@ -46,6 +58,79 @@ public class AddApplicationActivity extends AppCompatActivity {
 
             }
         });
+        leave.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AddApplicationActivity.this, LeaveActivity.class);
+                startActivity(intent);
+                finish();
+
+            }
+        });
+        businessTrip.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AddApplicationActivity.this, BusinessActivity.class);
+                startActivity(intent);
+                finish();
+
+            }
+        });
+        meeting.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AddApplicationActivity.this, MeetingActivity.class);
+                startActivity(intent);
+                finish();
+
+            }
+        });
+        dimission.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AddApplicationActivity.this, DimissionActivity.class);
+                startActivity(intent);
+                finish();
+
+            }
+        });
+        regularWorker.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AddApplicationActivity.this, RegularWorkerActivity.class);
+                startActivity(intent);
+                finish();
+
+            }
+        });
+        adjustPost.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AddApplicationActivity.this, AdjustPostActivity.class);
+                startActivity(intent);
+                finish();
+
+            }
+        });
+        recruitment.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AddApplicationActivity.this, RecruitmentActivity.class);
+                startActivity(intent);
+                finish();
+
+            }
+        });
+        goods.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AddApplicationActivity.this, GoodsActivity.class);
+                startActivity(intent);
+                finish();
+
+            }
+        });
+
     }
 
     @Override

@@ -18,6 +18,7 @@ public class RefuseActivity extends Fragment {
     private Context mContext;
     private LinearLayout addPasslistView;
     private TextView tvname;
+    private View rootview;
 
     @Nullable
     @Override
@@ -31,7 +32,14 @@ public class RefuseActivity extends Fragment {
         //默认添加一个Item
         addViewItem(null);
 
+        initView();
+
         return rootview;
+    }
+
+    private void initView() {
+        tvname = (TextView) rootview.findViewById(R.id.item_name);
+        addPasslistView = (LinearLayout) rootview.findViewById(R.id.refuse_list);
     }
 
     //添加ViewItem

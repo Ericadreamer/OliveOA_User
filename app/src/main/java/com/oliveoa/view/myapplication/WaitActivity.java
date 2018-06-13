@@ -30,6 +30,7 @@ public class WaitActivity extends Fragment {
 
         //默认添加一个Item
         addViewItem(null);
+        initView();
 
         return rootview;
     }

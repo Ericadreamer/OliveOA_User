@@ -114,7 +114,8 @@
                     android:layout_weight="1"
                     android:background="@color/line"
                     android:layout_gravity="center"
-                    android:layout_marginRight="@dimen/dp_20">
+                    android:layout_marginRight="@dimen/dp_20"
+                    android:onClick="onYearMonthDayTimePicker1">
                     <TextView
                         android:id="@+id/start"
                         android:layout_width="match_parent"
@@ -138,7 +139,8 @@
                     android:layout_height="@dimen/dp_40"
                     android:layout_weight="1"
                     android:background="@color/line"
-                    android:layout_gravity="center">
+                    android:layout_gravity="center"
+                    android:onClick="onYearMonthDayTimePicker2">
                     <TextView
                         android:id="@+id/end"
                         android:layout_width="match_parent"

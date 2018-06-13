@@ -17,22 +17,29 @@ public class PassActivity extends Fragment {
     private Context mContext;
     private LinearLayout addPasslistView;
     private TextView tvname;
+    private View rootview;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View rootview = inflater.inflate(R.layout.activity_pass, container, false);
+        rootview = inflater.inflate(R.layout.activity_pass, container, false);
         this.mContext = getActivity();
-        tvname = (TextView) rootview.findViewById(R.id.item_name);
-        addPasslistView = (LinearLayout) rootview.findViewById(R.id.wait_list);
 
         //默认添加一个Item
         addViewItem(null);
 
+        initView();
+
 
         return rootview;
     }
+
+    private void initView() {
+        tvname = (TextView) rootview.findViewById(R.id.item_name);
+        addPasslistView = (LinearLayout) rootview.findViewById(R.id.wait_list);
+    }
+
     //添加ViewItem
     private void addViewItem(View view) {
 

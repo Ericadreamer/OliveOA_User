@@ -1,59 +1,59 @@
 package com.oliveoa.view.myapplication;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.oliveoa.view.MainActivity;
 import com.oliveoa.view.R;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class BusinessActivity extends AppCompatActivity {
+public class SelectPersonApprovingActivity extends AppCompatActivity {
 
-    private ImageView back,save;
+    private ExpandableListView exlist_staff;
+    private ImageView back;
+    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_business);
+        setContentView(R.layout.activity_select_person_approving);
 
         initView();
-        initData();
     }
 
     private void initView() {
-        back = (ImageView) findViewById(R.id.iback);
-        save = (ImageView) findViewById(R.id.isave);
+        mContext = SelectPersonApprovingActivity.this;
 
-        //点击事件
+        exlist_staff = (ExpandableListView) findViewById(R.id.exlist_staff);
+        back =(ImageView)findViewById(R.id.iback);
+
+        exlist_staff.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                Log.i("" + SelectPersonApprovingActivity.this, "group " + groupPosition);
+                return false;
+            }
+        });
+
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(BusinessActivity.this, MyApplicationActivity.class);
+                Intent intent = new Intent(SelectPersonApprovingActivity.this, OvertimeActivity.class);
                 startActivity(intent);
                 finish();
                 //Toast.makeText(mContext, "你点击了返回", Toast.LENGTH_SHORT).show();
             }
         });
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                save();
-            }
-        });
-
-    }
-
-    private void initData() {
-
-    }
-    private void save() {
-
     }
 
     @Override
@@ -66,14 +66,13 @@ public class BusinessActivity extends AppCompatActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
-
     /**
      * 双击退出函数
      */
     private static Boolean isESC = false;
 
     private void exitBy2Click() {
-        Timer tExit;
+        Timer tExit ;
         if (!isESC) {
             isESC = true; // 准备退出
             Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();

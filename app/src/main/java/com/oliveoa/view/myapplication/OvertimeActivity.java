@@ -49,12 +49,31 @@ public class OvertimeActivity extends AppCompatActivity {
         LinesEditView linesEditView = new LinesEditView(OvertimeActivity.this);
         String test = linesEditView.getContentText();
 
+        addPerson.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(OvertimeActivity.this, SelectPersonApprovingActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
         back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(OvertimeActivity.this, MyApplicationActivity.class);
+                startActivity(intent);
+                finish();
+                //Toast.makeText(mContext, "你点击了返回", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        /*back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(OvertimeActivity.this);
                 dialog.setTitle("提示");
-                dialog.setMessage("是否确定退出创建,直接返回部门列表页面？");
+                dialog.setMessage("是否确定退出创建,直接返回我的申请页面？");
                 dialog.setCancelable(false);
                 dialog.setNegativeButton("是", new DialogInterface.OnClickListener() {
                     @Override
@@ -72,13 +91,16 @@ public class OvertimeActivity extends AppCompatActivity {
                 });
                 //Toast.makeText(mContext, "你点击了返回", Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 save();
             }
         });
+
+        // 默认添加一个Item
+        addViewItem(null);
 
     }
 
@@ -88,26 +110,54 @@ public class OvertimeActivity extends AppCompatActivity {
     private void save() {
 
     }
+    private void addViewItem(View view) {
+
+    }
 
     //年月日时分选择器
-    public void onYearMonthDayTimePicker(View view) {
+    public void onYearMonthDayTimePicker1(View view) {
         DateTimePicker picker = new DateTimePicker(this, DateTimePicker.HOUR_24);
         picker.setDateRangeStart(1996, 1, 1);
         picker.setDateRangeEnd(2025, 12, 31);
         picker.setTimeRangeStart(9, 0);
         picker.setTimeRangeEnd(20, 30);
         // picker.setTopLineColor(0x99FF0000);
-        picker.setLabelTextColor(0xFFFF0000);
-        picker.setDividerColor(0xFFFF0000);
-        picker.setTopLineColor(Color.WHITE);
+        picker.setDividerColor(Color.rgb(0, 178, 238));//设置分割线的颜色
+        picker.setLabelTextColor(Color.GRAY);
+        picker.setTopLineColor(Color.GRAY);
         picker.setSubmitTextSize(16);
         picker.setCancelTextSize(16);
         picker.setTitleTextColor(Color.BLACK);
-        picker.setTitleText("年月日选择");
+        picker.setTitleText("年月日时分选择");
         picker.setOnDateTimePickListener(new DateTimePicker.OnYearMonthDayTimePickListener() {
             @Override
             public void onDateTimePicked(String year, String month, String day, String hour, String minute) {
-                //birth.setText(year+"-"+month+"-"+day + " " + hour + ":" + minute);
+                startTime.setText(year+"-"+month+"-"+day + " " + hour + ":" + minute);
+                //showToast(year + "-" + month + "-" + day + " " + hour + ":" + minute);
+            }
+        });
+        picker.show();
+    }
+
+    //年月日时分选择器
+    public void onYearMonthDayTimePicker2(View view) {
+        DateTimePicker picker = new DateTimePicker(this, DateTimePicker.HOUR_24);
+        picker.setDateRangeStart(1996, 1, 1);
+        picker.setDateRangeEnd(2025, 12, 31);
+        picker.setTimeRangeStart(9, 0);
+        picker.setTimeRangeEnd(20, 30);
+        // picker.setTopLineColor(0x99FF0000);
+        picker.setDividerColor(Color.rgb(0, 178, 238));//设置分割线的颜色
+        picker.setLabelTextColor(Color.GRAY);
+        picker.setTopLineColor(Color.GRAY);
+        picker.setSubmitTextSize(16);
+        picker.setCancelTextSize(16);
+        picker.setTitleTextColor(Color.BLACK);
+        picker.setTitleText("年月日时分选择");
+        picker.setOnDateTimePickListener(new DateTimePicker.OnYearMonthDayTimePickListener() {
+            @Override
+            public void onDateTimePicked(String year, String month, String day, String hour, String minute) {
+                endTime.setText(year+"-"+month+"-"+day + " " + hour + ":" + minute);
                 //showToast(year + "-" + month + "-" + day + " " + hour + ":" + minute);
             }
         });
