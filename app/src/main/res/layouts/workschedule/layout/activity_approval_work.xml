@@ -33,7 +33,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="工作拟定"
+                android:text="批阅工作"
                 android:textAlignment="center"
                 android:layout_weight="1"
                 android:textColor="#ffffff"
@@ -59,12 +59,12 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                //加班时间
+                //工作时间
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_100"
+                    android:layout_height="@dimen/dp_80"
                     android:background="#fff"
-                    android:layout_marginBottom="@dimen/dp_10"
+                    android:layout_marginBottom="@dimen/dp_1"
                     android:orientation="vertical">
                     <TextView
                         android:layout_width="match_parent"
@@ -75,70 +75,60 @@
                         android:textSize="@dimen/text_size_normal"
                         android:textColor="@color/tv_gray_deep"
                         android:layout_marginTop="@dimen/dp_5"/>
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/work_time"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
+                        android:layout_height="@dimen/dp_30"
+                        android:text="2018/6/5-2018/6/9"
+                        android:gravity="center|left"
                         android:layout_marginLeft="@dimen/dp_20"
-                        android:layout_marginRight="@dimen/dp_20">
+                        android:textSize="@dimen/text_size_normal"
+                        android:textColor="@color/tv_gray_deep"
+                        android:layout_marginTop="@dimen/dp_5"/>
 
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="@dimen/dp_40"
-                            android:layout_weight="1"
-                            android:background="@color/line"
-                            android:layout_gravity="center"
-                            android:layout_marginRight="@dimen/dp_20"
-                            android:onClick="onYearMonthDayPicker1">
-                            <TextView
-                                android:id="@+id/start"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:hint="选择开始时间"
-                                android:textColor="@color/colorPrimary"
-                                android:textSize="@dimen/text_size_normal"/>
-
-                        </LinearLayout>
-                        <View
-                            android:layout_width="@dimen/dp_30"
-                            android:layout_height="@dimen/dp_2"
-                            android:layout_gravity="center"
-                            android:background="@color/tv_gray"
-                            android:layout_marginRight="@dimen/dp_20"
-                            >
-                        </View>
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="@dimen/dp_40"
-                            android:layout_weight="1"
-                            android:background="@color/line"
-                            android:layout_gravity="center"
-                            android:onClick="onYearMonthDayPicker2">
-                            <TextView
-                                android:id="@+id/end"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:hint="选择结束时间"
-                                android:textColor="@color/colorPrimary"
-                                android:textSize="@dimen/text_size_normal"/>
-
-                        </LinearLayout>
-                    </LinearLayout>
                 </LinearLayout>
 
                 //工作内容
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_200"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:background="#fff"
                     android:layout_marginBottom="@dimen/dp_10">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp_30"
-                        android:text="工作内容（必填）"
+                        android:text="工作内容"
+                        android:gravity="center|left"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:textSize="@dimen/text_size_normal"
+                        android:textColor="@color/tv_gray_deep"
+                        android:layout_marginTop="@dimen/dp_5"/>
+
+                    <TextView
+                        android:id="@+id/work_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="22dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:text="去买个橘子回来"
+                        android:textColor="@color/tv_gray_deep"
+                        android:textColorHint="#898989" />
+
+                </LinearLayout>
+
+                //批阅意见
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_200"
+                    android:orientation="vertical"
+                    android:background="#fff">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_30"
+                        android:text="批阅意见"
                         android:gravity="center|left"
                         android:layout_marginLeft="@dimen/dp_20"
                         android:textSize="@dimen/text_size_normal"
@@ -150,34 +140,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         />
-                </LinearLayout>
-
-                //批阅人
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_80"
-                    android:orientation="vertical"
-                    android:background="#fff"
-                    android:layout_marginBottom="@dimen/dp_10">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_30"
-                        android:text="批阅人"
-                        android:gravity="center|left"
-                        android:layout_marginLeft="@dimen/dp_20"
-                        android:textSize="@dimen/text_size_normal"
-                        android:textColor="@color/tv_gray_deep"
-                        android:layout_marginTop="@dimen/dp_5"/>
-                    <TextView
-                        android:id="@+id/approve_person"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_30"
-                        android:text="部门经理"
-                        android:gravity="center|left"
-                        android:layout_marginLeft="@dimen/dp_20"
-                        android:textSize="@dimen/text_size_normal"
-                        android:textColor="@color/colorPrimary"
-                        android:layout_marginTop="@dimen/dp_5"/>
                 </LinearLayout>
 
 

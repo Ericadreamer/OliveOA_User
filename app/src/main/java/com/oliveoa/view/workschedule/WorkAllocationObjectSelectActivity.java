@@ -1,60 +1,63 @@
 package com.oliveoa.view.workschedule;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.oliveoa.view.R;
-import com.oliveoa.view.TabLayoutBottomActivity;
+import com.oliveoa.view.myapplication.BusinessActivity;
+import com.oliveoa.view.myapplication.BusinessSelectActivity;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class LeadershipApprovalActivity extends AppCompatActivity {
-
+public class WorkAllocationObjectSelectActivity extends AppCompatActivity {
+    private ExpandableListView exlist_staff;
     private ImageView back;
-    private LinearLayout addmyWorkitem;
+    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_leadership_approval);
+        setContentView(R.layout.activity_work_allocation_object_select);
+
         initView();
-        //默认添加一个Item
-        addViewItem(null);
+        initData();
     }
 
     private void initView() {
-        back = (ImageView) findViewById(R.id.iback);
-        addmyWorkitem = (LinearLayout) findViewById(R.id.my_work_list);
+        mContext = WorkAllocationObjectSelectActivity.this;
 
-        //点击事件
-        back.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
+        exlist_staff = (ExpandableListView) findViewById(R.id.exlist_staff);
+        back =(ImageView)findViewById(R.id.iback);
+
+        exlist_staff.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LeadershipApprovalActivity.this, MyWorkActivity.class);
-                startActivity(intent);
-                finish();
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                Log.i("" + WorkAllocationObjectSelectActivity.this, "group " + groupPosition);
+                return false;
             }
         });
 
-        addmyWorkitem.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LeadershipApprovalActivity.this, ApprovalWorkActivity.class);
+                Intent intent = new Intent(WorkAllocationObjectSelectActivity.this, WorkAllocationActivity.class);
                 startActivity(intent);
                 finish();
+                //Toast.makeText(mContext, "你点击了返回", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
-    //添加ViewItem
-    private void addViewItem(View view) {
+
+    private void initData() {
 
     }
 

@@ -149,21 +149,29 @@
         <activity
             android:name=".mine.PersonalDetailsActivity"
             android:exported="true"
-            android:theme="@style/HomeTheme"/>
+            android:theme="@style/HomeTheme" />
         <activity
             android:name=".mine.PersonalDetailsEditActivity"
             android:exported="true"
-            android:theme="@style/HomeTheme"/>
+            android:theme="@style/HomeTheme" />
         <activity
             android:name=".mine.PasswordEditActivity"
             android:exported="true"
-            android:theme="@style/HomeTheme"/>
+            android:theme="@style/HomeTheme" />
         <activity
             android:name=".mine.AboutsUsActivity"
             android:exported="true"
-            android:theme="@style/HomeTheme"/>
+            android:theme="@style/HomeTheme" />
         <activity
             android:name=".mine.AdviseActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme" />
+        <activity
+            android:name=".workschedule.ApprovalWorkActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme"/>
+        <activity
+            android:name=".workschedule.WorkAllocationObjectSelectActivity"
             android:exported="true"
             android:theme="@style/HomeTheme"></activity>
     </application>

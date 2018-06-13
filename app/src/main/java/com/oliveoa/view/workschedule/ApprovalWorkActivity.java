@@ -6,55 +6,61 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.oliveoa.util.LinesEditView;
 import com.oliveoa.view.R;
-import com.oliveoa.view.TabLayoutBottomActivity;
+import com.oliveoa.view.myapplication.MyApplicationActivity;
+import com.oliveoa.view.myapplication.OvertimeActivity;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class LeadershipApprovalActivity extends AppCompatActivity {
+public class ApprovalWorkActivity extends AppCompatActivity {
 
-    private ImageView back;
-    private LinearLayout addmyWorkitem;
+    private TextView ttime,tworkContent;
+    private ImageView back,save;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_leadership_approval);
+        setContentView(R.layout.activity_approval_work);
         initView();
-        //默认添加一个Item
-        addViewItem(null);
     }
 
     private void initView() {
         back = (ImageView) findViewById(R.id.iback);
-        addmyWorkitem = (LinearLayout) findViewById(R.id.my_work_list);
+        save = (ImageView) findViewById(R.id.isave);
+        ttime = (TextView) findViewById(R.id.work_time);
+        tworkContent = (TextView) findViewById(R.id.work_content);
 
-        //点击事件
-        back.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
+        initData();
+
+        LinesEditView linesEditView = new LinesEditView(ApprovalWorkActivity.this);
+        String test = linesEditView.getContentText();
+
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LeadershipApprovalActivity.this, MyWorkActivity.class);
+                Intent intent = new Intent(ApprovalWorkActivity.this, LeadershipApprovalActivity.class);
                 startActivity(intent);
                 finish();
+                //Toast.makeText(mContext, "你点击了返回", Toast.LENGTH_SHORT).show();
             }
         });
-
-        addmyWorkitem.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
+        save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LeadershipApprovalActivity.this, ApprovalWorkActivity.class);
-                startActivity(intent);
-                finish();
+                save();
             }
         });
+    }
+
+    private void initData() {
 
     }
-    //添加ViewItem
-    private void addViewItem(View view) {
+    private void save() {
 
     }
 
