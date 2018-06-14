@@ -7,10 +7,12 @@
     android:orientation="vertical"
     tools:context="com.oliveoa.view.mine.MineActivity">
 
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="这是我的"
         android:textSize="16sp" />
+
 
 </LinearLayout>

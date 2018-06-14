@@ -6,38 +6,38 @@ import com.oliveoa.pojo.OvertimeApplicationApprovedOpinionList;
 import java.util.ArrayList;
 
 public class OvertimeApplicationJsonBean {
-    private ArrayList<OvertimeApplication> overtimeApplications;
-    private ArrayList<OvertimeApplicationApprovedOpinionList> overtimeApplicationApprovedOpinionLists;
+    private OvertimeApplication overtimeApplication;
+    private ArrayList<OvertimeApplicationApprovedOpinionList> overtimeApplicationApprovedOpinionList;
 
     public OvertimeApplicationJsonBean() {
     }
 
-    public OvertimeApplicationJsonBean(ArrayList<OvertimeApplication> overtimeApplications, ArrayList<OvertimeApplicationApprovedOpinionList> overtimeApplicationApprovedOpinionLists) {
-        this.overtimeApplications = overtimeApplications;
-        this.overtimeApplicationApprovedOpinionLists = overtimeApplicationApprovedOpinionLists;
+    public OvertimeApplicationJsonBean(OvertimeApplication overtimeApplication, ArrayList<OvertimeApplicationApprovedOpinionList> overtimeApplicationApprovedOpinionList) {
+        this.overtimeApplication = overtimeApplication;
+        this.overtimeApplicationApprovedOpinionList = overtimeApplicationApprovedOpinionList;
     }
 
-    public ArrayList<OvertimeApplication> getOvertimeApplications() {
-        return overtimeApplications;
+    public OvertimeApplication getOvertimeApplications() {
+        return overtimeApplication;
     }
 
-    public void setOvertimeApplications(ArrayList<OvertimeApplication> overtimeApplications) {
-        this.overtimeApplications = overtimeApplications;
+    public void setOvertimeApplications(OvertimeApplication overtimeApplication) {
+        this.overtimeApplication = overtimeApplication;
     }
 
     public ArrayList<OvertimeApplicationApprovedOpinionList> getOvertimeApplicationApprovedOpinionLists() {
-        return overtimeApplicationApprovedOpinionLists;
+        return overtimeApplicationApprovedOpinionList;
     }
 
-    public void setOvertimeApplicationApprovedOpinionLists(ArrayList<OvertimeApplicationApprovedOpinionList> overtimeApplicationApprovedOpinionLists) {
-        this.overtimeApplicationApprovedOpinionLists = overtimeApplicationApprovedOpinionLists;
+    public void setOvertimeApplicationApprovedOpinionLists(ArrayList<OvertimeApplicationApprovedOpinionList> overtimeApplicationApprovedOpinionList) {
+        this.overtimeApplicationApprovedOpinionList = overtimeApplicationApprovedOpinionList;
     }
 
     @Override
     public String toString() {
         return "OvertimeApplicationJsonBean{" +
-                "overtimeApplications=" + overtimeApplications +
-                ", overtimeApplicationApprovedOpinionLists=" + overtimeApplicationApprovedOpinionLists +
+                "overtimeApplication=" + overtimeApplication +
+                ", overtimeApplicationApprovedOpinionList=" + overtimeApplicationApprovedOpinionList +
                 '}';
     }
 }

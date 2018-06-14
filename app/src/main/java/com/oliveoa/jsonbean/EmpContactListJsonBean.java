@@ -4,23 +4,23 @@ import com.oliveoa.pojo.DutyInfo;
 import com.oliveoa.pojo.ContactInfo;
 
 public class EmpContactListJsonBean {
-    private ContactInfo employee;
+    private ContactInfo employees;
     private DutyInfo position;
 
     public EmpContactListJsonBean() {
     }
 
-    public EmpContactListJsonBean(ContactInfo employee, DutyInfo position) {
-        this.employee = employee;
+    public EmpContactListJsonBean(ContactInfo employees, DutyInfo position) {
+        this.employees = employees;
         this.position = position;
     }
 
     public ContactInfo getEmployee() {
-        return employee;
+        return employees;
     }
 
-    public void setEmployee(ContactInfo employee) {
-        this.employee = employee;
+    public void setEmployee(ContactInfo employees) {
+        this.employees = employees;
     }
 
     public DutyInfo getPosition() {
@@ -34,7 +34,7 @@ public class EmpContactListJsonBean {
     @Override
     public String toString() {
         return "EmpContactListJsonBean{" +
-                "employee=" + employee +
+                "employees=" + employees +
                 ", position=" + position +
                 '}';
     }

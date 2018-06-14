@@ -21,6 +21,8 @@
     <color name="tv_gray">@android:color/darker_gray</color>
     <color name="tv_color">#ffffff</color>
     <color name="list_glide">#50e0e0e0</color>
+    <color name="tv_pass">#02a314</color>
+    <color name="tv_refuse">#b90306</color>
 
     <color name="top_bar_normal_bg">#ec6f1a</color>
 

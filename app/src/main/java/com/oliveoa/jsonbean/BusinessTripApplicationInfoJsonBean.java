@@ -6,38 +6,38 @@ import com.oliveoa.pojo.BusinessTripApplicationApprovedOpinionList;
 import java.util.ArrayList;
 
 public class BusinessTripApplicationInfoJsonBean {
-    private ArrayList<BusinessTripApplication> businessTripApplications;
-    private ArrayList<BusinessTripApplicationApprovedOpinionList> businessTripApplicationApprovedOpinionLists;
+    private BusinessTripApplication businessTripApplication;
+    private ArrayList<BusinessTripApplicationApprovedOpinionList> businessTripApplicationApprovedOpinionList;
 
     public BusinessTripApplicationInfoJsonBean() {
     }
 
-    public BusinessTripApplicationInfoJsonBean(ArrayList<BusinessTripApplication> businessTripApplications, ArrayList<BusinessTripApplicationApprovedOpinionList> businessTripApplicationApprovedOpinionLists) {
-        this.businessTripApplications = businessTripApplications;
-        this.businessTripApplicationApprovedOpinionLists = businessTripApplicationApprovedOpinionLists;
+    public BusinessTripApplicationInfoJsonBean(BusinessTripApplication businessTripApplication, ArrayList<BusinessTripApplicationApprovedOpinionList> businessTripApplicationApprovedOpinionLists) {
+        this.businessTripApplication = businessTripApplication;
+        this.businessTripApplicationApprovedOpinionList= businessTripApplicationApprovedOpinionLists;
     }
 
-    public ArrayList<BusinessTripApplication> getBusinessTripApplications() {
-        return businessTripApplications;
+    public BusinessTripApplication getBusinessTripApplication() {
+        return businessTripApplication;
     }
 
-    public void setBusinessTripApplications(ArrayList<BusinessTripApplication> businessTripApplications) {
-        this.businessTripApplications = businessTripApplications;
+    public void setBusinessTripApplication(BusinessTripApplication businessTripApplication) {
+        this.businessTripApplication = businessTripApplication;
     }
 
     public ArrayList<BusinessTripApplicationApprovedOpinionList> getBusinessTripApplicationApprovedOpinionLists() {
-        return businessTripApplicationApprovedOpinionLists;
+        return businessTripApplicationApprovedOpinionList;
     }
 
     public void setBusinessTripApplicationApprovedOpinionLists(ArrayList<BusinessTripApplicationApprovedOpinionList> businessTripApplicationApprovedOpinionLists) {
-        this.businessTripApplicationApprovedOpinionLists = businessTripApplicationApprovedOpinionLists;
+        this.businessTripApplicationApprovedOpinionList= businessTripApplicationApprovedOpinionLists;
     }
 
     @Override
     public String toString() {
         return "BusinessTripApplicationInfoJsonBean{" +
-                "businessTripApplications=" + businessTripApplications +
-                ", businessTripApplicationApprovedOpinionLists=" + businessTripApplicationApprovedOpinionLists +
+                "businessTripApplication=" + businessTripApplication +
+                ", businessTripApplicationApprovedOpinionLists=" + businessTripApplicationApprovedOpinionList+
                 '}';
     }
 }

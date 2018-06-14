@@ -7,14 +7,14 @@ import java.util.ArrayList;
 
 public class LeaveApplicationInfoJsonBean {
     private LeaveApplication leaveApplication;
-    private ArrayList<LeaveApplicationApprovedOpinionList> leaveApplicationApprovedOpinionLists;
+    private ArrayList<LeaveApplicationApprovedOpinionList> leaveApplicationApprovedOpinionList;
 
     public LeaveApplicationInfoJsonBean() {
     }
 
     public LeaveApplicationInfoJsonBean(LeaveApplication leaveApplication, ArrayList<LeaveApplicationApprovedOpinionList> leaveApplicationApprovedOpinionLists) {
         this.leaveApplication = leaveApplication;
-        this.leaveApplicationApprovedOpinionLists = leaveApplicationApprovedOpinionLists;
+        this.leaveApplicationApprovedOpinionList= leaveApplicationApprovedOpinionLists;
     }
 
     public LeaveApplication getLeaveApplication() {
@@ -26,18 +26,18 @@ public class LeaveApplicationInfoJsonBean {
     }
 
     public ArrayList<LeaveApplicationApprovedOpinionList> getLeaveApplicationApprovedOpinionLists() {
-        return leaveApplicationApprovedOpinionLists;
+        return leaveApplicationApprovedOpinionList;
     }
 
     public void setLeaveApplicationApprovedOpinionLists(ArrayList<LeaveApplicationApprovedOpinionList> leaveApplicationApprovedOpinionLists) {
-        this.leaveApplicationApprovedOpinionLists = leaveApplicationApprovedOpinionLists;
+        this.leaveApplicationApprovedOpinionList= leaveApplicationApprovedOpinionLists;
     }
 
     @Override
     public String toString() {
         return "LeaveApplicationInfoJsonBean{" +
                 "leaveApplication=" + leaveApplication +
-                ", leaveApplicationApprovedOpinionLists=" + leaveApplicationApprovedOpinionLists +
+                ", leaveApplicationApprovedOpinionLists=" + leaveApplicationApprovedOpinionList+
                 '}';
     }
 }

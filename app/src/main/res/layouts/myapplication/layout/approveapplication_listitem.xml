@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/dp_1"
+    android:layout_marginBottom="@dimen/dp_1"
+    android:background="#f0f0f0">
+
+    <LinearLayout
+        android:id="@+id/approve_person_item"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:orientation="horizontal"
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_width="@dimen/dp_32"
+            android:layout_height="@dimen/dp_32"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:src="@drawable/yonghu"
+            android:layout_gravity="center"/>
+        <TextView
+            android:id="@+id/person_approving"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center|left"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginLeft="@dimen/dp_10"
+            />
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center|end"
+            android:text="待审核"
+            android:textColor="@color/tv_gray_deep"
+            android:layout_marginRight="@dimen/dp_20"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

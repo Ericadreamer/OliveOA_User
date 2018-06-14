@@ -2,7 +2,7 @@ package com.oliveoa.common;
 
 import com.oliveoa.jsonbean.OvertimeApplicationJsonBean;
 
-public class OvertimeApplicationHttpResponseObject {
+public class OvertimeApplicationHttpResponseObject<T> {
     private int status;
     private String msg;
     private OvertimeApplicationJsonBean data;

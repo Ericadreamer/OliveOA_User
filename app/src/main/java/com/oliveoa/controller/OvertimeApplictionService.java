@@ -1,11 +1,14 @@
 package com.oliveoa.controller;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.oliveoa.common.Const;
 import com.oliveoa.common.OvertimeApplicationHttpResponseObject;
 import com.oliveoa.jsonbean.OvertimeApplicationApprovedOpinionListInfoJsonBean;
 import com.oliveoa.jsonbean.OvertimeApplicationInfoJsonBean;
+import com.oliveoa.jsonbean.OvertimeApplicationJsonBean;
 import com.oliveoa.jsonbean.StatusAndMsgJsonBean;
 import com.oliveoa.pojo.OvertimeApplication;
 import com.oliveoa.pojo.OvertimeApplicationApprovedOpinionList;
@@ -88,7 +91,8 @@ public class OvertimeApplictionService {
     }
 
     //获取加班申请详情(oaid)
-    public OvertimeApplicationHttpResponseObject overtimeapplication(String s,String oaid){
+    public   OvertimeApplicationHttpResponseObject overtimeapplication(String s,String oaid){
+        Log.e("OAService","oaid:"+oaid);
         try {
             OkHttpClient client = new OkHttpClient();
             FormBody body = new FormBody.Builder()
@@ -101,10 +105,11 @@ public class OvertimeApplictionService {
             //System.out.println(response.body().string());
 
             String json = response.body().string();
+            System.out.println(json);
             Gson gson = new Gson();
-            java.lang.reflect.Type type = new TypeToken<OvertimeApplicationHttpResponseObject >() {
+            java.lang.reflect.Type type = new TypeToken<OvertimeApplicationHttpResponseObject>() {
             }.getType();
-            OvertimeApplicationHttpResponseObject  oahro = gson.fromJson(json, type);
+            OvertimeApplicationHttpResponseObject oahro =gson.fromJson(json,type);
 
             System.out.println("OvertimeApplicationHttpResponseObject  = " + oahro);
 

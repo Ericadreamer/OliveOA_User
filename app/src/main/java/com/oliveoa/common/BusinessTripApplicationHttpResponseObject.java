@@ -1,16 +1,19 @@
 package com.oliveoa.common;
 
+import com.oliveoa.jsonbean.BusinessTripApplicationInfoJsonBean;
+import com.oliveoa.jsonbean.BusinessTripApplicationJsonBean;
+
 import java.util.ArrayList;
 
-public class BusinessTripApplicationHttpResponseObject<T>{
+public class BusinessTripApplicationHttpResponseObject{
     private int status;
     private String msg;
-    private T data;
+    private BusinessTripApplicationInfoJsonBean data;
 
     public BusinessTripApplicationHttpResponseObject() {
     }
 
-    public BusinessTripApplicationHttpResponseObject(int status, String msg, T data) {
+    public BusinessTripApplicationHttpResponseObject(int status, String msg, BusinessTripApplicationInfoJsonBean data) {
         this.status = status;
         this.msg = msg;
         this.data = data;
@@ -32,11 +35,11 @@ public class BusinessTripApplicationHttpResponseObject<T>{
         this.msg = msg;
     }
 
-    public T getData() {
+    public BusinessTripApplicationInfoJsonBean getData() {
         return data;
     }
 
-    public void setData(T data) {
+    public void setData(BusinessTripApplicationInfoJsonBean data) {
         this.data = data;
     }
 

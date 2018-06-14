@@ -1,17 +1,20 @@
 package com.oliveoa.common;
 
+import com.oliveoa.jsonbean.LeaveApplicationInfoJsonBean;
+import com.oliveoa.pojo.LeaveApplicationApprovedOpinionList;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Keep;
 
-public class LeaveApplicationHttpResponseObject<T> {
+public class LeaveApplicationHttpResponseObject {
     private int status;
     private String msg;
-    private T data;
+    private LeaveApplicationInfoJsonBean data;
 
     public LeaveApplicationHttpResponseObject() {
     }
 
-    public LeaveApplicationHttpResponseObject(int status, String msg, T data) {
+    public LeaveApplicationHttpResponseObject(int status, String msg, LeaveApplicationInfoJsonBean data) {
         this.status = status;
         this.msg = msg;
         this.data = data;
@@ -33,11 +36,11 @@ public class LeaveApplicationHttpResponseObject<T> {
         this.msg = msg;
     }
 
-    public T getData() {
+    public LeaveApplicationInfoJsonBean getData() {
         return data;
     }
 
-    public void setData(T data) {
+    public void setData(LeaveApplicationInfoJsonBean data) {
         this.data = data;
     }
 

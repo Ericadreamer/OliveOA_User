@@ -1,5 +1,6 @@
 package com.oliveoa.view;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Looper;
@@ -8,12 +9,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.oliveoa.common.BusinessTripApplicationHttpResponseObject;
 import com.oliveoa.common.ContactHttpResponseObject;
+import com.oliveoa.common.LeaveApplicationHttpResponseObject;
 import com.oliveoa.common.OvertimeApplicationHttpResponseObject;
 import com.oliveoa.controller.BusinessTripApplicationService;
 import com.oliveoa.controller.LeaveApplicationService;
-import com.oliveoa.controller.LoginService;
-import com.oliveoa.controller.MessageService;
 import com.oliveoa.controller.OvertimeApplictionService;
 import com.oliveoa.controller.UserInfoService;
 import com.oliveoa.controller.WorkDetailService;
@@ -21,6 +22,8 @@ import com.oliveoa.greendao.BusinessTripApplicationApprovedOpinionListDao;
 import com.oliveoa.greendao.BusinessTripApplicationDao;
 import com.oliveoa.greendao.ContactInfoDao;
 import com.oliveoa.greendao.DaoManager;
+import com.oliveoa.greendao.DaoMaster;
+import com.oliveoa.greendao.DaoSession;
 import com.oliveoa.greendao.DepartmentInfoDao;
 import com.oliveoa.greendao.DutyInfoDao;
 import com.oliveoa.greendao.IssueWorkDao;
@@ -29,45 +32,42 @@ import com.oliveoa.greendao.LeaveApplicationDao;
 import com.oliveoa.greendao.MessageDao;
 import com.oliveoa.greendao.OvertimeApplicationApprovedOpinionListDao;
 import com.oliveoa.greendao.OvertimeApplicationDao;
+import com.oliveoa.jsonbean.BusinessTripApplicationInfoJsonBean;
 import com.oliveoa.jsonbean.BusinessTripApplicationJsonBean;
 import com.oliveoa.jsonbean.ContactJsonBean;
-import com.oliveoa.jsonbean.DepartmentInfoJsonBean;
 import com.oliveoa.jsonbean.EmpContactListJsonBean;
+import com.oliveoa.jsonbean.LeaveApplicationInfoJsonBean;
 import com.oliveoa.jsonbean.LeaveApplicationJsonBean;
-import com.oliveoa.jsonbean.MessageJsonbean;
-import com.oliveoa.jsonbean.OvertimeApplicationApprovedOpinionListInfoJsonBean;
 import com.oliveoa.jsonbean.OvertimeApplicationInfoJsonBean;
 import com.oliveoa.jsonbean.OvertimeApplicationJsonBean;
 import com.oliveoa.jsonbean.UserLoginJsonBean;
 import com.oliveoa.pojo.BusinessTripApplication;
-import com.oliveoa.pojo.BusinessTripApplicationApprovedOpinionList;
 import com.oliveoa.pojo.ContactInfo;
 import com.oliveoa.pojo.DepartmentInfo;
-import com.oliveoa.pojo.DutyInfo;
 import com.oliveoa.pojo.LeaveApplication;
-import com.oliveoa.pojo.LeaveApplicationApprovedOpinionList;
 import com.oliveoa.pojo.Message;
 import com.oliveoa.pojo.OvertimeApplication;
-import com.oliveoa.pojo.OvertimeApplicationApprovedOpinionList;
+import com.oliveoa.util.DataCleanManager;
 import com.oliveoa.util.EntityManager;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class LoadingViewActivity extends AppCompatActivity {
 
+
+    private String TAG = this.getClass().getSimpleName();
     private ArrayList<ContactJsonBean> contactInfos;
     private ArrayList<Message> messages;
     private ContactInfo user;
     private ArrayList<EmpContactListJsonBean> empContactList;
     private ArrayList<OvertimeApplication> oa;
-    private ArrayList<OvertimeApplicationApprovedOpinionList> oaaol;
+    private OvertimeApplicationJsonBean oaaol;
     private ArrayList<LeaveApplication> la;
-    private ArrayList<LeaveApplicationApprovedOpinionList> laaol;
+    private LeaveApplicationInfoJsonBean laaol;
     private ArrayList<BusinessTripApplication> bta;
-    private ArrayList<BusinessTripApplicationApprovedOpinionList> btaaol;
+    private BusinessTripApplicationInfoJsonBean btaaol;
 
 
     private ContactInfoDao contactInfoDao;
@@ -82,6 +82,8 @@ public class LoadingViewActivity extends AppCompatActivity {
     private OvertimeApplicationDao oaDao;
     private OvertimeApplicationApprovedOpinionListDao oaaolDao;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +94,10 @@ public class LoadingViewActivity extends AppCompatActivity {
         initData();
     }
     public void initData(){
+        //String string = getString(R.string.app_name);
+
+         DataCleanManager dataCleanManager = new DataCleanManager();
+        dataCleanManager.cleanDatabases();
 
         contactInfoDao = EntityManager.getInstance().getContactInfo();
         departmentInfoDao = EntityManager.getInstance().getDepartmentInfo();
@@ -136,9 +142,13 @@ public class LoadingViewActivity extends AppCompatActivity {
                         Log.d("departmentinfo", contactInfos.get(i).getDepartment().toString());
                         DepartmentInfo departmentInfo =contactInfos.get(i).getDepartment();
                         departmentInfoDao.insert(departmentInfo);
+                        Log.d(TAG,"contactInfos.get(i).getEmpContactList().size():"+contactInfos.get(i).getEmpContactList().size());
                         for(int j=0;j<contactInfos.get(i).getEmpContactList().size();i++){
                             if(contactInfos.get(i).getEmpContactList().get(j).getEmployee()!=null) {
+                                Log.d(TAG,"contactInfos.get(i).getEmpContactList().get(j).getEmployee()"+contactInfos.get(i).getEmpContactList().get(j).getEmployee().toString());
+
                                 contactInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getEmployee());
+
                                 dutyInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getPosition());
                             }
                         }
@@ -171,8 +181,22 @@ public class LoadingViewActivity extends AppCompatActivity {
                 if (overtimeApplications.getStatus()==0) {
                      oa = overtimeApplications .getData();
                     Log.d("overtimeApplication",oa.toString());
+                    Log.d(TAG,"overtimeApplication.size:"+oa.size());
                     for (int i=0;i<oa.size();i++){
-                       oaDao.insert(oa.get(i));
+                        Log.d(TAG,"overtimeApplication.oaid["+i+"]:"+oa.get(i).getOaid());
+                        OvertimeApplicationHttpResponseObject oahrom = overtimeApplictionService.overtimeapplication(s,oa.get(i).getOaid());
+                        Log.e(TAG,"oahro"+oahrom.toString());
+                        if(oahrom.getStatus() == 0){
+                            oaaol =oahrom.getOvertimeApplicationJsonBean();
+                            Log.d(TAG,"oaaol"+oaaol.toString());
+                            if(oaaol.getOvertimeApplicationApprovedOpinionLists()!=null) {
+                                Log.d(TAG,"oaaol.getOvertimeApplicationApprovedOpinionLists():"+oaaol.getOvertimeApplicationApprovedOpinionLists().toString());
+                                for (int j = 0; j < oaaol.getOvertimeApplicationApprovedOpinionLists().size(); j++) {
+                                    oaaolDao.insert(oaaol.getOvertimeApplicationApprovedOpinionLists().get(j));
+                                }
+                            }
+                        }
+                        oaDao.insert(oa.get(i));
                     }
                 }else{
                     Looper.prepare();//解决子线程弹toast问题
@@ -201,6 +225,16 @@ public class LoadingViewActivity extends AppCompatActivity {
                     bta = businessTripApplicationJsonBean .getData();
                     Log.d("bta:",bta.toString());
                     for (int i=0;i<bta.size();i++){
+                        BusinessTripApplicationHttpResponseObject businessTripApplicationHttpResponseObject = businessTripApplicationService.getbtapplicationinfo(s,bta.get(i).getBtaid());
+                        if(businessTripApplicationHttpResponseObject.getStatus() == 0){
+                            btaaol = businessTripApplicationHttpResponseObject.getData();
+                            Log.i(TAG,"btaaol:"+btaaol);
+                            if(btaaol.getBusinessTripApplicationApprovedOpinionLists()!=null) {
+                                for (int j = 0; j < btaaol.getBusinessTripApplicationApprovedOpinionLists().size(); j++) {
+                                    btaaolDao.insert(btaaol.getBusinessTripApplicationApprovedOpinionLists().get(j));
+                                }
+                            }
+                        }
                         btaDao.insert(bta.get(i));
                     }
                 }else{
@@ -220,6 +254,16 @@ public class LoadingViewActivity extends AppCompatActivity {
                     la = leaveApplicationJsonBean .getData();
                     Log.d("la:",la.toString());
                     for (int i=0;i<la.size();i++){
+                        LeaveApplicationHttpResponseObject leaveApplicationHttpResponseObject = leaveApplicationService.getlapplicationinfo(s,la.get(i).getLaid());
+                        if(leaveApplicationHttpResponseObject.getStatus() == 0){
+                            laaol = leaveApplicationHttpResponseObject.getData();
+                            Log.i(TAG,"laaol:"+laaol);
+                            if(laaol.getLeaveApplicationApprovedOpinionLists()!=null) {
+                                for (int j = 0; j < laaol.getLeaveApplicationApprovedOpinionLists().size(); j++) {
+                                    laaolDao.insert(laaol.getLeaveApplicationApprovedOpinionLists().get(j));
+                                }
+                            }
+                        }
                         laDao.insert(la.get(i));
                     }
                 }else{

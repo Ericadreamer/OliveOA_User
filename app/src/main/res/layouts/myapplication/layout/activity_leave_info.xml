@@ -56,20 +56,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                //审批进度
+                //详情
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_90"
-                    android:orientation="vertical"
+                    android:layout_height="wrap_content"
                     android:background="#fff"
-                    android:layout_marginBottom="@dimen/dp_10">
-
+                    android:orientation="vertical"
+                    android:layout_marginBottom="@dimen/dp_1">
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp_40"
-                        android:text="@string/progress"
+                        android:text="申请内容"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/margin_medium"
+                        android:textSize="16sp"
                         android:gravity="center|left"
                         android:layout_marginLeft="@dimen/dp_20"/>
                     <View
@@ -79,48 +78,7 @@
                         android:layout_marginLeft="@dimen/dp_20"
                         android:layout_marginRight="@dimen/dp_20">
                     </View>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
 
-                        <ImageView
-                            android:layout_width="@dimen/dp_32"
-                            android:layout_height="@dimen/dp_32"
-                            android:layout_marginLeft="@dimen/dp_20"
-                            android:src="@drawable/yonghu"
-                            android:layout_gravity="center"/>
-                        <TextView
-                            android:id="@+id/person_approving"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center|left"
-                            android:text="哪只蕉"
-                            android:textColor="@color/colorPrimary"
-                            android:layout_marginLeft="@dimen/dp_10"
-                            />
-                        <TextView
-                            android:id="@+id/status"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center|end"
-                            android:text="待审核"
-                            android:textColor="@color/tv_gray_deep"
-                            android:layout_marginRight="@dimen/dp_20"
-                            />
-
-                    </LinearLayout>
-                </LinearLayout>
-
-                //详情
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_120"
-                    android:background="#fff"
-                    android:orientation="vertical"
-                    android:layout_marginBottom="@dimen/dp_1">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
@@ -224,8 +182,40 @@
                         />
 
                 </LinearLayout>
+                //审批进度
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="#fff"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_marginBottom="@dimen/dp_10">
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_40"
+                        android:text="@string/progress"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16sp"
+                        android:gravity="center|left"
+                        android:layout_marginLeft="@dimen/dp_20"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_1"
+                        android:background="@color/tv_gray_normal"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:layout_marginRight="@dimen/dp_20">
+                    </View>
+                    <LinearLayout
+                        android:id="@+id/approve_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
+
+
         </ScrollView>
 
     </LinearLayout>

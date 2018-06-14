@@ -19,6 +19,13 @@ public class DateFormat {
         Log.i("LongtoDate:",format.format(date1));
         return format.format(date1);
     }
+    //长整型转换为分钟时间型
+    public String LongtoDatemm(long time){
+        Date date1 = new Date(time);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        Log.i("LongtoDatemm:",format.format(date1));
+        return format.format(date1);
+    }
 
 
 
