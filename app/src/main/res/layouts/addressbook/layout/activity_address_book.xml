@@ -5,12 +5,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#f0f0f0"
     tools:context="com.oliveoa.view.addressbook.AddressBookActivity">
 
+    <ImageView
+        android:id="@+id/null_depart"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:src="@drawable/image_null"
+        android:layout_gravity="center"
+        android:layout_marginTop="120dp"
+        />
+
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="这是通讯录"
-        android:textSize="16sp" />
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:text="还没有通讯录信息哦"
+        android:textAlignment="center"
+        android:textColor="@color/textcolor"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:text="期待更多通讯录开发信息吧"
+        android:textAlignment="center"
+        android:textColor="@color/textcolor"/>
 
 </LinearLayout>
