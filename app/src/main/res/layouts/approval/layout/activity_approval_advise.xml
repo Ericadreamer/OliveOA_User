@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com.oliveoa.view/tools"
-    android:id="@+id/dl_root"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f0f0f0"
     android:layout_gravity="center_vertical"
-    android:gravity="center">
-
+    android:gravity="center"
+    tools:context="com.oliveoa.view.approval.ApprovalAdviseActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,7 +33,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="我的审批"
+                android:text="审批意见"
                 android:textAlignment="center"
                 android:layout_weight="1"
                 android:textColor="#ffffff"
@@ -42,29 +41,38 @@
                 android:textStyle="bold"
                 android:layout_gravity="center_vertical" />
             <ImageView
+                android:id="@+id/isave"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:background="@null"
                 android:layout_gravity="center_vertical"
-                android:layout_margin="20dp"/>
+                android:layout_margin="20dp"
+                android:src="@drawable/ic_save"/>
 
         </LinearLayout>
-
-        <!--顶部tab标签容器-->
-        <android.support.design.widget.TabLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/tab_layout"
-            android:background="@color/white"
-            app:tabIndicatorColor="@color/orange_main"
-            app:tabSelectedTextColor="@color/orange_main"
-            app:tabTextColor="@color/colorPrimary">
-        </android.support.design.widget.TabLayout>
-        <android.support.v4.view.ViewPager
-            android:id="@+id/info_viewpager"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            />
+            android:layout_height="@dimen/dp_200"
+            android:orientation="vertical"
+            android:background="#fff">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_30"
+                android:text="审批意见（非必填）"
+                android:gravity="center|left"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:textSize="@dimen/text_size_normal"
+                android:textColor="@color/tv_gray_deep"
+                android:layout_marginTop="@dimen/dp_5"/>
+            <com.oliveoa.util.LinesEditView
+                android:id="@+id/reason"
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+        </LinearLayout>
+
 
     </LinearLayout>
-</RelativeLayout>
+
+</LinearLayout>

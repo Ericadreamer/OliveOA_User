@@ -1,5 +1,6 @@
 package com.oliveoa.view.approval;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -7,12 +8,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.oliveoa.view.R;
+import com.oliveoa.view.TabLayoutBottomActivity;
+import com.oliveoa.view.myapplication.MyApplicationActivity;
+
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.TabLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +41,8 @@ public class MyApprovalActivity extends AppCompatActivity {
     private ApprovalPagerAdapter mAdapter;
     private ViewPager mViewPager;
 
+    private ImageView back;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +50,8 @@ public class MyApprovalActivity extends AppCompatActivity {
         initViews();
     }
     private void initViews() {
+        back = (ImageView) findViewById(R.id.iback);
+
         mTabLayout = (TabLayout)findViewById(R.id.tab_layout);
         setTabs(mTabLayout,this.getLayoutInflater(),TAB_TITLES);
 
@@ -50,6 +60,18 @@ public class MyApprovalActivity extends AppCompatActivity {
         mViewPager.setAdapter(mAdapter);
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
         mTabLayout.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+
+        //点击事件
+        //点击事件
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MyApprovalActivity.this, TabLayoutBottomActivity.class);
+                startActivity(intent);
+                finish();
+                //Toast.makeText(mContext, "你点击了返回", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     /**

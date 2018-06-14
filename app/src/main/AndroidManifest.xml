@@ -207,10 +207,16 @@
             android:name=".myapplication.LeaveInfoActivity"
             android:exported="true"
             android:theme="@style/HomeTheme" />
-        <activity android:name=".myapplication.ApprovedInfoActivity"
+        <activity
+            android:name=".myapplication.ApprovedInfoActivity"
             android:exported="true"
             android:theme="@style/HomeTheme" />
+        <activity
+            android:name=".approval.ApprovalAdviseActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme">
 
+        </activity>
     </application>
 
 </manifest>
