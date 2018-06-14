@@ -169,9 +169,37 @@
         <activity
             android:name=".workschedule.ApprovalWorkActivity"
             android:exported="true"
-            android:theme="@style/HomeTheme"/>
+            android:theme="@style/HomeTheme" />
         <activity
             android:name=".workschedule.WorkAllocationObjectSelectActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme" />
+        <activity
+            android:name=".approval.MyApprovalActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme"/>
+        <activity
+            android:name=".approval.OvertimeUndisposedActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme"/>
+        <activity
+            android:name=".approval.OvertimeDisposedActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme"/>
+        <activity
+            android:name=".approval.BusinessUndisposedActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme"/>
+        <activity
+            android:name=".approval.BusinessDisposedActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme"/>
+        <activity
+            android:name=".approval.LeaveDisposedActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme"/>
+        <activity
+            android:name=".approval.LeaveUndisposedActivity"
             android:exported="true"
             android:theme="@style/HomeTheme"></activity>
     </application>
