@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/approval_list"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_80"
+    android:orientation="horizontal"
+    android:background="#fff">
+
+    <ImageView
+        android:layout_width="@dimen/dp_50"
+        android:layout_height="@dimen/dp_50"
+        android:src="@drawable/yonghu"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/dp_20"/>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/application_person_name"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="阿蕉"
+            android:gravity="center|left"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/dp_16"
+            android:layout_marginLeft="@dimen/dp_20"/>
+        <TextView
+            android:id="@+id/approval_type"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="出差申请"
+            android:gravity="center|left"
+            android:layout_marginLeft="@dimen/dp_20"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/application_time"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="2018/6/14"
+            android:gravity="center|end"
+            android:layout_marginRight="@dimen/dp_20"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="审批中"
+            android:gravity="end"
+            android:textColor="#ef3939"
+            android:textSize="@dimen/dp_16"
+            android:layout_marginRight="@dimen/dp_20"/>
+    </LinearLayout>
+
+</LinearLayout>

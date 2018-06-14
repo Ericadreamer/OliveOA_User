@@ -1,9 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com.oliveoa.view/tools"
+    android:id="@+id/dl_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.oliveoa.view.approval.MyApprovalActivity">
+    android:background="#f0f0f0"
+    android:layout_gravity="center_vertical"
+    android:gravity="center"
+    tools:context=".RedactDepartmentActivity">
 
-</android.support.constraint.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:windowSoftInputMode="adjustResize">
+
+        //标题栏
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/LoginPrimaryDark"
+            android:orientation="horizontal"
+            >
+            <ImageView
+                android:id="@+id/iback"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_back"
+                android:background="@null"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="20dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="我的审批"
+                android:textAlignment="center"
+                android:layout_weight="1"
+                android:textColor="#ffffff"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical" />
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@null"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="20dp"/>
+
+        </LinearLayout>
+
+        <!--顶部tab标签容器-->
+        <android.support.design.widget.TabLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tab_layout"
+            android:background="@color/white"
+            app:tabIndicatorColor="@color/orange_main"
+            app:tabSelectedTextColor="@color/orange_main"
+            app:tabTextColor="@color/colorPrimary"
+            ></android.support.design.widget.TabLayout>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/info_viewpager"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            />
+
+    </LinearLayout>
+</RelativeLayout>

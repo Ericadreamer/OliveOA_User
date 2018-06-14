@@ -48,5 +48,9 @@
     <string name="application_info">申请详情</string>
     <string name="progress">审批进度</string>
 
+    <!--审批-->
+    <string name="disposed">已处理</string>
+    <string name="undisposed">未处理</string>
+
 
 </resources>
