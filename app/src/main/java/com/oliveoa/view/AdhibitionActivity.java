@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -29,6 +31,8 @@ public class AdhibitionActivity extends Fragment {
 
     private RadioButton application,schedule,approval,document,meeting,note;
     private Context mContext;
+    private ImageView more;
+    private LinearLayout addMlistView;
 
     @Nullable
     @Override
@@ -36,6 +40,10 @@ public class AdhibitionActivity extends Fragment {
 
         View rootview = inflater.inflate(R.layout.activity_adhibition, container, false);
         this.mContext = getActivity();
+
+        addMlistView = (LinearLayout) rootview.findViewById(R.id.message_list);
+        //默认添加一个Item
+        addViewItem(null);
 
         //设置图标大小
         //我的申请
@@ -122,12 +130,39 @@ public class AdhibitionActivity extends Fragment {
         drawableNote.setBounds(0, 0, 165, 165);//第一0是距左右边距离，第二0是距上下边距离，第三69长度,第四宽度
         note.setCompoundDrawables(null, drawableNote, null, null);//只放上面
 
+        more = (ImageView)rootview.findViewById(R.id.more);
 
-
+        //监听事件
+        more.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
+            @Override
+            public void onClick(View view) {
+                final Intent it = new Intent(getActivity(), MessageListActivity.class);
+                Timer timer = new Timer();
+                TimerTask task = new TimerTask() {
+                    @Override
+                    public void run() {
+                        startActivity(it); //执行
+                    }
+                };
+                timer.schedule(task, 1000 * 0); //0秒后
+            }
+        });
 
         return rootview;
 
     }
+    //添加ViewItem
+    private void addViewItem(View view){
+
+    }
+
+    /**
+     * Item加载数据
+     */
+    private void InitDataViewItem(){
+
+    }
+
     //我的申请
     private void applicationinfo() {
         final Intent it = new Intent(getActivity(), WaitActivity1.class);

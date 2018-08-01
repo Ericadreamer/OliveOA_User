@@ -214,9 +214,11 @@
         <activity
             android:name=".approval.ApprovalAdviseActivity"
             android:exported="true"
-            android:theme="@style/HomeTheme">
-
-        </activity>
+            android:theme="@style/HomeTheme"></activity>
+        <activity
+            android:name=".MessageListActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme"></activity>
     </application>
 
 </manifest>

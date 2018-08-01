@@ -148,12 +148,12 @@ public class OvertimeActivity extends AppCompatActivity {
         picker.setTimeRangeEnd(20, 30);
         // picker.setTopLineColor(0x99FF0000);
         picker.setDividerColor(Color.rgb(0, 178, 238));//设置分割线的颜色
-        picker.setLabelTextColor(Color.GRAY);
-        picker.setTopLineColor(Color.GRAY);
-        picker.setSubmitTextSize(16);
-        picker.setCancelTextSize(16);
-        picker.setTitleTextColor(Color.BLACK);
-        picker.setTitleText("年月日时分选择");
+        picker.setLabelTextColor(Color.GRAY);  //年月日时分单位字体颜色
+        picker.setTopLineColor(Color.GRAY);  //顶部横线颜色
+        picker.setSubmitTextSize(16); //确定文字大小
+        picker.setCancelTextSize(16); //取消文字大小
+        picker.setTitleTextColor(Color.BLACK); //标题文字颜色
+        picker.setTitleText("年月日时分选择");  //标题文字
         picker.setOnDateTimePickListener(new DateTimePicker.OnYearMonthDayTimePickListener() {
             @Override
             public void onDateTimePicked(String year, String month, String day, String hour, String minute) {

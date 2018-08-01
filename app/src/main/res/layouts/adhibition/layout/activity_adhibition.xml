@@ -10,6 +10,13 @@
     android:orientation="vertical"
     tools:context="com.oliveoa.view.MainActivity">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
     <ImageView
         android:id="@+id/main_homepage"
         android:layout_width="@dimen/dp_600"
@@ -18,8 +25,8 @@
         android:src="@drawable/image_home"
         />
 
-    //功能按钮
-    <LinearLayout
+    //功能按钮-上下两排
+    <!--<LinearLayout
         android:id="@+id/radio_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -107,6 +114,161 @@
 
     </LinearLayout>
 
+    </LinearLayout>-->
+
+    //功能按钮一排横向滑动
+    <LinearLayout
+        android:id="@+id/radio_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:orientation="vertical"
+        android:layout_marginBottom="@dimen/dp_1">
+
+            <HorizontalScrollView
+                android:id="@+id/huadong"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:scrollbars="none"
+                android:layout_marginTop="@dimen/dp_20"
+                android:layout_marginBottom="@dimen/dp_20">
+
+
+            <RadioGroup
+                android:id="@+id/radioGroup1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/home_application"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:button="@null"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:drawablePadding="@dimen/dp_6"
+                    android:drawableTop="@drawable/ic_menu_application"
+                    android:text="我的申请" />
+                <RadioButton
+                    android:id="@+id/home_schedule"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:button="@null"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:drawablePadding="@dimen/dp_6"
+                    android:drawableTop="@drawable/ic_menu_notify"
+                    android:text="工作日程" />
+                <RadioButton
+                    android:id="@+id/home_appravol"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:button="@null"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:drawablePadding="@dimen/dp_6"
+                    android:drawableTop="@drawable/ic_menu_examine"
+                    android:text="审批" />
+                <RadioButton
+                    android:id="@+id/home_document"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:button="@null"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:drawablePadding="@dimen/dp_6"
+                    android:drawableTop="@drawable/ic_menu_official"
+                    android:text="公文管理" />
+                <RadioButton
+                    android:id="@+id/home_meeting"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:button="@null"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:drawablePadding="@dimen/dp_6"
+                    android:drawableTop="@drawable/ic_menu_meeting"
+                    android:text="会议管理" />
+                <RadioButton
+                    android:id="@+id/home_note"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:layout_marginLeft="@dimen/dp_20"
+                    android:layout_marginRight="@dimen/dp_20"
+                    android:drawablePadding="@dimen/dp_6"
+                    android:drawableTop="@drawable/ic_menu_note"
+                    android:text="便签" />
+
+            </RadioGroup>
+            </HorizontalScrollView>
     </LinearLayout>
+
+            //消息
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff">
+                //消息标题
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_35"
+                    android:background="#fff"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="@dimen/dp_10"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/dp_10">
+                <View
+                    android:layout_width="@dimen/dp_5"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@color/orange_main"
+                    android:layout_marginLeft="@dimen/dp_8"/>
+                    <TextView
+                        android:id="@+id/show"
+                        android:layout_width="@dimen/dp_80"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/dp_15"
+                        android:background="@null"
+                        android:gravity="center_vertical|left"
+                        android:singleLine="true"
+                        android:textColor="@color/colorPrimary"
+                        android:textColorHint="#898989"
+                        android:textSize="16sp"
+                        android:text="最新消息"/>
+
+                    <ImageView
+                        android:id="@+id/more"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="@dimen/dp_20"
+                        android:background="@null"
+                        android:src="@drawable/ic_next" />
+
+                </LinearLayout>
+
+                //消息列表
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/message_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"/>
+            </LinearLayout>
+
+
+    </ScrollView>
 </LinearLayout>
 
