@@ -70,7 +70,7 @@ public class TabListFragment extends Fragment implements AdapterView.OnItemClick
 
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
-            View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.item_list_1, null);
+            View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.item_wait, null);
             contentView.findViewById(R.id.application_item).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

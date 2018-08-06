@@ -70,6 +70,8 @@
         <activity
             android:name=".myapplication.MyApplicationActivity"
             android:exported="true"
+            android:allowBackup="true"
+            android:supportsRtl="true"
             android:theme="@style/HomeTheme" />
         <activity
             android:name=".myapplication.OvertimeActivity"

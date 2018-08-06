@@ -165,7 +165,7 @@ public class AdhibitionActivity extends Fragment {
 
     //我的申请
     private void applicationinfo() {
-        final Intent it = new Intent(getActivity(), WaitActivity1.class);
+        final Intent it = new Intent(getActivity(), MyApplicationActivity.class);
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             @Override

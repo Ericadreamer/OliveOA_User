@@ -112,8 +112,8 @@
                         android:layout_marginRight="@dimen/dp_20"
                         android:textColor="@color/colorPrimary"/>
                     <ImageView
-                        android:layout_width="@dimen/dp_18"
-                        android:layout_height="@dimen/dp_18"
+                        android:layout_width="@dimen/dp_16"
+                        android:layout_height="@dimen/dp_16"
                         android:layout_gravity="center|end"
                         android:layout_marginRight="@dimen/dp_20"
                         android:src="@drawable/ic_next"

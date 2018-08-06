@@ -56,6 +56,10 @@ public class MyApplicationActivity extends AppCompatActivity {
 
         mIndicatorTl = (TabLayout) findViewById(R.id.tl_indicator);
         mContentVp = (ViewPager) findViewById(R.id.vp_content);
+        contentAdapter = new ContentPagerAdapter(getSupportFragmentManager());
+        mContentVp.setAdapter(contentAdapter);
+        mContentVp.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mIndicatorTl));
+        mIndicatorTl.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mContentVp));//点击显示子页面
 
         initTab();
         initView();
@@ -96,7 +100,7 @@ public class MyApplicationActivity extends AppCompatActivity {
         mIndicatorTl.setTabTextColors(ContextCompat.getColor(this, R.color.tv_gray_deep), ContextCompat.getColor(this, R.color.tab_tv_selected));
         mIndicatorTl.setSelectedTabIndicatorColor(ContextCompat.getColor(this, R.color.tab_tv_selected));
         ViewCompat.setElevation(mIndicatorTl, 10);
-        mIndicatorTl.setupWithViewPager(mContentVp);
+//        mIndicatorTl.setupWithViewPager(mContentVp);
     }
 
     /**
@@ -144,7 +148,7 @@ public class MyApplicationActivity extends AppCompatActivity {
 
     }
 
-    /*@Override
+    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -154,9 +158,9 @@ public class MyApplicationActivity extends AppCompatActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
-    *//**
+    /**
      * 双击退出函数
-     *//*
+     */
     private static Boolean isESC = false;
 
     private void exitBy2Click() {
@@ -175,5 +179,5 @@ public class MyApplicationActivity extends AppCompatActivity {
         } else {
             System.exit(0);
         }
-    }*/
+    }
 }

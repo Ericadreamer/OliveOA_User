@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.oliveoa.view.R;
 
@@ -16,8 +18,10 @@ public class PassActivity extends Fragment {
 
     private Context mContext;
     private LinearLayout addPasslistView;
-    private TextView tvname;
+    private TextView tvtype,tvcontent;
+    private ImageView ivpicture;
     private View rootview;
+
 
     @Nullable
     @Override
@@ -36,12 +40,32 @@ public class PassActivity extends Fragment {
     }
 
     private void initView() {
-        tvname = (TextView) rootview.findViewById(R.id.item_name);
-        //addPasslistView = (LinearLayout) rootview.findViewById(R.id.wait_list);
+        ivpicture = (ImageView) rootview.findViewById(R.id.application_pic);
+        tvtype = (TextView) rootview.findViewById(R.id.item_type);
+        tvcontent = (TextView) rootview.findViewById(R.id.item_content);
+        addPasslistView = (LinearLayout) rootview.findViewById(R.id.pass_list);
+
+        initData();
+    }
+
+    private void initData(){
+
     }
 
     //添加ViewItem
     private void addViewItem(View view) {
+//        if (la == null&&bta==null&&oa==null) {//如果申请列表为0，加载空布局
+//            Toast.makeText(mContext, "当前没有申请！", Toast.LENGTH_SHORT).show();
+//        } else {//如果有申请则按数组大小加载布局
+//            for(int i = 0;i <7; i ++){
+//                View hotelEvaluateView = View.inflate(mContext, R.layout.item_pass, null);
+//                addPasslistView.addView(hotelEvaluateView);
+//                InitDataViewItem();
+//
+//            }
+//            sortHotelViewItem();
+//
+//        }
 
     }
 
@@ -49,6 +73,20 @@ public class PassActivity extends Fragment {
      * Item排序
      */
     private void sortHotelViewItem() {
+        //获取LinearLayout里面所有的view
+        for (int i = 0; i < addPasslistView.getChildCount(); i++) {
+            final View childAt = addPasslistView.getChildAt(i);
+            final LinearLayout item = (LinearLayout) childAt.findViewById(R.id.application_item);
+            //final View child = LayoutInflater.from(mContext).inflate(R.layout.item_list_1, null);
+            //final LinearLayout item =childAt.findViewWithTag(child);
+
+            item.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(mContext, "你点击了www", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
 
     }
 

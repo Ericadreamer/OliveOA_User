@@ -59,7 +59,7 @@ public class WaitActivity1 extends AppCompatActivity {
     private ImageView back,add;
     private ImageView isapproved;
 
-    protected void onCreate(Bundle savedInstanceState) {
+    /*protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wait);
         initView();
@@ -84,9 +84,9 @@ public class WaitActivity1 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(WaitActivity1.this, AddApplicationActivity.class);
-                /*intent.putParcelableArrayListExtra("ParcelableDepartment",departmentInfos);
+                *//*intent.putParcelableArrayListExtra("ParcelableDepartment",departmentInfos);
                 intent.putExtra("index",departmentInfos.size());
-                setAddDepartmentinfo(departmentInfos.size());*/
+                setAddDepartmentinfo(departmentInfos.size());*//*
                 startActivity(intent);
                 finish();
             }
@@ -95,8 +95,8 @@ public class WaitActivity1 extends AppCompatActivity {
 //        tvtype = (TextView)findViewById(R.id.item_type);
 
         addOAlistView = (LinearLayout)findViewById(R.id.wait_list);
-        addLAlistView = (LinearLayout)findViewById(R.id.la_list);
-        addBTAlistView = (LinearLayout)findViewById(R.id.bta_list);
+//        addLAlistView = (LinearLayout)findViewById(R.id.la_list);
+//        addBTAlistView = (LinearLayout)findViewById(R.id.bta_list);
         initData();
         addViewItem(null);
 
@@ -144,9 +144,9 @@ public class WaitActivity1 extends AppCompatActivity {
 
     }
 
-    /**
+    *//**
      * Item排序
-     */
+     *//*
     private void sortHotelViewItem() {
         //获取LinearLayout里面所有的view
         for (int i = 0; i < addOAlistView.getChildCount(); i++) {
@@ -229,9 +229,9 @@ public class WaitActivity1 extends AppCompatActivity {
         }
     }
 
-    /**
+    *//**
      * Item加载数据
-     */
+     *//*
     private void InitOADataViewItem() {
         int i;
         Log.e(TAG,"addOAlistView.size"+addOAlistView.getChildCount());
@@ -342,7 +342,7 @@ public class WaitActivity1 extends AppCompatActivity {
             }
             }
         Log.e(TAG, "出差请假理由：" + tvname.getText().toString());
-    }
+    }*/
 
 
     }
