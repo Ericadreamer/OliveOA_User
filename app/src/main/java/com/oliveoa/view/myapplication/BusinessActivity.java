@@ -44,15 +44,13 @@ public class BusinessActivity extends AppCompatActivity {
         tplace = (TextView) findViewById(R.id.business_place);
         addPersonList = (LinearLayout) findViewById(R.id.approve_list);
 
-        initData();
-
         LinesEditView linesEditView = new LinesEditView(BusinessActivity.this);
         String test = linesEditView.getContentText();
 
         taddPerson.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(BusinessActivity.this, BusinessSelectActivity.class);
+                Intent intent = new Intent(BusinessActivity.this, SelectPersonApprovingActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -74,19 +72,47 @@ public class BusinessActivity extends AppCompatActivity {
             }
         });
 
+        // 默认添加一个Item
+        addViewItem(null);
+
     }
 
     private void initData() {
 
     }
+
     private void save() {
+
+    }
+
+    //添加审批人操作
+    public void personadd(){
+
+    }
+
+    //加载R.layout.item_approve列表
+    private void addViewItem(View view) {
+
+    }
+
+    /**
+     * Item排序
+     */
+    private void sortHotelViewItem(){
+
+    }
+
+    /**
+     * Item加载数据
+     */
+    private void InitDataViewItem(){
 
     }
 
     //年月日时分选择器
     public void onYearMonthDayTimePicker1(View view) {
         DateTimePicker picker = new DateTimePicker(this, DateTimePicker.HOUR_24);
-        picker.setDateRangeStart(1996, 1, 1);
+        picker.setDateRangeStart(2018, 8, 1);
         picker.setDateRangeEnd(2025, 12, 31);
         picker.setTimeRangeStart(9, 0);
         picker.setTimeRangeEnd(20, 30);
@@ -111,7 +137,7 @@ public class BusinessActivity extends AppCompatActivity {
     //年月日时分选择器
     public void onYearMonthDayTimePicker2(View view) {
         DateTimePicker picker = new DateTimePicker(this, DateTimePicker.HOUR_24);
-        picker.setDateRangeStart(1996, 1, 1);
+        picker.setDateRangeStart(2018, 8, 1);
         picker.setDateRangeEnd(2025, 12, 31);
         picker.setTimeRangeStart(9, 0);
         picker.setTimeRangeEnd(20, 30);

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_48"
+    android:orientation="horizontal"
+    android:background="#fff"
+    android:descendantFocusability="blocksDescendants">
+
+    <TextView
+        android:id="@+id/leave_type"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@null"
+        android:gravity="center|left"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:textSize="@dimen/text_size_normal"
+        android:textColor="@color/tv_gray_deep"
+        android:text="那只喵"
+        />
+    <ImageView
+        android:id="@+id/delete"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
+        android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginRight="@dimen/dp_20"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/ic_delete" />
+</LinearLayout>

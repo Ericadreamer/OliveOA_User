@@ -190,8 +190,7 @@
                 android:gravity="center|left"
                 android:layout_marginLeft="@dimen/dp_20"
                 android:textSize="@dimen/text_size_normal"
-                android:textColor="@color/tv_gray_deep"
-                android:layout_marginTop="@dimen/dp_5"/>
+                android:textColor="@color/tv_gray_deep" />
             <TextView
                 android:id="@+id/person_add"
                 android:layout_width="0dp"

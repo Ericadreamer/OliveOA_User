@@ -15,8 +15,8 @@
 
     <color name="line">#e0e0e0</color>
     <color name="tv_gray_litter">#FAF0E6</color>
-    <color name="tv_gray_normal">#c0c0c0</color>
-    <color name="tv_gray_deep">#818181</color>
+    <color name="tv_gray_normal">#acabab</color>
+    <color name="tv_gray_deep">#4d4d4d</color>
     <color name="tv_gray_lit">#50b1b1b1</color>
     <color name="tv_gray">@android:color/darker_gray</color>
     <color name="tv_color">#ffffff</color>

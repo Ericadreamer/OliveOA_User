@@ -33,7 +33,6 @@ public class LeaveActivity extends AppCompatActivity {
         setContentView(R.layout.activity_leave);
 
         initView();
-        initData();
     }
 
     private void initView() {
@@ -54,7 +53,7 @@ public class LeaveActivity extends AppCompatActivity {
         taddPerson.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LeaveActivity.this, LeaveSelectActivity.class);
+                Intent intent = new Intent(LeaveActivity.this, SelectPersonApprovingActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -89,14 +88,34 @@ public class LeaveActivity extends AppCompatActivity {
 
     }
 
+    //添加审批人操作
+    public void personadd(){
+
+    }
+
+    //加载R.layout.item_approve列表
     private void addViewItem(View view) {
 
     }
 
-    //年月日时分选择器
+    /**
+     * Item排序
+     */
+    private void sortHotelViewItem(){
+
+    }
+
+    /**
+     * Item加载数据
+     */
+    private void InitDataViewItem(){
+
+    }
+
+    //年月日时分选择器，开始时间选择
     public void onYearMonthDayTimePicker1(View view) {
         DateTimePicker picker = new DateTimePicker(this, DateTimePicker.HOUR_24);
-        picker.setDateRangeStart(1996, 1, 1);
+        picker.setDateRangeStart(2018, 8, 1);
         picker.setDateRangeEnd(2025, 12, 31);
         picker.setTimeRangeStart(9, 0);
         picker.setTimeRangeEnd(20, 30);
@@ -118,10 +137,10 @@ public class LeaveActivity extends AppCompatActivity {
         picker.show();
     }
 
-    //年月日时分选择器
+    //年月日时分选择器，结束时间选择
     public void onYearMonthDayTimePicker2(View view) {
         DateTimePicker picker = new DateTimePicker(this, DateTimePicker.HOUR_24);
-        picker.setDateRangeStart(1996, 1, 1);
+        picker.setDateRangeStart(2018, 8, 1);
         picker.setDateRangeEnd(2025, 12, 31);
         picker.setTimeRangeStart(9, 0);
         picker.setTimeRangeEnd(20, 30);
@@ -143,7 +162,7 @@ public class LeaveActivity extends AppCompatActivity {
         picker.show();
     }
 
-    //单项选择器
+    //单项选择器，请假类型选择
     public void onOptionPicker(View view) {
         OptionPicker picker = new OptionPicker(this, new String[]{
                 "病假", "事假","婚假","丧假","公假","年假","产假","护理假","工伤假"

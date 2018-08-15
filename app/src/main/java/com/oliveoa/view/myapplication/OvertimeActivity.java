@@ -24,7 +24,8 @@ import cn.qqtheme.framework.picker.DateTimePicker;
 public class OvertimeActivity extends AppCompatActivity {
 
     private ImageView back,save;
-    private TextView startTime,endTime,reason,addPerson;
+    private TextView startTime,endTime,addPerson;
+    private TextView tnum,tname; //approve_item信息，tnum为第几审批人，tname为审批人名称
     private LinearLayout addPersonList;
 
     @Override
@@ -49,6 +50,7 @@ public class OvertimeActivity extends AppCompatActivity {
         LinesEditView linesEditView = new LinesEditView(OvertimeActivity.this);
         String test = linesEditView.getContentText();
 
+        //+添加点击事件
         addPerson.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
             @Override
             public void onClick(View view) {
@@ -110,14 +112,36 @@ public class OvertimeActivity extends AppCompatActivity {
     private void save() {
 
     }
+
+    //添加审批人操作
+    public void personadd(){
+
+    }
+
+    //加载R.layout.item_approve列表
     private void addViewItem(View view) {
+
+
+    }
+
+    /**
+     * Item排序
+     */
+    private void sortHotelViewItem(){
+
+    }
+
+    /**
+     * Item加载数据
+     */
+    private void InitDataViewItem(){
 
     }
 
     //年月日时分选择器
     public void onYearMonthDayTimePicker1(View view) {
         DateTimePicker picker = new DateTimePicker(this, DateTimePicker.HOUR_24);
-        picker.setDateRangeStart(1996, 1, 1);
+        picker.setDateRangeStart(2018, 8, 1);
         picker.setDateRangeEnd(2025, 12, 31);
         picker.setTimeRangeStart(9, 0);
         picker.setTimeRangeEnd(20, 30);
@@ -142,7 +166,7 @@ public class OvertimeActivity extends AppCompatActivity {
     //年月日时分选择器
     public void onYearMonthDayTimePicker2(View view) {
         DateTimePicker picker = new DateTimePicker(this, DateTimePicker.HOUR_24);
-        picker.setDateRangeStart(1996, 1, 1);
+        picker.setDateRangeStart(2018, 8, 1);
         picker.setDateRangeEnd(2025, 12, 31);
         picker.setTimeRangeStart(9, 0);
         picker.setTimeRangeEnd(20, 30);

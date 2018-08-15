@@ -59,6 +59,7 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+                //申请流程
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_65"
@@ -82,6 +83,215 @@
                         android:textSize="@dimen/text_size_normal"
                         android:textColor="@color/colorPrimary"
                         android:layout_marginBottom="@dimen/dp_5"/>
+                </LinearLayout>
+                //会议主题
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:background="#fff"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="1dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:layout_marginLeft="20dp"
+                        android:gravity="center_vertical"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/text_size_normal"
+                        android:textColor="@color/tv_gray_deep"
+                        android:text="会议主题（必填）" />
+
+                    <EditText
+                        android:id="@+id/meeting_topic"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="center_vertical|start"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:textSize="@dimen/text_size_normal"
+                        android:textColor="@color/colorPrimary"
+                        android:singleLine="true"
+                        android:textColorHint="#898989"
+                        android:hint="请填写会议主题"
+                        />
+                </LinearLayout>
+                //会议时间
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_100"
+                    android:background="#fff"
+                    android:layout_marginBottom="@dimen/dp_1"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_30"
+                        android:text="会议时间（必填）"
+                        android:gravity="center|left"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:textSize="@dimen/text_size_normal"
+                        android:textColor="@color/tv_gray_deep"
+                        android:layout_marginTop="@dimen/dp_5"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:layout_marginRight="@dimen/dp_20">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/dp_40"
+                            android:layout_weight="1"
+                            android:background="@color/line"
+                            android:layout_gravity="center"
+                            android:layout_marginRight="@dimen/dp_20"
+                            android:onClick="onYearMonthDayTimePicker1">
+                            <TextView
+                                android:id="@+id/start"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:hint="选择开始时间"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="@dimen/text_size_normal"/>
+
+                        </LinearLayout>
+                        <View
+                            android:layout_width="@dimen/dp_30"
+                            android:layout_height="@dimen/dp_2"
+                            android:layout_gravity="center"
+                            android:background="@color/tv_gray"
+                            android:layout_marginRight="@dimen/dp_20"
+                            >
+                        </View>
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/dp_40"
+                            android:layout_weight="1"
+                            android:background="@color/line"
+                            android:layout_gravity="center"
+                            android:onClick="onYearMonthDayTimePicker2">
+                            <TextView
+                                android:id="@+id/end"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:hint="选择结束时间"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="@dimen/text_size_normal"/>
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+                //会议地点
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#fff"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="1dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:layout_marginLeft="20dp"
+                        android:gravity="center_vertical"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/text_size_normal"
+                        android:textColor="@color/tv_gray_deep"
+                        android:text="会议地点（必填）" />
+
+                    <EditText
+                        android:id="@+id/meeting_place"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="center_vertical|start"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:textSize="@dimen/text_size_normal"
+                        android:textColor="@color/colorPrimary"
+                        android:singleLine="true"
+                        android:textColorHint="#898989"
+                        android:hint="请填写会议地点"
+                        />
+                </LinearLayout>
+                //出席人员
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_36"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dp_30"
+                        android:layout_weight="1"
+                        android:text="出席人员"
+                        android:gravity="center|left"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:textSize="@dimen/text_size_normal"
+                        android:textColor="@color/tv_gray_deep" />
+                    <TextView
+                        android:id="@+id/members_add"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="center_vertical|end"
+                        android:layout_marginRight="20dp"
+                        android:clickable="true"
+                        android:text="＋添加"
+                        android:singleLine="true"
+                        android:textColor="@color/orange_main" />
+                </LinearLayout>
+                //出席人员列表
+                <LinearLayout
+                    android:id="@+id/members_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                </LinearLayout>
+                //审批人
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_36"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dp_30"
+                        android:layout_weight="1"
+                        android:text="审批人"
+                        android:gravity="center|left"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:textSize="@dimen/text_size_normal"
+                        android:textColor="@color/tv_gray_deep" />
+                    <TextView
+                        android:id="@+id/person_add"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="center_vertical|end"
+                        android:layout_marginRight="20dp"
+                        android:clickable="true"
+                        android:text="＋添加"
+                        android:singleLine="true"
+                        android:textColor="@color/orange_main" />
+                </LinearLayout>
+                //审批人列表
+                <LinearLayout
+                    android:id="@+id/approve_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
                 </LinearLayout>
 
             </LinearLayout>

@@ -88,34 +88,42 @@
                 //请假类型
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_35"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="10dp"
                     android:background="#fff"
-                    android:layout_marginBottom="@dimen/dp_1"
-                    android:orientation="horizontal">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="@dimen/dp_1">
+
                     <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:id="@+id/title_sex"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
                         android:text="请假类型（必填）"
-                        android:gravity="center|left"
-                        android:layout_marginLeft="@dimen/dp_20"
-                        android:textSize="@dimen/text_size_normal"
+                        android:layout_marginLeft="20dp"
                         android:textColor="@color/tv_gray_deep"
-                        android:layout_marginTop="@dimen/dp_5"/>
+                        android:textSize="@dimen/text_size_normal" />
+
                     <TextView
                         android:id="@+id/leave_type"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:gravity="center|end"
-                        android:hint="产假"
-                        android:layout_marginRight="@dimen/dp_20"
-                        android:textColor="@color/colorPrimary"/>
+                        android:background="@null"
+                        android:gravity="center_vertical|end"
+                        android:singleLine="true"
+                        android:hint="请选择请假类型"
+                        android:textColorHint="#898989"
+                        android:textColor="@color/colorPrimary"
+                        />
                     <ImageView
+                        android:id="@+id/next"
                         android:layout_width="@dimen/dp_16"
                         android:layout_height="@dimen/dp_16"
-                        android:layout_gravity="center|end"
+                        android:layout_marginLeft="@dimen/dp_15"
                         android:layout_marginRight="@dimen/dp_20"
+                        android:layout_gravity="center_vertical"
                         android:src="@drawable/ic_next"
                         android:onClick="onOptionPicker"/>
                 </LinearLayout>
@@ -225,8 +233,7 @@
                         android:gravity="center|left"
                         android:layout_marginLeft="@dimen/dp_20"
                         android:textSize="@dimen/text_size_normal"
-                        android:textColor="@color/tv_gray_deep"
-                        android:layout_marginTop="@dimen/dp_5"/>
+                        android:textColor="@color/tv_gray_deep" />
                     <TextView
                         android:id="@+id/person_add"
                         android:layout_width="0dp"
