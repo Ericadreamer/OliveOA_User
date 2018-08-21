@@ -120,8 +120,7 @@
                         android:layout_marginLeft="@dimen/dp_15"
                         android:layout_marginRight="@dimen/dp_20"
                         android:layout_gravity="center_vertical"
-                        android:src="@drawable/ic_next"
-                        android:onClick="onOptionPicker"/>
+                        android:src="@drawable/ic_next" />
                 </LinearLayout>
                 //取用时间
                 <LinearLayout
@@ -161,7 +160,7 @@
                         android:layout_marginRight="@dimen/dp_20"
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/ic_next"
-                        android:onClick="onOptionPicker"/>
+                        android:onClick="onYearMonthDayPicker1"/>
                 </LinearLayout>
                 //归还时间
                 <LinearLayout
@@ -201,7 +200,7 @@
                         android:layout_marginRight="@dimen/dp_20"
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/ic_next"
-                        android:onClick="onOptionPicker"/>
+                        android:onClick="onYearMonthDayPicker2"/>
                 </LinearLayout>
                 //审批人
                 <LinearLayout

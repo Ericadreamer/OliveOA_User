@@ -69,8 +69,8 @@
         <!-- <activity android:name=".myapplication.BaseActivity" /> -->
         <activity
             android:name=".myapplication.MyApplicationActivity"
-            android:exported="true"
             android:allowBackup="true"
+            android:exported="true"
             android:supportsRtl="true"
             android:theme="@style/HomeTheme" />
         <activity
@@ -216,11 +216,12 @@
         <activity
             android:name=".approval.ApprovalAdviseActivity"
             android:exported="true"
-            android:theme="@style/HomeTheme"></activity>
+            android:theme="@style/HomeTheme" />
         <activity
             android:name=".MessageListActivity"
             android:exported="true"
-            android:theme="@style/HomeTheme"></activity>
+            android:theme="@style/HomeTheme" />
+        <activity android:name=".myapplication.GoodsListActivity"></activity>
     </application>
 
 </manifest>
