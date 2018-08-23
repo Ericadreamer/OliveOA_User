@@ -49,6 +49,7 @@ public class LeaveInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_leave_info);
 
         index = getIntent().getIntExtra("index",index);
+
         initView();
     }
 

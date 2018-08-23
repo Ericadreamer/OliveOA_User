@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#f0f0f0"
     android:layout_gravity="center_vertical"
-    tools:context="com.oliveoa.view.myapplication.OvertimeInfoActivity">
+    tools:context="com.oliveoa.view.myapplication.RegularWorkerInfoActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -56,7 +56,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                //详情内容
+                //详情
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -79,7 +79,7 @@
                         android:layout_marginRight="@dimen/dp_20">
                     </View>
 
-                    //申请流程
+                    //被调员工编号
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
@@ -92,13 +92,14 @@
                             android:text="申请流程"
                             android:textSize="@dimen/text_size_normal"
                             android:textColor="@color/tv_gray_deep"
-                            android:layout_marginLeft="@dimen/dp_22" />
+                            android:layout_marginLeft="@dimen/dp_22"
+                            />
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center|right"
-                            android:text="出差申请"
+                            android:text="招聘申请"
                             android:textSize="@dimen/text_size_normal"
                             android:textColor="@color/colorPrimary"
                             android:layout_marginRight="@dimen/dp_20"
@@ -106,7 +107,36 @@
 
                     </LinearLayout>
 
-                    //出差时间
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:orientation="horizontal">
+
+                        //申请部门
+                        <TextView
+                            android:layout_width="100dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center|left"
+                            android:text="申请部门"
+                            android:textSize="@dimen/text_size_normal"
+                            android:textColor="@color/tv_gray_deep"
+                            android:layout_marginLeft="@dimen/dp_22"
+                            />
+                        <TextView
+                            android:id="@+id/department"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center|right"
+                            android:text="技术部"
+                            android:textSize="@dimen/text_size_normal"
+                            android:textColor="@color/colorPrimary"
+                            android:layout_marginRight="@dimen/dp_20"
+                            />
+
+                    </LinearLayout>
+
+                    //招聘岗位
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
@@ -116,24 +146,26 @@
                             android:layout_width="100dp"
                             android:layout_height="match_parent"
                             android:gravity="center|left"
-                            android:text="出差时间"
+                            android:text="招聘岗位"
                             android:textSize="@dimen/text_size_normal"
                             android:textColor="@color/tv_gray_deep"
-                            android:layout_marginLeft="@dimen/dp_22" />
+                            android:layout_marginLeft="@dimen/dp_22"
+                            />
                         <TextView
-                            android:id="@+id/business_time"
+                            android:id="@+id/position"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center|right"
-                            android:text="2018/06/10 -- 2018/06/10"
+                            android:text="大数据开发"
                             android:textSize="@dimen/text_size_normal"
                             android:textColor="@color/colorPrimary"
                             android:layout_marginRight="@dimen/dp_20"
                             />
 
                     </LinearLayout>
-                    //出差时间
+
+                    //招聘人数
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
@@ -143,17 +175,18 @@
                             android:layout_width="100dp"
                             android:layout_height="match_parent"
                             android:gravity="center|left"
-                            android:text="出差地点"
+                            android:text="招聘人数"
                             android:textSize="@dimen/text_size_normal"
                             android:textColor="@color/tv_gray_deep"
-                            android:layout_marginLeft="@dimen/dp_22" />
+                            android:layout_marginLeft="@dimen/dp_22"
+                            />
                         <TextView
-                            android:id="@+id/business_place"
+                            android:id="@+id/quantity"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center|right"
-                            android:text="北京"
+                            android:text="3"
                             android:textSize="@dimen/text_size_normal"
                             android:textColor="@color/colorPrimary"
                             android:layout_marginRight="@dimen/dp_20"
@@ -161,7 +194,7 @@
 
                     </LinearLayout>
                 </LinearLayout>
-                //出差原因
+                //岗位描述
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -172,19 +205,82 @@
                         android:layout_width="100dp"
                         android:layout_height="match_parent"
                         android:gravity="center|left"
-                        android:text="出差原因"
+                        android:text="岗位描述"
                         android:textSize="@dimen/text_size_normal"
                         android:textColor="@color/tv_gray_deep"
                         android:layout_marginLeft="@dimen/dp_22"
-                        android:layout_marginTop="@dimen/dp_10"/>
+                        android:layout_marginTop="@dimen/dp_10"
+                        />
                     <TextView
-                        android:id="@+id/reason"
+                        android:id="@+id/position_content"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@null"
                         android:layout_margin="22dp"
-                        android:text="跟合约公司进行秘密合作"
+                        android:text="大数据开发"
+                        android:textSize="@dimen/text_size_normal"
+                        android:textColor="@color/colorPrimary"
+                        />
+
+                </LinearLayout>
+                //招聘要求
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="#fff"
+                    android:layout_marginTop="@dimen/dp_1">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center|left"
+                        android:text="招聘要求"
+                        android:textSize="@dimen/text_size_normal"
+                        android:textColor="@color/tv_gray_deep"
+                        android:layout_marginLeft="@dimen/dp_22"
+                        android:layout_marginTop="@dimen/dp_10"
+                        />
+                    <TextView
+                        android:id="@+id/demand_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:layout_margin="22dp"
+                        android:text="有2~3年工作经历"
+                        android:textSize="@dimen/text_size_normal"
+                        android:textColor="@color/colorPrimary"
+                        />
+
+                </LinearLayout>
+                //薪资标准
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="#fff"
+                    android:layout_marginTop="@dimen/dp_1">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center|left"
+                        android:text="薪资标准"
+                        android:textSize="@dimen/text_size_normal"
+                        android:textColor="@color/tv_gray_deep"
+                        android:layout_marginLeft="@dimen/dp_22"
+                        android:layout_marginTop="@dimen/dp_10"
+                        />
+                    <TextView
+                        android:id="@+id/salary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:layout_margin="22dp"
+                        android:text="15k-20k"
                         android:textSize="@dimen/text_size_normal"
                         android:textColor="@color/colorPrimary"
                         />
@@ -221,11 +317,11 @@
                         android:orientation="vertical">
                     </LinearLayout>
                 </LinearLayout>
-
             </LinearLayout>
+
+
         </ScrollView>
 
     </LinearLayout>
 
 </LinearLayout>
-

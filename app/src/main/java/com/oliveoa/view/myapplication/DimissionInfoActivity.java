@@ -15,32 +15,35 @@ import com.oliveoa.view.R;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class BusinessInfoActivity extends AppCompatActivity {
+public class DimissionInfoActivity extends AppCompatActivity {
 
     private ImageView back;
-    private TextView tname,tstatus,tplace,ttime,treason;   //审批人名称，审批状态，出差地点，出差时间，出差原因
+    private TextView tnumber,tdate,tContentDpcid,treason,tmatter;  //离职员工编号，离职日期，所属部门职务，离职原因，交代事项
+    private TextView tname,tstatus;  //审批进度item，审批人和审批状态
     private LinearLayout addlistView;  //添加审批进度列表
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_business_info);
+        setContentView(R.layout.activity_dimission_info);
 
         initView();
     }
 
-    private void initView() {
+    public void initView(){
+        tnumber = (TextView) findViewById(R.id.employee_num);
+        tdate = (TextView) findViewById(R.id.dimission_date);
+        tContentDpcid = (TextView) findViewById(R.id.content_dpcid);
+        treason = (TextView) findViewById(R.id.reason);
+        tmatter = (TextView) findViewById(R.id.matter);
         back = (ImageView) findViewById(R.id.iback);
         tname = (TextView) findViewById(R.id.person_approving);
-        tplace = (TextView) findViewById(R.id.leave_type);
         tstatus = (TextView) findViewById(R.id.status);
-        ttime = (TextView) findViewById(R.id.time);
-        treason = (TextView) findViewById(R.id.reason);
 
         back.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(BusinessInfoActivity.this, MyApplicationActivity.class);
+                Intent intent = new Intent(DimissionInfoActivity.this, MyApplicationActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -68,7 +71,6 @@ public class BusinessInfoActivity extends AppCompatActivity {
     private void InitDataViewItem(){
 
     }
-
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -103,4 +105,5 @@ public class BusinessInfoActivity extends AppCompatActivity {
             System.exit(0);
         }
     }
+
 }

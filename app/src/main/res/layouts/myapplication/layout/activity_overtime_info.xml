@@ -85,20 +85,22 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="80dp"
+                    android:layout_width="100dp"
                     android:layout_height="match_parent"
-                    android:gravity="center"
+                    android:gravity="center|left"
                     android:text="申请流程"
-                    android:textColor="@color/colorPrimary"
-                    android:layout_marginLeft="@dimen/dp_10"
+                    android:textSize="@dimen/text_size_normal"
+                    android:textColor="@color/tv_gray_deep"
+                    android:layout_marginLeft="@dimen/dp_22"
                     />
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center|left"
+                    android:gravity="center|right"
                     android:text="加班申请"
-                    android:textColor="@color/tv_gray_deep"
+                    android:textSize="@dimen/text_size_normal"
+                    android:textColor="@color/colorPrimary"
                     android:layout_marginRight="@dimen/dp_20"
                     />
 
@@ -109,20 +111,21 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="80dp"
+                    android:layout_width="100dp"
                     android:layout_height="match_parent"
-                    android:gravity="center"
+                    android:gravity="center|left"
                     android:text="加班时间"
-                    android:textColor="@color/colorPrimary"
-                    android:layout_marginLeft="@dimen/dp_10"
+                    android:textSize="@dimen/text_size_normal"
+                    android:textColor="@color/tv_gray_deep"
+                    android:layout_marginLeft="@dimen/dp_22"
                     />
                 <TextView
                     android:id="@+id/time"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="center|left"
-                    android:text="2018/06/10 19:00 -- 2018/06/10 22:00"
+                    android:gravity="center|right"
+                    android:text="2018/06/10 19:00-2018/06/10 22:00"
                     android:textColor="@color/tv_gray_deep"
                     android:layout_marginRight="@dimen/dp_20"
                     />
@@ -136,12 +139,13 @@
                 android:background="#fff">
 
                 <TextView
-                    android:layout_width="80dp"
+                    android:layout_width="100dp"
                     android:layout_height="match_parent"
-                    android:gravity="center"
+                    android:gravity="center|left"
                     android:text="加班原因"
-                    android:textColor="@color/colorPrimary"
-                    android:layout_marginLeft="@dimen/dp_10"
+                    android:textSize="@dimen/text_size_normal"
+                    android:textColor="@color/tv_gray_deep"
+                    android:layout_marginLeft="@dimen/dp_22"
                     android:layout_marginTop="@dimen/dp_10"/>
                 <TextView
                     android:id="@+id/reason"

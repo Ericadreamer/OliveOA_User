@@ -118,15 +118,7 @@
             android:exported="true"
             android:theme="@style/HomeTheme" />
         <activity
-            android:name=".myapplication.LeaveSelectActivity"
-            android:exported="true"
-            android:theme="@style/HomeTheme" />
-        <activity
             android:name=".myapplication.BusinessInfoActivity"
-            android:exported="true"
-            android:theme="@style/HomeTheme" />
-        <activity
-            android:name=".myapplication.BusinessSelectActivity"
             android:exported="true"
             android:theme="@style/HomeTheme" />
         <activity
@@ -221,7 +213,13 @@
             android:name=".MessageListActivity"
             android:exported="true"
             android:theme="@style/HomeTheme" />
-        <activity android:name=".myapplication.GoodsListActivity"></activity>
+        <activity android:name=".myapplication.GoodsListActivity" />
+        <activity android:name=".myapplication.AdjustPostInfoActivity" />
+        <activity android:name=".myapplication.DimissionInfoActivity" />
+        <activity android:name=".myapplication.GoodsInfoActivity" />
+        <activity android:name=".myapplication.MeetingInfoActivity" />
+        <activity android:name=".myapplication.RecruitmentInfoActivity" />
+        <activity android:name=".myapplication.RegularWorkerInfoActivity"></activity>
     </application>
 
 </manifest>

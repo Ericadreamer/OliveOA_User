@@ -1,14 +1,13 @@
 package com.oliveoa.view.myapplication;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.oliveoa.view.R;
@@ -16,42 +15,60 @@ import com.oliveoa.view.R;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class BusinessSelectActivity extends AppCompatActivity {
+public class MeetingInfoActivity extends AppCompatActivity {
 
-    private ExpandableListView exlist_staff;
     private ImageView back;
-    private Context mContext;
+    private TextView ttopic,ttime,tplace,tmembers;  //会议主题，会议时间，会议地点，出席人员
+    private TextView tname,tstatus;  //审批进度item，审批人和审批状态
+    private LinearLayout addlistView;  //添加审批进度列表
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_business_select);
+        setContentView(R.layout.activity_meeting_info);
+
         initView();
     }
 
-    private void initView() {
-        mContext = BusinessSelectActivity.this;
+    public void initView(){
+        ttopic = (TextView) findViewById(R.id.meeting_topic);
+        ttime = (TextView) findViewById(R.id.meeting_time);
+        tplace = (TextView) findViewById(R.id.meeting_place);
+        tmembers = (TextView) findViewById(R.id.members_list);
+        back = (ImageView) findViewById(R.id.iback);
+        tname = (TextView) findViewById(R.id.person_approving);
+        tstatus = (TextView) findViewById(R.id.status);
 
-        exlist_staff = (ExpandableListView) findViewById(R.id.exlist_staff);
-        back =(ImageView)findViewById(R.id.iback);
-
-        exlist_staff.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-            @Override
-            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-                Log.i("" + BusinessSelectActivity.this, "group " + groupPosition);
-                return false;
-            }
-        });
-
-        back.setOnClickListener(new View.OnClickListener() {
+        back.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(BusinessSelectActivity.this, BusinessActivity.class);
+                Intent intent = new Intent(MeetingInfoActivity.this, MyApplicationActivity.class);
                 startActivity(intent);
                 finish();
-                //Toast.makeText(mContext, "你点击了返回", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    /**
+     * Item排序
+     */
+    private void sortHotelViewItem() {
+        //获取LinearLayout里面所有的view
+    }
+
+    /**
+     * 添加ViewItem，R.layout.approveapplication_listitem
+     * @param view
+     */
+    private void addViewItem(View view){
+
+    }
+
+    /**
+     * Item加载数据
+     */
+    private void InitDataViewItem(){
+
     }
 
     @Override
@@ -64,13 +81,14 @@ public class BusinessSelectActivity extends AppCompatActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+
     /**
      * 双击退出函数
      */
     private static Boolean isESC = false;
 
     private void exitBy2Click() {
-        Timer tExit ;
+        Timer tExit;
         if (!isESC) {
             isESC = true; // 准备退出
             Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
@@ -86,4 +104,5 @@ public class BusinessSelectActivity extends AppCompatActivity {
             System.exit(0);
         }
     }
+
 }

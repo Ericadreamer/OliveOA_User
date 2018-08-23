@@ -56,7 +56,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                //详情
+                //详情内容
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -79,82 +79,93 @@
                         android:layout_marginRight="@dimen/dp_20">
                     </View>
 
+                    //申请流程
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="80dp"
+                            android:layout_width="100dp"
                             android:layout_height="match_parent"
-                            android:gravity="center"
+                            android:gravity="center|left"
                             android:text="申请流程"
-                            android:textColor="@color/colorPrimary"
-                            android:layout_marginLeft="@dimen/dp_10"
+                            android:textSize="@dimen/text_size_normal"
+                            android:textColor="@color/tv_gray_deep"
+                            android:layout_marginLeft="@dimen/dp_22"
                             />
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="center|left"
+                            android:gravity="center|right"
                             android:text="请假申请"
-                            android:textColor="@color/tv_gray_deep"
+                            android:textSize="@dimen/text_size_normal"
+                            android:textColor="@color/colorPrimary"
                             android:layout_marginRight="@dimen/dp_20"
                             />
 
                     </LinearLayout>
 
+                    //请假类型
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="80dp"
+                            android:layout_width="100dp"
                             android:layout_height="match_parent"
-                            android:gravity="center"
+                            android:gravity="center|left"
                             android:text="请假类型"
-                            android:textColor="@color/colorPrimary"
-                            android:layout_marginLeft="@dimen/dp_10"
+                            android:textSize="@dimen/text_size_normal"
+                            android:textColor="@color/tv_gray_deep"
+                            android:layout_marginLeft="@dimen/dp_22"
                             />
                         <TextView
+                            android:id="@+id/leave_type"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="center|left"
+                            android:gravity="center|right"
                             android:text="产假"
-                            android:textColor="@color/tv_gray_deep"
+                            android:textSize="@dimen/text_size_normal"
+                            android:textColor="@color/colorPrimary"
                             android:layout_marginRight="@dimen/dp_20"
                             />
 
                     </LinearLayout>
 
+                    //请假时间
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="80dp"
+                            android:layout_width="100dp"
                             android:layout_height="match_parent"
-                            android:gravity="center"
+                            android:gravity="center|left"
                             android:text="请假时间"
-                            android:textColor="@color/colorPrimary"
-                            android:layout_marginLeft="@dimen/dp_10"
+                            android:textSize="@dimen/text_size_normal"
+                            android:textColor="@color/tv_gray_deep"
+                            android:layout_marginLeft="@dimen/dp_22"
                             />
                         <TextView
                             android:id="@+id/time"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:gravity="center|left"
-                            android:text="2018/06/10 19:00 -- 2018/06/10 22:00"
-                            android:textColor="@color/tv_gray_deep"
+                            android:gravity="center|right"
+                            android:text="2018/06/10 19:00-2018/06/10 22:00"
+                            android:textSize="@dimen/text_size_normal"
+                            android:textColor="@color/colorPrimary"
                             android:layout_marginRight="@dimen/dp_20"
                             />
 
                     </LinearLayout>
                 </LinearLayout>
+                //请假原因
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -162,12 +173,13 @@
                     android:background="#fff">
 
                     <TextView
-                        android:layout_width="80dp"
+                        android:layout_width="100dp"
                         android:layout_height="match_parent"
-                        android:gravity="center"
+                        android:gravity="center|left"
                         android:text="请假原因"
-                        android:textColor="@color/colorPrimary"
-                        android:layout_marginLeft="@dimen/dp_10"
+                        android:textSize="@dimen/text_size_normal"
+                        android:textColor="@color/tv_gray_deep"
+                        android:layout_marginLeft="@dimen/dp_22"
                         android:layout_marginTop="@dimen/dp_10"/>
                     <TextView
                         android:id="@+id/reason"
@@ -176,9 +188,9 @@
                         android:layout_weight="1"
                         android:background="@null"
                         android:layout_margin="22dp"
-                        android:text="赶项目进度"
-                        android:textColor="@color/tv_gray_deep"
-                        android:textColorHint="#898989"
+                        android:text="临近预产期，需要住院待产"
+                        android:textSize="@dimen/text_size_normal"
+                        android:textColor="@color/colorPrimary"
                         />
 
                 </LinearLayout>
