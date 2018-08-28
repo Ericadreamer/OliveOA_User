@@ -242,7 +242,7 @@
                         android:singleLine="true"
                         android:textColorHint="#898989"
                         android:textSize="@dimen/text_size_normal"
-                        />
+                        android:lineSpacingExtra="6dp"/>
                 </LinearLayout>
                 //交接事项
                 <LinearLayout
@@ -276,7 +276,7 @@
                         android:singleLine="true"
                         android:textColorHint="#898989"
                         android:textSize="@dimen/text_size_normal"
-                        />
+                        android:lineSpacingExtra="6dp"/>
                 </LinearLayout>
                 //审批人
                 <LinearLayout

@@ -221,7 +221,7 @@
                         android:text="大数据开发"
                         android:textSize="@dimen/text_size_normal"
                         android:textColor="@color/colorPrimary"
-                        />
+                        android:lineSpacingExtra="6dp"/>
 
                 </LinearLayout>
                 //招聘要求
@@ -252,7 +252,7 @@
                         android:text="有2~3年工作经历"
                         android:textSize="@dimen/text_size_normal"
                         android:textColor="@color/colorPrimary"
-                        />
+                        android:lineSpacingExtra="6dp"/>
 
                 </LinearLayout>
                 //薪资标准
@@ -283,7 +283,7 @@
                         android:text="15k-20k"
                         android:textSize="@dimen/text_size_normal"
                         android:textColor="@color/colorPrimary"
-                        />
+                        android:lineSpacingExtra="6dp"/>
 
                 </LinearLayout>
                 //审批进度

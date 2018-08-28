@@ -187,7 +187,7 @@
                         android:text="跟合约公司进行秘密合作"
                         android:textSize="@dimen/text_size_normal"
                         android:textColor="@color/colorPrimary"
-                        />
+                        android:lineSpacingExtra="6dp"/>
 
                 </LinearLayout>
                 //审批进度

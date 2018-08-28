@@ -220,7 +220,7 @@
                         android:text="那只喵、那只蕉、小泉泉"
                         android:textSize="@dimen/text_size_normal"
                         android:textColor="@color/colorPrimary"
-                        />
+                        android:lineSpacingExtra="6dp"/>
 
                 </LinearLayout>
 

@@ -112,7 +112,7 @@ public class LeaveActivity extends AppCompatActivity {
 
     }
 
-    //年月日时分选择器，开始时间选择
+    //开始时间
     public void onYearMonthDayTimePicker1(View view) {
         DateTimePicker picker = new DateTimePicker(this, DateTimePicker.HOUR_24);
         picker.setDateRangeStart(2018, 8, 1);
@@ -137,7 +137,7 @@ public class LeaveActivity extends AppCompatActivity {
         picker.show();
     }
 
-    //年月日时分选择器，结束时间选择
+    //结束时间
     public void onYearMonthDayTimePicker2(View view) {
         DateTimePicker picker = new DateTimePicker(this, DateTimePicker.HOUR_24);
         picker.setDateRangeStart(2018, 8, 1);

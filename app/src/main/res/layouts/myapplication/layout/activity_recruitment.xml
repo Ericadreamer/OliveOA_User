@@ -229,7 +229,7 @@
                         android:singleLine="true"
                         android:textColorHint="#898989"
                         android:textSize="@dimen/text_size_normal"
-                        />
+                        android:lineSpacingExtra="6dp"/>
                 </LinearLayout>
                 //招聘描述
                 <LinearLayout
@@ -263,7 +263,7 @@
                         android:singleLine="true"
                         android:textColorHint="#898989"
                         android:textSize="@dimen/text_size_normal"
-                        />
+                        android:lineSpacingExtra="6dp"/>
                 </LinearLayout>
                 //薪资标准
                 <LinearLayout
@@ -299,7 +299,7 @@
                         android:singleLine="true"
                         android:textColorHint="#898989"
                         android:hint="请填写薪资标准"
-                        />
+                        android:lineSpacingExtra="6dp"/>
                 </LinearLayout>
                 //审批人
                 <LinearLayout

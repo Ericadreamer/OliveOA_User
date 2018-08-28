@@ -218,6 +218,7 @@
                         android:layout_margin="22dp"
                         android:text="在实习期间跟着前辈学到了很多东西，跟同事相处融洽，每个人都很友好，很照顾新人。"
                         android:textSize="@dimen/text_size_normal"
+                        android:lineSpacingExtra="6dp"
                         android:textColor="@color/colorPrimary"
                         />
 

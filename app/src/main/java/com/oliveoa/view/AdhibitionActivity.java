@@ -18,10 +18,12 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.oliveoa.view.R;
+import com.oliveoa.view.approval.MyApprovalActivity;
 import com.oliveoa.view.myapplication.AddApplicationActivity;
 import com.oliveoa.view.myapplication.MyApplicationActivity;
 import com.oliveoa.view.myapplication.WaitActivity;
 import com.oliveoa.view.myapplication.WaitActivity1;
+import com.oliveoa.view.workschedule.MyWorkActivity;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -61,7 +63,7 @@ public class AdhibitionActivity extends Fragment {
         schedule.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mContext, "您点击了工作日程", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mContext, "您点击了工作日程", Toast.LENGTH_SHORT).show();
                 scheduleinfo();
             }
         });
@@ -71,7 +73,7 @@ public class AdhibitionActivity extends Fragment {
         approval.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mContext, "您点击了审批", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mContext, "您点击了审批", Toast.LENGTH_SHORT).show();
                 approvalinfo();
             }
         });
@@ -178,11 +180,30 @@ public class AdhibitionActivity extends Fragment {
 
     //工作日程
     private void scheduleinfo() {
+        final Intent it = new Intent(getActivity(), MyWorkActivity.class);
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                startActivity(it); //执行
+            }
+        };
+        timer.schedule(task, 1000 * 0); //0秒后
 
     }
 
     //审批
     private void approvalinfo() {
+        final Intent it = new Intent(getActivity(), MyApprovalActivity.class);
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                startActivity(it); //执行
+            }
+        };
+        timer.schedule(task, 1000 * 0); //0秒后
+
 
     }
 
