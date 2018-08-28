@@ -77,7 +77,7 @@ public class LinesEditView extends LinearLayout {
         id_et_input.addTextChangedListener(mTextWatcher);
         id_et_input.setHint(hintText);
         id_et_input.setHintTextColor(hintTextColor);
-        id_et_input.setText("dsadsadsadas");
+        id_et_input.setText("请输入内容");
         id_et_input.setTextColor(contentTextColor);
         id_et_input.setTextSize(TypedValue.COMPLEX_UNIT_PX, contentTextSize);
         id_et_input.setHeight((int) contentViewHeight);

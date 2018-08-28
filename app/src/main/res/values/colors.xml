@@ -17,7 +17,7 @@
     <color name="tv_gray_litter">#FAF0E6</color>
     <color name="tv_gray_normal">#acabab</color>
     <color name="tv_gray_deep">#646464</color>
-    <color name="tv_gray_lit">#50b1b1b1</color>
+    <color name="tv_gray_lit">#506b6969</color>
     <color name="tv_gray">@android:color/darker_gray</color>
     <color name="tv_color">#ffffff</color>
     <color name="list_glide">#50e0e0e0</color>

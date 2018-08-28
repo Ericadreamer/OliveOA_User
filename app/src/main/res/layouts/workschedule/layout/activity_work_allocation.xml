@@ -167,8 +167,7 @@
                         android:gravity="center|left"
                         android:layout_marginLeft="@dimen/dp_20"
                         android:textSize="@dimen/text_size_normal"
-                        android:textColor="@color/tv_gray_deep"
-                        android:layout_marginTop="@dimen/dp_5"/>
+                        android:textColor="@color/tv_gray_deep" />
                     <TextView
                         android:id="@+id/approve_person"
                         android:layout_width="0dp"
@@ -176,10 +175,8 @@
                         android:layout_weight="1"
                         android:text="那只喵"
                         android:gravity="center|end"
-                        android:layout_marginLeft="@dimen/dp_20"
                         android:textSize="@dimen/text_size_normal"
                         android:textColor="@color/colorPrimary"
-                        android:layout_marginTop="@dimen/dp_5"
                         android:layout_marginRight="@dimen/dp_20"/>
                     <ImageView
                         android:id="@+id/inext"

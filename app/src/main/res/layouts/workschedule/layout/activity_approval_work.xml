@@ -33,13 +33,24 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="批阅工作"
+                android:text="批阅内容"
                 android:textAlignment="center"
                 android:layout_weight="1"
                 android:textColor="#ffffff"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:layout_gravity="center_vertical" />
+            <!--<TextView
+                android:id="@+id/isave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:text="提交"
+                android:textColor="#fff"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="20dp"
+                android:textSize="16sp"
+                android:textStyle="bold" />-->
             <ImageView
                 android:id="@+id/isave"
                 android:layout_width="30dp"
@@ -59,32 +70,64 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+                //拟定人
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal"
+                    android:background="#fff">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center|left"
+                        android:text="拟定人"
+                        android:textSize="@dimen/text_size_normal"
+                        android:textColor="@color/tv_gray_deep"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        />
+                    <TextView
+                        android:id="@+id/name"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center|right"
+                        android:text="那只喵"
+                        android:textSize="@dimen/text_size_normal"
+                        android:textColor="@color/colorPrimary"
+                        android:layout_marginRight="@dimen/dp_20"
+                        />
+
+                </LinearLayout>
+
                 //工作时间
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_80"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal"
                     android:background="#fff"
-                    android:layout_marginBottom="@dimen/dp_1"
-                    android:orientation="vertical">
+                    android:layout_marginBottom="@dimen/dp_1">
+
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_30"
-                        android:text="工作时间"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
                         android:gravity="center|left"
-                        android:layout_marginLeft="@dimen/dp_20"
+                        android:text="工作时间"
                         android:textSize="@dimen/text_size_normal"
                         android:textColor="@color/tv_gray_deep"
-                        android:layout_marginTop="@dimen/dp_5"/>
+                        android:layout_marginLeft="@dimen/dp_20"
+                        />
                     <TextView
                         android:id="@+id/work_time"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_30"
-                        android:text="2018/6/5-2018/6/9"
-                        android:gravity="center|left"
-                        android:layout_marginLeft="@dimen/dp_20"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center|right"
+                        android:text="2018/6/6-2018/6/9"
                         android:textSize="@dimen/text_size_normal"
-                        android:textColor="@color/tv_gray_deep"
-                        android:layout_marginTop="@dimen/dp_5"/>
+                        android:textColor="@color/colorPrimary"
+                        android:layout_marginRight="@dimen/dp_20"
+                        />
 
                 </LinearLayout>
 
@@ -93,29 +136,28 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:background="#fff"
-                    android:layout_marginBottom="@dimen/dp_10">
+                    android:background="#fff">
 
                     <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_30"
-                        android:text="工作内容"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
                         android:gravity="center|left"
-                        android:layout_marginLeft="@dimen/dp_20"
+                        android:text="工作内容"
                         android:textSize="@dimen/text_size_normal"
                         android:textColor="@color/tv_gray_deep"
-                        android:layout_marginTop="@dimen/dp_5"/>
-
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:layout_marginTop="@dimen/dp_10"/>
                     <TextView
                         android:id="@+id/work_content"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="22dp"
                         android:layout_weight="1"
                         android:background="@null"
-                        android:text="去买个橘子回来"
-                        android:textColor="@color/tv_gray_deep"
-                        android:textColorHint="#898989" />
+                        android:layout_margin="20dp"
+                        android:text="能力晋升，有望提高部门工作效率"
+                        android:textSize="@dimen/text_size_normal"
+                        android:textColor="@color/colorPrimary"
+                        android:lineSpacingExtra="6dp"/>
 
                 </LinearLayout>
 
@@ -128,7 +170,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dp_30"
-                        android:text="批阅意见"
+                        android:text="批阅意见（必填）"
                         android:gravity="center|left"
                         android:layout_marginLeft="@dimen/dp_20"
                         android:textSize="@dimen/text_size_normal"

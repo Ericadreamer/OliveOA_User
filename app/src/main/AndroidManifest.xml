@@ -213,13 +213,34 @@
             android:name=".MessageListActivity"
             android:exported="true"
             android:theme="@style/HomeTheme" />
-        <activity android:name=".myapplication.GoodsListActivity" />
-        <activity android:name=".myapplication.AdjustPostInfoActivity" />
-        <activity android:name=".myapplication.DimissionInfoActivity" />
-        <activity android:name=".myapplication.GoodsInfoActivity" />
-        <activity android:name=".myapplication.MeetingInfoActivity" />
-        <activity android:name=".myapplication.RecruitmentInfoActivity" />
-        <activity android:name=".myapplication.RegularWorkerInfoActivity"></activity>
+        <activity
+            android:name=".myapplication.GoodsListActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme" />
+        <activity
+            android:name=".myapplication.AdjustPostInfoActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme" />
+        <activity
+            android:name=".myapplication.DimissionInfoActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme" />
+        <activity
+            android:name=".myapplication.GoodsInfoActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme" />
+        <activity
+            android:name=".myapplication.MeetingInfoActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme" />
+        <activity
+            android:name=".myapplication.RecruitmentInfoActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme" />
+        <activity
+            android:name=".myapplication.RegularWorkerInfoActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme" />
     </application>
 
 </manifest>

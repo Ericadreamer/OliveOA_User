@@ -23,8 +23,8 @@ import java.util.TimerTask;
 public class MyWorkActivity extends AppCompatActivity {
 
     private ImageView back;
-    private RadioButton protocolWork,leadershipApproval,workAllocation;
-    private LinearLayout myWork,leadershipAllocation,addMyWorkItem;
+    private RadioButton protocolWork, leadershipApproval, workAllocation;  //工作拟定，领导审批，工作审批
+    private LinearLayout addMyWorkItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +42,6 @@ public class MyWorkActivity extends AppCompatActivity {
         protocolWork = (RadioButton) findViewById(R.id.protocol_work);
         leadershipApproval = (RadioButton) findViewById(R.id.leadership_approval);
         workAllocation = (RadioButton) findViewById(R.id.allocation);
-        myWork = (LinearLayout) findViewById(R.id.my_work_list);
-        //leadershipAllocation = (LinearLayout) findViewById(R.id.allocation);
         addMyWorkItem = (LinearLayout) findViewById(R.id.my_work_list);
 
 
@@ -95,14 +93,32 @@ public class MyWorkActivity extends AppCompatActivity {
         workAllocation.setCompoundDrawables(null, drawableApproval, null, null);//只放上面
     }
 
-    //添加ViewItem
-    private void addViewItem(View view) {
+    /**
+     * Item排序
+     */
+    private void sortHotelViewItem() {
+        //获取LinearLayout里面所有的view
+    }
+
+    /**
+     * 添加ViewItem，R.layout.my_work_item
+     * @param view
+     */
+    private void addViewItem(View view){
 
     }
 
-    private void initData() {
+    /**
+     * Item加载数据
+     */
+    private void InitDataViewItem(){
 
     }
+
+    private void initData(){
+
+    }
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -114,13 +130,14 @@ public class MyWorkActivity extends AppCompatActivity {
         }
         return super.onKeyDown(keyCode, event);
     }
+
     /**
      * 双击退出函数
      */
     private static Boolean isESC = false;
 
     private void exitBy2Click() {
-        Timer tExit ;
+        Timer tExit;
         if (!isESC) {
             isESC = true; // 准备退出
             Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();

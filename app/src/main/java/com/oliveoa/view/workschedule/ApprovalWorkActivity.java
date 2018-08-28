@@ -19,7 +19,7 @@ import java.util.TimerTask;
 
 public class ApprovalWorkActivity extends AppCompatActivity {
 
-    private TextView ttime,tworkContent;
+    private TextView tname,ttime,tworkContent;
     private ImageView back,save;
 
     @Override
@@ -32,6 +32,7 @@ public class ApprovalWorkActivity extends AppCompatActivity {
     private void initView() {
         back = (ImageView) findViewById(R.id.iback);
         save = (ImageView) findViewById(R.id.isave);
+        tname = (TextView) findViewById(R.id.name);
         ttime = (TextView) findViewById(R.id.work_time);
         tworkContent = (TextView) findViewById(R.id.work_content);
 

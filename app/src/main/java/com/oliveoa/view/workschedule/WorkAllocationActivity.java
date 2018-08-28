@@ -20,7 +20,7 @@ import cn.qqtheme.framework.util.ConvertUtils;
 
 public class WorkAllocationActivity extends AppCompatActivity {
 
-    private TextView tstartTime,tendTime,tapprovePerson;
+    private TextView tstartTime,tendTime,tapprovePerson;  //开始时间，结束时间，分配对象
     private ImageView back,save,next;
 
     @Override
@@ -42,6 +42,7 @@ public class WorkAllocationActivity extends AppCompatActivity {
 
         initData();
 
+        //工作内容获取
         LinesEditView linesEditView = new LinesEditView(WorkAllocationActivity.this);
         String test = linesEditView.getContentText();
 

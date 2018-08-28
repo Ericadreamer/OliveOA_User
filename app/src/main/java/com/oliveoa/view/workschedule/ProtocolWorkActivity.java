@@ -1,6 +1,7 @@
 package com.oliveoa.view.workschedule;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -18,11 +19,12 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import cn.qqtheme.framework.picker.DatePicker;
+import cn.qqtheme.framework.picker.DateTimePicker;
 import cn.qqtheme.framework.util.ConvertUtils;
 
 public class ProtocolWorkActivity extends AppCompatActivity {
 
-    private TextView tstartTime,tendTime,tapprovePerson;
+    private TextView tstartTime,tendTime,tapprovePerson;    //开始时间，结束时间,批阅人
     private ImageView back,save;
 
     @Override
@@ -68,7 +70,7 @@ public class ProtocolWorkActivity extends AppCompatActivity {
 
     }
 
-    //年月日选择器
+    //开始时间
     public void onYearMonthDayPicker1(View view) {
         final DatePicker picker = new DatePicker(this);
         picker.setCanceledOnTouchOutside(true);
@@ -78,6 +80,12 @@ public class ProtocolWorkActivity extends AppCompatActivity {
         picker.setRangeStart(2016, 8, 29);
         picker.setSelectedItem(2050, 10, 14);
         picker.setResetWhileWheel(false);
+        picker.setLabelTextColor(Color.GRAY);
+        picker.setTopLineColor(Color.GRAY);
+        picker.setSubmitTextSize(16);
+        picker.setCancelTextSize(16);
+        picker.setTitleTextColor(Color.BLACK);
+        picker.setTitleText("选择开始时间");
         picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
             @Override
             public void onDatePicked(String year, String month, String day) {
@@ -104,7 +112,7 @@ public class ProtocolWorkActivity extends AppCompatActivity {
         picker.show();
     }
 
-    //年月日选择器
+    //结束时间
     public void onYearMonthDayPicker2(View view) {
         final DatePicker picker = new DatePicker(this);
         picker.setCanceledOnTouchOutside(true);
@@ -114,6 +122,12 @@ public class ProtocolWorkActivity extends AppCompatActivity {
         picker.setRangeStart(2016, 8, 29);
         picker.setSelectedItem(2050, 10, 14);
         picker.setResetWhileWheel(false);
+        picker.setLabelTextColor(Color.GRAY);
+        picker.setTopLineColor(Color.GRAY);
+        picker.setSubmitTextSize(16);
+        picker.setCancelTextSize(16);
+        picker.setTitleTextColor(Color.BLACK);
+        picker.setTitleText("选择结束时间");
         picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
             @Override
             public void onDatePicked(String year, String month, String day) {

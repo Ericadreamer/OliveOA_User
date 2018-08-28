@@ -53,8 +53,25 @@ public class LeadershipApprovalActivity extends AppCompatActivity {
         });
 
     }
-    //添加ViewItem
-    private void addViewItem(View view) {
+    /**
+     * Item排序
+     */
+    private void sortHotelViewItem() {
+        //获取LinearLayout里面所有的view
+    }
+
+    /**
+     * 添加ViewItem，R.layout.leadership_approval_item
+     * @param view
+     */
+    private void addViewItem(View view){
+
+    }
+
+    /**
+     * Item加载数据
+     */
+    private void InitDataViewItem(){
 
     }
 
