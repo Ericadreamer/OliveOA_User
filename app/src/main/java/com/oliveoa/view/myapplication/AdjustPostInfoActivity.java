@@ -18,7 +18,7 @@ import java.util.TimerTask;
 public class AdjustPostInfoActivity extends AppCompatActivity {
     private ImageView back;
     private TextView tNumber,tOriginalDcpid,tTargetDcpid,tReason;  //被调员工编号，原部门职务，目标部门职务，调岗原因
-    private TextView tname,tstatus;  //审批进度item，审批人和审批状态
+    private TextView tname,tstatus;  //审批进度item：审批人和审批状态
     private LinearLayout addlistView;  //添加审批进度列表
 
     @Override

@@ -112,7 +112,7 @@
                         android:hint="请选择申请部门"
                         android:textColorHint="#898989"
                         android:textColor="@color/colorPrimary"
-                        />
+                        android:textSize="@dimen/text_size_normal"/>
                     <ImageView
                         android:id="@+id/department_list"
                         android:layout_width="@dimen/dp_16"
@@ -152,7 +152,7 @@
                         android:hint="请选择招聘岗位"
                         android:textColorHint="#898989"
                         android:textColor="@color/colorPrimary"
-                        />
+                        android:textSize="@dimen/text_size_normal"/>
                     <ImageView
                         android:id="@+id/position_list"
                         android:layout_width="@dimen/dp_16"
@@ -201,7 +201,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="1dp"
-                    android:layout_marginTop="@dimen/dp_10"
                     android:background="#fff"
                     android:orientation="vertical">
                     <TextView
@@ -269,7 +268,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
                     android:background="#fff"
                     android:gravity="center_vertical"
                     android:orientation="vertical"

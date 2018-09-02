@@ -56,10 +56,13 @@
             android:layout_height="wrap_content"
             android:id="@+id/tab_layout"
             android:background="@color/white"
-            app:tabIndicatorColor="@color/orange_main"
-            app:tabSelectedTextColor="@color/orange_main"
-            app:tabTextColor="@color/colorPrimary">
+            app:tabIndicatorColor="@color/tab_tv_selected"
+            app:tabSelectedTextColor="@color/tab_tv_selected"
+            app:tabTextColor="@color/tv_gray_deep"
+            android:elevation="@dimen/dp_3"
+            app:tabMode="fixed">
         </android.support.design.widget.TabLayout>
+
         <android.support.v4.view.ViewPager
             android:id="@+id/info_viewpager"
             android:layout_width="fill_parent"

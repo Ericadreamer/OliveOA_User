@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,7 +18,9 @@ import java.util.TimerTask;
 public class OvertimeDisposedActivity extends AppCompatActivity {
 
     private ImageView back;
-    private TextView tvapplicationName,tvtime,tvreason,tvapprovalName,tvstatus,tvadvise;
+    //申请人，加班时间，加班原因，审批人，审批状态，审批意见
+    private TextView tApplicant,ttime,treason,tApprover,tstatus,tadvise;
+    private LinearLayout addlistView;//审批列表
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,19 +33,20 @@ public class OvertimeDisposedActivity extends AppCompatActivity {
 
     private void initView() {
         back = (ImageView) findViewById(R.id.iback);
-        tvapplicationName = (TextView) findViewById(R.id.application_person);
-        tvtime = (TextView) findViewById(R.id.time);
-        tvreason = (TextView) findViewById(R.id.reason);
-        tvapprovalName = (TextView) findViewById(R.id.approve_person);
-        tvstatus = (TextView) findViewById(R.id.status);
-        tvadvise = (TextView) findViewById(R.id.advise);
+        ttime = (TextView) findViewById(R.id.time);
+        treason = (TextView) findViewById(R.id.reason);
+        tApprover = (TextView) findViewById(R.id.approver);
+        tstatus = (TextView) findViewById(R.id.status);
+        tadvise = (TextView) findViewById(R.id.advise);
+        addlistView = (LinearLayout) findViewById(R.id.approve_list);
+        tApplicant = (TextView) findViewById(R.id.name);
 
 
         //点击事件
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(OvertimeDisposedActivity.this, MyApprovalActivity.class);
+                Intent intent = new Intent(OvertimeDisposedActivity.this, DisposedApprovalActivity.class);
                 startActivity(intent);
                 finish();
                 //Toast.makeText(mContext, "你点击了返回", Toast.LENGTH_SHORT).show();
@@ -52,6 +56,28 @@ public class OvertimeDisposedActivity extends AppCompatActivity {
     }
 
     private void initData() {
+
+    }
+
+    /**
+     * Item排序
+     */
+    private void sortHotelViewItem() {
+        //获取LinearLayout里面所有的view
+    }
+
+    /**
+     * 添加ViewItem，R.layout.approval_status_item
+     * @param view
+     */
+    private void addViewItem(View view){
+
+    }
+
+    /**
+     * Item加载数据
+     */
+    private void InitDataViewItem(){
 
     }
 

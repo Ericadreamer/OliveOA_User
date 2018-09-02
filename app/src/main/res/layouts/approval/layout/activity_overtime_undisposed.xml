@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f0f0f0"
     android:layout_gravity="center_vertical"
+    android:background="#f0f0f0"
     android:gravity="center"
     tools:context="com.oliveoa.view.approval.OvertimeUndisposedActivity">
 
@@ -16,229 +16,213 @@
         android:windowSoftInputMode="adjustResize">
 
         //标题栏
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/LoginPrimaryDark"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
+
             <ImageView
                 android:id="@+id/iback"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/ic_back"
-                android:background="@null"
                 android:layout_gravity="center_vertical"
-                android:layout_margin="20dp"/>
+                android:layout_margin="20dp"
+                android:background="@null"
+                android:src="@drawable/ic_back" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
                 android:text="申请详情"
                 android:textAlignment="center"
-                android:layout_weight="1"
                 android:textColor="#ffffff"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_gravity="center_vertical" />
+                android:textStyle="bold" />
+
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:background="@null"
                 android:layout_gravity="center_vertical"
-                android:layout_margin="20dp"/>
+                android:layout_margin="20dp"
+                android:background="@null" />
 
         </LinearLayout>
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+
                 //详情
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_110"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dp_1"
                     android:background="#fff"
                     android:orientation="vertical">
+
+                    //申请人
+
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_30"
-                        android:layout_marginTop="@dimen/dp_10"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="@dimen/dp_5"
                         android:orientation="horizontal">
+
                         <TextView
-                            android:layout_width="@dimen/dp_85"
+                            android:layout_width="100dp"
                             android:layout_height="match_parent"
-                            android:layout_marginLeft="@dimen/dp_20"
-                            android:text="@string/application_person"
+                            android:layout_marginLeft="@dimen/dp_22"
                             android:gravity="center|left"
-                            android:textSize="@dimen/dp_16"/>
+                            android:text="申请人"
+                            android:textColor="@color/tv_gray_deep"
+                            android:textSize="@dimen/text_size_normal" />
+
                         <TextView
-                            android:id="@+id/application_person_name"
-                            android:layout_width="match_parent"
+                            android:id="@+id/name"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:gravity="center|left"
+                            android:layout_marginRight="@dimen/dp_20"
+                            android:layout_weight="1"
+                            android:gravity="center|right"
                             android:text="那只喵"
                             android:textColor="@color/colorPrimary"
-                            android:textSize="@dimen/dp_16"/>
+                            android:textSize="@dimen/text_size_normal" />
 
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_30"
+                        android:layout_height="40dp"
                         android:orientation="horizontal">
+
                         <TextView
-                            android:layout_width="@dimen/dp_85"
+                            android:layout_width="100dp"
                             android:layout_height="match_parent"
-                            android:layout_marginLeft="@dimen/dp_20"
+                            android:layout_marginLeft="@dimen/dp_22"
+                            android:gravity="center|left"
                             android:text="申请流程"
-                            android:gravity="center|left"
-                            android:textSize="@dimen/dp_16"/>
+                            android:textColor="@color/tv_gray_deep"
+                            android:textSize="@dimen/text_size_normal" />
+
                         <TextView
-                            android:id="@+id/type"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:gravity="center|left"
+                            android:layout_marginRight="@dimen/dp_20"
+                            android:layout_weight="1"
+                            android:gravity="center|right"
                             android:text="加班申请"
                             android:textColor="@color/colorPrimary"
-                            android:textSize="@dimen/dp_16"/>
+                            android:textSize="@dimen/text_size_normal" />
 
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/dp_30"
-                        android:orientation="horizontal">
+                        android:layout_height="40dp"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="@dimen/dp_12">
+
                         <TextView
-                            android:layout_width="@dimen/dp_85"
+                            android:layout_width="100dp"
                             android:layout_height="match_parent"
-                            android:layout_marginLeft="@dimen/dp_20"
+                            android:layout_marginLeft="@dimen/dp_22"
+                            android:gravity="center|left"
                             android:text="加班时间"
-                            android:gravity="center|left"
-                            android:textSize="@dimen/dp_16"/>
+                            android:textColor="@color/tv_gray_deep"
+                            android:textSize="@dimen/text_size_normal" />
+
                         <TextView
-                            android:id="@+id/place"
-                            android:layout_width="match_parent"
+                            android:id="@+id/time"
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:gravity="center|left"
-                            android:text="2018/6/14-2018/6/29"
+                            android:layout_marginRight="@dimen/dp_20"
+                            android:layout_weight="1"
+                            android:gravity="center|right"
+                            android:text="2018/06/10 19:00-2018/06/10 22:00"
                             android:textColor="@color/colorPrimary"
-                            android:textSize="@dimen/dp_16"/>
+                            android:textSize="@dimen/text_size_normal" />
 
                     </LinearLayout>
                 </LinearLayout>
+                //加班原因
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:background="#fff"
-                    android:layout_marginTop="@dimen/dp_1">
+                    android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="80dp"
+                        android:layout_width="100dp"
                         android:layout_height="match_parent"
-                        android:text="加班原因"
+                        android:layout_marginLeft="@dimen/dp_22"
+                        android:layout_marginTop="@dimen/dp_10"
                         android:gravity="center|left"
-                        android:textSize="@dimen/dp_16"
-                        android:layout_marginLeft="@dimen/dp_20"
-                        android:layout_marginTop="@dimen/dp_10"/>
+                        android:text="加班原因"
+                        android:textColor="@color/tv_gray_deep"
+                        android:textSize="@dimen/text_size_normal" />
+
                     <TextView
                         android:id="@+id/reason"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_margin="22dp"
                         android:layout_weight="1"
                         android:background="@null"
-                        android:layout_marginTop="@dimen/dp_10"
-                        android:layout_marginLeft="@dimen/dp_20"
-                        android:layout_marginRight="@dimen/dp_20"
-                        android:layout_marginBottom="@dimen/dp_20"
-                        android:text="报表整理"
+                        android:lineSpacingExtra="6dp"
+                        android:text="赶项目进度"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/dp_16"
                         android:textColorHint="#898989"
-                        />
+                        android:textSize="@dimen/text_size_normal" />
 
-                </LinearLayout>
-                //审批进度
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_40"
-                    android:background="#fff"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:layout_marginBottom="@dimen/dp_1">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center|left"
-                        android:text="审批进度"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/dp_16"
-                        android:layout_marginLeft="@dimen/dp_20"/>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_60"
-                    android:background="#fff"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:layout_width="@dimen/dp_40"
-                        android:layout_height="@dimen/dp_40"
-                        android:layout_gravity="center"
-                        android:src="@drawable/yonghu"
-                        android:layout_marginLeft="@dimen/dp_20"/>
-                    <TextView
-                        android:id="@+id/approval_name"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="审批人"
-                        android:gravity="center|left"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/dp_16"
-                        android:layout_marginLeft="20dp"/>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="审批中"
-                        android:gravity="center|end"
-                        android:textColor="#ef3939"
-                        android:textSize="@dimen/dp_16"
-                        android:layout_marginRight="20dp"/>
                 </LinearLayout>
                 //按钮
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_60"
+                    android:layout_height="@dimen/dp_50"
+                    android:background="#fff"
                     android:orientation="horizontal"
-                    android:layout_marginTop="@dimen/dp_1">
+                    android:layout_marginTop="@dimen/dp_10">
+
                     <Button
                         android:id="@+id/disagree"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/dp_1"
+                        android:layout_marginRight="@dimen/dp_1"
                         android:layout_weight="1"
                         android:background="@drawable/btn_orange_selector"
-                        android:textColor="@android:color/white"
                         android:text="不同意"
+                        android:textColor="@android:color/white"
                         android:textSize="20sp"
-                        android:layout_marginRight="@dimen/dp_1"/>
+                        android:textStyle="bold" />
+
                     <Button
                         android:id="@+id/agree"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginLeft="@dimen/dp_1"
+                        android:layout_marginRight="@dimen/dp_1"
                         android:layout_weight="1"
                         android:background="@drawable/btn_orange_selector"
+                        android:text="同    意"
                         android:textColor="@android:color/white"
-                        android:text="同意"
                         android:textSize="20sp"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentRight="true"/>
+                        android:textStyle="bold" />
                 </LinearLayout>
-
-
 
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
 </RelativeLayout>
+

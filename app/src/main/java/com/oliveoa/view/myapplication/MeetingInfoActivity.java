@@ -38,6 +38,7 @@ public class MeetingInfoActivity extends AppCompatActivity {
         back = (ImageView) findViewById(R.id.iback);
         tname = (TextView) findViewById(R.id.person_approving);
         tstatus = (TextView) findViewById(R.id.status);
+        addlistView = (LinearLayout) findViewById(R.id.approve_list);
 
         back.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
             @Override

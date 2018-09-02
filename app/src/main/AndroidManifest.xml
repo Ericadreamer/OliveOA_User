@@ -241,6 +241,43 @@
             android:name=".myapplication.RegularWorkerInfoActivity"
             android:exported="true"
             android:theme="@style/HomeTheme" />
+        <activity
+            android:name=".approval.MeetingDisposedActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme"/>
+        <activity android:name=".approval.MeetingUndisposedActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme"/>
+        <activity android:name=".approval.DimissionDisposedActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme"/>
+        <activity android:name=".approval.DimissionUndisposedActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme"/>
+        <activity android:name=".approval.RegularWorkerDisposedActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme"/>
+        <activity android:name=".approval.RegularWorkerUndisposedActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme"/>
+        <activity android:name=".approval.AdjustPostDisposedActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme"/>
+        <activity android:name=".approval.AdjustPostUndisposedActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme"/>
+        <activity android:name=".approval.RecruitmentDisposedActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme"/>
+        <activity android:name=".approval.RecruitmentUndisposedActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme"/>
+        <activity android:name=".approval.GoodsDisposedActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme"/>
+        <activity android:name=".approval.GoodsUndisposedActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme"></activity>
     </application>
 
 </manifest>

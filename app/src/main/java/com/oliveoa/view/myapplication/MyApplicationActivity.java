@@ -96,10 +96,10 @@ public class MyApplicationActivity extends AppCompatActivity {
 
     //tab的字体和线条颜色
     private void initTab(){
-        mIndicatorTl.setTabMode(TabLayout.MODE_FIXED);
-        mIndicatorTl.setTabTextColors(ContextCompat.getColor(this, R.color.tv_gray_deep), ContextCompat.getColor(this, R.color.tab_tv_selected));
-        mIndicatorTl.setSelectedTabIndicatorColor(ContextCompat.getColor(this, R.color.tab_tv_selected));
-        ViewCompat.setElevation(mIndicatorTl, 10);
+        mIndicatorTl.setTabMode(TabLayout.MODE_FIXED);   //设置不可横向水平滑动，MODE_SCROLLABLE支持可横向滑动
+        mIndicatorTl.setTabTextColors(ContextCompat.getColor(this, R.color.tv_gray_deep), ContextCompat.getColor(this, R.color.tab_tv_selected)); //字体颜色
+        mIndicatorTl.setSelectedTabIndicatorColor(ContextCompat.getColor(this, R.color.tab_tv_selected));   //指示器颜色
+        //ViewCompat.setElevation(mIndicatorTl, 10);  //设置阴影
 //        mIndicatorTl.setupWithViewPager(mContentVp);
     }
 

@@ -1,13 +1,12 @@
 package com.oliveoa.view.approval;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,7 +18,8 @@ import java.util.TimerTask;
 public class BusinessUndisposedActivity extends AppCompatActivity {
 
     private ImageView back;
-    private TextView tvapplicationName,tvtime,tvplace,tvreason,tvapprovalName;
+    //申请人，出差时间，出差地点，出差原因
+    private TextView tApplicant,tvtime,tvplace,tvreason;
     private Button bagree,bdisagree;
 
     @Override
@@ -33,11 +33,10 @@ public class BusinessUndisposedActivity extends AppCompatActivity {
 
     private void initView() {
         back = (ImageView) findViewById(R.id.iback);
-        tvapplicationName = (TextView) findViewById(R.id.application_person);
         tvtime = (TextView) findViewById(R.id.time);
-        tvplace = (TextView) findViewById(R.id.place);
         tvreason = (TextView) findViewById(R.id.reason);
-        tvapprovalName = (TextView) findViewById(R.id.approve_person);
+        tvplace = (TextView) findViewById(R.id.business_place);
+        tApplicant = (TextView) findViewById(R.id.name);
         bagree = (Button) findViewById(R.id.agree);
         bdisagree = (Button) findViewById(R.id.disagree);
 
@@ -45,7 +44,7 @@ public class BusinessUndisposedActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(BusinessUndisposedActivity.this, MyApprovalActivity.class);
+                Intent intent = new Intent(BusinessUndisposedActivity.this, UndisposedApprovalActivity.class);
                 startActivity(intent);
                 finish();
                 //Toast.makeText(mContext, "你点击了返回", Toast.LENGTH_SHORT).show();

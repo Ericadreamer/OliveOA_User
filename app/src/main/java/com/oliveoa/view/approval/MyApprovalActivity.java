@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -47,6 +49,7 @@ public class MyApprovalActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_approval);
+
         initViews();
     }
     private void initViews() {
@@ -73,6 +76,13 @@ public class MyApprovalActivity extends AppCompatActivity {
             }
         });
     }
+
+   /* //tab的阴影
+    private void initTab(){
+        ViewCompat.setElevation(mTabLayout, 10);
+//        mIndicatorTl.setupWithViewPager(mContentVp);
+    }
+*/
 
     /**
      * @description: 设置添加Tab

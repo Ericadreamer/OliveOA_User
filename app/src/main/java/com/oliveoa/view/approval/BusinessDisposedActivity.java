@@ -7,6 +7,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +19,9 @@ import java.util.TimerTask;
 public class BusinessDisposedActivity extends AppCompatActivity {
 
     private ImageView back;
-    private TextView tvapplicationName,tvtime,tvplace,tvreason,tvapprovalName,tvstatus,tvadvise;
+    //申请人，出差时间，出差地点，出差原因，审批人，审批状态，审批意见
+    private TextView tApplicant,tvtime,tvplace,tvreason,tApprover,tStatus,tadvise;
+    private LinearLayout addListView;  //添加审批进度列表
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,14 +34,14 @@ public class BusinessDisposedActivity extends AppCompatActivity {
 
     private void initView() {
         back = (ImageView) findViewById(R.id.iback);
-        tvapplicationName = (TextView) findViewById(R.id.application_person);
         tvtime = (TextView) findViewById(R.id.time);
-        tvplace = (TextView) findViewById(R.id.place);
         tvreason = (TextView) findViewById(R.id.reason);
-        tvapprovalName = (TextView) findViewById(R.id.approve_person);
-        tvstatus = (TextView) findViewById(R.id.status);
-        tvadvise = (TextView) findViewById(R.id.advise);
-
+        tvplace = (TextView) findViewById(R.id.business_place);
+        tApprover = (TextView) findViewById(R.id.approver);
+        tStatus = (TextView) findViewById(R.id.status);
+        tadvise = (TextView) findViewById(R.id.advise);
+        tApplicant = (TextView) findViewById(R.id.name);
+        addListView = (LinearLayout) findViewById(R.id.approve_list);
 
         //点击事件
         back.setOnClickListener(new View.OnClickListener() {
@@ -56,6 +59,29 @@ public class BusinessDisposedActivity extends AppCompatActivity {
     private void initData() {
 
     }
+
+    /**
+     * Item排序
+     */
+    private void sortHotelViewItem() {
+        //获取LinearLayout里面所有的view
+    }
+
+    /**
+     * 添加ViewItem，R.layout.approval_status_item
+     * @param view
+     */
+    private void addViewItem(View view){
+
+    }
+
+    /**
+     * Item加载数据
+     */
+    private void InitDataViewItem(){
+
+    }
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

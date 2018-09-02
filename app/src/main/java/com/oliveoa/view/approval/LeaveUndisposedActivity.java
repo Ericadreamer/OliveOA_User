@@ -18,7 +18,8 @@ import java.util.TimerTask;
 public class LeaveUndisposedActivity extends AppCompatActivity {
 
     private ImageView back;
-    private TextView tvapplicationName,tvleaveType,tvtime,tvreason,tvapprovalName;
+    //申请人，请假类型，请假时间，请假原因
+    private TextView tApplicant,ttype,ttime,treason;
     private Button bagree,bdisagree;
 
     @Override
@@ -32,11 +33,10 @@ public class LeaveUndisposedActivity extends AppCompatActivity {
 
     private void initView() {
         back = (ImageView) findViewById(R.id.iback);
-        tvapplicationName = (TextView) findViewById(R.id.application_person);
-        tvleaveType = (TextView) findViewById(R.id.leave_type);
-        tvtime = (TextView) findViewById(R.id.time);
-        tvreason = (TextView) findViewById(R.id.reason);
-        tvapprovalName = (TextView) findViewById(R.id.approve_person);
+        tApplicant = (TextView) findViewById(R.id.name);
+        ttime = (TextView) findViewById(R.id.time);
+        ttype = (TextView) findViewById(R.id.leave_type);
+        treason = (TextView) findViewById(R.id.reason);
         bagree = (Button) findViewById(R.id.agree);
         bdisagree = (Button) findViewById(R.id.disagree);
 
@@ -44,7 +44,7 @@ public class LeaveUndisposedActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LeaveUndisposedActivity.this, MyApprovalActivity.class);
+                Intent intent = new Intent(LeaveUndisposedActivity.this, UndisposedApprovalActivity.class);
                 startActivity(intent);
                 finish();
                 //Toast.makeText(mContext, "你点击了返回", Toast.LENGTH_SHORT).show();

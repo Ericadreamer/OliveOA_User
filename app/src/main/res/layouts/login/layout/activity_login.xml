@@ -166,7 +166,8 @@
         android:paddingTop="@dimen/margin_small"
         android:background="@drawable/btn_orange_selector"
         android:text="@string/login"
+        android:textStyle="bold"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/text_size_normal" />
+        android:textSize="20sp" />
 
 </LinearLayout>
