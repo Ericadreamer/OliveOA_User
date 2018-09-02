@@ -120,6 +120,7 @@
                         android:layout_weight="1"
                         android:background="@null"
                         android:gravity="center_vertical|end"
+                        android:textSize="@dimen/text_size_normal"
                         android:hint="请选择请假类型"
                         android:singleLine="true"
                         android:textColor="@color/colorPrimary"

@@ -185,7 +185,6 @@
                         android:layout_marginLeft="@dimen/dp_20"
                         android:textSize="@dimen/text_size_normal"
                         android:textColor="@color/colorPrimary"
-                        android:singleLine="true"
                         android:textColorHint="#898989"
                         android:hint="请填写出差地点"
                         />

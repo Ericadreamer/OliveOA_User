@@ -19,6 +19,7 @@
             android:layout_height="@dimen/dp_56"
             android:layout_weight="1"
             android:gravity="center|left"
+            android:singleLine="true"
             android:text="整理财务报表"
             android:layout_marginLeft="@dimen/dp_20"
             android:textColor="@color/colorPrimary"

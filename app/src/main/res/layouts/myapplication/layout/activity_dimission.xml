@@ -144,6 +144,7 @@
                         android:background="@null"
                         android:gravity="center_vertical|end"
                         android:singleLine="true"
+                        android:textSize="@dimen/text_size_normal"
                         android:hint="请选择离职日期"
                         android:textColorHint="#898989"
                         android:textColor="@color/colorPrimary"

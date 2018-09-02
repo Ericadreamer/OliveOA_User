@@ -128,6 +128,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center|right"
+                            android:singleLine="true"
                             android:text="论如何按用户心情变换手机主题"
                             android:textSize="@dimen/text_size_normal"
                             android:textColor="@color/colorPrimary"
@@ -188,6 +189,7 @@
                             android:gravity="center|right"
                             android:text="行政楼第二会议室"
                             android:textSize="@dimen/text_size_normal"
+                            android:singleLine="true"
                             android:textColor="@color/colorPrimary"
                             android:layout_marginRight="@dimen/dp_20"
                             />

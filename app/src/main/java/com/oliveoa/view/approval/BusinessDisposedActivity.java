@@ -34,7 +34,7 @@ public class BusinessDisposedActivity extends AppCompatActivity {
 
     private void initView() {
         back = (ImageView) findViewById(R.id.iback);
-        tvtime = (TextView) findViewById(R.id.time);
+        tvtime = (TextView) findViewById(R.id.business_time);
         tvreason = (TextView) findViewById(R.id.reason);
         tvplace = (TextView) findViewById(R.id.business_place);
         tApprover = (TextView) findViewById(R.id.approver);

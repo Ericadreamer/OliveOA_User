@@ -17,61 +17,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/application_item"
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_marginBottom="@dimen/dp_1"
-                android:background="#fff"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/application_pic"
-                    android:layout_width="@dimen/dp_40"
-                    android:layout_height="@dimen/dp_40"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="@dimen/dp_20"
-                    android:src="@drawable/leave_pic" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/item_type"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dp_20"
-                        android:layout_marginRight="@dimen/dp_20"
-                        android:gravity="left"
-                        android:singleLine="true"
-                        android:text="请假申请"
-                        android:textColor="#373c3e"
-                        android:textSize="17sp" />
-
-                    <TextView
-                        android:id="@+id/item_content"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dp_22"
-                        android:layout_marginRight="@dimen/dp_20"
-                        android:layout_marginTop="@dimen/dp_8"
-                        android:gravity="left"
-                        android:singleLine="true"
-                        android:text="今天发高烧了想请假一天"
-                        android:textColor="#808080"
-                        android:textSize="15sp" />
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:src="@drawable/wait_pic" />
-            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/wait_list"

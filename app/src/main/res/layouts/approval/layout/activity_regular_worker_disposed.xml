@@ -265,42 +265,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"></LinearLayout>
-                //列表示例
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_60"
-                    android:background="#fff"
-                    android:orientation="horizontal">
 
-                    <ImageView
-                        android:layout_width="@dimen/dp_40"
-                        android:layout_height="@dimen/dp_40"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="@dimen/dp_20"
-                        android:src="@drawable/yonghu" />
-
-                    <TextView
-                        android:id="@+id/approval_name"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="20dp"
-                        android:layout_weight="1"
-                        android:gravity="center|left"
-                        android:text="审批人"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/dp_16" />
-
-                    <TextView
-                        android:id="@+id/status"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginRight="20dp"
-                        android:layout_weight="1"
-                        android:gravity="center|end"
-                        android:text="同意"
-                        android:textColor="#0aa605"
-                        android:textSize="@dimen/dp_16" />
-                </LinearLayout>
                 //审批意见
                 <LinearLayout
                     android:layout_width="match_parent"

@@ -22,6 +22,7 @@
         android:gravity="center|left"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/dp_16"
+        android:singleLine="true"
         android:layout_marginLeft="20dp"/>
     <TextView
         android:id="@+id/status"

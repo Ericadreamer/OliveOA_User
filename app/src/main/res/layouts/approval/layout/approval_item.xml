@@ -37,6 +37,7 @@
             android:layout_weight="1"
             android:text="到北京出差一个月"
             android:gravity="center|left"
+            android:singleLine="true"
             android:layout_marginBottom="@dimen/dp_6"
             android:layout_marginLeft="@dimen/dp_20"/>
     </LinearLayout>

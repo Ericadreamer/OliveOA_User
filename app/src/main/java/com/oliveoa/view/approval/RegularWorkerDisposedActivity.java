@@ -38,7 +38,7 @@ public class RegularWorkerDisposedActivity extends AppCompatActivity {
         tendDate = (TextView) findViewById(R.id.end_date);
         tsummary = (TextView) findViewById(R.id.summary);
         back = (ImageView) findViewById(R.id.iback);
-        tApprover = (TextView) findViewById(R.id.approval_name);
+        tApprover = (TextView) findViewById(R.id.approver);
         tApplicant = (TextView) findViewById(R.id.name);
         tadvise = (TextView) findViewById(R.id.advise);
         addlistView = (LinearLayout) findViewById(R.id.approve_list);

@@ -12,12 +12,12 @@
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:gravity="top"
-        android:hint="请输入物品描述"
+        android:hint="请输入内容"
         android:inputType="textMultiLine"
         android:padding="10dp"
         android:selectAllOnFocus="true"
         android:textColor="#DE000000"
-        android:textSize="16dp" />
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/id_tv_input"

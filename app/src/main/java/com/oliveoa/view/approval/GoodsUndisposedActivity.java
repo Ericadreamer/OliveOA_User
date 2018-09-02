@@ -32,7 +32,7 @@ public class GoodsUndisposedActivity extends AppCompatActivity {
     }
 
     public void initView(){
-        tGoodsName = (TextView) findViewById(R.id.goods_name);
+        tGoodsName = (TextView) findViewById(R.id.goods);
         tstartTime = (TextView) findViewById(R.id.start_time);
         treturnTime = (TextView) findViewById(R.id.return_time);
         back = (ImageView) findViewById(R.id.iback);

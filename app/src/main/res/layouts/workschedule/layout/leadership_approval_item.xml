@@ -28,6 +28,7 @@
                         android:gravity="center|left"
                         android:text="整理财务报表"
                         android:layout_marginLeft="@dimen/dp_20"
+                        android:singleLine=""
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/text_size_normal"/>
                     <TextView

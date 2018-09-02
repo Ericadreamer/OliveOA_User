@@ -112,7 +112,7 @@
                         android:hint="请选择物品"
                         android:textColorHint="#898989"
                         android:textColor="@color/colorPrimary"
-                        />
+                        android:textSize="@dimen/text_size_normal"/>
                     <ImageView
                         android:id="@+id/goods_list"
                         android:layout_width="@dimen/dp_16"
@@ -151,7 +151,7 @@
                         android:hint="请选择取用时间"
                         android:textColorHint="#898989"
                         android:textColor="@color/colorPrimary"
-                        />
+                        android:textSize="@dimen/text_size_normal"/>
                     <ImageView
                         android:id="@+id/start_choose"
                         android:layout_width="@dimen/dp_16"
@@ -191,7 +191,7 @@
                         android:hint="请选择归还时间"
                         android:textColorHint="#898989"
                         android:textColor="@color/colorPrimary"
-                        />
+                        android:textSize="@dimen/text_size_normal"/>
                     <ImageView
                         android:id="@+id/return_choose"
                         android:layout_width="@dimen/dp_16"
