@@ -30,7 +30,7 @@ public class DisposedApprovalActivity extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View rootview = inflater.inflate(R.layout.activity_disposed_approval, container, false);
+        rootview = inflater.inflate(R.layout.activity_disposed_approval, container, false);
         this.mContext = getActivity();
 
         //默认添加一个Item

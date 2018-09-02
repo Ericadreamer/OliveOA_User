@@ -23,7 +23,7 @@ public class UndisposedApprovalActivity extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View rootview = inflater.inflate(R.layout.activity_undisposed_approval, container, false);
+        rootview = inflater.inflate(R.layout.activity_undisposed_approval, container, false);
         this.mContext = getActivity();
 
         //默认添加一个Item
@@ -37,7 +37,7 @@ public class UndisposedApprovalActivity extends Fragment {
     public void initView(){
         addlistView = (LinearLayout) rootview.findViewById(R.id.approval_list);
         tname = (TextView) rootview.findViewById(R.id.person_name);
-        tcontent = (TextView) rootview.findViewById(R.id.approval_type);
+        tcontent = (TextView) rootview.findViewById(R.id.approval_content);
         ttype = (TextView) rootview.findViewById(R.id.type);
         tstatus = (TextView) rootview.findViewById(R.id.status);
 
