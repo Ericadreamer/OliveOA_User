@@ -1,6 +1,5 @@
 package com.oliveoa.view;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Looper;
@@ -18,20 +17,9 @@ import com.oliveoa.controller.LeaveApplicationService;
 import com.oliveoa.controller.OvertimeApplictionService;
 import com.oliveoa.controller.UserInfoService;
 import com.oliveoa.controller.WorkDetailService;
-import com.oliveoa.greendao.BusinessTripApplicationApprovedOpinionListDao;
-import com.oliveoa.greendao.BusinessTripApplicationDao;
 import com.oliveoa.greendao.ContactInfoDao;
-import com.oliveoa.greendao.DaoManager;
-import com.oliveoa.greendao.DaoMaster;
-import com.oliveoa.greendao.DaoSession;
 import com.oliveoa.greendao.DepartmentInfoDao;
 import com.oliveoa.greendao.DutyInfoDao;
-import com.oliveoa.greendao.IssueWorkDao;
-import com.oliveoa.greendao.LeaveApplicationApprovedOpinionListDao;
-import com.oliveoa.greendao.LeaveApplicationDao;
-import com.oliveoa.greendao.MessageDao;
-import com.oliveoa.greendao.OvertimeApplicationApprovedOpinionListDao;
-import com.oliveoa.greendao.OvertimeApplicationDao;
 import com.oliveoa.jsonbean.BusinessTripApplicationInfoJsonBean;
 import com.oliveoa.jsonbean.BusinessTripApplicationJsonBean;
 import com.oliveoa.jsonbean.ContactJsonBean;
@@ -73,15 +61,6 @@ public class LoadingViewActivity extends AppCompatActivity {
     private ContactInfoDao contactInfoDao;
     private DepartmentInfoDao departmentInfoDao;
     private DutyInfoDao dutyInfoDao;
-    private BusinessTripApplicationDao btaDao;
-    private BusinessTripApplicationApprovedOpinionListDao btaaolDao;
-    private IssueWorkDao issueWorkDao;
-    private LeaveApplicationDao laDao;
-    private LeaveApplicationApprovedOpinionListDao laaolDao;
-    private MessageDao messageDao;
-    private OvertimeApplicationDao oaDao;
-    private OvertimeApplicationApprovedOpinionListDao oaaolDao;
-
 
 
     @Override
@@ -96,20 +75,13 @@ public class LoadingViewActivity extends AppCompatActivity {
     public void initData(){
         //String string = getString(R.string.app_name);
 
-         DataCleanManager dataCleanManager = new DataCleanManager();
-        dataCleanManager.cleanDatabases();
+       /* DataCleanManager dataCleanManager = new DataCleanManager();
+        dataCleanManager.cleanDatabases();*/
 
         contactInfoDao = EntityManager.getInstance().getContactInfo();
         departmentInfoDao = EntityManager.getInstance().getDepartmentInfo();
         dutyInfoDao = EntityManager.getInstance().getDutyInfoInfo();
-        btaDao =EntityManager.getInstance().getBusinessTripApplicationInfo();
-        btaaolDao =EntityManager.getInstance().getBusinessTripApplicationApprovedOpinionListInfo();
-        issueWorkDao = EntityManager.getInstance().getIssueWorkInfo();
-        laDao = EntityManager.getInstance().getLeaveApplicationInfo();
-        laaolDao = EntityManager.getInstance().getLeaveApplicationApprovedOpinionListInfo();
-        messageDao = EntityManager.getInstance().getMessageInfo();
-        oaDao = EntityManager.getInstance().getOvertimeApplicationInfo();
-        oaaolDao = EntityManager.getInstance().getOvertimeApplicationApprovedOpinionListInfo();
+
 
 
         new Thread(new Runnable() {
@@ -134,7 +106,7 @@ public class LoadingViewActivity extends AppCompatActivity {
                 }
 
                 //获取通讯录信息
-                ContactHttpResponseObject contactHttpResponseObject =userInfoService.contact(s);
+               /* ContactHttpResponseObject contactHttpResponseObject =userInfoService.contact(s);
                 if (contactHttpResponseObject.getStatus()==0) {
                     contactInfos = contactHttpResponseObject.getData();
                     Log.d("userinfo", contactInfos.toString());
@@ -157,7 +129,7 @@ public class LoadingViewActivity extends AppCompatActivity {
                     Looper.prepare();//解决子线程弹toast问题
                     Toast.makeText(getApplicationContext(), "网络错误，获取通讯录信息失败", Toast.LENGTH_SHORT).show();
                     Looper.loop();// 进入loop中的循环，查看消息队列
-                }
+                }*/
 
                 //消息详情
 //                MessageService messageService = new MessageService();
@@ -176,7 +148,7 @@ public class LoadingViewActivity extends AppCompatActivity {
 
 
                 //加班申请详情
-                OvertimeApplictionService overtimeApplictionService = new OvertimeApplictionService();
+             /*   OvertimeApplictionService overtimeApplictionService = new OvertimeApplictionService();
                 OvertimeApplicationInfoJsonBean overtimeApplications = overtimeApplictionService.submitotapplication(s);
                 if (overtimeApplications.getStatus()==0) {
                      oa = overtimeApplications .getData();
@@ -280,7 +252,7 @@ public class LoadingViewActivity extends AppCompatActivity {
                 WorkDetailService workDetailService = new WorkDetailService();
 
 
-                //发布工作详情
+                //发布工作详情*/
 
 
             }

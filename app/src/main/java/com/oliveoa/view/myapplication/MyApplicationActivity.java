@@ -1,6 +1,8 @@
 package com.oliveoa.view.myapplication;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Looper;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -18,7 +20,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.oliveoa.controller.BusinessTripApplicationService;
+import com.oliveoa.controller.LeaveApplicationService;
+import com.oliveoa.controller.OvertimeApplictionService;
 import com.oliveoa.fragment.TabListFragment;
+import com.oliveoa.jsonbean.BusinessTripApplicationJsonBean;
+import com.oliveoa.jsonbean.LeaveApplicationInfoJsonBean;
+import com.oliveoa.jsonbean.LeaveApplicationJsonBean;
+import com.oliveoa.jsonbean.OvertimeApplicationInfoJsonBean;
+import com.oliveoa.pojo.BusinessTripApplication;
 import com.oliveoa.view.AdhibitionActivity;
 import com.oliveoa.view.MainActivity;
 import com.oliveoa.view.R;
@@ -31,6 +41,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static android.app.ProgressDialog.show;
 
 public class MyApplicationActivity extends AppCompatActivity {
 
@@ -92,7 +104,59 @@ public class MyApplicationActivity extends AppCompatActivity {
             }
         });
 
+        initData();
     }
+
+    private void initData() {
+           new Thread(new Runnable() {
+                       @Override
+                       public void run() {
+                           GetMyApplicationSubmited();
+                       }
+                   }).start();
+    }
+
+    private void GetMyApplicationSubmited() {
+        SharedPreferences pref = getSharedPreferences("data",MODE_PRIVATE);
+        String s = pref.getString("sessionid","");
+
+        //Todo Service
+        LeaveApplicationService leaveApplicationService = new LeaveApplicationService();
+        OvertimeApplictionService overtimeApplictionService = new OvertimeApplictionService();
+        BusinessTripApplicationService businessTripApplicationService = new BusinessTripApplicationService();
+        //Todo Service.Method
+        LeaveApplicationJsonBean leaveApplicationInfoJsonBean = leaveApplicationService.getlapplicationsubmited(s);
+        OvertimeApplicationInfoJsonBean overtimeApplicationInfoJsonBean  = overtimeApplictionService.submitotapplication(s);
+        BusinessTripApplicationJsonBean businessTripApplicationJsonBean = businessTripApplicationService.getbtapplicationsubmited(s);
+        //Todo Check JsonBean.getStatus()
+        if (leaveApplicationInfoJsonBean.getStatus() == 0&&overtimeApplicationInfoJsonBean.getStatus()==0&&businessTripApplicationJsonBean.getStatus()==0) {
+           for (int i = 0;i<leaveApplicationInfoJsonBean.getData().size();i++){
+
+           }
+           for(int i=0;i<overtimeApplicationInfoJsonBean.getData().size();i++){
+
+           }
+           for(int i=0;i<businessTripApplicationJsonBean.getData().size();i++){
+
+           }
+
+        } else {
+            Looper.prepare();//解决子线程弹toast问题
+            String msg ="Error：";
+            if(leaveApplicationInfoJsonBean.getStatus()!=0){
+                msg.concat(leaveApplicationInfoJsonBean.getMsg()+"");
+            }
+            if(overtimeApplicationInfoJsonBean.getStatus()!=0){
+                msg.concat(leaveApplicationInfoJsonBean.getMsg()+"");
+            }
+            if(businessTripApplicationJsonBean.getStatus()!=0){
+                msg.concat(leaveApplicationInfoJsonBean.getMsg()+"");
+            }
+            Toast.makeText(getApplicationContext(),msg, Toast.LENGTH_SHORT).show();
+            Looper.loop();// 进入loop中的循环，查看消息队列
+        }
+    }
+
 
     //tab的字体和线条颜色
     private void initTab(){

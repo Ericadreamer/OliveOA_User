@@ -13,8 +13,6 @@ import com.oliveoa.greendao.MessageDao;
 import com.oliveoa.greendao.OvertimeApplicationApprovedOpinionListDao;
 import com.oliveoa.greendao.OvertimeApplicationDao;
 import com.oliveoa.greendao.WorkDetailDao;
-import com.oliveoa.pojo.BusinessTripApplicationApprovedOpinionList;
-import com.oliveoa.pojo.ContactInfo;
 
 public class EntityManager {
     private static EntityManager entityManager;

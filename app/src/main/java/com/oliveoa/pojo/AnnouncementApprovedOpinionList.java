@@ -6,12 +6,12 @@ import android.os.Parcelable;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Keep;
 
-@Entity
 @Keep
-public class BusinessTripApplicationApprovedOpinionList implements Parcelable{
-    private String btaaocid;
-    private String btaaopid;
-    private String btaid;
+@Entity
+public class AnnouncementApprovedOpinionList implements Parcelable{
+    private String aaocid;
+    private String aaopid;
+    private String aid;
     private String eid;
     private int isapproved;
     private String opinion;
@@ -19,13 +19,13 @@ public class BusinessTripApplicationApprovedOpinionList implements Parcelable{
     private long createtime;
     private long updatetime;
 
-    public BusinessTripApplicationApprovedOpinionList() {
+    public AnnouncementApprovedOpinionList() {
     }
 
-    public BusinessTripApplicationApprovedOpinionList(String btaaocid, String btaaopid, String btaid, String eid, int isapproved, String opinion, int orderby, long createtime, long updatetime) {
-        this.btaaocid = btaaocid;
-        this.btaaopid = btaaopid;
-        this.btaid = btaid;
+    public AnnouncementApprovedOpinionList(String aaocid, String aaopid, String aid, String eid, int isapproved, String opinion, int orderby, long createtime, long updatetime) {
+        this.aaocid = aaocid;
+        this.aaopid = aaopid;
+        this.aid = aid;
         this.eid = eid;
         this.isapproved = isapproved;
         this.opinion = opinion;
@@ -34,28 +34,28 @@ public class BusinessTripApplicationApprovedOpinionList implements Parcelable{
         this.updatetime = updatetime;
     }
 
-    public String getBtaaocid() {
-        return btaaocid;
+    public String getAaocid() {
+        return aaocid;
     }
 
-    public void setBtaaocid(String btaaocid) {
-        this.btaaocid = btaaocid;
+    public void setAaocid(String aaocid) {
+        this.aaocid = aaocid;
     }
 
-    public String getBtaaopid() {
-        return btaaopid;
+    public String getAaopid() {
+        return aaopid;
     }
 
-    public void setBtaaopid(String btaaopid) {
-        this.btaaopid = btaaopid;
+    public void setAaopid(String aaopid) {
+        this.aaopid = aaopid;
     }
 
-    public String getBtaid() {
-        return btaid;
+    public String getAid() {
+        return aid;
     }
 
-    public void setBtaid(String btaid) {
-        this.btaid = btaid;
+    public void setAid(String aid) {
+        this.aid = aid;
     }
 
     public String getEid() {
@@ -108,10 +108,10 @@ public class BusinessTripApplicationApprovedOpinionList implements Parcelable{
 
     @Override
     public String toString() {
-        return "BusinessTripApplicationApprovedOpinionList{" +
-                "btaaocid='" + btaaocid + '\'' +
-                ", btaaopid='" + btaaopid + '\'' +
-                ", btaid='" + btaid + '\'' +
+        return "AnnouncementApprovedOpinionList{" +
+                "aaocid='" + aaocid + '\'' +
+                ", aaopid='" + aaopid + '\'' +
+                ", aid='" + aid + '\'' +
                 ", eid='" + eid + '\'' +
                 ", isapproved=" + isapproved +
                 ", opinion='" + opinion + '\'' +
@@ -122,30 +122,31 @@ public class BusinessTripApplicationApprovedOpinionList implements Parcelable{
     }
 
      //创建带参Parcel构造器
-         protected BusinessTripApplicationApprovedOpinionList(Parcel in) {
+         protected AnnouncementApprovedOpinionList(Parcel in) {
              //这里read字段的顺序要与write的顺序一致
 
-             btaaocid = in.readString();
-             btaaopid = in.readString();
-             btaid = in.readString();
+             aaocid = in.readString();
+             aaopid = in.readString();
+             aid = in.readString();
              eid = in.readString();
              isapproved = in.readInt();
-             opinion =in.readString();
+             opinion = in.readString();
+
              orderby = in.readInt();
              createtime = in.readLong();
-             updatetime = in.readLong();
+              updatetime = in.readLong();
          }
 
          //创建常量Creator，并实现该接口的两个方法
-         public static final Creator<BusinessTripApplicationApprovedOpinionList> CREATOR = new Creator<BusinessTripApplicationApprovedOpinionList>() {
+         public static final Creator<AnnouncementApprovedOpinionList> CREATOR = new Creator<AnnouncementApprovedOpinionList>() {
              @Override
-             public BusinessTripApplicationApprovedOpinionList createFromParcel(Parcel in) {
-                 return new BusinessTripApplicationApprovedOpinionList(in);
+             public AnnouncementApprovedOpinionList createFromParcel(Parcel in) {
+                 return new AnnouncementApprovedOpinionList(in);
              }
 
              @Override
-             public BusinessTripApplicationApprovedOpinionList[] newArray(int size) {
-                 return new BusinessTripApplicationApprovedOpinionList[size];
+             public AnnouncementApprovedOpinionList[] newArray(int size) {
+                 return new AnnouncementApprovedOpinionList[size];
              }
          };
 
@@ -156,18 +157,21 @@ public class BusinessTripApplicationApprovedOpinionList implements Parcelable{
 
          @Override
          public void writeToParcel(Parcel parcel, int i) {
-             parcel.writeString(btaaocid);
-             parcel.writeString(btaaopid);
-             parcel.writeString(btaid);
+             parcel.writeString(aaocid);
+             parcel.writeString(aaopid);
+             parcel.writeString(aid);
              parcel.writeString(eid);
              parcel.writeInt(isapproved);
              parcel.writeString(opinion);
+
+
              parcel.writeInt(orderby);
              parcel.writeLong(createtime);
              parcel.writeLong(updatetime);
          }
 
-         public static Creator<BusinessTripApplicationApprovedOpinionList> getCREATOR() {
+         public static Creator<AnnouncementApprovedOpinionList> getCREATOR() {
              return CREATOR;
          }
+
 }

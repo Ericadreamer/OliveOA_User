@@ -1,16 +1,10 @@
 package com.oliveoa.view.myapplication;
 
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.oliveoa.greendao.BusinessTripApplicationApprovedOpinionListDao;
 import com.oliveoa.greendao.BusinessTripApplicationDao;
@@ -24,11 +18,6 @@ import com.oliveoa.pojo.LeaveApplication;
 import com.oliveoa.pojo.LeaveApplicationApprovedOpinionList;
 import com.oliveoa.pojo.OvertimeApplication;
 import com.oliveoa.pojo.OvertimeApplicationApprovedOpinionList;
-import com.oliveoa.util.EntityManager;
-import com.oliveoa.view.R;
-import com.oliveoa.view.TabLayoutBottomActivity;
-
-import org.greenrobot.greendao.Property;
 
 import java.util.List;
 

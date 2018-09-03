@@ -23,7 +23,7 @@ import okhttp3.Response;
 public class LeaveApplicationService {
 
     //发起请假申请(begintime,endtime,reason,type,normalrest,swaprest,shouldrest,supplementrest,approvedMember[])
-    public StatusAndMsgJsonBean sentlapplication(String s,LeaveApplication leaveApplication,ArrayList<String> aeid ){
+    public StatusAndMsgJsonBean sentlapplication(String s,LeaveApplication leaveApplication,ArrayList<String> approvedMember){
         try {
             DateFormat dateFormat = new DateFormat();
             OkHttpClient client = new OkHttpClient();
@@ -36,7 +36,7 @@ public class LeaveApplicationService {
                     .add("swaprest",dateFormat.LongtoDate(leaveApplication.getSwapRest()))
                     .add("shouldrest",dateFormat.LongtoDate(leaveApplication.getShouldRest()))
                     .add("supplementrest",dateFormat.LongtoDate(leaveApplication.getSupplementRest()))
-                    .add("approvedMember",aeid.toString())
+                    .add("approvedMember",approvedMember.toString())
                     .build();
 
             Request request = new Request.Builder()

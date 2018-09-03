@@ -1,12 +1,15 @@
 package com.oliveoa.pojo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Keep;
 
 /* JSON 数据抽象为实体类 */
 @Entity
 @Keep
-public class ContactInfo {
+public class ContactInfo implements Parcelable{
     private String name;
     private String sex;
     private String birth;
@@ -162,4 +165,63 @@ public class ContactInfo {
                 ", updatetime=" + updatetime +
                 '}';
     }
+
+     //创建带参Parcel构造器
+         protected ContactInfo(Parcel in) {
+             //这里read字段的顺序要与write的顺序一致
+
+             name = in.readString();
+             sex = in.readString();
+             birth = in.readString();
+             tel = in.readString();
+             email = in.readString();
+             address = in.readString();
+             eid = in.readString();
+             dcid = in.readString();
+             pcid = in.readString();
+             id = in.readString();
+
+             orderby = in.readInt();
+             createtime = in.readLong();
+              updatetime = in.readLong();
+         }
+
+         //创建常量Creator，并实现该接口的两个方法
+         public static final Creator<ContactInfo> CREATOR = new Creator<ContactInfo>() {
+             @Override
+             public ContactInfo createFromParcel(Parcel in) {
+                 return new ContactInfo(in);
+             }
+
+             @Override
+             public ContactInfo[] newArray(int size) {
+                 return new ContactInfo[size];
+             }
+         };
+
+         @Override
+         public int describeContents() {
+             return 0;
+         }
+
+         @Override
+         public void writeToParcel(Parcel parcel, int i) {
+             parcel.writeString(name);
+             parcel.writeString(sex);
+             parcel.writeString(birth);
+              parcel.writeString(tel);
+             parcel.writeString(email);
+              parcel.writeString(address);
+             parcel.writeString(eid);
+             parcel.writeString(dcid);
+             parcel.writeString(pcid);
+             parcel.writeString(id);
+             parcel.writeInt(orderby);
+             parcel.writeLong(createtime);
+             parcel.writeLong(updatetime);
+         }
+
+         public static Creator<ContactInfo> getCREATOR() {
+             return CREATOR;
+         }
 }

@@ -1,8 +1,6 @@
 package com.oliveoa.view.myapplication;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,19 +25,16 @@ import com.oliveoa.pojo.OvertimeApplicationApprovedOpinionList;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import static android.content.Context.MODE_PRIVATE;
 
 
 public class WaitActivity extends Fragment {
 
     private Context mContext;
     //装在所有动态添加的Item的LinearLayout容器
-    private LinearLayout addWaitlistView;
+   /* private LinearLayout addWaitlistView;
     private TextView tvtype,tvcontent;  //请假类型和请假内容
-    private ImageView ivpicture;  //请假类型对应的图片
+    private ImageView ivpicture;  //请假类型对应的图片*/
     private View rootview;
     private List<OvertimeApplication> oa;
     private List<OvertimeApplicationApprovedOpinionList> oaaol;
@@ -67,12 +62,12 @@ public class WaitActivity extends Fragment {
 
 
     private void initView() {
-        ivpicture = (ImageView) rootview.findViewById(R.id.application_pic);
+        /*ivpicture = (ImageView) rootview.findViewById(R.id.application_pic);
         tvtype = (TextView) rootview.findViewById(R.id.item_type);
         tvcontent = (TextView) rootview.findViewById(R.id.item_content);
-        addWaitlistView = (LinearLayout) rootview.findViewById(R.id.wait_list);
+        addWaitlistView = (LinearLayout) rootview.findViewById(R.id.wait_list);*/
 
-        addViewItem(null);
+        //addViewItem(null);
         initData();
     }
 
@@ -102,7 +97,7 @@ public class WaitActivity extends Fragment {
     /**
      * Item排序
      */
-    private void sortHotelViewItem() {
+  /*  private void sortHotelViewItem() {
         //获取LinearLayout里面所有的view
         for (int i = 0; i < addWaitlistView.getChildCount(); i++) {
             final View childAt = addWaitlistView.getChildAt(i);
@@ -117,10 +112,10 @@ public class WaitActivity extends Fragment {
                     }
             });
        }
-    }
+    }*/
 
     //添加ViewItem
-    private void addViewItem(View view) {
+   /* private void addViewItem(View view) {
         if (la == null&&bta==null&&oa==null) {//如果申请列表为0，加载空布局
             Toast.makeText(mContext, "当前没有申请！", Toast.LENGTH_SHORT).show();
         } else {//如果有申请则按数组大小加载布局
@@ -133,7 +128,7 @@ public class WaitActivity extends Fragment {
             sortHotelViewItem();
 
         }
-    }
+    }*/
 
     /**
      * Item加载数据

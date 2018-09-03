@@ -21,6 +21,8 @@ public class DaoMaster extends AbstractDaoMaster {
 
     /** Creates underlying database table using DAOs. */
     public static void createAllTables(Database db, boolean ifNotExists) {
+        AnnouncementApprovedOpinionListDao.createTable(db, ifNotExists);
+        AnnouncementInfoDao.createTable(db, ifNotExists);
         BusinessTripApplicationDao.createTable(db, ifNotExists);
         BusinessTripApplicationApprovedOpinionListDao.createTable(db, ifNotExists);
         ContactInfoDao.createTable(db, ifNotExists);
@@ -38,6 +40,8 @@ public class DaoMaster extends AbstractDaoMaster {
 
     /** Drops underlying database table using DAOs. */
     public static void dropAllTables(Database db, boolean ifExists) {
+        AnnouncementApprovedOpinionListDao.dropTable(db, ifExists);
+        AnnouncementInfoDao.dropTable(db, ifExists);
         BusinessTripApplicationDao.dropTable(db, ifExists);
         BusinessTripApplicationApprovedOpinionListDao.dropTable(db, ifExists);
         ContactInfoDao.dropTable(db, ifExists);
@@ -69,6 +73,8 @@ public class DaoMaster extends AbstractDaoMaster {
 
     public DaoMaster(Database db) {
         super(db, SCHEMA_VERSION);
+        registerDaoClass(AnnouncementApprovedOpinionListDao.class);
+        registerDaoClass(AnnouncementInfoDao.class);
         registerDaoClass(BusinessTripApplicationDao.class);
         registerDaoClass(BusinessTripApplicationApprovedOpinionListDao.class);
         registerDaoClass(ContactInfoDao.class);

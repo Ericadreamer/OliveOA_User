@@ -25,7 +25,7 @@ import okhttp3.Response;
 public class OvertimeApplictionService {
 
     //发起加班申请(reason,begintime,endtime(str),approvedMember[])
-    public StatusAndMsgJsonBean sentotapplication(String s,OvertimeApplication overtimeApplication,ArrayList<String> aeid){
+    public StatusAndMsgJsonBean sentotapplication(String s,OvertimeApplication overtimeApplication,ArrayList<String> approvedMember){
         try {
             DateFormat dateFormat = new DateFormat();
             OkHttpClient client = new OkHttpClient();
@@ -33,7 +33,7 @@ public class OvertimeApplictionService {
                     .add("reason",overtimeApplication.getReason())
                     .add("begintime",dateFormat.LongtoDate(overtimeApplication.getBegintime()))
                     .add("endtime",dateFormat.LongtoDate(overtimeApplication.getEndtime()))
-                    .add("approvedMember",aeid.toString())
+                    .add("approvedMember",approvedMember.toString())
                     .build();
 
             Request request = new Request.Builder()

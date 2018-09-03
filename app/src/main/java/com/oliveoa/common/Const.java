@@ -49,5 +49,14 @@ public class Const {
     public static final String WORK_INFOSUBMITED_SEARCH =HOSTPATH+"/oliveoa/employee/work/get_work_detail.do";
     public static final String WORK_ALL_SUBMITED_SEARCH = HOSTPATH +"/oliveoa/employee/work/get_approved_work.do";
 
+    //公告
+    public static final String ANNOUNCEMENT_APPROVED = HOSTPATH + "/oliveoa/employee/approved_announcement.do";
+    public static final String ANNOUNCEMENT_SUBMITED = HOSTPATH + "/oliveoa/employee/submit_announcement.do";
+    public static final String ANNOUNCEMENT_INFO = HOSTPATH + "/oliveoa/employee/get_announcement_details.do";
+    public static final String ANNOUNCEMENT_PUBLISHED_SEARCH= HOSTPATH + "/oliveoa/employee/get_announcement_publish.do";
+    public static final String ANNOUNCEMENT_APPROVED_SEARCH= HOSTPATH + "/oliveoa/employee/get_announcement_need_approved.do";
+    public static final String ANNOUNCEMENT_ISUBMITED_SEARCH= HOSTPATH + "/oliveoa/employee/get_announcement_Isubmit.do";
+
+
 
 }

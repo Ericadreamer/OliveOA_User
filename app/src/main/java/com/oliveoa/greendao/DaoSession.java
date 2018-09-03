@@ -8,6 +8,8 @@ import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.identityscope.IdentityScopeType;
 import org.greenrobot.greendao.internal.DaoConfig;
 
+import com.oliveoa.pojo.AnnouncementApprovedOpinionList;
+import com.oliveoa.pojo.AnnouncementInfo;
 import com.oliveoa.pojo.BusinessTripApplication;
 import com.oliveoa.pojo.BusinessTripApplicationApprovedOpinionList;
 import com.oliveoa.pojo.ContactInfo;
@@ -22,6 +24,8 @@ import com.oliveoa.pojo.OvertimeApplicationApprovedOpinionList;
 import com.oliveoa.pojo.UserLoginInfo;
 import com.oliveoa.pojo.WorkDetail;
 
+import com.oliveoa.greendao.AnnouncementApprovedOpinionListDao;
+import com.oliveoa.greendao.AnnouncementInfoDao;
 import com.oliveoa.greendao.BusinessTripApplicationDao;
 import com.oliveoa.greendao.BusinessTripApplicationApprovedOpinionListDao;
 import com.oliveoa.greendao.ContactInfoDao;
@@ -45,6 +49,8 @@ import com.oliveoa.greendao.WorkDetailDao;
  */
 public class DaoSession extends AbstractDaoSession {
 
+    private final DaoConfig announcementApprovedOpinionListDaoConfig;
+    private final DaoConfig announcementInfoDaoConfig;
     private final DaoConfig businessTripApplicationDaoConfig;
     private final DaoConfig businessTripApplicationApprovedOpinionListDaoConfig;
     private final DaoConfig contactInfoDaoConfig;
@@ -59,6 +65,8 @@ public class DaoSession extends AbstractDaoSession {
     private final DaoConfig userLoginInfoDaoConfig;
     private final DaoConfig workDetailDaoConfig;
 
+    private final AnnouncementApprovedOpinionListDao announcementApprovedOpinionListDao;
+    private final AnnouncementInfoDao announcementInfoDao;
     private final BusinessTripApplicationDao businessTripApplicationDao;
     private final BusinessTripApplicationApprovedOpinionListDao businessTripApplicationApprovedOpinionListDao;
     private final ContactInfoDao contactInfoDao;
@@ -76,6 +84,12 @@ public class DaoSession extends AbstractDaoSession {
     public DaoSession(Database db, IdentityScopeType type, Map<Class<? extends AbstractDao<?, ?>>, DaoConfig>
             daoConfigMap) {
         super(db);
+
+        announcementApprovedOpinionListDaoConfig = daoConfigMap.get(AnnouncementApprovedOpinionListDao.class).clone();
+        announcementApprovedOpinionListDaoConfig.initIdentityScope(type);
+
+        announcementInfoDaoConfig = daoConfigMap.get(AnnouncementInfoDao.class).clone();
+        announcementInfoDaoConfig.initIdentityScope(type);
 
         businessTripApplicationDaoConfig = daoConfigMap.get(BusinessTripApplicationDao.class).clone();
         businessTripApplicationDaoConfig.initIdentityScope(type);
@@ -116,6 +130,8 @@ public class DaoSession extends AbstractDaoSession {
         workDetailDaoConfig = daoConfigMap.get(WorkDetailDao.class).clone();
         workDetailDaoConfig.initIdentityScope(type);
 
+        announcementApprovedOpinionListDao = new AnnouncementApprovedOpinionListDao(announcementApprovedOpinionListDaoConfig, this);
+        announcementInfoDao = new AnnouncementInfoDao(announcementInfoDaoConfig, this);
         businessTripApplicationDao = new BusinessTripApplicationDao(businessTripApplicationDaoConfig, this);
         businessTripApplicationApprovedOpinionListDao = new BusinessTripApplicationApprovedOpinionListDao(businessTripApplicationApprovedOpinionListDaoConfig, this);
         contactInfoDao = new ContactInfoDao(contactInfoDaoConfig, this);
@@ -130,6 +146,8 @@ public class DaoSession extends AbstractDaoSession {
         userLoginInfoDao = new UserLoginInfoDao(userLoginInfoDaoConfig, this);
         workDetailDao = new WorkDetailDao(workDetailDaoConfig, this);
 
+        registerDao(AnnouncementApprovedOpinionList.class, announcementApprovedOpinionListDao);
+        registerDao(AnnouncementInfo.class, announcementInfoDao);
         registerDao(BusinessTripApplication.class, businessTripApplicationDao);
         registerDao(BusinessTripApplicationApprovedOpinionList.class, businessTripApplicationApprovedOpinionListDao);
         registerDao(ContactInfo.class, contactInfoDao);
@@ -146,6 +164,8 @@ public class DaoSession extends AbstractDaoSession {
     }
     
     public void clear() {
+        announcementApprovedOpinionListDaoConfig.clearIdentityScope();
+        announcementInfoDaoConfig.clearIdentityScope();
         businessTripApplicationDaoConfig.clearIdentityScope();
         businessTripApplicationApprovedOpinionListDaoConfig.clearIdentityScope();
         contactInfoDaoConfig.clearIdentityScope();
@@ -159,6 +179,14 @@ public class DaoSession extends AbstractDaoSession {
         overtimeApplicationApprovedOpinionListDaoConfig.clearIdentityScope();
         userLoginInfoDaoConfig.clearIdentityScope();
         workDetailDaoConfig.clearIdentityScope();
+    }
+
+    public AnnouncementApprovedOpinionListDao getAnnouncementApprovedOpinionListDao() {
+        return announcementApprovedOpinionListDao;
+    }
+
+    public AnnouncementInfoDao getAnnouncementInfoDao() {
+        return announcementInfoDao;
     }
 
     public BusinessTripApplicationDao getBusinessTripApplicationDao() {

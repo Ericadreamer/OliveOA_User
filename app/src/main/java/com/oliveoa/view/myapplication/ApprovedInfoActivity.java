@@ -7,17 +7,13 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.oliveoa.greendao.ContactInfoDao;
 import com.oliveoa.greendao.OvertimeApplicationApprovedOpinionListDao;
-import com.oliveoa.greendao.OvertimeApplicationDao;
 import com.oliveoa.pojo.ContactInfo;
-import com.oliveoa.pojo.OvertimeApplication;
 import com.oliveoa.pojo.OvertimeApplicationApprovedOpinionList;
-import com.oliveoa.util.DateFormat;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
 

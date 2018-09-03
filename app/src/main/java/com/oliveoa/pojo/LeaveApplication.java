@@ -1,11 +1,14 @@
 package com.oliveoa.pojo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Keep;
 import org.greenrobot.greendao.annotation.Transient;
 
 @Entity@Keep
-public class LeaveApplication {
+public class LeaveApplication implements Parcelable{
 
     private String laid;
     private String eid;
@@ -178,4 +181,63 @@ public class LeaveApplication {
                 ", updatetime=" + updatetime +
                 '}';
     }
+
+     //创建带参Parcel构造器
+         protected LeaveApplication(Parcel in) {
+             //这里read字段的顺序要与write的顺序一致
+
+             laid = in.readString();
+             eid = in.readString();
+             begintime = in.readLong();
+             endtime = in.readLong();
+             reason = in.readString();
+             type = in.readInt();
+             normalRest = in.readLong();
+             swapRest = in.readLong();
+             shouldRest = in.readLong();
+             supplementRest = in.readLong();
+             orderby = in.readInt();
+             createtime = in.readLong();
+              updatetime = in.readLong();
+         }
+
+         //创建常量Creator，并实现该接口的两个方法
+         public static final Creator<LeaveApplication> CREATOR = new Creator<LeaveApplication>() {
+             @Override
+             public LeaveApplication createFromParcel(Parcel in) {
+                 return new LeaveApplication(in);
+             }
+
+             @Override
+             public LeaveApplication[] newArray(int size) {
+                 return new LeaveApplication[size];
+             }
+         };
+
+         @Override
+         public int describeContents() {
+             return 0;
+         }
+
+         @Override
+         public void writeToParcel(Parcel parcel, int i) {
+             parcel.writeString(laid);
+             parcel.writeString(eid);
+             parcel.writeLong(begintime);
+             parcel.writeLong(endtime);
+             parcel.writeString(reason);
+             parcel.writeInt(type);
+             parcel.writeLong(normalRest);
+             parcel.writeLong(swapRest);
+             parcel.writeLong(shouldRest);
+             parcel.writeLong(supplementRest);
+
+             parcel.writeInt(orderby);
+             parcel.writeLong(createtime);
+             parcel.writeLong(updatetime);
+         }
+
+         public static Creator<LeaveApplication> getCREATOR() {
+             return CREATOR;
+         }
 }

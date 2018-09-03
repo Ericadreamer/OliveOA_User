@@ -1,12 +1,15 @@
 package com.oliveoa.pojo;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Keep;
 
 @Entity
 @Keep
-public class LeaveApplicationApprovedOpinionList {
+public class LeaveApplicationApprovedOpinionList implements Parcelable{
     private String laaocid;
     private String laaopid;
     private String laid;
@@ -118,4 +121,56 @@ public class LeaveApplicationApprovedOpinionList {
                 ", updatetime=" + updatetime +
                 '}';
     }
+
+     //创建带参Parcel构造器
+         protected LeaveApplicationApprovedOpinionList(Parcel in) {
+             //这里read字段的顺序要与write的顺序一致
+
+             laaocid = in.readString();
+             laaopid = in.readString();
+             laid = in.readString();
+             eid = in.readString();
+             isapproved = in.readInt();
+             opinion = in.readString();
+
+             orderby = in.readInt();
+             createtime = in.readLong();
+              updatetime = in.readLong();
+         }
+
+         //创建常量Creator，并实现该接口的两个方法
+         public static final Creator<LeaveApplicationApprovedOpinionList> CREATOR = new Creator<LeaveApplicationApprovedOpinionList>() {
+             @Override
+             public LeaveApplicationApprovedOpinionList createFromParcel(Parcel in) {
+                 return new LeaveApplicationApprovedOpinionList(in);
+             }
+
+             @Override
+             public LeaveApplicationApprovedOpinionList[] newArray(int size) {
+                 return new LeaveApplicationApprovedOpinionList[size];
+             }
+         };
+
+         @Override
+         public int describeContents() {
+             return 0;
+         }
+
+         @Override
+         public void writeToParcel(Parcel parcel, int i) {
+             parcel.writeString(laaocid);
+             parcel.writeString(laaopid);
+             parcel.writeString(laid);
+             parcel.writeString(eid);
+             parcel.writeInt(isapproved);
+             parcel.writeString(opinion);
+
+             parcel.writeInt(orderby);
+             parcel.writeLong(createtime);
+             parcel.writeLong(updatetime);
+         }
+
+         public static Creator<LeaveApplicationApprovedOpinionList> getCREATOR() {
+             return CREATOR;
+         }
 }

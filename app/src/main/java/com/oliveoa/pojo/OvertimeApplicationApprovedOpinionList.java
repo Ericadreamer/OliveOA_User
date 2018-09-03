@@ -1,5 +1,8 @@
 package com.oliveoa.pojo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Keep;
 
@@ -9,7 +12,7 @@ import org.greenrobot.greendao.annotation.Keep;
  */
 @Entity
 @Keep
-public class OvertimeApplicationApprovedOpinionList {
+public class OvertimeApplicationApprovedOpinionList implements Parcelable{
     private String oaaocid;
     private String oaaopid;
     private String oaid;
@@ -121,4 +124,56 @@ public class OvertimeApplicationApprovedOpinionList {
                 ", updatetime=" + updatetime +
                 '}';
     }
+
+     //创建带参Parcel构造器
+         protected OvertimeApplicationApprovedOpinionList(Parcel in) {
+             //这里read字段的顺序要与write的顺序一致
+             oaaocid = in.readString();
+             oaaopid = in.readString();
+             oaid = in.readString();
+             eid = in.readString();
+             isapproved = in.readInt();
+             opinion = in.readString();
+
+             orderby = in.readInt();
+             createtime = in.readLong();
+              updatetime = in.readLong();
+         }
+
+         //创建常量Creator，并实现该接口的两个方法
+         public static final Creator<OvertimeApplicationApprovedOpinionList> CREATOR = new Creator<OvertimeApplicationApprovedOpinionList>() {
+             @Override
+             public OvertimeApplicationApprovedOpinionList createFromParcel(Parcel in) {
+                 return new OvertimeApplicationApprovedOpinionList(in);
+             }
+
+             @Override
+             public OvertimeApplicationApprovedOpinionList[] newArray(int size) {
+                 return new OvertimeApplicationApprovedOpinionList[size];
+             }
+         };
+
+         @Override
+         public int describeContents() {
+             return 0;
+         }
+
+         @Override
+         public void writeToParcel(Parcel parcel, int i) {
+             parcel.writeString(oaaocid);
+             parcel.writeString(oaaopid);
+             parcel.writeString(oaid);
+             parcel.writeString(eid);
+             parcel.writeInt(isapproved);
+             parcel.writeString(opinion);
+
+
+             parcel.writeInt(orderby);
+             parcel.writeLong(createtime);
+             parcel.writeLong(updatetime);
+         }
+
+         public static Creator<OvertimeApplicationApprovedOpinionList> getCREATOR() {
+             return CREATOR;
+         }
 }

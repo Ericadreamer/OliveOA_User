@@ -19,7 +19,6 @@ import com.oliveoa.pojo.OvertimeApplication;
 import com.oliveoa.pojo.OvertimeApplicationApprovedOpinionList;
 import com.oliveoa.util.DateFormat;
 import com.oliveoa.util.EntityManager;
-import com.oliveoa.view.MainActivity;
 import com.oliveoa.view.R;
 
 import java.util.List;
@@ -74,10 +73,7 @@ public class OvertimeInfoActivity extends AppCompatActivity {
                 .list();
 
         oaaoldao = EntityManager.getInstance().getOvertimeApplicationApprovedOpinionListInfo();
-        oaaol = oaaoldao.queryBuilder()
-                .where(OvertimeApplicationApprovedOpinionListDao.Properties.Oaid.eq(oa.get(index).getOaid()) )
-                .orderDesc(OvertimeApplicationApprovedOpinionListDao.Properties.Orderby)
-                .list();
+
 
         cidao = EntityManager.getInstance().getContactInfo();
         ci = cidao.queryBuilder()

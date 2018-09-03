@@ -1,11 +1,14 @@
 package com.oliveoa.pojo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Keep;
 
 @Entity
 @Keep
-public class IssueWork {
+public class IssueWork implements Parcelable{
     private String iwid;
     private String eid;
     private String content;
@@ -106,4 +109,54 @@ public class IssueWork {
                 ", updatetime=" + updatetime +
                 '}';
     }
+     //创建带参Parcel构造器
+         protected IssueWork(Parcel in) {
+             //这里read字段的顺序要与write的顺序一致
+
+             iwid = in.readString();
+             eid = in.readString();
+             content = in.readString();
+             begintime = in.readLong();
+             endtime  = in.readLong();
+
+             orderby = in.readInt();
+             createtime = in.readLong();
+              updatetime = in.readLong();
+         }
+
+         //创建常量Creator，并实现该接口的两个方法
+         public static final Creator<IssueWork> CREATOR = new Creator<IssueWork>() {
+             @Override
+             public IssueWork createFromParcel(Parcel in) {
+                 return new IssueWork(in);
+             }
+
+             @Override
+             public IssueWork[] newArray(int size) {
+                 return new IssueWork[size];
+             }
+         };
+
+         @Override
+         public int describeContents() {
+             return 0;
+         }
+
+         @Override
+         public void writeToParcel(Parcel parcel, int i) {
+             parcel.writeString(iwid);
+             parcel.writeString(eid);
+             parcel.writeString(content);
+             parcel.writeLong(begintime);
+             parcel.writeLong(endtime);
+
+
+             parcel.writeInt(orderby);
+             parcel.writeLong(createtime);
+             parcel.writeLong(updatetime);
+         }
+
+         public static Creator<IssueWork> getCREATOR() {
+             return CREATOR;
+         }
 }

@@ -1,11 +1,14 @@
 package com.oliveoa.pojo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Keep;
 
 @Entity
 @Keep
-public class WorkDetail {
+public class WorkDetail implements Parcelable{
     private String swid;
     private String seid;
     private String aeid;
@@ -139,4 +142,59 @@ public class WorkDetail {
                 ", updatetime=" + updatetime +
                 '}';
     }
+
+     //创建带参Parcel构造器
+         protected WorkDetail(Parcel in) {
+             //这里read字段的顺序要与write的顺序一致
+
+            swid  = in.readString();
+            seid  = in.readString();
+            aeid  = in.readString();
+            content  = in.readString();
+            begintime  = in.readLong();
+            endtime = in.readLong();
+            isapproved = in.readInt();
+            opinion  = in.readString();
+
+             orderby = in.readInt();
+             createtime = in.readLong();
+              updatetime = in.readLong();
+         }
+
+         //创建常量Creator，并实现该接口的两个方法
+         public static final Creator<WorkDetail> CREATOR = new Creator<WorkDetail>() {
+             @Override
+             public WorkDetail createFromParcel(Parcel in) {
+                 return new WorkDetail(in);
+             }
+
+             @Override
+             public WorkDetail[] newArray(int size) {
+                 return new WorkDetail[size];
+             }
+         };
+
+         @Override
+         public int describeContents() {
+             return 0;
+         }
+
+         @Override
+         public void writeToParcel(Parcel parcel, int i) {
+             parcel.writeString(swid);
+             parcel.writeString(seid);
+             parcel.writeString(aeid);
+             parcel.writeString(content);
+             parcel.writeLong(begintime);
+             parcel.writeLong(endtime);
+             parcel.writeInt(isapproved);
+             parcel.writeString(opinion);
+             parcel.writeInt(orderby);
+             parcel.writeLong(createtime);
+             parcel.writeLong(updatetime);
+         }
+
+         public static Creator<WorkDetail> getCREATOR() {
+             return CREATOR;
+         }
 }

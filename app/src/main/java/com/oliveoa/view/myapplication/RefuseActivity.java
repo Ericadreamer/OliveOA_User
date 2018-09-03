@@ -3,9 +3,7 @@ package com.oliveoa.view.myapplication;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.oliveoa.greendao.BusinessTripApplicationDao;
-import com.oliveoa.greendao.LeaveApplicationDao;
-import com.oliveoa.greendao.OvertimeApplicationDao;
-import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
 
 public class RefuseActivity extends Fragment {
