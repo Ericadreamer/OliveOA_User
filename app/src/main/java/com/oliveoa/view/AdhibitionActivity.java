@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.oliveoa.view.R;
 import com.oliveoa.view.approval.MyApprovalActivity;
+import com.oliveoa.view.meetingmanagement.MyMeetingActivity;
 import com.oliveoa.view.myapplication.AddApplicationActivity;
 import com.oliveoa.view.myapplication.MyApplicationActivity;
 import com.oliveoa.view.myapplication.WaitActivity;
@@ -93,7 +94,7 @@ public class AdhibitionActivity extends Fragment {
         meeting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mContext, "您点击了会议管理", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mContext, "您点击了会议管理", Toast.LENGTH_SHORT).show();
                 meetinginfo();
             }
         });
@@ -214,6 +215,15 @@ public class AdhibitionActivity extends Fragment {
 
     //会议管理
     private void meetinginfo() {
+        final Intent it = new Intent(getActivity(), MyMeetingActivity.class);
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                startActivity(it); //执行
+            }
+        };
+        timer.schedule(task, 1000 * 0); //0秒后
 
     }
 
