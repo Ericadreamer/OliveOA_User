@@ -21,6 +21,7 @@ import com.oliveoa.view.R;
 import com.oliveoa.view.approval.MyApprovalActivity;
 import com.oliveoa.view.meetingmanagement.MyMeetingActivity;
 import com.oliveoa.view.myapplication.AddApplicationActivity;
+import com.oliveoa.view.myapplication.MainApplicationActivity;
 import com.oliveoa.view.myapplication.MyApplicationActivity;
 import com.oliveoa.view.myapplication.WaitActivity;
 import com.oliveoa.view.myapplication.WaitActivity1;
@@ -168,7 +169,7 @@ public class AdhibitionActivity extends Fragment {
 
     //我的申请
     private void applicationinfo() {
-        final Intent it = new Intent(getActivity(), MyApplicationActivity.class);
+        final Intent it = new Intent(getActivity(), MainApplicationActivity.class);
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             @Override

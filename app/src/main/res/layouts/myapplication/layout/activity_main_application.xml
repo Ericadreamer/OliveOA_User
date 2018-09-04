@@ -8,7 +8,7 @@
     android:layout_gravity="center_vertical"
     android:background="#f0f0f0"
     android:gravity="center"
-    tools:context="com.oliveoa.view.myapplication.MyApplicationActivity">
+    tools:context="com.oliveoa.view.myapplication.MainApplicationActivity">
 
 
     <LinearLayout
@@ -56,21 +56,35 @@
 
         </LinearLayout>
 
-        <!--顶部tab标签容器-->
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tl_indicator"
+        <!--1.Android:numColumns=”auto_fit” //GridView的列数设置为自动
+
+            2.android:columnWidth=”90dp ” //每列的宽度，也就是Item的宽度
+
+            3.android:stretchMode=”columnWidth”//缩放与列宽大小同步
+
+            4.android:verticalSpacing=”10dp” //两行之间的边距
+
+            5.android:horizontalSpacing=”10dp” //两列之间的边距 -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#fff"
-            android:elevation="@dimen/dp_3"
-            app:tabMode="fixed" />
+            android:background="#fff">
 
+        <GridView
+            android:id="@+id/gridview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:columnWidth="@dimen/dp_70"
+            android:gravity="center"
+            android:numColumns="3"
+            android:horizontalSpacing="6dp"
+            android:verticalSpacing="6dp"
+            android:stretchMode="columnWidth"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginBottom="@dimen/dp_20">
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/vp_content"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        </GridView>
+        </LinearLayout>
 
     </LinearLayout>
 </RelativeLayout>

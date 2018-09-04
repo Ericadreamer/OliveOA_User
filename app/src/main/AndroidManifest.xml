@@ -289,10 +289,15 @@
             android:name=".approval.GoodsUndisposedActivity"
             android:exported="true"
             android:theme="@style/HomeTheme" />
-        <activity android:name=".meetingmanagement.MyMeetingActivity"
+        <activity
+            android:name=".meetingmanagement.MyMeetingActivity"
             android:exported="true"
-            android:theme="@style/HomeTheme"/>
-        <activity android:name=".meetingmanagement.MyMeetingInfoActivity"
+            android:theme="@style/HomeTheme" />
+        <activity
+            android:name=".meetingmanagement.MyMeetingInfoActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme" />
+        <activity android:name=".myapplication.MainApplicationActivity"
             android:exported="true"
             android:theme="@style/HomeTheme"></activity>
     </application>
