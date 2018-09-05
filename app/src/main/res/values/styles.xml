@@ -21,6 +21,12 @@
         <item name="colorAccent">@color/colorPrimary</item>
     </style>
 
+    <style name="NoteTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/background</item>
+        <item name="colorPrimaryDark">@color/background</item>
+        <item name="colorAccent">@color/background</item>
+    </style>
+
     <!--加载对话窗-->
     <style name="BaseDialog" parent="@android:style/Theme.Dialog"/>
     <style name="Theme.Light.LoadingDialog" parent="@style/BaseDialog">

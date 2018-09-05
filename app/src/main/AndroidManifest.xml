@@ -297,9 +297,16 @@
             android:name=".meetingmanagement.MyMeetingInfoActivity"
             android:exported="true"
             android:theme="@style/HomeTheme" />
-        <activity android:name=".myapplication.MainApplicationActivity"
+        <activity
+            android:name=".myapplication.MainApplicationActivity"
             android:exported="true"
-            android:theme="@style/HomeTheme"></activity>
+            android:theme="@style/HomeTheme" />
+        <activity android:name=".note.MyNoteActivity"
+            android:exported="true"
+            android:theme="@style/NoteTheme"/>
+        <activity android:name=".note.EditNoteActivity"
+            android:exported="true"
+            android:theme="@style/NoteTheme"></activity>
     </application>
 
 </manifest>

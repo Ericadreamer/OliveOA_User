@@ -25,6 +25,7 @@ import com.oliveoa.view.myapplication.MainApplicationActivity;
 import com.oliveoa.view.myapplication.MyApplicationActivity;
 import com.oliveoa.view.myapplication.WaitActivity;
 import com.oliveoa.view.myapplication.WaitActivity1;
+import com.oliveoa.view.note.MyNoteActivity;
 import com.oliveoa.view.workschedule.MyWorkActivity;
 
 import java.util.Timer;
@@ -105,7 +106,7 @@ public class AdhibitionActivity extends Fragment {
         note.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mContext, "您点击了便签", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mContext, "您点击了便签", Toast.LENGTH_SHORT).show();
                 noteinfo();
             }
         });
@@ -230,6 +231,15 @@ public class AdhibitionActivity extends Fragment {
 
     //便签
     private void noteinfo() {
+        final Intent it = new Intent(getActivity(), MyNoteActivity.class);
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                startActivity(it); //执行
+            }
+        };
+        timer.schedule(task, 1000 * 0); //0秒后
 
     }
 
