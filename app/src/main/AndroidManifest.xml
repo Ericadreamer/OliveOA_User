@@ -34,30 +34,24 @@
             android:exported="true"
             android:label="@string/home"
             android:theme="@style/AppTheme">
-
-            <!--
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            -->
         </activity>
         <activity
             android:name=".LoginActivity"
             android:exported="true"
-            android:theme="@style/LoginTheme" />
-        <activity
-            android:name=".TabLayoutBottomActivity"
-            android:allowBackup="true"
-            android:label="@string/home_name"
-            android:supportsRtl="true"
-            android:theme="@style/AppTheme">
+            android:theme="@style/LoginTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".TabLayoutBottomActivity"
+            android:allowBackup="true"
+            android:label="@string/home_name"
+            android:exported="true"
+            android:supportsRtl="true"
+            android:theme="@style/AppTheme">
         </activity>
         <activity
             android:name=".myapplication.AddApplicationActivity"

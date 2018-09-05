@@ -48,7 +48,7 @@ public class LoginService {
                     .build();
             Request request = new Request.Builder().url(Const.User_LOGIN).post(body).build();
             Response response = client.newCall(request).execute();
-            System.out.println(response.body().string());
+            //System.out.println(response.body().string());
 
             Headers headers = response.headers();
             Log.i("info_respons.headers",headers+"");
