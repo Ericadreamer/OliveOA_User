@@ -10,6 +10,7 @@ import org.greenrobot.greendao.internal.DaoConfig;
 
 import com.oliveoa.pojo.AnnouncementApprovedOpinionList;
 import com.oliveoa.pojo.AnnouncementInfo;
+import com.oliveoa.pojo.Application;
 import com.oliveoa.pojo.BusinessTripApplication;
 import com.oliveoa.pojo.BusinessTripApplicationApprovedOpinionList;
 import com.oliveoa.pojo.ContactInfo;
@@ -26,6 +27,7 @@ import com.oliveoa.pojo.WorkDetail;
 
 import com.oliveoa.greendao.AnnouncementApprovedOpinionListDao;
 import com.oliveoa.greendao.AnnouncementInfoDao;
+import com.oliveoa.greendao.ApplicationDao;
 import com.oliveoa.greendao.BusinessTripApplicationDao;
 import com.oliveoa.greendao.BusinessTripApplicationApprovedOpinionListDao;
 import com.oliveoa.greendao.ContactInfoDao;
@@ -51,6 +53,7 @@ public class DaoSession extends AbstractDaoSession {
 
     private final DaoConfig announcementApprovedOpinionListDaoConfig;
     private final DaoConfig announcementInfoDaoConfig;
+    private final DaoConfig applicationDaoConfig;
     private final DaoConfig businessTripApplicationDaoConfig;
     private final DaoConfig businessTripApplicationApprovedOpinionListDaoConfig;
     private final DaoConfig contactInfoDaoConfig;
@@ -67,6 +70,7 @@ public class DaoSession extends AbstractDaoSession {
 
     private final AnnouncementApprovedOpinionListDao announcementApprovedOpinionListDao;
     private final AnnouncementInfoDao announcementInfoDao;
+    private final ApplicationDao applicationDao;
     private final BusinessTripApplicationDao businessTripApplicationDao;
     private final BusinessTripApplicationApprovedOpinionListDao businessTripApplicationApprovedOpinionListDao;
     private final ContactInfoDao contactInfoDao;
@@ -90,6 +94,9 @@ public class DaoSession extends AbstractDaoSession {
 
         announcementInfoDaoConfig = daoConfigMap.get(AnnouncementInfoDao.class).clone();
         announcementInfoDaoConfig.initIdentityScope(type);
+
+        applicationDaoConfig = daoConfigMap.get(ApplicationDao.class).clone();
+        applicationDaoConfig.initIdentityScope(type);
 
         businessTripApplicationDaoConfig = daoConfigMap.get(BusinessTripApplicationDao.class).clone();
         businessTripApplicationDaoConfig.initIdentityScope(type);
@@ -132,6 +139,7 @@ public class DaoSession extends AbstractDaoSession {
 
         announcementApprovedOpinionListDao = new AnnouncementApprovedOpinionListDao(announcementApprovedOpinionListDaoConfig, this);
         announcementInfoDao = new AnnouncementInfoDao(announcementInfoDaoConfig, this);
+        applicationDao = new ApplicationDao(applicationDaoConfig, this);
         businessTripApplicationDao = new BusinessTripApplicationDao(businessTripApplicationDaoConfig, this);
         businessTripApplicationApprovedOpinionListDao = new BusinessTripApplicationApprovedOpinionListDao(businessTripApplicationApprovedOpinionListDaoConfig, this);
         contactInfoDao = new ContactInfoDao(contactInfoDaoConfig, this);
@@ -148,6 +156,7 @@ public class DaoSession extends AbstractDaoSession {
 
         registerDao(AnnouncementApprovedOpinionList.class, announcementApprovedOpinionListDao);
         registerDao(AnnouncementInfo.class, announcementInfoDao);
+        registerDao(Application.class, applicationDao);
         registerDao(BusinessTripApplication.class, businessTripApplicationDao);
         registerDao(BusinessTripApplicationApprovedOpinionList.class, businessTripApplicationApprovedOpinionListDao);
         registerDao(ContactInfo.class, contactInfoDao);
@@ -166,6 +175,7 @@ public class DaoSession extends AbstractDaoSession {
     public void clear() {
         announcementApprovedOpinionListDaoConfig.clearIdentityScope();
         announcementInfoDaoConfig.clearIdentityScope();
+        applicationDaoConfig.clearIdentityScope();
         businessTripApplicationDaoConfig.clearIdentityScope();
         businessTripApplicationApprovedOpinionListDaoConfig.clearIdentityScope();
         contactInfoDaoConfig.clearIdentityScope();
@@ -187,6 +197,10 @@ public class DaoSession extends AbstractDaoSession {
 
     public AnnouncementInfoDao getAnnouncementInfoDao() {
         return announcementInfoDao;
+    }
+
+    public ApplicationDao getApplicationDao() {
+        return applicationDao;
     }
 
     public BusinessTripApplicationDao getBusinessTripApplicationDao() {

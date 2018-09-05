@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.*;
 
@@ -203,6 +204,7 @@ public class LoginActivity extends AppCompatActivity
 
                 String idvalu1e = et_name.getText().toString().trim();
                 String pwdvalue = et_password.getText().toString().trim();
+                Log.e("user&pwd=",idvalu1e+"-----"+pwdvalue);
                 LoginService loginService = new LoginService();
                 HttpResponseObject<ContactInfo> httpResponseObject = loginService.login(idvalu1e,pwdvalue);
                 System.out.println("httpResponseObject.getStatus() = "+httpResponseObject.getStatus());

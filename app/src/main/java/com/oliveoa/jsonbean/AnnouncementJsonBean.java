@@ -1,13 +1,17 @@
 package com.oliveoa.jsonbean;
 
-public class AnnouncementJsonBean {
-    private int status;
-    private AnnouncementDataJsonBean data;
+import com.oliveoa.pojo.AnnouncementInfo;
 
-    public AnnouncementJsonBean() {
+import java.util.ArrayList;
+
+public class AnnouncementJsonBean  {
+    private int status;
+    private ArrayList<AnnouncementInfo> data;
+
+    public AnnouncementJsonBean () {
     }
 
-    public AnnouncementJsonBean(int status, AnnouncementDataJsonBean data) {
+    public AnnouncementJsonBean (int status, ArrayList<AnnouncementInfo> data) {
         this.status = status;
         this.data = data;
     }
@@ -20,17 +24,17 @@ public class AnnouncementJsonBean {
         this.status = status;
     }
 
-    public AnnouncementDataJsonBean getData() {
+    public ArrayList<AnnouncementInfo> getData() {
         return data;
     }
 
-    public void setData(AnnouncementDataJsonBean data) {
+    public void setData(ArrayList<AnnouncementInfo> data) {
         this.data = data;
     }
 
     @Override
     public String toString() {
-        return "AnnouncementJsonBean{" +
+        return "AnnouncementJsonBean {" +
                 "status=" + status +
                 ", data=" + data +
                 '}';

@@ -4,12 +4,16 @@ package com.oliveoa.pojo;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Keep;
+
+@Keep
+@Entity
 public class Application implements Parcelable{
     private String describe;
     private String aid;
     private int type;
     private int status;
-
 
     public Application() {
     }

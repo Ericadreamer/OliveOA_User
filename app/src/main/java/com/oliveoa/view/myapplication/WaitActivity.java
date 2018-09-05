@@ -3,6 +3,8 @@ package com.oliveoa.view.myapplication;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +15,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.oliveoa.Adapter.MyApplicationAdapter;
 import com.oliveoa.greendao.BusinessTripApplicationDao;
 import com.oliveoa.greendao.LeaveApplicationDao;
 import com.oliveoa.greendao.OvertimeApplicationDao;
+import com.oliveoa.pojo.Application;
 import com.oliveoa.pojo.BusinessTripApplication;
 import com.oliveoa.pojo.BusinessTripApplicationApprovedOpinionList;
 import com.oliveoa.pojo.LeaveApplication;
@@ -25,6 +29,7 @@ import com.oliveoa.pojo.OvertimeApplicationApprovedOpinionList;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -48,6 +53,9 @@ public class WaitActivity extends Fragment {
     private OvertimeApplicationDao oaDao;
 
     private String TAG = this.getClass().getSimpleName();
+    private ArrayList<Application> applicationList;
+    private MyApplicationAdapter adapter;
+    private RecyclerView recyclerView;
 
     @Nullable
     @Override
@@ -55,8 +63,11 @@ public class WaitActivity extends Fragment {
 
         rootview = inflater.inflate(R.layout.activity_wait, container, false);
         this.mContext = getActivity();
-        initView();
+        applicationList = getArguments().getParcelableArrayList("application");
+        Log.e(TAG,"applicatinList"+applicationList);
 
+
+        initView();
         return rootview;
     }
 
@@ -68,29 +79,18 @@ public class WaitActivity extends Fragment {
         addWaitlistView = (LinearLayout) rootview.findViewById(R.id.wait_list);*/
 
         //addViewItem(null);
+        adapter=new MyApplicationAdapter(getContext(),applicationList);
+        LinearLayoutManager layoutManager=new LinearLayoutManager(getContext());
+        recyclerView = (RecyclerView)rootview.findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(adapter);
+
+
         initData();
     }
 
     private void initData(){
-        btaDao = EntityManager.getInstance().getBusinessTripApplicationInfo();
-        laDao = EntityManager.getInstance().getLeaveApplicationInfo();
-        oaDao = EntityManager.getInstance().getOvertimeApplicationInfo();
-
-        la = laDao.queryBuilder()
-                .orderAsc(LeaveApplicationDao.Properties.Orderby)
-                .list();
-
-        oa = oaDao.queryBuilder()
-                .orderAsc(OvertimeApplicationDao.Properties.Orderby)
-                .list();
-
-        bta = btaDao.queryBuilder()
-                .orderAsc(BusinessTripApplicationDao.Properties.Orderby)
-                .list();
-
-        Log.i("la:",la.toString());
-        Log.i("oa:",oa.toString());
-        Log.i("bta:",bta.toString());
 
     }
 

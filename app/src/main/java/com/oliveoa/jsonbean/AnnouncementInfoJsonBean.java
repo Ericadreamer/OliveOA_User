@@ -1,42 +1,43 @@
 package com.oliveoa.jsonbean;
 
+import com.oliveoa.pojo.AnnouncementApprovedOpinionList;
 import com.oliveoa.pojo.AnnouncementInfo;
 
 import java.util.ArrayList;
 
 public class AnnouncementInfoJsonBean {
-    private int status;
-    private ArrayList<AnnouncementInfo> data;
+    private AnnouncementInfo announcement;
+    private ArrayList<AnnouncementApprovedOpinionList> announcementApprovedOpinionList;
 
     public AnnouncementInfoJsonBean() {
     }
 
-    public AnnouncementInfoJsonBean(int status, ArrayList<AnnouncementInfo> data) {
-        this.status = status;
-        this.data = data;
+    public AnnouncementInfoJsonBean(AnnouncementInfo announcement, ArrayList<AnnouncementApprovedOpinionList> announcementApprovedOpinionList) {
+        this.announcement = announcement;
+        this.announcementApprovedOpinionList = announcementApprovedOpinionList;
     }
 
-    public int getStatus() {
-        return status;
+    public AnnouncementInfo getAnnouncement() {
+        return announcement;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setAnnouncement(AnnouncementInfo announcement) {
+        this.announcement = announcement;
     }
 
-    public ArrayList<AnnouncementInfo> getData() {
-        return data;
+    public ArrayList<AnnouncementApprovedOpinionList> getAnnouncementApprovedOpinionList() {
+        return announcementApprovedOpinionList;
     }
 
-    public void setData(ArrayList<AnnouncementInfo> data) {
-        this.data = data;
+    public void setAnnouncementApprovedOpinionList(ArrayList<AnnouncementApprovedOpinionList> announcementApprovedOpinionList) {
+        this.announcementApprovedOpinionList = announcementApprovedOpinionList;
     }
 
     @Override
     public String toString() {
         return "AnnouncementInfoJsonBean{" +
-                "status=" + status +
-                ", data=" + data +
+                "announcement=" + announcement +
+                ", announcementApprovedOpinionList=" + announcementApprovedOpinionList +
                 '}';
     }
 }

@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.oliveoa.pojo.Application;
 import com.oliveoa.view.R;
+import com.oliveoa.view.myapplication.WaitActivity;
 
 import java.util.List;
 
@@ -25,9 +26,6 @@ import static android.content.Context.MODE_PRIVATE;
 public class MyApplicationAdapter extends RecyclerView.Adapter<MyApplicationAdapter.ViewHolder> {
     private Context mContext;
     private List<Application> mapplicationList;
-    /*private List<LeaveApplication> leaveApplications;
-    private List<OvertimeApplication> overtimeApplications;
-    private List<BusinessTripApplication> businessTripApplications;*/
 
     public MyApplicationAdapter(Context mContext, List<Application> mapplicationList) {
         this.mContext = mContext;

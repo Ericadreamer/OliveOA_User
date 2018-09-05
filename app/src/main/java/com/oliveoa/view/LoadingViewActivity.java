@@ -17,9 +17,19 @@ import com.oliveoa.controller.LeaveApplicationService;
 import com.oliveoa.controller.OvertimeApplictionService;
 import com.oliveoa.controller.UserInfoService;
 import com.oliveoa.controller.WorkDetailService;
+import com.oliveoa.greendao.AnnouncementApprovedOpinionListDao;
+import com.oliveoa.greendao.AnnouncementInfoDao;
+import com.oliveoa.greendao.ApplicationDao;
+import com.oliveoa.greendao.BusinessTripApplicationApprovedOpinionListDao;
+import com.oliveoa.greendao.BusinessTripApplicationDao;
 import com.oliveoa.greendao.ContactInfoDao;
+import com.oliveoa.greendao.DaoManager;
 import com.oliveoa.greendao.DepartmentInfoDao;
 import com.oliveoa.greendao.DutyInfoDao;
+import com.oliveoa.greendao.LeaveApplicationApprovedOpinionListDao;
+import com.oliveoa.greendao.LeaveApplicationDao;
+import com.oliveoa.greendao.OvertimeApplicationApprovedOpinionListDao;
+import com.oliveoa.greendao.OvertimeApplicationDao;
 import com.oliveoa.jsonbean.BusinessTripApplicationInfoJsonBean;
 import com.oliveoa.jsonbean.BusinessTripApplicationJsonBean;
 import com.oliveoa.jsonbean.ContactJsonBean;
@@ -61,7 +71,15 @@ public class LoadingViewActivity extends AppCompatActivity {
     private ContactInfoDao contactInfoDao;
     private DepartmentInfoDao departmentInfoDao;
     private DutyInfoDao dutyInfoDao;
-
+    private AnnouncementApprovedOpinionListDao announcementApprovedOpinionListDao;
+    private AnnouncementInfoDao announcementInfoDao;
+    private ApplicationDao applicationDao;
+    private BusinessTripApplicationDao businessTripApplicationDao;
+    private BusinessTripApplicationApprovedOpinionListDao businessTripApplicationApprovedOpinionListDao;
+    private OvertimeApplicationApprovedOpinionListDao overtimeApplicationApprovedOpinionListDao;
+    private OvertimeApplicationDao overtimeApplicationDao;
+    private LeaveApplicationApprovedOpinionListDao leaveApplicationApprovedOpinionListDao;
+    private LeaveApplicationDao leaveApplicationDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,10 +96,19 @@ public class LoadingViewActivity extends AppCompatActivity {
        /* DataCleanManager dataCleanManager = new DataCleanManager();
         dataCleanManager.cleanDatabases();*/
 
+        DaoManager.getInstance().getSession().clear();
+
         contactInfoDao = EntityManager.getInstance().getContactInfo();
         departmentInfoDao = EntityManager.getInstance().getDepartmentInfo();
         dutyInfoDao = EntityManager.getInstance().getDutyInfoInfo();
+        announcementApprovedOpinionListDao =EntityManager.getInstance().getAnnouncementApprovedOpinionListDao();
+        announcementInfoDao = EntityManager.getInstance().getAnnouncementInfoDao();
+        applicationDao = EntityManager.getInstance().getApplicationDao();
 
+        contactInfoDao.deleteAll();
+        departmentInfoDao.deleteAll();
+        dutyInfoDao.deleteAll();
+        applicationDao.deleteAll();
 
 
         new Thread(new Runnable() {
@@ -145,115 +172,6 @@ public class LoadingViewActivity extends AppCompatActivity {
 //                    Toast.makeText(getApplicationContext(), "网络错误，获取个人信息失败", Toast.LENGTH_SHORT).show();
 //                    Looper.loop();// 进入loop中的循环，查看消息队列
 //                }
-
-
-                //加班申请详情
-             /*   OvertimeApplictionService overtimeApplictionService = new OvertimeApplictionService();
-                OvertimeApplicationInfoJsonBean overtimeApplications = overtimeApplictionService.submitotapplication(s);
-                if (overtimeApplications.getStatus()==0) {
-                     oa = overtimeApplications .getData();
-                    Log.d("overtimeApplication",oa.toString());
-                    Log.d(TAG,"overtimeApplication.size:"+oa.size());
-                    for (int i=0;i<oa.size();i++){
-                        Log.d(TAG,"overtimeApplication.oaid["+i+"]:"+oa.get(i).getOaid());
-                        OvertimeApplicationHttpResponseObject oahrom = overtimeApplictionService.overtimeapplication(s,oa.get(i).getOaid());
-                        Log.e(TAG,"oahro"+oahrom.toString());
-                        if(oahrom.getStatus() == 0){
-                            oaaol =oahrom.getOvertimeApplicationJsonBean();
-                            Log.d(TAG,"oaaol"+oaaol.toString());
-                            if(oaaol.getOvertimeApplicationApprovedOpinionLists()!=null) {
-                                Log.d(TAG,"oaaol.getOvertimeApplicationApprovedOpinionLists():"+oaaol.getOvertimeApplicationApprovedOpinionLists().toString());
-                                for (int j = 0; j < oaaol.getOvertimeApplicationApprovedOpinionLists().size(); j++) {
-                                    oaaolDao.insert(oaaol.getOvertimeApplicationApprovedOpinionLists().get(j));
-                                }
-                            }
-                        }
-                        oaDao.insert(oa.get(i));
-                    }
-                }else{
-                    Looper.prepare();//解决子线程弹toast问题
-                    Toast.makeText(getApplicationContext(), "网络错误，获取加班申请信息失败", Toast.LENGTH_SHORT).show();
-                    Looper.loop();// 进入loop中的循环，查看消息队列
-                }
-
-                //加班审核详情
-//               OvertimeApplicationApprovedOpinionListInfoJsonBean overtimeApplicationApprovedOpinionListInfoJsonBean = overtimeApplictionService.unapprovedotapplication(s);
-//                if (overtimeApplicationApprovedOpinionListInfoJsonBean.getStatus()==0) {
-//                    oaaol = overtimeApplicationApprovedOpinionListInfoJsonBean .getData();
-//                    Log.d("oaaol",oaaol.toString());
-//                    for (int i=0;i<oa.size();i++){
-//                        oaaolDao.insert(oaaol.get(i));
-//                    }
-//                }else{
-//                    Looper.prepare();//解决子线程弹toast问题
-//                    Toast.makeText(getApplicationContext(), "网络错误，获取加班申请信息失败", Toast.LENGTH_SHORT).show();
-//                    Looper.loop();// 进入loop中的循环，查看消息队列
-//                }
-
-                //出差申请详情
-                BusinessTripApplicationService businessTripApplicationService = new BusinessTripApplicationService();
-                BusinessTripApplicationJsonBean businessTripApplicationJsonBean = businessTripApplicationService.getbtapplicationsubmited(s);
-                if (businessTripApplicationJsonBean.getStatus()==0) {
-                    bta = businessTripApplicationJsonBean .getData();
-                    Log.d("bta:",bta.toString());
-                    for (int i=0;i<bta.size();i++){
-                        BusinessTripApplicationHttpResponseObject businessTripApplicationHttpResponseObject = businessTripApplicationService.getbtapplicationinfo(s,bta.get(i).getBtaid());
-                        if(businessTripApplicationHttpResponseObject.getStatus() == 0){
-                            btaaol = businessTripApplicationHttpResponseObject.getData();
-                            Log.i(TAG,"btaaol:"+btaaol);
-                            if(btaaol.getBusinessTripApplicationApprovedOpinionLists()!=null) {
-                                for (int j = 0; j < btaaol.getBusinessTripApplicationApprovedOpinionLists().size(); j++) {
-                                    btaaolDao.insert(btaaol.getBusinessTripApplicationApprovedOpinionLists().get(j));
-                                }
-                            }
-                        }
-                        btaDao.insert(bta.get(i));
-                    }
-                }else{
-                    Looper.prepare();//解决子线程弹toast问题
-                    Toast.makeText(getApplicationContext(), "网络错误，获取加班申请信息失败", Toast.LENGTH_SHORT).show();
-                    Looper.loop();// 进入loop中的循环，查看消息队列
-                }
-
-                //出差审核详情
-
-
-
-                //请假申请详情
-                LeaveApplicationService leaveApplicationService = new LeaveApplicationService();
-                LeaveApplicationJsonBean leaveApplicationJsonBean = leaveApplicationService.getlapplicationsubmited(s);
-                if (businessTripApplicationJsonBean.getStatus()==0) {
-                    la = leaveApplicationJsonBean .getData();
-                    Log.d("la:",la.toString());
-                    for (int i=0;i<la.size();i++){
-                        LeaveApplicationHttpResponseObject leaveApplicationHttpResponseObject = leaveApplicationService.getlapplicationinfo(s,la.get(i).getLaid());
-                        if(leaveApplicationHttpResponseObject.getStatus() == 0){
-                            laaol = leaveApplicationHttpResponseObject.getData();
-                            Log.i(TAG,"laaol:"+laaol);
-                            if(laaol.getLeaveApplicationApprovedOpinionLists()!=null) {
-                                for (int j = 0; j < laaol.getLeaveApplicationApprovedOpinionLists().size(); j++) {
-                                    laaolDao.insert(laaol.getLeaveApplicationApprovedOpinionLists().get(j));
-                                }
-                            }
-                        }
-                        laDao.insert(la.get(i));
-                    }
-                }else{
-                    Looper.prepare();//解决子线程弹toast问题
-                    Toast.makeText(getApplicationContext(), "网络错误，获取加班申请信息失败", Toast.LENGTH_SHORT).show();
-                    Looper.loop();// 进入loop中的循环，查看消息队列
-                }
-
-                //请假审核详情
-
-
-
-                //提交工作详情
-                WorkDetailService workDetailService = new WorkDetailService();
-
-
-                //发布工作详情*/
-
 
             }
         }).start();

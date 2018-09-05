@@ -3,6 +3,7 @@ package com.oliveoa.controller;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.oliveoa.common.Const;
+import com.oliveoa.common.StatusAndDataHttpResponseObject;
 import com.oliveoa.jsonbean.AnnouncementInfoJsonBean;
 import com.oliveoa.jsonbean.AnnouncementJsonBean;
 import com.oliveoa.jsonbean.StatusAndMsgJsonBean;
@@ -30,7 +31,7 @@ public class AnnouncementService {
      *   Description： 获取公告详情
      *   @Author： Erica
      */
-     public AnnouncementJsonBean get_annoucementinfo(String s,String aid){
+     public StatusAndDataHttpResponseObject<AnnouncementInfoJsonBean> get_annoucementinfo(String s, String aid){
            try {
                        DateFormat dateFormat = new DateFormat();
                        OkHttpClient client = new OkHttpClient();
@@ -48,13 +49,13 @@ public class AnnouncementService {
 
                        String json = response.body().string();
                        Gson gson = new Gson();
-                       Type type = new TypeToken<AnnouncementJsonBean>() {
+                       Type type = new TypeToken<StatusAndDataHttpResponseObject<AnnouncementInfoJsonBean>>() {
                        }.getType();
-                       AnnouncementJsonBean announcementJsonBean  = gson.fromJson(json, type);
+                       StatusAndDataHttpResponseObject<AnnouncementInfoJsonBean> announcementHttpResponseObject  = gson.fromJson(json, type);
 
-                       System.out.println(" AnnouncementJsonBean = " +announcementJsonBean );
+                       System.out.println(" StatusAndDataHttpResponseObject<AnnouncementInfoJsonBean> = " +announcementHttpResponseObject );
 
-                       return announcementJsonBean;
+                       return announcementHttpResponseObject;
                    } catch (IOException e) {
                        //todo handler IOException
                        //throw new RuntimeException(e);
@@ -151,7 +152,7 @@ public class AnnouncementService {
      *   Description： 获取已经发布的公告
      *   @Author： Erica
      */
-    public AnnouncementInfoJsonBean get_published_annoucements(String s){
+    public AnnouncementJsonBean get_published_annoucements(String s){
         try {
             DateFormat dateFormat = new DateFormat();
             OkHttpClient client = new OkHttpClient();
@@ -168,13 +169,13 @@ public class AnnouncementService {
 
             String json = response.body().string();
             Gson gson = new Gson();
-            Type type = new TypeToken<AnnouncementInfoJsonBean>() {
+            Type type = new TypeToken<AnnouncementJsonBean>() {
             }.getType();
-            AnnouncementInfoJsonBean announcementInfoJsonBean  = gson.fromJson(json, type);
+            AnnouncementJsonBean announcementJsonBean  = gson.fromJson(json, type);
 
-            System.out.println(" AnnouncementInfoJsonBean = " +announcementInfoJsonBean );
+            System.out.println(" AnnouncementJsonBean = " +announcementJsonBean );
 
-            return announcementInfoJsonBean;
+            return announcementJsonBean;
         } catch (IOException e) {
             //todo handler IOException
             //throw new RuntimeException(e);
@@ -189,7 +190,7 @@ public class AnnouncementService {
      *   Description： 获取待我审核的公告
      *   @Author： Erica
      */
-    public AnnouncementInfoJsonBean  get_approvedannoucement(String s){
+    public AnnouncementJsonBean  get_approvedannoucement(String s){
         try {
             DateFormat dateFormat = new DateFormat();
             OkHttpClient client = new OkHttpClient();
@@ -206,13 +207,13 @@ public class AnnouncementService {
 
             String json = response.body().string();
             Gson gson = new Gson();
-            Type type = new TypeToken<AnnouncementInfoJsonBean>() {
+            Type type = new TypeToken<AnnouncementJsonBean>() {
             }.getType();
-            AnnouncementInfoJsonBean announcementInfoJsonBean  = gson.fromJson(json, type);
+            AnnouncementJsonBean announcementJsonBean  = gson.fromJson(json, type);
 
-            System.out.println(" AnnouncementInfoJsonBean = " +announcementInfoJsonBean );
+            System.out.println(" AnnouncementJsonBean = " +announcementJsonBean );
 
-            return announcementInfoJsonBean;
+            return announcementJsonBean;
         } catch (IOException e) {
             //todo handler IOException
             //throw new RuntimeException(e);
@@ -227,7 +228,7 @@ public class AnnouncementService {
      *   Description： 获取我提交的公告
      *   @Author： Erica
      */
-    public AnnouncementInfoJsonBean  get_isubmitannoucements(String s){
+    public AnnouncementJsonBean  get_isubmitannoucements(String s){
         try {
             DateFormat dateFormat = new DateFormat();
             OkHttpClient client = new OkHttpClient();
@@ -244,13 +245,13 @@ public class AnnouncementService {
 
             String json = response.body().string();
             Gson gson = new Gson();
-            Type type = new TypeToken<AnnouncementInfoJsonBean>() {
+            Type type = new TypeToken<AnnouncementJsonBean>() {
             }.getType();
-            AnnouncementInfoJsonBean announcementInfoJsonBean  = gson.fromJson(json, type);
+            AnnouncementJsonBean announcementJsonBean  = gson.fromJson(json, type);
 
-            System.out.println(" AnnouncementInfoJsonBean = " +announcementInfoJsonBean );
+            System.out.println(" AnnouncementJsonBean = " +announcementJsonBean );
 
-            return announcementInfoJsonBean;
+            return announcementJsonBean;
         } catch (IOException e) {
             //todo handler IOException
             //throw new RuntimeException(e);

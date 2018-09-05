@@ -1,5 +1,8 @@
 package com.oliveoa.util;
 
+import com.oliveoa.greendao.AnnouncementApprovedOpinionListDao;
+import com.oliveoa.greendao.AnnouncementInfoDao;
+import com.oliveoa.greendao.ApplicationDao;
 import com.oliveoa.greendao.BusinessTripApplicationApprovedOpinionListDao;
 import com.oliveoa.greendao.BusinessTripApplicationDao;
 import com.oliveoa.greendao.ContactInfoDao;
@@ -13,6 +16,7 @@ import com.oliveoa.greendao.MessageDao;
 import com.oliveoa.greendao.OvertimeApplicationApprovedOpinionListDao;
 import com.oliveoa.greendao.OvertimeApplicationDao;
 import com.oliveoa.greendao.WorkDetailDao;
+import com.oliveoa.pojo.Application;
 
 public class EntityManager {
     private static EntityManager entityManager;
@@ -28,6 +32,9 @@ public class EntityManager {
     public BusinessTripApplicationApprovedOpinionListDao businessTripApplicationApprovedOpinionList;
     public WorkDetailDao workDetailDao;
     public IssueWorkDao issueWorkDao;
+    public ApplicationDao applicationDao;
+    public AnnouncementApprovedOpinionListDao announcementApprovedOpinionListDao;
+    public AnnouncementInfoDao announcementInfoDao;
 
 
     /**
@@ -149,6 +156,40 @@ public class EntityManager {
         workDetailDao = DaoManager.getInstance().getSession().getWorkDetailDao();
         return workDetailDao;
     }
+
+
+    /**
+     * 创建 ApplicationDao表实例
+     *
+     * @return
+     */
+    public ApplicationDao getApplicationDao(){
+        applicationDao = DaoManager.getInstance().getSession().getApplicationDao();
+        return applicationDao;
+    }
+
+    /**
+     * 创建AnnouncementApprovedOpinionListDao表实例
+     *
+     * @return
+     */
+    public AnnouncementApprovedOpinionListDao getAnnouncementApprovedOpinionListDao(){
+        announcementApprovedOpinionListDao = DaoManager.getInstance().getSession().getAnnouncementApprovedOpinionListDao();
+        return announcementApprovedOpinionListDao;
+    }
+
+    /**
+     * 创建AnnouncementInfoDao表实例
+     *
+     * @return
+     */
+    public AnnouncementInfoDao getAnnouncementInfoDao(){
+        announcementInfoDao = DaoManager.getInstance().getSession().getAnnouncementInfoDao();
+        return announcementInfoDao;
+    }
+
+
+
 
     /**
      * 创建单例
