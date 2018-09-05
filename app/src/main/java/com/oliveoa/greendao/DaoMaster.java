@@ -23,7 +23,6 @@ public class DaoMaster extends AbstractDaoMaster {
     public static void createAllTables(Database db, boolean ifNotExists) {
         AnnouncementApprovedOpinionListDao.createTable(db, ifNotExists);
         AnnouncementInfoDao.createTable(db, ifNotExists);
-        ApplicationDao.createTable(db, ifNotExists);
         BusinessTripApplicationDao.createTable(db, ifNotExists);
         BusinessTripApplicationApprovedOpinionListDao.createTable(db, ifNotExists);
         ContactInfoDao.createTable(db, ifNotExists);
@@ -37,13 +36,13 @@ public class DaoMaster extends AbstractDaoMaster {
         OvertimeApplicationApprovedOpinionListDao.createTable(db, ifNotExists);
         UserLoginInfoDao.createTable(db, ifNotExists);
         WorkDetailDao.createTable(db, ifNotExists);
+        ApplicationDao.createTable(db, ifNotExists);
     }
 
     /** Drops underlying database table using DAOs. */
     public static void dropAllTables(Database db, boolean ifExists) {
         AnnouncementApprovedOpinionListDao.dropTable(db, ifExists);
         AnnouncementInfoDao.dropTable(db, ifExists);
-        ApplicationDao.dropTable(db, ifExists);
         BusinessTripApplicationDao.dropTable(db, ifExists);
         BusinessTripApplicationApprovedOpinionListDao.dropTable(db, ifExists);
         ContactInfoDao.dropTable(db, ifExists);
@@ -57,6 +56,7 @@ public class DaoMaster extends AbstractDaoMaster {
         OvertimeApplicationApprovedOpinionListDao.dropTable(db, ifExists);
         UserLoginInfoDao.dropTable(db, ifExists);
         WorkDetailDao.dropTable(db, ifExists);
+        ApplicationDao.dropTable(db, ifExists);
     }
 
     /**
@@ -77,7 +77,6 @@ public class DaoMaster extends AbstractDaoMaster {
         super(db, SCHEMA_VERSION);
         registerDaoClass(AnnouncementApprovedOpinionListDao.class);
         registerDaoClass(AnnouncementInfoDao.class);
-        registerDaoClass(ApplicationDao.class);
         registerDaoClass(BusinessTripApplicationDao.class);
         registerDaoClass(BusinessTripApplicationApprovedOpinionListDao.class);
         registerDaoClass(ContactInfoDao.class);
@@ -91,6 +90,7 @@ public class DaoMaster extends AbstractDaoMaster {
         registerDaoClass(OvertimeApplicationApprovedOpinionListDao.class);
         registerDaoClass(UserLoginInfoDao.class);
         registerDaoClass(WorkDetailDao.class);
+        registerDaoClass(ApplicationDao.class);
     }
 
     public DaoSession newSession() {

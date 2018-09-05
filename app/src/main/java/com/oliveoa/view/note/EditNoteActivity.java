@@ -32,6 +32,7 @@ public class EditNoteActivity extends AppCompatActivity {
         delete = (ImageView) findViewById(R.id.delete);
         enote = (EditText) findViewById(R.id.note_edit);
 
+
         //点击事件
         back.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
             @Override
@@ -47,6 +48,7 @@ public class EditNoteActivity extends AppCompatActivity {
     public void initData() {
 
     }
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

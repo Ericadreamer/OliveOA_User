@@ -7,7 +7,7 @@
     android:layout_gravity="center_vertical"
     android:background="#f0f0f0"
     android:gravity="center"
-    tools:context="com.oliveoa.view.note.MyNoteActivity">
+    tools:context="com.oliveoa.view.note.EditNoteActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -60,17 +60,14 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="@dimen/dp_22">
-
                 <EditText
                     android:id="@+id/note_edit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
+                    android:cursorVisible="true"
+                    android:textCursorDrawable="@null"
+                    android:layout_margin="@dimen/dp_22"
                     android:hint="记事"
                     android:inputType="textMultiLine"
                     android:textColorHint="#898989"
@@ -79,32 +76,7 @@
                     android:lineSpacingExtra="6dp"
                     android:gravity="center_vertical|start"/>
 
-            </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="1dp"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:background="@null"
-                    android:orientation="vertical">
-
-                    <EditText
-                        android:id="@+id/reason"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin = "20dp"
-                        android:hint="请输入离职原因"
-                        android:inputType="textMultiLine"
-                        android:background="@null"
-                        android:gravity="center_vertical|start"
-                        android:layout_marginLeft="@dimen/dp_20"
-                        android:textColor="@color/textcolor"
-                        android:singleLine="true"
-                        android:textColorHint="#898989"
-                        android:textSize="@dimen/text_size_normal"
-                        android:lineSpacingExtra="6dp"/>
-                </LinearLayout>
             </LinearLayout>
         </ScrollView>
 
