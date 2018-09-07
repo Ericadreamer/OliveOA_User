@@ -2,9 +2,14 @@ package com.oliveoa.view.note;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -13,12 +18,15 @@ import android.widget.Toast;
 import com.oliveoa.view.R;
 import com.oliveoa.view.TabLayoutBottomActivity;
 
+import java.text.DecimalFormat;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class MyNoteActivity extends AppCompatActivity {
-    private ImageView back;
+    private ImageView back,add;
     private LinearLayout additem;
+
+    private RecyclerView mContentRv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +39,12 @@ public class MyNoteActivity extends AppCompatActivity {
 
     public void initView() {
         back = (ImageView) findViewById(R.id.iback);
-        additem = (LinearLayout) findViewById(R.id.note_list);
+        add = (ImageView) findViewById(R.id.iadd);
+        //additem = (LinearLayout) findViewById(R.id.note_list);
+
+        mContentRv = (RecyclerView) findViewById(R.id.rv_content);
+        mContentRv.setLayoutManager(new LinearLayoutManager(this));
+        mContentRv.setAdapter(new ContentAdapter());
 
         //点击事件
         back.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
@@ -43,7 +56,7 @@ public class MyNoteActivity extends AppCompatActivity {
             }
         });
 
-        additem.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
+        add.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MyNoteActivity.this, EditNoteActivity.class);
@@ -51,6 +64,44 @@ public class MyNoteActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        /*additem.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MyNoteActivity.this, EditNoteActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });*/
+    }
+
+    private class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentHolder>{
+
+        @Override
+        public ContentAdapter.ContentHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new ContentHolder(LayoutInflater.from(MyNoteActivity.this).inflate(R.layout.item_note, parent, false));
+        }
+
+        @Override
+        public void onBindViewHolder(ContentAdapter.ContentHolder holder, int position) {
+            //holder.itemTv.setText("Item "+new DecimalFormat("00").format(position));
+        }
+
+        @Override
+        public int getItemCount() {
+            return 100;
+        }
+
+        class ContentHolder extends RecyclerView.ViewHolder{
+
+            private TextView itemTv;
+
+            public ContentHolder(View itemView) {
+                super(itemView);
+                itemTv = (TextView) itemView.findViewById(android.R.id.text1);
+            }
+        }
+
     }
 
     public void initData() {
@@ -59,25 +110,25 @@ public class MyNoteActivity extends AppCompatActivity {
 
     /**
      * Item排序
-     */
+     *//*
     private void sortHotelViewItem() {
         //获取LinearLayout里面所有的view
     }
 
-    /**
+    *//**
      * 添加ViewItem，R.layout.item_note
      * @param view
-     */
+     *//*
     private void addViewItem(View view){
 
     }
 
-    /**
+    *//**
      * Item加载数据
-     */
+     *//*
     private void InitDataViewItem(){
 
-    }
+    }*/
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

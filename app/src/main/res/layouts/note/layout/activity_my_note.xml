@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com.oliveoa.view/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -24,8 +25,8 @@
 
             <ImageView
                 android:id="@+id/iback"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="19dp"
+                android:layout_height="19dp"
                 android:layout_gravity="center_vertical"
                 android:layout_margin="18dp"
                 android:src="@drawable/note_back" />
@@ -35,16 +36,23 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="便签"
-                android:textAlignment="center"
                 android:textColor="@color/tv_gray_lit"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:layout_weight="1" />
 
+            <ImageView
+                android:id="@+id/iadd"
+                android:layout_width="@dimen/dp_22"
+                android:layout_height="22dp"
+                android:gravity="center|right"
+                android:layout_margin="18dp"
+                android:src="@drawable/add" />
 
 
         </LinearLayout>
 
         //便签列表
-        <ScrollView
+        <!--<ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
@@ -59,9 +67,28 @@
                 android:orientation="vertical">
 
             </LinearLayout>
-        </LinearLayout>
-        </ScrollView>
 
+        </LinearLayout>
+        </ScrollView>-->
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
+
+        <!--<android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_16"
+            android:onClick="onClickFab"
+            android:src="@drawable/ic_toolbar_add"
+            app:backgroundTint="@color/orange_main"
+            app:layout_anchor="@id/vp_content"
+            app:layout_anchorGravity="bottom|right|end" />-->
 
         <!--<android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"

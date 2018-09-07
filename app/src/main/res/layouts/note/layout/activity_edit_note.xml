@@ -24,8 +24,8 @@
 
             <ImageView
                 android:id="@+id/iback"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="19dp"
+                android:layout_height="19dp"
                 android:layout_gravity="center_vertical"
                 android:layout_margin="18dp"
                 android:src="@drawable/note_back" />
