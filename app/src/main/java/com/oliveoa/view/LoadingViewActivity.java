@@ -131,33 +131,6 @@ public class LoadingViewActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "网络错误，获取个人信息失败", Toast.LENGTH_SHORT).show();
                     Looper.loop();// 进入loop中的循环，查看消息队列
                 }
-
-                //获取通讯录信息
-               /* ContactHttpResponseObject contactHttpResponseObject =userInfoService.contact(s);
-                if (contactHttpResponseObject.getStatus()==0) {
-                    contactInfos = contactHttpResponseObject.getData();
-                    Log.d("userinfo", contactInfos.toString());
-                    for (int i=0;i<contactInfos.size();i++){
-                        Log.d("departmentinfo", contactInfos.get(i).getDepartment().toString());
-                        DepartmentInfo departmentInfo =contactInfos.get(i).getDepartment();
-                        departmentInfoDao.insert(departmentInfo);
-                        Log.d(TAG,"contactInfos.get(i).getEmpContactList().size():"+contactInfos.get(i).getEmpContactList().size());
-                        for(int j=0;j<contactInfos.get(i).getEmpContactList().size();i++){
-                            if(contactInfos.get(i).getEmpContactList().get(j).getEmployee()!=null) {
-                                Log.d(TAG,"contactInfos.get(i).getEmpContactList().get(j).getEmployee()"+contactInfos.get(i).getEmpContactList().get(j).getEmployee().toString());
-
-                                contactInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getEmployee());
-
-                                dutyInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getPosition());
-                            }
-                        }
-                    }
-                }else{
-                    Looper.prepare();//解决子线程弹toast问题
-                    Toast.makeText(getApplicationContext(), "网络错误，获取通讯录信息失败", Toast.LENGTH_SHORT).show();
-                    Looper.loop();// 进入loop中的循环，查看消息队列
-                }*/
-
                 //消息详情
 //                MessageService messageService = new MessageService();
 //                MessageJsonbean messageJsonbean = messageService.getMessagebyme(s,0);

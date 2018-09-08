@@ -1,8 +1,11 @@
 package com.oliveoa.view.myapplication;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,8 +13,30 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.oliveoa.common.StatusAndDataHttpResponseObject;
+import com.oliveoa.controller.FulltimeApplicationService;
+import com.oliveoa.controller.JobTransferApplicationService;
+import com.oliveoa.greendao.ApplicationDao;
+import com.oliveoa.greendao.ContactInfoDao;
+import com.oliveoa.greendao.DepartmentInfoDao;
+import com.oliveoa.greendao.DutyInfoDao;
+import com.oliveoa.jsonbean.FulltimeApplicationInfoJsonBean;
+import com.oliveoa.jsonbean.JobTransferApplicationInfoJsonBean;
+import com.oliveoa.pojo.Application;
+import com.oliveoa.pojo.ContactInfo;
+import com.oliveoa.pojo.DepartmentInfo;
+import com.oliveoa.pojo.DutyInfo;
+import com.oliveoa.pojo.FulltimeApplication;
+import com.oliveoa.pojo.FulltimeApplicationApprovedOpinion;
+import com.oliveoa.pojo.JobTransferApplication;
+import com.oliveoa.pojo.JobTransferApplicationApprovedOpinion;
+import com.oliveoa.util.DateFormat;
+import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
+import com.oliveoa.widget.LoadingDialog;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -21,11 +46,26 @@ public class AdjustPostInfoActivity extends AppCompatActivity {
     private TextView tname,tstatus;  //审批进度item：审批人和审批状态
     private LinearLayout addlistView;  //添加审批进度列表
 
+    private ContactInfoDao cidao;
+    private ContactInfo ci;
+    private DepartmentInfoDao departmentInfoDao;
+    private DepartmentInfo dp;
+    private DutyInfoDao dutyInfoDao;
+    private DutyInfo dt;
+    private JobTransferApplication ap;
+    private ArrayList<JobTransferApplicationApprovedOpinion> list;
+    private String TAG = this.getClass().getSimpleName();
+    private ApplicationDao applicationDao;
+    private Application application;
+    private LoadingDialog loadingDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adjust_post_info);
 
+        ap = getIntent().getParcelableExtra("ap");
+        list = getIntent().getParcelableArrayListExtra("list");
+        Log.i(TAG,"ap="+ap+"---list="+list);
         initView();
 
     }
@@ -38,15 +78,99 @@ public class AdjustPostInfoActivity extends AppCompatActivity {
         tReason = (TextView) findViewById(R.id.reason);
         tname = (TextView) findViewById(R.id.person_approving);
         tstatus = (TextView) findViewById(R.id.status);
+        loadingDialog = new LoadingDialog(AdjustPostInfoActivity.this,"正在加载数据",true);
 
         back.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AdjustPostInfoActivity.this, MyApplicationActivity.class);
-                startActivity(intent);
-                finish();
+                loadingDialog.show();back();
             }
         });
+        initData();
+        addViewItem(null);
+    }
+    private void back() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
+                String s = pref.getString("sessionid", "");
+                //Todo Service
+                JobTransferApplicationService service = new JobTransferApplicationService();
+
+                applicationDao = EntityManager.getInstance().getApplicationDao();
+                List<Application> ap = new ArrayList<>();
+                application = new Application();
+                int i, j = 0;
+                StatusAndDataHttpResponseObject<ArrayList<JobTransferApplication>> statusAndDataHttpResponseObject = service.getApplicationIsubmited(s);
+                if (statusAndDataHttpResponseObject.getStatus() == 0) {
+                    applicationDao.deleteAll();
+                    for (i = 0;i<statusAndDataHttpResponseObject.getData().size();i++){
+                        StatusAndDataHttpResponseObject<JobTransferApplicationInfoJsonBean> infojsonbean
+                                = service.getApplicationInfo(s,statusAndDataHttpResponseObject.getData().get(i).getJtaid());
+                        application.setAid(statusAndDataHttpResponseObject.getData().get(i).getJtaid());
+                        application.setDescribe(statusAndDataHttpResponseObject.getData().get(i).getReason());
+                        application.setType(7);
+                        if(infojsonbean.getData().getJobTransferApplicationApprovedOpinions()!=null) {
+                            for(j=0;j<infojsonbean.getData().getJobTransferApplicationApprovedOpinions().size();j++)
+                                switch (infojsonbean.getData().getJobTransferApplicationApprovedOpinions().get(j).getIsapproved()) {
+                                    case -2:
+                                        application.setStatus(-2);
+                                        break;
+                                    case -1:
+                                        application.setStatus(-1);
+                                        break;
+                                    case 0:
+                                        application.setStatus(0);
+                                        break;
+                                    case 1:
+                                        application.setStatus(1);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                        }
+                        applicationDao.insert(application);
+                        //Log.e(TAG,"application["+i+"]-------"+application.toString());
+                    }
+                    startActivity(new Intent(AdjustPostInfoActivity.this, MyApplicationActivity.class).putExtra("index",7));
+                } else {
+                    Looper.prepare();//解决子线程弹toast问题
+                    Toast.makeText(getApplicationContext(), "获取申请数据失败", Toast.LENGTH_SHORT).show();
+                    Looper.loop();// 进入loop中的循环，查看消息队列
+                }
+            }
+        }).start();
+    }
+    private void initData(){
+        cidao = EntityManager.getInstance().getContactInfo();
+        DateFormat dateFormat = new DateFormat();
+        departmentInfoDao = EntityManager.getInstance().getDepartmentInfo();
+        dutyInfoDao = EntityManager.getInstance().getDutyInfoInfo();
+
+
+        ci = cidao.queryBuilder().where(ContactInfoDao.Properties.Eid.eq(ap.getEid())).unique();
+        if(ci!=null){
+            tNumber.setText(ci.getId());
+            dp = departmentInfoDao.queryBuilder().where(DepartmentInfoDao.Properties.Dcid.eq(ci.getDcid())).unique();
+            if(dp!=null){
+                dt = dutyInfoDao.queryBuilder().where(DutyInfoDao.Properties.Pcid.eq(ci.getPcid())).unique();
+                if(dt!=null){
+                    tOriginalDcpid.setText(dp.getName()+dt.getName());
+                }
+            }
+            dp = departmentInfoDao.queryBuilder().where(DepartmentInfoDao.Properties.Dcid.eq(ap.getAimdcid())).unique();
+            if(dp!=null){
+                dt = dutyInfoDao.queryBuilder().where(DutyInfoDao.Properties.Pcid.eq(ap.getAimpcid())).unique();
+                if(dt!=null){
+                    tTargetDcpid.setText(dp.getName()+dt.getName());
+                }
+            }
+        }else{
+            Toast.makeText(AdjustPostInfoActivity.this,"获取详情内容失败",Toast.LENGTH_SHORT);
+        }
+
+
     }
 
     /**
@@ -54,22 +178,92 @@ public class AdjustPostInfoActivity extends AppCompatActivity {
      */
     private void sortHotelViewItem() {
         //获取LinearLayout里面所有的view
+        for (int i = 0; i < addlistView.getChildCount(); i++) {
+            final View childAt = addlistView.getChildAt(i);
+            final LinearLayout item = (LinearLayout) childAt.findViewById(R.id.approve_person_item);
+
+            final int finalI = i;
+            item.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    tname = (TextView)childAt.findViewById(R.id.person_approving);
+                    Log.e(TAG,"tname="+tname.getText().toString());
+                    String epname =tname.getText().toString().trim();
+                    Application application = new Application();
+                    application.setDescribe(list.get(finalI).getOpinion());
+                    application.setType(7);
+                    application.setAid(ap.getJtaid());
+                    application.setStatus(list.get(finalI).getIsapproved());
+
+                    Intent intent = new Intent(AdjustPostInfoActivity.this, ApprovedInfoActivity.class);
+                    intent.putExtra("epname",epname);
+                    intent.putExtra("ap",application);
+                    startActivity(intent);
+                    finish();
+
+                }
+            });
+        }
     }
 
-    /**
-     * 添加ViewItem，R.layout.approveapplication_listitem
-     * @param view
-     */
-    private void addViewItem(View view){
+    //添加ViewItem
+    private void addViewItem(View view) {
 
+        if (list==null) {
+            Toast.makeText(AdjustPostInfoActivity.this, "当前没有审批！", Toast.LENGTH_SHORT).show();
+        } else {
+            for(int i = 0;i <list.size(); i ++) {
+                View EvaluateView = View.inflate(AdjustPostInfoActivity.this, R.layout.approveapplication_listitem, null);
+                addlistView.addView(EvaluateView);
+                InitLADataViewItem();
+            }
+            sortHotelViewItem();
+        }
     }
 
     /**
      * Item加载数据
      */
-    private void InitDataViewItem(){
+    private void InitLADataViewItem() {
+        int i;
+        for (i = 0; i < addlistView.getChildCount(); i++) {
+            View childAt = addlistView.getChildAt(i);
+            LinearLayout item = (LinearLayout) childAt.findViewById(R.id.approve_person_item);
+            tname = (TextView)childAt.findViewById(R.id.person_approving);
+            tstatus = (TextView)childAt.findViewById(R.id.status);
+            ci = cidao.queryBuilder().where(ContactInfoDao.Properties.Eid.eq(list.get(i).getEid())).unique();
+            if(ci!=null){
+                tname.setText(ci.getName());
+                Log.e("eid:",ci.getName());
+            }else{
+                tname.setText("");
+            }
+            int flag = list.get(i).getIsapproved();
+            switch (flag) {
+                case -2:
+                    tstatus.setText("待审核");
+                    tstatus.setTextColor(getResources().getColor(R.color.tv_gray_deep));
+                    break;
+                case -1:
+                    tstatus.setText("不同意");
+                    tstatus.setTextColor(getResources().getColor(R.color.tv_refuse));
+                    break;
+                case 1:
+                    tstatus.setText("同意");
+                    tstatus.setTextColor(getResources().getColor(R.color.tv_pass));
+                    break;
+                case 0:
+                    tstatus.setText("正在审核");
+                    tstatus.setTextColor(getResources().getColor(R.color.tv_gray_deep));
+                    break;
+                default:
+                    break;
+            }
+        }
+
 
     }
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

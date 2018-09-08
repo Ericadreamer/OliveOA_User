@@ -66,6 +66,7 @@ public class MyApplicationActivity extends AppCompatActivity {
     private TabLayout mIndicatorTl;
     private ViewPager mContentVp;
     private ImageView back,add;
+    private TextView tvtitle;
 
     private List<String> tabIndicators;
     private List<Fragment> tabFragments;
@@ -80,232 +81,119 @@ public class MyApplicationActivity extends AppCompatActivity {
 
     private int index;
     private String TAG = this.getClass().getSimpleName();
+    private ApplicationDao applicationDao;
+    private Application application ;
     private BusinessTripApplicationDao btaDao;
     private BusinessTripApplicationApprovedOpinionListDao btaaolDao;
     private LeaveApplicationDao laDao;
     private LeaveApplicationApprovedOpinionListDao laaolDao;
     private OvertimeApplicationDao oaDao;
     private OvertimeApplicationApprovedOpinionListDao oaaolDao;
-    private ApplicationDao applicationDao;
-    private Application application ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_application);
 
         index = getIntent().getIntExtra("index",index);//加班1、请假2、出差3、会议4、离职5、转正6、调岗7、招聘8、物品9
+        Log.e(TAG,"INDEX="+index);
+        initView();
 
         mIndicatorTl = (TabLayout) findViewById(R.id.tl_indicator);
         mContentVp = (ViewPager) findViewById(R.id.vp_content);
         contentAdapter = new ContentPagerAdapter(getSupportFragmentManager());
+        initData();
         mContentVp.setAdapter(contentAdapter);
         mContentVp.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mIndicatorTl));
         mIndicatorTl.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mContentVp));//点击显示子页面
 
         initTab();
-        initView();
+
         initContent(mIndicatorTl,this.getLayoutInflater(),TAB_TITLES);
     }
 
     private void initView() {
         back = (ImageView)findViewById(R.id.iback);
-        add = (ImageView)findViewById(R.id.iadd);
-
+        tvtitle = (TextView)findViewById(R.id.tvtitle);
+        if(index==1){
+            tvtitle.setText("加班申请");
+        }
+        if(index==2){
+            tvtitle.setText("请假申请");
+        }
+        if(index==3){
+            tvtitle.setText("出差申请");
+        }
+        if(index==4){
+            tvtitle.setText("会议申请");
+        }
+        if(index==5){
+            tvtitle.setText("离职申请");
+        }
+        if(index==6){
+            tvtitle.setText("转正申请");
+        }
+        if(index==7){
+            tvtitle.setText("调岗申请");
+        }
+        if(index == 8){
+            tvtitle.setText("招聘申请");
+        }
         //监听事件
         back.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MyApplicationActivity.this, TabLayoutBottomActivity.class);
+                applicationDao = EntityManager.getInstance().getApplicationDao();
+                applicationDao.deleteAll();
+                Intent intent = new Intent(MyApplicationActivity.this, MainApplicationActivity.class);
                 startActivity(intent);
                 finish();
             }
         });
 
-        add.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MyApplicationActivity.this, AddApplicationActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-        initData();
     }
 
     private void initData() {
-           new Thread(new Runnable() {
-                       @Override
-                       public void run() {
-                           GetMyApplicationSubmited(1);
-                       }
-                   }).start();
-    }
+        applicationDao = EntityManager.getInstance().getApplicationDao();
 
-    private void GetMyApplicationSubmited(int index) {
-        SharedPreferences pref = getSharedPreferences("data",MODE_PRIVATE);
-        String s = pref.getString("sessionid","");
-
-        //Todo Service
-        LeaveApplicationService leaveApplicationService = new LeaveApplicationService();
-        OvertimeApplictionService overtimeApplictionService = new OvertimeApplictionService();
-        BusinessTripApplicationService businessTripApplicationService = new BusinessTripApplicationService();
-        if(index==1){//加班
-            Log.e(TAG,"SESSIONID="+s+","+index);
-            applicationDao = EntityManager.getInstance().getApplicationDao();
-            List<Application> ap = new ArrayList<>() ;
-            application = new Application();
-            int i,j,k=0;
-            OvertimeApplicationInfoJsonBean overtimeApplicationInfoJsonBean  = overtimeApplictionService.submitotapplication(s); //获取我提交的申请
-            if(overtimeApplicationInfoJsonBean.getStatus()==0){
-                    for (i = 0; i < overtimeApplicationInfoJsonBean.getData().size(); i++) {
-                        OvertimeApplicationHttpResponseObject oahro = overtimeApplictionService.overtimeapplication(s, overtimeApplicationInfoJsonBean.getData().get(i).getOaid());
-                        Log.e(TAG, "oahro" + oahro.toString());
-                        String oaid = overtimeApplicationInfoJsonBean.getData().get(i).getOaid();
-                        if (oahro.getStatus() == 0) {
-                            OvertimeApplicationJsonBean oaaol = oahro.getOvertimeApplicationJsonBean(); //获取oaid的审核列表结果及oaid申请详情
-                            Log.d(TAG, "oaaol" + oaaol.toString());
-                            if (oaaol.getOvertimeApplicationApprovedOpinionLists() != null) {
-                                Log.d(TAG, "oaaol.getOvertimeApplicationApprovedOpinionLists():" + oaaol.getOvertimeApplicationApprovedOpinionLists().toString());
-                                Log.d(TAG, "oaid="+oaid);
-                                application.setAid(oaid);
-                                application.setDescribe(overtimeApplicationInfoJsonBean.getData().get(i).getReason());
-                                application.setType(1);
-                                for (j = 0; j < oaaol.getOvertimeApplicationApprovedOpinionLists().size(); j++) { //循环审核列表
-                                    int flag = oaaol.getOvertimeApplicationApprovedOpinionLists().get(j).getIsapproved();
-                                    switch (flag) {
-                                        case -2:
-                                            application.setStatus(-2);
-                                            break;
-                                        case -1:
-                                            application.setStatus(-1);
-                                            break;
-                                        case 0:
-                                            application.setStatus(0);
-                                            break;
-                                        case 1:
-                                            application.setStatus(1);
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                }
-
-
-                            }
-                        } else {
-                            Looper.prepare();//解决子线程弹toast问题
-                            Toast.makeText(getApplicationContext(), oahro.getMsg(), Toast.LENGTH_SHORT).show();
-                            Looper.loop();// 进入loop中的循环，查看消息队列
-                        }
-                     applicationDao.insert(application);
+        List<Application> ap = null;
+        Bundle waitbundle = new Bundle();
+        waitbundle.putString("application","");
+        Bundle passbundle = new Bundle();
+        passbundle.putString("application","");
+        Bundle refusebundle = new Bundle();
+        refusebundle.putString("application","");
+                    //审核中
+                    QueryBuilder qb = applicationDao.queryBuilder();
+                    qb.whereOr(ApplicationDao.Properties.Status.eq(-2),
+                            ApplicationDao.Properties.Status.eq(0));
+                    ap =  qb.list();
+                    ArrayList ap1 =(ArrayList<Application>) ap;
+                    Log.e(TAG,"ArrayList<Application> ap = "+ap1.toString());
+                    if(ap!=null){
+                        waitbundle.putParcelableArrayList("application",ap1);
                     }
-                     Bundle bundle = new Bundle();
-                     bundle.putString("application","");
+                    Log.e(TAG,"waitbundle = "+waitbundle.toString());
+                    contentAdapter.getItem(0).setArguments(waitbundle);
 
-                     //审核中
-                     QueryBuilder qb = applicationDao.queryBuilder();
-                     qb.whereOr(ApplicationDao.Properties.Status.eq(-2),
-                             ApplicationDao.Properties.Status.eq(0));
-                     ap =  qb.list();
-                             ArrayList ap1 =(ArrayList<Application>) ap;
-                     Log.e(TAG,"ArrayList<Application> ap = "+ap1.toString());
-                     if(ap!=null){
-                         bundle.putParcelableArrayList("application",ap1);
-                     }
-                     contentAdapter.getItem(0).setArguments(bundle);
-
-                     //同意
-                     ap = applicationDao.queryBuilder().where(ApplicationDao.Properties.Status.eq(1)).list();
+                    //同意
+                    ap = applicationDao.queryBuilder().where(ApplicationDao.Properties.Status.eq(1)).list();
                     ap1 =(ArrayList<Application>) ap;
                     Log.e(TAG,"ArrayList<Application> ap = "+ap1.toString());
                     if(ap!=null){
-                        bundle.putParcelableArrayList("application",ap1);
+                        passbundle.putParcelableArrayList("application",ap1);
                     }
-                     contentAdapter.getItem(1).setArguments(bundle);
+                    contentAdapter.getItem(1).setArguments(passbundle);
 
                     //不同意
                     ap = applicationDao.queryBuilder().where(ApplicationDao.Properties.Status.eq(-1)).list();
                     ap1 =(ArrayList<Application>) ap;
                     Log.e(TAG,"ArrayList<Application> ap = "+ap1.toString());
                     if(ap!=null){
-                        bundle.putParcelableArrayList("application",ap1);
+                        refusebundle.putParcelableArrayList("application",ap1);
                     }
-                    contentAdapter.getItem(2).setArguments(bundle);
+                    contentAdapter.getItem(2).setArguments(refusebundle);
 
-
-            }else{
-                Looper.prepare();//解决子线程弹toast问题
-                Toast.makeText(getApplicationContext(),overtimeApplicationInfoJsonBean.getMsg(), Toast.LENGTH_SHORT).show();
-                Looper.loop();// 进入loop中的循环，查看消息队列
-            }
-        }
-        if(index==2){//请假
-            LeaveApplicationJsonBean leaveApplicationInfoJsonBean = leaveApplicationService.getlapplicationsubmited(s);
-            if (leaveApplicationInfoJsonBean.getStatus() == 0) {
-                for (int i = 0;i<leaveApplicationInfoJsonBean.getData().size();i++){
-                    LeaveApplicationHttpResponseObject leaveApplicationHttpResponseObject = leaveApplicationService.getlapplicationinfo(s,leaveApplicationInfoJsonBean.getData().get(i).getLaid());
-                    if(leaveApplicationHttpResponseObject.getStatus()==0){
-                        LeaveApplicationInfoJsonBean laaol = leaveApplicationHttpResponseObject.getData();
-                        Log.i(TAG,"laaol:"+laaol);
-                        if(laaol.getLeaveApplicationApprovedOpinionLists()!=null) {
-                            for (int j = 0; j < laaol.getLeaveApplicationApprovedOpinionLists().size(); j++) {
-                                laaolDao.insert(laaol.getLeaveApplicationApprovedOpinionLists().get(j));
-                            }
-                        }
-                    }else{
-                        Looper.prepare();//解决子线程弹toast问题
-                        Toast.makeText(getApplicationContext(),leaveApplicationHttpResponseObject.getMsg(), Toast.LENGTH_SHORT).show();
-                        Looper.loop();// 进入loop中的循环，查看消息队列
-                    }
-                    laDao.insert(leaveApplicationInfoJsonBean.getData().get(i));
-                }
-            }else{
-                Looper.prepare();//解决子线程弹toast问题
-                Toast.makeText(getApplicationContext(),leaveApplicationInfoJsonBean.getMsg(), Toast.LENGTH_SHORT).show();
-                Looper.loop();// 进入loop中的循环，查看消息队列
-            }
-        }
-        if(index==3){//出差
-            BusinessTripApplicationJsonBean businessTripApplicationJsonBean = businessTripApplicationService.getbtapplicationsubmited(s);
-            if( businessTripApplicationJsonBean.getStatus()==0) {
-                for(int i=0;i<businessTripApplicationJsonBean.getData().size();i++){
-                        BusinessTripApplicationHttpResponseObject businessTripApplicationHttpResponseObject = businessTripApplicationService.getbtapplicationinfo(s,businessTripApplicationJsonBean.getData().get(i).getBtaid());
-                        if(businessTripApplicationHttpResponseObject.getStatus() == 0){
-                            BusinessTripApplicationInfoJsonBean btaaol = businessTripApplicationHttpResponseObject.getData();
-                            Log.i(TAG,"btaaol:"+btaaol);
-                            if(btaaol.getBusinessTripApplicationApprovedOpinionLists()!=null) {
-                                for (int j = 0; j < btaaol.getBusinessTripApplicationApprovedOpinionLists().size(); j++) {
-                                    btaaolDao.insert(btaaol.getBusinessTripApplicationApprovedOpinionLists().get(j));
-                                }
-                            }
-                        }
-                        btaDao.insert(businessTripApplicationJsonBean.getData().get(i));
-                }
-            } else {
-                Looper.prepare();//解决子线程弹toast问题
-                Toast.makeText(getApplicationContext(),businessTripApplicationJsonBean.getMsg(), Toast.LENGTH_SHORT).show();
-                Looper.loop();// 进入loop中的循环，查看消息队列
-            }
-        }
-        if(index==4){//会议
-
-        }
-        if(index==5){//离职
-
-        }
-        if(index==6){//转正
-
-        }
-        if(index==7){//调岗
-
-        }
-        if(index==8){//招聘
-
-        }
-        if(index==9){//物品
-
-        }
     }
 
 

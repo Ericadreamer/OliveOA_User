@@ -119,7 +119,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_marginTop="@dimen/dp_10"
-                        android:layout_marginBottom="@dimen/dp_20">
+                        android:layout_marginBottom="@dimen/dp_10">
 
                         <TextView
                             android:layout_width="100dp"
@@ -130,18 +130,24 @@
                             android:textColor="@color/tv_gray_deep"
                             android:layout_marginLeft="@dimen/dp_22"
                             />
-                        <TextView
-                            android:id="@+id/time"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center|right"
-                            android:text="2018/06/10 19:00-2018/06/10 22:00"
-                            android:textSize="@dimen/text_size_normal"
-                            android:textColor="@color/colorPrimary"
-                            android:layout_marginRight="@dimen/dp_20"
-                            android:lineSpacingExtra="6dp"/>
-
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:layout_marginBottom="@dimen/dp_20">
+                    <TextView
+                        android:id="@+id/time"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center|left"
+                        android:text="2018/06/10 19:00-2018/06/10 22:00"
+                        android:textSize="@dimen/text_size_normal"
+                        android:textColor="@color/colorPrimary"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:lineSpacingExtra="6dp"/>
                     </LinearLayout>
                 </LinearLayout>
                 //加班原因

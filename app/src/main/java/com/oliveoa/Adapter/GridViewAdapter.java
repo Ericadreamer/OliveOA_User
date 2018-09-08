@@ -35,7 +35,7 @@ public class GridViewAdapter extends BaseAdapter {
             R.drawable.regular_pic,
             R.drawable.adjust_pic,
             R.drawable.recruitment_pic,
-            R.drawable.goods_pic,
+            /*R.drawable.goods_pic,*/
     };
 
     //九宫格图片下方文字设置
@@ -48,7 +48,7 @@ public class GridViewAdapter extends BaseAdapter {
             "转正申请",
             "调岗申请",
             "招聘申请",
-            "物品申请",
+           /* "物品申请",*/
     };
 
     @Override
