@@ -33,12 +33,11 @@
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/home"
-            android:theme="@style/AppTheme">
-        </activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".LoginActivity"
             android:exported="true"
-            android:theme="@style/LoginTheme" >
+            android:theme="@style/LoginTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -48,11 +47,10 @@
         <activity
             android:name=".TabLayoutBottomActivity"
             android:allowBackup="true"
-            android:label="@string/home_name"
             android:exported="true"
+            android:label="@string/home_name"
             android:supportsRtl="true"
-            android:theme="@style/AppTheme">
-        </activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".myapplication.AddApplicationActivity"
             android:exported="true"
@@ -296,12 +294,20 @@
             android:name=".myapplication.MainApplicationActivity"
             android:exported="true"
             android:theme="@style/HomeTheme" />
-        <activity android:name=".note.MyNoteActivity"
+        <activity
+            android:name=".note.MyNoteActivity"
             android:exported="true"
-            android:theme="@style/NoteTheme"/>
-        <activity android:name=".note.EditNoteActivity"
+            android:theme="@style/NoteTheme" />
+        <activity
+            android:name=".note.EditNoteActivity"
             android:exported="true"
-            android:theme="@style/NoteTheme"></activity>
+            android:theme="@style/NoteTheme" />
+        <activity android:name=".notice.AddNoticeActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme"/>
+        <activity android:name=".notice.NoticeInfoActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme"></activity>
     </application>
 
 </manifest>

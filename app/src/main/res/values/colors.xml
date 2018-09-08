@@ -42,4 +42,7 @@
 
     <color name="background">#f0f0f0</color>
 
+    <color name="blue">#3F51B5</color>
+    <color name="blue_dark">#303F9F</color>
+
 </resources>
