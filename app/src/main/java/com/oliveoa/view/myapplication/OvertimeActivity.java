@@ -1,11 +1,11 @@
 package com.oliveoa.view.myapplication;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.v7.app.AlertDialog;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,10 +16,22 @@ import android.widget.Toast;
 import com.oliveoa.util.LinesEditView;
 import com.oliveoa.view.R;
 
+import java.net.URL;
+import java.net.URLConnection;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+import cn.qqtheme.framework.picker.DateTimePicker;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import cn.qqtheme.framework.picker.DateTimePicker;
+import static java.lang.Integer.parseInt;
 
 public class OvertimeActivity extends AppCompatActivity {
 
@@ -27,7 +39,7 @@ public class OvertimeActivity extends AppCompatActivity {
     private TextView startTime,endTime,addPerson;
     private TextView tnum,tname; //approve_item信息，tnum为第几审批人，tname为审批人名称
     private LinearLayout addPersonList;
-
+    private DateTimePicker picker;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,27 +152,9 @@ public class OvertimeActivity extends AppCompatActivity {
 
     //年月日时分选择器
     public void onYearMonthDayTimePicker1(View view) {
-        DateTimePicker picker = new DateTimePicker(this, DateTimePicker.HOUR_24);
-        picker.setDateRangeStart(2018, 8, 1);
-        picker.setDateRangeEnd(2025, 12, 31);
-        picker.setTimeRangeStart(9, 0);
-        picker.setTimeRangeEnd(20, 30);
+        NetTimeThread time = new NetTimeThread();
+        new Thread(time).start();
         // picker.setTopLineColor(0x99FF0000);
-        picker.setDividerColor(Color.rgb(0, 178, 238));//设置分割线的颜色
-        picker.setLabelTextColor(Color.GRAY);
-        picker.setTopLineColor(Color.GRAY);
-        picker.setSubmitTextSize(16);
-        picker.setCancelTextSize(16);
-        picker.setTitleTextColor(Color.BLACK);
-        picker.setTitleText("年月日时分选择");
-        picker.setOnDateTimePickListener(new DateTimePicker.OnYearMonthDayTimePickListener() {
-            @Override
-            public void onDateTimePicked(String year, String month, String day, String hour, String minute) {
-                startTime.setText(year+"-"+month+"-"+day + " " + hour + ":" + minute);
-                //showToast(year + "-" + month + "-" + day + " " + hour + ":" + minute);
-            }
-        });
-        picker.show();
     }
 
     //年月日时分选择器
@@ -193,6 +187,51 @@ public class OvertimeActivity extends AppCompatActivity {
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
+    class NetTimeThread implements Runnable{
+
+        @Override
+        public void run() {
+            // TODO Auto-generated method stub
+            try {
+                URL url=new URL("http://open.baidu.com/special/time/");//取得资源对象
+                URLConnection uc=url.openConnection();//生成连接对象
+                uc.connect(); //发出连接
+                long ld=uc.getDate(); //取得网站日期时间
+                Date date=new Date(ld); //转换为标准时间对象
+                SimpleDateFormat yyyy = new SimpleDateFormat("yyyy", Locale.CHINA);// 输出北京时间
+                SimpleDateFormat mm = new SimpleDateFormat("MM", Locale.CHINA);// 输出北京时间
+                SimpleDateFormat dd = new SimpleDateFormat("dd", Locale.CHINA);// 输出北京时间
+
+
+                 Looper.prepare();
+                picker = new DateTimePicker(OvertimeActivity.this, DateTimePicker.HOUR_24);
+                picker.setDateRangeStart(Integer.parseInt(yyyy.format(date)), Integer.parseInt(mm.format(date)),Integer.parseInt(dd.format(date)));
+                picker.setDateRangeEnd(2025, 12, 31);
+                //分别取得时间中的小时，分钟和秒，并输出
+                Log.i("★★★", date.getHours()+"时"+date.getMinutes()+"分"+date.getSeconds()+"秒");
+                picker.setTimeRangeStart(date.getHours(), date.getMinutes());
+                picker.setTimeRangeEnd(23, 59);
+                picker.setDividerColor(Color.rgb(0, 178, 238));//设置分割线的颜色
+                picker.setLabelTextColor(Color.GRAY);
+                picker.setTopLineColor(Color.GRAY);
+                picker.setSubmitTextSize(16);
+                picker.setCancelTextSize(16);
+                picker.setTitleTextColor(Color.BLACK);
+                picker.setTitleText("年月日时分选择");
+                picker.setOnDateTimePickListener(new DateTimePicker.OnYearMonthDayTimePickListener() {
+                    @Override
+                    public void onDateTimePicked(String year, String month, String day, String hour, String minute) {
+                        startTime.setText(year+"-"+month+"-"+day + " " + hour + ":" + minute);
+                        //showToast(year + "-" + month + "-" + day + " " + hour + ":" + minute);
+                    }
+                });
+                picker.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 

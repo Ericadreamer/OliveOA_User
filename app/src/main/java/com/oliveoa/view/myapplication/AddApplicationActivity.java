@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.oliveoa.view.R;
+import com.oliveoa.widget.LoadingDialog;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -18,7 +19,7 @@ public class AddApplicationActivity extends AppCompatActivity {
 
     private LinearLayout overtime,leave,businessTrip,meeting,dimission,regularWorker,adjustPost,recruitment,goods;
     private ImageView back;
-
+    private LoadingDialog loadingDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

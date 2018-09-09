@@ -97,10 +97,11 @@ public class MainApplicationActivity extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
             @Override
             public void onClick(View view) {
+                ApplicationDao applicationDao = EntityManager.getInstance().getApplicationDao();
+                Application ap = new Application();
+                applicationDao.deleteAll();
+                applicationDao.insert(ap);
                 Intent intent = new Intent(MainApplicationActivity.this, AddApplicationActivity.class);
-                /*intent.putParcelableArrayListExtra("ParcelableDepartment",departmentInfos);
-                intent.putExtra("index",departmentInfos.size());
-                setAddDepartmentinfo(departmentInfos.size());*/
                 startActivity(intent);
                 finish();
             }
