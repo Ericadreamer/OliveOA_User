@@ -29,14 +29,21 @@ public class MeetingApplicationService {
     /**
      *  发起申请（）
      */
-    public StatusAndMsgJsonBean submitApplication(String s, MeetingApplication application, ArrayList<String> members){
-          try {
-                      DateFormat dateFormat = new DateFormat();
+    public StatusAndMsgJsonBean submitApplication(String s, MeetingApplication application, String members){
+         DateFormat dateFormat = new DateFormat();
+        String begintime =dateFormat.LongtoDate(application.getBegintime());
+        //begintime= begintime +":00";
+        String endtime =dateFormat.LongtoDate(application.getEndtime());
+        //endtime = endtime +":00";
+        System.out.println(begintime+"---"+endtime);
+        System.out.println(members);
+        System.out.println(application.getAeid());
+        try {
                       OkHttpClient client = new OkHttpClient();
                       FormBody body = new FormBody.Builder()
                               .add("theme",application.getTheme())
-                              .add("begintime",dateFormat.LongtoDatemm(application.getBegintime()))
-                              .add("endtime",dateFormat.LongtoDatemm(application.getEndtime()))
+                              .add("begintime",begintime)
+                              .add("endtime",endtime)
                               .add("place",application.getPlace())
                               .add("aeid",application.getAeid())
                               .add("meetingMember",members.toString())

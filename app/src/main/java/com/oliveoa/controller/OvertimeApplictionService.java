@@ -10,6 +10,7 @@ import com.oliveoa.jsonbean.OvertimeApplicationApprovedOpinionListInfoJsonBean;
 import com.oliveoa.jsonbean.OvertimeApplicationInfoJsonBean;
 import com.oliveoa.jsonbean.OvertimeApplicationJsonBean;
 import com.oliveoa.jsonbean.StatusAndMsgJsonBean;
+import com.oliveoa.pojo.ApproveNumber;
 import com.oliveoa.pojo.OvertimeApplication;
 import com.oliveoa.pojo.OvertimeApplicationApprovedOpinionList;
 import com.oliveoa.util.DateFormat;
@@ -25,15 +26,19 @@ import okhttp3.Response;
 public class OvertimeApplictionService {
 
     //发起加班申请(reason,begintime,endtime(str),approvedMember[])
-    public StatusAndMsgJsonBean sentotapplication(String s,OvertimeApplication overtimeApplication,ArrayList<String> approvedMember){
-        try {
-            DateFormat dateFormat = new DateFormat();
+    public StatusAndMsgJsonBean sentotapplication(String s,OvertimeApplication overtimeApplication,String approvedMember){
+        DateFormat dateFormat = new DateFormat();
+        String begintime =dateFormat.LongtoDate(overtimeApplication.getBegintime());
+        String endtime =dateFormat.LongtoDate(overtimeApplication.getEndtime());
+        System.out.println(begintime+"---"+endtime);
+        System.out.println(approvedMember);
+        try{
             OkHttpClient client = new OkHttpClient();
             FormBody body = new FormBody.Builder()
                     .add("reason",overtimeApplication.getReason())
-                    .add("begintime",dateFormat.LongtoDate(overtimeApplication.getBegintime()))
-                    .add("endtime",dateFormat.LongtoDate(overtimeApplication.getEndtime()))
-                    .add("approvedMember",approvedMember.toString())
+                    .add("begintime",begintime)
+                    .add("endtime",endtime)
+                    .add("approvedMember",approvedMember)
                     .build();
 
             Request request = new Request.Builder()
@@ -50,7 +55,7 @@ public class OvertimeApplictionService {
             System.out.println("StatusAndMsgJsonBean = " + statusAndMsgJsonBean);
 
             return statusAndMsgJsonBean;
-        } catch (IOException e) {
+        }catch (IOException e) {
             //todo handler IOException
             //throw new RuntimeException(e);
             e.printStackTrace();

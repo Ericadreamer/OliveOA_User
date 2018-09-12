@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_48"
+        android:orientation="horizontal"
+        android:paddingLeft="5dp"
+        android:paddingBottom="@dimen/dp_0.5"
+        android:background="#f0f5f0"
+        android:descendantFocusability="blocksDescendants">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="false">
+    <ImageView
+        android:id="@+id/img_icon"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@drawable/yonghu"
+        android:layout_gravity="center_vertical"
+        android:focusable="false"/>
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_gravity="center_vertical"
+        android:textColor="@color/textcolor"
+        android:focusable="false"
+        android:text="员工1"
+        android:textSize="18sp" />
+
+      </LinearLayout>
+        <!--&lt;!&ndash; 以下都是侧滑菜单的内容依序排列 &ndash;&gt;-->
+        <!--<Button-->
+            <!--android:id="@+id/btnEdit"-->
+            <!--android:layout_width="60dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="#d9dee4"-->
+            <!--android:text="详情"-->
+            <!--android:textColor="@android:color/white"-->
+            <!--android:focusable="false"-->
+            <!--/>-->
+
+        <!--<Button-->
+            <!--android:id="@+id/btnDelete"-->
+            <!--android:layout_width="60dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="@color/orange_deep"-->
+            <!--android:text="删除"-->
+            <!--android:textColor="@android:color/white"-->
+            <!--android:focusable="false"-->
+            <!--/>-->
+
+    </LinearLayout>
+    <!--<ImageView-->
+        <!--android:id="@+id/img_icon"-->
+        <!--android:layout_width="@dimen/dp_30"-->
+        <!--android:layout_height="@dimen/dp_30"-->
+        <!--android:layout_margin="@dimen/dp_10"-->
+        <!--android:src="@drawable/down"-->
+        <!--android:focusable="false"/>-->

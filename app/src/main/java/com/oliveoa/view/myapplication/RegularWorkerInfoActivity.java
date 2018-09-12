@@ -1,6 +1,5 @@
 package com.oliveoa.view.myapplication;
 
-import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Looper;
@@ -16,21 +15,17 @@ import android.widget.Toast;
 
 import com.oliveoa.common.StatusAndDataHttpResponseObject;
 import com.oliveoa.controller.FulltimeApplicationService;
-import com.oliveoa.controller.LeaveOfficeApplicationService;
 import com.oliveoa.greendao.ApplicationDao;
 import com.oliveoa.greendao.ContactInfoDao;
 import com.oliveoa.greendao.DepartmentInfoDao;
 import com.oliveoa.greendao.DutyInfoDao;
 import com.oliveoa.jsonbean.FulltimeApplicationInfoJsonBean;
-import com.oliveoa.jsonbean.LeaveOfficeApplicationJsonBean;
 import com.oliveoa.pojo.Application;
 import com.oliveoa.pojo.ContactInfo;
 import com.oliveoa.pojo.DepartmentInfo;
 import com.oliveoa.pojo.DutyInfo;
 import com.oliveoa.pojo.FulltimeApplication;
 import com.oliveoa.pojo.FulltimeApplicationApprovedOpinion;
-import com.oliveoa.pojo.LeaveOfficeApplication;
-import com.oliveoa.pojo.LeaveOfficeApplicationApprovedOpinion;
 import com.oliveoa.util.DateFormat;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;

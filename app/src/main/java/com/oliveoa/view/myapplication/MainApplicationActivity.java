@@ -89,6 +89,7 @@ public class MainApplicationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainApplicationActivity.this, TabLayoutBottomActivity.class);
+                intent.getIntExtra("index",0);
                 startActivity(intent);
                 finish();
             }

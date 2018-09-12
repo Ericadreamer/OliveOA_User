@@ -16,7 +16,6 @@ public class DaoManager {
         //db = new ContactsManager(getActivity());
         DaoMaster mDaoMaster = new DaoMaster(devOpenHelper.getWritableDatabase());
         mDaoSession = mDaoMaster.newSession();
-
     }
 
     public DaoMaster getMaster() {

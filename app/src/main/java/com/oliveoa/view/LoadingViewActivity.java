@@ -8,18 +8,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.oliveoa.common.BusinessTripApplicationHttpResponseObject;
-import com.oliveoa.common.ContactHttpResponseObject;
-import com.oliveoa.common.LeaveApplicationHttpResponseObject;
-import com.oliveoa.common.OvertimeApplicationHttpResponseObject;
-import com.oliveoa.controller.BusinessTripApplicationService;
-import com.oliveoa.controller.LeaveApplicationService;
-import com.oliveoa.controller.OvertimeApplictionService;
 import com.oliveoa.controller.UserInfoService;
-import com.oliveoa.controller.WorkDetailService;
 import com.oliveoa.greendao.AnnouncementApprovedOpinionListDao;
 import com.oliveoa.greendao.AnnouncementInfoDao;
 import com.oliveoa.greendao.ApplicationDao;
+import com.oliveoa.greendao.ApproveNumberDao;
 import com.oliveoa.greendao.BusinessTripApplicationApprovedOpinionListDao;
 import com.oliveoa.greendao.BusinessTripApplicationDao;
 import com.oliveoa.greendao.ContactInfoDao;
@@ -28,24 +21,20 @@ import com.oliveoa.greendao.DepartmentInfoDao;
 import com.oliveoa.greendao.DutyInfoDao;
 import com.oliveoa.greendao.LeaveApplicationApprovedOpinionListDao;
 import com.oliveoa.greendao.LeaveApplicationDao;
+import com.oliveoa.greendao.MeetingApplicationDao;
 import com.oliveoa.greendao.OvertimeApplicationApprovedOpinionListDao;
 import com.oliveoa.greendao.OvertimeApplicationDao;
 import com.oliveoa.jsonbean.BusinessTripApplicationInfoJsonBean;
-import com.oliveoa.jsonbean.BusinessTripApplicationJsonBean;
 import com.oliveoa.jsonbean.ContactJsonBean;
 import com.oliveoa.jsonbean.EmpContactListJsonBean;
 import com.oliveoa.jsonbean.LeaveApplicationInfoJsonBean;
-import com.oliveoa.jsonbean.LeaveApplicationJsonBean;
-import com.oliveoa.jsonbean.OvertimeApplicationInfoJsonBean;
 import com.oliveoa.jsonbean.OvertimeApplicationJsonBean;
 import com.oliveoa.jsonbean.UserLoginJsonBean;
 import com.oliveoa.pojo.BusinessTripApplication;
 import com.oliveoa.pojo.ContactInfo;
-import com.oliveoa.pojo.DepartmentInfo;
 import com.oliveoa.pojo.LeaveApplication;
 import com.oliveoa.pojo.Message;
 import com.oliveoa.pojo.OvertimeApplication;
-import com.oliveoa.util.DataCleanManager;
 import com.oliveoa.util.EntityManager;
 
 import java.util.ArrayList;
@@ -80,6 +69,8 @@ public class LoadingViewActivity extends AppCompatActivity {
     private OvertimeApplicationDao overtimeApplicationDao;
     private LeaveApplicationApprovedOpinionListDao leaveApplicationApprovedOpinionListDao;
     private LeaveApplicationDao leaveApplicationDao;
+    private MeetingApplicationDao meetingApplicationDao;
+    private ApproveNumberDao approveNumberDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,12 +95,15 @@ public class LoadingViewActivity extends AppCompatActivity {
         announcementApprovedOpinionListDao =EntityManager.getInstance().getAnnouncementApprovedOpinionListDao();
         announcementInfoDao = EntityManager.getInstance().getAnnouncementInfoDao();
         applicationDao = EntityManager.getInstance().getApplicationDao();
+        approveNumberDao = EntityManager.getInstance().getApproveNumberDao();
+        meetingApplicationDao = EntityManager.getInstance().getMeetingApplicationDao();
 
         contactInfoDao.deleteAll();
         departmentInfoDao.deleteAll();
         dutyInfoDao.deleteAll();
         applicationDao.deleteAll();
-
+        approveNumberDao.deleteAll();
+        meetingApplicationDao.deleteAll();
 
         new Thread(new Runnable() {
             @Override

@@ -6,8 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.oliveoa.Adapter.MyApplicationAdapter;
 import com.oliveoa.common.BusinessTripApplicationHttpResponseObject;
 import com.oliveoa.common.ContactHttpResponseObject;
 import com.oliveoa.common.LeaveApplicationHttpResponseObject;
@@ -33,12 +30,9 @@ import com.oliveoa.controller.MeetingApplicationService;
 import com.oliveoa.controller.OvertimeApplictionService;
 import com.oliveoa.controller.RecruitmentApplicationService;
 import com.oliveoa.controller.UserInfoService;
-import com.oliveoa.greendao.BusinessTripApplicationDao;
 import com.oliveoa.greendao.ContactInfoDao;
 import com.oliveoa.greendao.DepartmentInfoDao;
 import com.oliveoa.greendao.DutyInfoDao;
-import com.oliveoa.greendao.LeaveApplicationDao;
-import com.oliveoa.greendao.OvertimeApplicationDao;
 import com.oliveoa.jsonbean.BusinessTripApplicationInfoJsonBean;
 import com.oliveoa.jsonbean.ContactJsonBean;
 import com.oliveoa.jsonbean.FulltimeApplicationInfoJsonBean;
@@ -46,13 +40,11 @@ import com.oliveoa.jsonbean.JobTransferApplicationInfoJsonBean;
 import com.oliveoa.jsonbean.LeaveApplicationInfoJsonBean;
 import com.oliveoa.jsonbean.LeaveOfficeApplicationJsonBean;
 import com.oliveoa.jsonbean.MeetingApplicationInfoJsonBean;
-import com.oliveoa.jsonbean.OvertimeApplicationInfoJsonBean;
 import com.oliveoa.jsonbean.OvertimeApplicationJsonBean;
 import com.oliveoa.jsonbean.RecruitmentApplicationInfoJsonBean;
 import com.oliveoa.pojo.Application;
 import com.oliveoa.pojo.BusinessTripApplication;
 import com.oliveoa.pojo.BusinessTripApplicationApprovedOpinionList;
-import com.oliveoa.pojo.ContactInfo;
 import com.oliveoa.pojo.DepartmentInfo;
 import com.oliveoa.pojo.FulltimeApplication;
 import com.oliveoa.pojo.FulltimeApplicationApprovedOpinion;
@@ -69,13 +61,10 @@ import com.oliveoa.pojo.OvertimeApplicationApprovedOpinionList;
 import com.oliveoa.pojo.RecruitmentApplication;
 import com.oliveoa.pojo.RecruitmentApplicationApprovedOpinion;
 import com.oliveoa.pojo.RecruitmentApplicationItem;
-import com.oliveoa.pojo.UserLoginInfo;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
-import com.oliveoa.widget.LoadingDialog;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -317,7 +306,7 @@ public class WaitActivity extends Fragment {
                         DepartmentInfo departmentInfo =contactInfos.get(i).getDepartment();
                         departmentInfoDao.insert(departmentInfo);
                         Log.d(TAG,"contactInfos.get(i).getEmpContactList().size():"+contactInfos.get(i).getEmpContactList().size());
-                        for(int j=0;j<contactInfos.get(i).getEmpContactList().size();i++){
+                        for(int j=0;j<contactInfos.get(i).getEmpContactList().size();j++){
                             if(contactInfos.get(i).getEmpContactList().get(j).getEmployee()!=null) {
                                 Log.d(TAG,"contactInfos.get(i).getEmpContactList().get(j).getEmployee()"+contactInfos.get(i).getEmpContactList().get(j).getEmployee().toString());
                                 contactInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getEmployee());
@@ -377,7 +366,7 @@ public class WaitActivity extends Fragment {
                         DepartmentInfo departmentInfo =contactInfos.get(i).getDepartment();
                         departmentInfoDao.insert(departmentInfo);
                         Log.d(TAG,"contactInfos.get(i).getEmpContactList().size():"+contactInfos.get(i).getEmpContactList().size());
-                        for(int j=0;j<contactInfos.get(i).getEmpContactList().size();i++){
+                        for(int j=0;j<contactInfos.get(i).getEmpContactList().size();j++){
                             if(contactInfos.get(i).getEmpContactList().get(j).getEmployee()!=null) {
                                 Log.d(TAG,"contactInfos.get(i).getEmpContactList().get(j).getEmployee()"+contactInfos.get(i).getEmpContactList().get(j).getEmployee().toString());
                                 contactInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getEmployee());
@@ -437,7 +426,7 @@ public class WaitActivity extends Fragment {
                         DepartmentInfo departmentInfo =contactInfos.get(i).getDepartment();
                         departmentInfoDao.insert(departmentInfo);
                         Log.d(TAG,"contactInfos.get(i).getEmpContactList().size():"+contactInfos.get(i).getEmpContactList().size());
-                        for(int j=0;j<contactInfos.get(i).getEmpContactList().size();i++){
+                        for(int j=0;j<contactInfos.get(i).getEmpContactList().size();j++){
                             if(contactInfos.get(i).getEmpContactList().get(j).getEmployee()!=null) {
                                 Log.d(TAG,"contactInfos.get(i).getEmpContactList().get(j).getEmployee()"+contactInfos.get(i).getEmpContactList().get(j).getEmployee().toString());
                                 contactInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getEmployee());
@@ -497,7 +486,7 @@ public class WaitActivity extends Fragment {
                         DepartmentInfo departmentInfo =contactInfos.get(i).getDepartment();
                         departmentInfoDao.insert(departmentInfo);
                         Log.d(TAG,"contactInfos.get(i).getEmpContactList().size():"+contactInfos.get(i).getEmpContactList().size());
-                        for(int j=0;j<contactInfos.get(i).getEmpContactList().size();i++){
+                        for(int j=0;j<contactInfos.get(i).getEmpContactList().size();j++){
                             if(contactInfos.get(i).getEmpContactList().get(j).getEmployee()!=null) {
                                 Log.d(TAG,"contactInfos.get(i).getEmpContactList().get(j).getEmployee()"+contactInfos.get(i).getEmpContactList().get(j).getEmployee().toString());
                                 contactInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getEmployee());
@@ -557,7 +546,7 @@ public class WaitActivity extends Fragment {
                         DepartmentInfo departmentInfo =contactInfos.get(i).getDepartment();
                         departmentInfoDao.insert(departmentInfo);
                         Log.d(TAG,"contactInfos.get(i).getEmpContactList().size():"+contactInfos.get(i).getEmpContactList().size());
-                        for(int j=0;j<contactInfos.get(i).getEmpContactList().size();i++){
+                        for(int j=0;j<contactInfos.get(i).getEmpContactList().size();j++){
                             if(contactInfos.get(i).getEmpContactList().get(j).getEmployee()!=null) {
                                 Log.d(TAG,"contactInfos.get(i).getEmpContactList().get(j).getEmployee()"+contactInfos.get(i).getEmpContactList().get(j).getEmployee().toString());
                                 contactInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getEmployee());
@@ -617,7 +606,7 @@ public class WaitActivity extends Fragment {
                         DepartmentInfo departmentInfo =contactInfos.get(i).getDepartment();
                         departmentInfoDao.insert(departmentInfo);
                         Log.d(TAG,"contactInfos.get(i).getEmpContactList().size():"+contactInfos.get(i).getEmpContactList().size());
-                        for(int j=0;j<contactInfos.get(i).getEmpContactList().size();i++){
+                        for(int j=0;j<contactInfos.get(i).getEmpContactList().size();j++){
                             if(contactInfos.get(i).getEmpContactList().get(j).getEmployee()!=null) {
                                 Log.d(TAG,"contactInfos.get(i).getEmpContactList().get(j).getEmployee()"+contactInfos.get(i).getEmpContactList().get(j).getEmployee().toString());
                                 contactInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getEmployee());
@@ -677,7 +666,7 @@ public class WaitActivity extends Fragment {
                         DepartmentInfo departmentInfo =contactInfos.get(i).getDepartment();
                         departmentInfoDao.insert(departmentInfo);
                         Log.d(TAG,"contactInfos.get(i).getEmpContactList().size():"+contactInfos.get(i).getEmpContactList().size());
-                        for(int j=0;j<contactInfos.get(i).getEmpContactList().size();i++){
+                        for(int j=0;j<contactInfos.get(i).getEmpContactList().size();j++){
                             if(contactInfos.get(i).getEmpContactList().get(j).getEmployee()!=null) {
                                 Log.d(TAG,"contactInfos.get(i).getEmpContactList().get(j).getEmployee()"+contactInfos.get(i).getEmpContactList().get(j).getEmployee().toString());
                                 contactInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getEmployee());

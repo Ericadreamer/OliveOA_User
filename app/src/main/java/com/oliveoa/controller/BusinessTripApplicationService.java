@@ -22,16 +22,20 @@ import okhttp3.Response;
 public class BusinessTripApplicationService {
 
     //发起出差申请(begintime,endtime,place,task,approvedMember[])
-    public StatusAndMsgJsonBean sentbtapplication(String s,BusinessTripApplication businessTripApplication,ArrayList<String> approvedMember){
+    public StatusAndMsgJsonBean sentbtapplication(String s,BusinessTripApplication businessTripApplication,String approvedMember){
+        DateFormat dateFormat = new DateFormat();
+        String begintime =dateFormat.LongtoDate(businessTripApplication.getBegintime());
+        String endtime =dateFormat.LongtoDate(businessTripApplication.getEndtime());
+        System.out.println(begintime+"---"+endtime);
+        System.out.println(approvedMember);
         try {
-            DateFormat dateFormat = new DateFormat();
             OkHttpClient client = new OkHttpClient();
             FormBody body = new FormBody.Builder()
-                    .add("begintime",dateFormat.LongtoDate(businessTripApplication.getBegintime()))
-                    .add("endtime",dateFormat.LongtoDate(businessTripApplication.getEndtime()))
+                    .add("begintime",begintime)
+                    .add("endtime",endtime)
                     .add("place",businessTripApplication.getPlace())
                     .add("task",businessTripApplication.getTask())
-                    .add("approvedMember",approvedMember.toString())
+                    .add("approvedMember",approvedMember)
                     .build();
 
             Request request = new Request.Builder()

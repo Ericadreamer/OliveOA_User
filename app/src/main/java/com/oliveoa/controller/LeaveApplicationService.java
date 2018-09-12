@@ -23,20 +23,26 @@ import okhttp3.Response;
 public class LeaveApplicationService {
 
     //发起请假申请(begintime,endtime,reason,type,normalrest,swaprest,shouldrest,supplementrest,approvedMember[])
-    public StatusAndMsgJsonBean sentlapplication(String s,LeaveApplication leaveApplication,ArrayList<String> approvedMember){
+    public StatusAndMsgJsonBean sentlapplication(String s,LeaveApplication leaveApplication,String approvedMember){
+        DateFormat dateFormat = new DateFormat();
+        String begintime =dateFormat.LongtoDate(leaveApplication.getBegintime());
+        //begintime= begintime +":00";
+        String endtime =dateFormat.LongtoDate(leaveApplication.getEndtime());
+        //endtime = endtime +":00";
+        System.out.println(begintime+"---"+endtime);
+        System.out.println(approvedMember);
         try {
-            DateFormat dateFormat = new DateFormat();
             OkHttpClient client = new OkHttpClient();
             FormBody body = new FormBody.Builder()
-                    .add("begintime",dateFormat.LongtoDate(leaveApplication.getBegintime()))
-                    .add("endtime",dateFormat.LongtoDate(leaveApplication.getBegintime()))
+                    .add("begintime",begintime)
+                    .add("endtime",endtime)
                     .add("reason",leaveApplication.getReason())
                     .add("type", String.valueOf(leaveApplication.getType()))
-                    .add("normalrest",dateFormat.LongtoDate(leaveApplication.getNormalRest()))
-                    .add("swaprest",dateFormat.LongtoDate(leaveApplication.getSwapRest()))
-                    .add("shouldrest",dateFormat.LongtoDate(leaveApplication.getShouldRest()))
-                    .add("supplementrest",dateFormat.LongtoDate(leaveApplication.getSupplementRest()))
-                    .add("approvedMember",approvedMember.toString())
+                    .add("normalrest","")
+                    .add("swaprest","")
+                    .add("shouldrest","")
+                    .add("supplementrest","")
+                    .add("approvedMember",approvedMember)
                     .build();
 
             Request request = new Request.Builder()

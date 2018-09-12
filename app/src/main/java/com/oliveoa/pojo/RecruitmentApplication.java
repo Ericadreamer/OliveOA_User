@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import java.util.Date;
 
+
 public class RecruitmentApplication implements Parcelable{
     private String raid;
 

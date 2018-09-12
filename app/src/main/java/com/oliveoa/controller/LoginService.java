@@ -1,6 +1,7 @@
 package com.oliveoa.controller;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -9,6 +10,7 @@ import com.oliveoa.common.HttpResponseObject;
 import com.oliveoa.jsonbean.LogoutJsonBean;
 import com.oliveoa.jsonbean.UserLoginJsonBean;
 import com.oliveoa.pojo.ContactInfo;
+import com.oliveoa.view.LoginActivity;
 
 import java.io.IOException;
 import java.util.List;

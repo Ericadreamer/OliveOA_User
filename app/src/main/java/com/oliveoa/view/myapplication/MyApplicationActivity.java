@@ -1,18 +1,14 @@
 package com.oliveoa.view.myapplication;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Looper;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -21,13 +17,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.oliveoa.common.BusinessTripApplicationHttpResponseObject;
-import com.oliveoa.common.LeaveApplicationHttpResponseObject;
-import com.oliveoa.common.OvertimeApplicationHttpResponseObject;
-import com.oliveoa.controller.BusinessTripApplicationService;
-import com.oliveoa.controller.LeaveApplicationService;
-import com.oliveoa.controller.OvertimeApplictionService;
-import com.oliveoa.fragment.TabListFragment;
 import com.oliveoa.greendao.ApplicationDao;
 import com.oliveoa.greendao.BusinessTripApplicationApprovedOpinionListDao;
 import com.oliveoa.greendao.BusinessTripApplicationDao;
@@ -35,22 +24,9 @@ import com.oliveoa.greendao.LeaveApplicationApprovedOpinionListDao;
 import com.oliveoa.greendao.LeaveApplicationDao;
 import com.oliveoa.greendao.OvertimeApplicationApprovedOpinionListDao;
 import com.oliveoa.greendao.OvertimeApplicationDao;
-import com.oliveoa.jsonbean.BusinessTripApplicationInfoJsonBean;
-import com.oliveoa.jsonbean.BusinessTripApplicationJsonBean;
-import com.oliveoa.jsonbean.LeaveApplicationInfoJsonBean;
-import com.oliveoa.jsonbean.LeaveApplicationJsonBean;
-import com.oliveoa.jsonbean.OvertimeApplicationInfoJsonBean;
-import com.oliveoa.jsonbean.OvertimeApplicationJsonBean;
 import com.oliveoa.pojo.Application;
-import com.oliveoa.pojo.BusinessTripApplication;
 import com.oliveoa.util.EntityManager;
-import com.oliveoa.view.AdhibitionActivity;
-import com.oliveoa.view.MainActivity;
 import com.oliveoa.view.R;
-import com.oliveoa.view.TabLayoutBottomActivity;
-import com.oliveoa.view.addressbook.AddressBookActivity;
-import com.oliveoa.view.mine.MineActivity;
-import com.oliveoa.view.notice.NoticeActivity;
 
 import org.greenrobot.greendao.query.QueryBuilder;
 

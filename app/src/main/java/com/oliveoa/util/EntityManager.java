@@ -3,20 +3,30 @@ package com.oliveoa.util;
 import com.oliveoa.greendao.AnnouncementApprovedOpinionListDao;
 import com.oliveoa.greendao.AnnouncementInfoDao;
 import com.oliveoa.greendao.ApplicationDao;
+import com.oliveoa.greendao.ApproveNumberDao;
 import com.oliveoa.greendao.BusinessTripApplicationApprovedOpinionListDao;
 import com.oliveoa.greendao.BusinessTripApplicationDao;
 import com.oliveoa.greendao.ContactInfoDao;
 import com.oliveoa.greendao.DaoManager;
 import com.oliveoa.greendao.DepartmentInfoDao;
 import com.oliveoa.greendao.DutyInfoDao;
+import com.oliveoa.greendao.FulltimeApplicationApprovedOpinionDao;
+import com.oliveoa.greendao.FulltimeApplicationDao;
 import com.oliveoa.greendao.IssueWorkDao;
+import com.oliveoa.greendao.IssueWorkMemberDao;
+import com.oliveoa.greendao.JobTransferApplicationApprovedOpinionDao;
+import com.oliveoa.greendao.JobTransferApplicationDao;
 import com.oliveoa.greendao.LeaveApplicationApprovedOpinionListDao;
 import com.oliveoa.greendao.LeaveApplicationDao;
+import com.oliveoa.greendao.LeaveOfficeApplicationApprovedOpinionDao;
+import com.oliveoa.greendao.LeaveOfficeApplicationDao;
+import com.oliveoa.greendao.MeetingApplicationDao;
+import com.oliveoa.greendao.MeetingMemberDao;
 import com.oliveoa.greendao.MessageDao;
 import com.oliveoa.greendao.OvertimeApplicationApprovedOpinionListDao;
 import com.oliveoa.greendao.OvertimeApplicationDao;
+import com.oliveoa.greendao.RecruitmentApplicationApprovedOpinionDao;
 import com.oliveoa.greendao.WorkDetailDao;
-import com.oliveoa.pojo.Application;
 
 public class EntityManager {
     private static EntityManager entityManager;
@@ -35,6 +45,18 @@ public class EntityManager {
     public ApplicationDao applicationDao;
     public AnnouncementApprovedOpinionListDao announcementApprovedOpinionListDao;
     public AnnouncementInfoDao announcementInfoDao;
+    public ApproveNumberDao approveNumberDao;
+    public FulltimeApplicationDao fulltimeApplicationDao;
+    public FulltimeApplicationApprovedOpinionDao fulltimeApplicationApprovedOpinionDao;
+    public IssueWorkMemberDao issueWorkMemberDao;
+    public JobTransferApplicationDao jobTransferApplicationDao;
+    public JobTransferApplicationApprovedOpinionDao jobTransferApplicationApprovedOpinionDao;
+    public LeaveOfficeApplicationDao leaveOfficeApplicationDao;
+    public LeaveOfficeApplicationApprovedOpinionDao leaveOfficeApplicationApprovedOpinionDao;
+    public MeetingApplicationDao meetingApplicationDao;
+    public MeetingMemberDao meetingMemberDao;
+    public RecruitmentApplicationApprovedOpinionDao recruitmentApplicationApprovedOpinionDao;
+
 
 
     /**
@@ -187,9 +209,85 @@ public class EntityManager {
         announcementInfoDao = DaoManager.getInstance().getSession().getAnnouncementInfoDao();
         return announcementInfoDao;
     }
+    /**
+     * 创建AnnouncementInfoDao表实例
+     *
+     * @return
+     */
+    public ApproveNumberDao getApproveNumberDao(){
+        approveNumberDao = DaoManager.getInstance().getSession().getApproveNumberDao();
+        return approveNumberDao;
+    }
 
+    public WorkDetailDao getWorkDetailDao() {
+        workDetailDao = DaoManager.getInstance().getSession().getWorkDetailDao();
+        return workDetailDao;
+    }
 
+    public IssueWorkDao getIssueWorkDao() {
+        issueWorkDao = DaoManager.getInstance().getSession().getIssueWorkDao();
+        return issueWorkDao;
+    }
 
+    public FulltimeApplicationDao getFulltimeApplicationDao() {
+        fulltimeApplicationDao = DaoManager.getInstance().getSession().getFulltimeApplicationDao();
+        return fulltimeApplicationDao;
+    }
+
+    public FulltimeApplicationApprovedOpinionDao getFulltimeApplicationApprovedOpinionDao() {
+        fulltimeApplicationApprovedOpinionDao = DaoManager.getInstance().getSession().getFulltimeApplicationApprovedOpinionDao();
+        return fulltimeApplicationApprovedOpinionDao;
+    }
+
+    public IssueWorkMemberDao getIssueWorkMemberDao() {
+        issueWorkMemberDao = DaoManager.getInstance().getSession().getIssueWorkMemberDao();
+        return issueWorkMemberDao;
+    }
+
+    public JobTransferApplicationDao getJobTransferApplicationDao() {
+        jobTransferApplicationDao = DaoManager.getInstance().getSession().getJobTransferApplicationDao();
+        return jobTransferApplicationDao;
+    }
+
+    public JobTransferApplicationApprovedOpinionDao getJobTransferApplicationApprovedOpinionDao() {
+        jobTransferApplicationApprovedOpinionDao = DaoManager.getInstance().getSession().getJobTransferApplicationApprovedOpinionDao();
+        return jobTransferApplicationApprovedOpinionDao;
+    }
+
+    public LeaveOfficeApplicationDao getLeaveOfficeApplicationDao() {
+        leaveOfficeApplicationDao = DaoManager.getInstance().getSession().getLeaveOfficeApplicationDao();
+        return leaveOfficeApplicationDao;
+    }
+
+    public LeaveOfficeApplicationApprovedOpinionDao getLeaveOfficeApplicationApprovedOpinionDao() {
+        leaveApplicationApprovedOpinionListDao = DaoManager.getInstance().getSession().getLeaveApplicationApprovedOpinionListDao();
+        return leaveOfficeApplicationApprovedOpinionDao;
+    }
+
+    public MeetingApplicationDao getMeetingApplicationDao() {
+        meetingApplicationDao = DaoManager.getInstance().getSession().getMeetingApplicationDao();
+        return meetingApplicationDao;
+    }
+
+    public MeetingMemberDao getMeetingMemberDao() {
+        meetingMemberDao = DaoManager.getInstance().getSession().getMeetingMemberDao();
+        return meetingMemberDao;
+    }
+
+  /*  public RecruitmentApplicationDao getRecruitmentApplicationDao() {
+        recruitmentApplicationDao = DaoManager.getInstance().getSession().getRecruitmentApplicationDao();
+        return recruitmentApplicationDao;
+    }
+
+    public RecruitmentApplicationApprovedOpinionDao getRecruitmentApplicationApprovedOpinionDao() {
+        recruitmentApplicationDao = DaoManager.getInstance().getSession().getRecruitmentApplicationDao();
+        return recruitmentApplicationApprovedOpinionDao;
+    }
+
+    public RecruitmentApplicationItemDao getRecruitmentApplicationItemDao() {
+        recruitmentApplicationItemDao = DaoManager.getInstance().getSession().getRecruitmentApplicationItemDao();
+        return recruitmentApplicationItemDao;
+    }*/
 
     /**
      * 创建单例

@@ -10,7 +10,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,9 +17,6 @@ import com.oliveoa.common.LeaveApplicationHttpResponseObject;
 import com.oliveoa.controller.LeaveApplicationService;
 import com.oliveoa.greendao.ApplicationDao;
 import com.oliveoa.greendao.ContactInfoDao;
-import com.oliveoa.greendao.LeaveApplicationApprovedOpinionListDao;
-import com.oliveoa.greendao.LeaveApplicationDao;
-import com.oliveoa.greendao.OvertimeApplicationDao;
 import com.oliveoa.jsonbean.LeaveApplicationInfoJsonBean;
 import com.oliveoa.jsonbean.LeaveApplicationJsonBean;
 import com.oliveoa.pojo.Application;

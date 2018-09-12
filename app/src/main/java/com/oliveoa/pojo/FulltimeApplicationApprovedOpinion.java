@@ -3,6 +3,11 @@ package com.oliveoa.pojo;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Keep;
+
+@Keep
+@Entity
 public class FulltimeApplicationApprovedOpinion implements Parcelable{
     private String faaocid;
 

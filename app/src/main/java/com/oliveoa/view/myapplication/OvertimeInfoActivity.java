@@ -13,13 +13,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.oliveoa.common.MyApplication;
 import com.oliveoa.common.OvertimeApplicationHttpResponseObject;
 import com.oliveoa.controller.OvertimeApplictionService;
 import com.oliveoa.greendao.ApplicationDao;
 import com.oliveoa.greendao.ContactInfoDao;
-import com.oliveoa.greendao.OvertimeApplicationApprovedOpinionListDao;
-import com.oliveoa.greendao.OvertimeApplicationDao;
 import com.oliveoa.jsonbean.OvertimeApplicationInfoJsonBean;
 import com.oliveoa.jsonbean.OvertimeApplicationJsonBean;
 import com.oliveoa.pojo.Application;

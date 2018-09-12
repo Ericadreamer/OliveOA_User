@@ -207,21 +207,25 @@ public class LoginActivity extends AppCompatActivity
                 Log.e("user&pwd=",idvalu1e+"-----"+pwdvalue);
                 LoginService loginService = new LoginService();
                 HttpResponseObject<ContactInfo> httpResponseObject = loginService.login(idvalu1e,pwdvalue);
-                System.out.println("httpResponseObject.getStatus() = "+httpResponseObject.getStatus());
-
-                if(httpResponseObject.getStatus()==0){
+                if(httpResponseObject==null){
+                    showToast("互联网连接失败！！！！");
+                }
+                else {
+                    System.out.println("httpResponseObject.getStatus() = " + httpResponseObject.getStatus());
+                    if (httpResponseObject.getStatus() == 0) {
 //                    //睡眠3秒
 //                    try {
 //                        Thread.sleep(3000);
 //                    } catch (InterruptedException e) {
 //                        e.printStackTrace();
 //                    }
-                    saveUserinfo(httpResponseObject);
-                    Intent intent = new Intent(LoginActivity.this, LoadingViewActivity.class);
-                    startActivity(intent);
-                    finish();
-                }else{
-                    showToast("输入的登录账号或密码不正确");
+                        saveUserinfo(httpResponseObject);
+                        Intent intent = new Intent(LoginActivity.this, LoadingViewActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        showToast("输入的登录账号或密码不正确");
+                    }
                 }
 
                 setLoginBtnClickable(true);  //这里解放登录按钮，设置为可以点击

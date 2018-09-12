@@ -3,6 +3,9 @@ package com.oliveoa.pojo;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Keep;
+
 import java.util.Date;
 
 public class RecruitmentApplicationItem implements Parcelable{

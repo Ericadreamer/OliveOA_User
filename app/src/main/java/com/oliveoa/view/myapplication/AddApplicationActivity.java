@@ -1,17 +1,31 @@
 package com.oliveoa.view.myapplication;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.oliveoa.common.ContactHttpResponseObject;
+import com.oliveoa.controller.UserInfoService;
+import com.oliveoa.greendao.ContactInfoDao;
+import com.oliveoa.greendao.DepartmentInfoDao;
+import com.oliveoa.greendao.MeetingApplicationDao;
+import com.oliveoa.greendao.OvertimeApplicationDao;
+import com.oliveoa.jsonbean.ContactJsonBean;
+import com.oliveoa.pojo.DepartmentInfo;
+import com.oliveoa.pojo.MeetingApplication;
+import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
 import com.oliveoa.widget.LoadingDialog;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -20,6 +34,12 @@ public class AddApplicationActivity extends AppCompatActivity {
     private LinearLayout overtime,leave,businessTrip,meeting,dimission,regularWorker,adjustPost,recruitment,goods;
     private ImageView back;
     private LoadingDialog loadingDialog;
+    private DepartmentInfoDao departmentInfoDao;
+    private ContactInfoDao contactInfoDao;
+    private OvertimeApplicationDao overtimeApplicationDao;
+    private ArrayList<String> eps;
+    private String TAG = this.getClass().getSimpleName();
+    private MeetingApplicationDao applicationDao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,73 +73,53 @@ public class AddApplicationActivity extends AppCompatActivity {
         overtime.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AddApplicationActivity.this, OvertimeActivity.class);
-                startActivity(intent);
-                finish();
-
+                addOvertimeApplication();
             }
         });
         leave.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AddApplicationActivity.this, LeaveActivity.class);
-                startActivity(intent);
-                finish();
+              addLeaveApplication();
 
             }
         });
         businessTrip.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AddApplicationActivity.this, BusinessActivity.class);
-                startActivity(intent);
-                finish();
+                addBusinessTripApplication();
 
             }
         });
         meeting.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AddApplicationActivity.this, MeetingActivity.class);
-                startActivity(intent);
-                finish();
+                addMeetingApplication();
 
             }
         });
         dimission.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AddApplicationActivity.this, DimissionActivity.class);
-                startActivity(intent);
-                finish();
-
+                addLeaveWorkApplication();
             }
         });
         regularWorker.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AddApplicationActivity.this, RegularWorkerActivity.class);
-                startActivity(intent);
-                finish();
-
+                addFulltimeApplication();
             }
         });
         adjustPost.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AddApplicationActivity.this, AdjustPostActivity.class);
-                startActivity(intent);
-                finish();
+                addJobTransferApplication();
 
             }
         });
         recruitment.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AddApplicationActivity.this, RecruitmentActivity.class);
-                startActivity(intent);
-                finish();
-
+                addRecruitmentApplication();
             }
         });
         goods.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
@@ -132,6 +132,450 @@ public class AddApplicationActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void addOvertimeApplication() {
+        LoadingDialog loadingDialog  = new LoadingDialog(AddApplicationActivity.this,"正在加载数据",true);
+        loadingDialog.show();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SharedPreferences pref = getSharedPreferences("data",MODE_PRIVATE);
+                String s = pref.getString("sessionid","");
+
+                //Todo Service
+                UserInfoService userInfoService = new UserInfoService();
+                //Todo Service.Method
+                ContactHttpResponseObject contactHttpResponseObject = userInfoService.contact(s);
+
+                departmentInfoDao = EntityManager.getInstance().getDepartmentInfo();
+                contactInfoDao = EntityManager.getInstance().getContactInfo();
+                departmentInfoDao.deleteAll();
+                contactInfoDao.deleteAll();
+
+                //ToCheck JsonBean.getStatus()
+                if (contactHttpResponseObject.getStatus()==0) {
+                    ArrayList<ContactJsonBean> contactInfos = contactHttpResponseObject.getData();
+                    Log.d("userinfo", contactInfos.toString());
+                    if(contactInfos.size()==0){
+                        Looper.prepare();//解决子线程弹toast问题
+                        Toast.makeText(getApplicationContext(),"该公司未创建更多的部门和员工", Toast.LENGTH_SHORT).show();
+                        Looper.loop();// 进入loop中的循环，查看消息队列
+                    }else {
+                        for (int i = 0; i < contactInfos.size(); i++) {
+                            Log.d("departmentinfo", contactInfos.get(i).getDepartment().toString());
+                            DepartmentInfo departmentInfo = contactInfos.get(i).getDepartment();
+                            departmentInfoDao.insert(departmentInfo);
+                            Log.d(TAG, "contactInfos.get(i).getEmpContactList().size():" + contactInfos.get(i).getEmpContactList().size());
+                            for (int j = 0; j < contactInfos.get(i).getEmpContactList().size(); j++) {
+                                if (contactInfos.get(i).getEmpContactList().get(j).getEmployee()!= null) {
+                                    Log.d(TAG, "contactInfos.get(i).getEmpContactList().get("+j+").getEmployee()" + contactInfos.get(i).getEmpContactList().get(j).getEmployee().toString());
+                                    contactInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getEmployee());
+                                }
+                            }
+                        }
+                        Intent intent = new Intent(AddApplicationActivity.this, OvertimeActivity.class);
+                        intent.putExtra("index",0);
+                        startActivity(intent);
+                        finish();
+                    }
+                }else{
+                    Looper.prepare();//解决子线程弹toast问题
+                    Toast.makeText(getApplicationContext(), contactHttpResponseObject.getMsg(), Toast.LENGTH_SHORT).show();
+                    Looper.loop();// 进入loop中的循环，查看消息队列
+                }
+
+            }
+        }).start();
+    }
+
+    private void addLeaveApplication() {
+        LoadingDialog loadingDialog  = new LoadingDialog(AddApplicationActivity.this,"正在加载数据",true);
+        loadingDialog.show();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SharedPreferences pref = getSharedPreferences("data",MODE_PRIVATE);
+                String s = pref.getString("sessionid","");
+
+                //Todo Service
+                UserInfoService userInfoService = new UserInfoService();
+                //Todo Service.Method
+                ContactHttpResponseObject contactHttpResponseObject = userInfoService.contact(s);
+
+                departmentInfoDao = EntityManager.getInstance().getDepartmentInfo();
+                contactInfoDao = EntityManager.getInstance().getContactInfo();
+                departmentInfoDao.deleteAll();
+                contactInfoDao.deleteAll();
+
+                //ToCheck JsonBean.getStatus()
+                if (contactHttpResponseObject.getStatus()==0) {
+                    ArrayList<ContactJsonBean> contactInfos = contactHttpResponseObject.getData();
+                    Log.d("userinfo", contactInfos.toString());
+                    if(contactInfos.size()==0){
+                        Looper.prepare();//解决子线程弹toast问题
+                        Toast.makeText(getApplicationContext(),"该公司未创建更多的部门和员工", Toast.LENGTH_SHORT).show();
+                        Looper.loop();// 进入loop中的循环，查看消息队列
+                    }else {
+                        for (int i = 0; i < contactInfos.size(); i++) {
+                            Log.d("departmentinfo", contactInfos.get(i).getDepartment().toString());
+                            DepartmentInfo departmentInfo = contactInfos.get(i).getDepartment();
+                            departmentInfoDao.insert(departmentInfo);
+                            Log.d(TAG, "contactInfos.get(i).getEmpContactList().size():" + contactInfos.get(i).getEmpContactList().size());
+                            for (int j = 0; j < contactInfos.get(i).getEmpContactList().size(); j++) {
+                                if (contactInfos.get(i).getEmpContactList().get(j).getEmployee()!= null) {
+                                    Log.d(TAG, "contactInfos.get(i).getEmpContactList().get("+j+").getEmployee()" + contactInfos.get(i).getEmpContactList().get(j).getEmployee().toString());
+                                    contactInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getEmployee());
+                                }
+                            }
+                        }
+                        Intent intent = new Intent(AddApplicationActivity.this, LeaveActivity.class);
+                        intent.putExtra("index",0);
+                        startActivity(intent);
+                        finish();
+                    }
+                }else{
+                    Looper.prepare();//解决子线程弹toast问题
+                    Toast.makeText(getApplicationContext(), contactHttpResponseObject.getMsg(), Toast.LENGTH_SHORT).show();
+                    Looper.loop();// 进入loop中的循环，查看消息队列
+                }
+
+            }
+        }).start();
+    }
+
+    private void addBusinessTripApplication() {
+        LoadingDialog loadingDialog  = new LoadingDialog(AddApplicationActivity.this,"正在加载数据",true);
+        loadingDialog.show();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SharedPreferences pref = getSharedPreferences("data",MODE_PRIVATE);
+                String s = pref.getString("sessionid","");
+
+                //Todo Service
+                UserInfoService userInfoService = new UserInfoService();
+                //Todo Service.Method
+                ContactHttpResponseObject contactHttpResponseObject = userInfoService.contact(s);
+
+                departmentInfoDao = EntityManager.getInstance().getDepartmentInfo();
+                contactInfoDao = EntityManager.getInstance().getContactInfo();
+                departmentInfoDao.deleteAll();
+                contactInfoDao.deleteAll();
+
+                //ToCheck JsonBean.getStatus()
+                if (contactHttpResponseObject.getStatus()==0) {
+                    ArrayList<ContactJsonBean> contactInfos = contactHttpResponseObject.getData();
+                    Log.d("userinfo", contactInfos.toString());
+                    if(contactInfos.size()==0){
+                        Looper.prepare();//解决子线程弹toast问题
+                        Toast.makeText(getApplicationContext(),"该公司未创建更多的部门和员工", Toast.LENGTH_SHORT).show();
+                        Looper.loop();// 进入loop中的循环，查看消息队列
+                    }else {
+                        for (int i = 0; i < contactInfos.size(); i++) {
+                            Log.d("departmentinfo", contactInfos.get(i).getDepartment().toString());
+                            DepartmentInfo departmentInfo = contactInfos.get(i).getDepartment();
+                            departmentInfoDao.insert(departmentInfo);
+                            Log.d(TAG, "contactInfos.get(i).getEmpContactList().size():" + contactInfos.get(i).getEmpContactList().size());
+                            for (int j = 0; j < contactInfos.get(i).getEmpContactList().size(); j++) {
+                                if (contactInfos.get(i).getEmpContactList().get(j).getEmployee()!= null) {
+                                    Log.d(TAG, "contactInfos.get(i).getEmpContactList().get("+j+").getEmployee()" + contactInfos.get(i).getEmpContactList().get(j).getEmployee().toString());
+                                    contactInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getEmployee());
+                                }
+                            }
+                        }
+                        Intent intent = new Intent(AddApplicationActivity.this, BusinessActivity.class);
+                        intent.putExtra("index",0);
+                        startActivity(intent);
+                        finish();
+                    }
+                }else{
+                    Looper.prepare();//解决子线程弹toast问题
+                    Toast.makeText(getApplicationContext(), contactHttpResponseObject.getMsg(), Toast.LENGTH_SHORT).show();
+                    Looper.loop();// 进入loop中的循环，查看消息队列
+                }
+
+            }
+        }).start();
+    }
+
+    private void addMeetingApplication() {
+        LoadingDialog loadingDialog  = new LoadingDialog(AddApplicationActivity.this,"正在加载数据",true);
+        loadingDialog.show();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SharedPreferences pref = getSharedPreferences("data",MODE_PRIVATE);
+                String s = pref.getString("sessionid","");
+
+                //Todo Service
+                UserInfoService userInfoService = new UserInfoService();
+                //Todo Service.Method
+                ContactHttpResponseObject contactHttpResponseObject = userInfoService.contact(s);
+
+                departmentInfoDao = EntityManager.getInstance().getDepartmentInfo();
+                contactInfoDao = EntityManager.getInstance().getContactInfo();
+                departmentInfoDao.deleteAll();
+                contactInfoDao.deleteAll();
+
+                //ToCheck JsonBean.getStatus()
+                if (contactHttpResponseObject.getStatus()==0) {
+                    ArrayList<ContactJsonBean> contactInfos = contactHttpResponseObject.getData();
+                    Log.d("userinfo", contactInfos.toString());
+                    if(contactInfos.size()==0){
+                        Looper.prepare();//解决子线程弹toast问题
+                        Toast.makeText(getApplicationContext(),"该公司未创建更多的部门和员工", Toast.LENGTH_SHORT).show();
+                        Looper.loop();// 进入loop中的循环，查看消息队列
+                    }else {
+                        for (int i = 0; i < contactInfos.size(); i++) {
+                            Log.d("departmentinfo", contactInfos.get(i).getDepartment().toString());
+                            DepartmentInfo departmentInfo = contactInfos.get(i).getDepartment();
+                            departmentInfoDao.insert(departmentInfo);
+                            Log.d(TAG, "contactInfos.get(i).getEmpContactList().size():" + contactInfos.get(i).getEmpContactList().size());
+                            for (int j = 0; j < contactInfos.get(i).getEmpContactList().size(); j++) {
+                                if (contactInfos.get(i).getEmpContactList().get(j).getEmployee()!= null) {
+                                    Log.d(TAG, "contactInfos.get(i).getEmpContactList().get("+j+").getEmployee()" + contactInfos.get(i).getEmpContactList().get(j).getEmployee().toString());
+                                    contactInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getEmployee());
+                                }
+                            }
+                        }
+                        applicationDao = EntityManager.getInstance().getMeetingApplicationDao();
+                        MeetingApplication application = new MeetingApplication();
+                        application.setTheme("");
+                        applicationDao.insert(application);
+                        Intent intent = new Intent(AddApplicationActivity.this, MeetingActivity.class);
+                        intent.putExtra("index",0);
+                        startActivity(intent);
+                        finish();
+                    }
+                }else{
+                    Looper.prepare();//解决子线程弹toast问题
+                    Toast.makeText(getApplicationContext(), contactHttpResponseObject.getMsg(), Toast.LENGTH_SHORT).show();
+                    Looper.loop();// 进入loop中的循环，查看消息队列
+                }
+
+            }
+        }).start();
+    }
+
+    private void addLeaveWorkApplication() {
+        LoadingDialog loadingDialog  = new LoadingDialog(AddApplicationActivity.this,"正在加载数据",true);
+        loadingDialog.show();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SharedPreferences pref = getSharedPreferences("data",MODE_PRIVATE);
+                String s = pref.getString("sessionid","");
+
+                //Todo Service
+                UserInfoService userInfoService = new UserInfoService();
+                //Todo Service.Method
+                ContactHttpResponseObject contactHttpResponseObject = userInfoService.contact(s);
+
+                departmentInfoDao = EntityManager.getInstance().getDepartmentInfo();
+                contactInfoDao = EntityManager.getInstance().getContactInfo();
+                departmentInfoDao.deleteAll();
+                contactInfoDao.deleteAll();
+
+                //ToCheck JsonBean.getStatus()
+                if (contactHttpResponseObject.getStatus()==0) {
+                    ArrayList<ContactJsonBean> contactInfos = contactHttpResponseObject.getData();
+                    Log.d("userinfo", contactInfos.toString());
+                    if(contactInfos.size()==0){
+                        Looper.prepare();//解决子线程弹toast问题
+                        Toast.makeText(getApplicationContext(),"该公司未创建更多的部门和员工", Toast.LENGTH_SHORT).show();
+                        Looper.loop();// 进入loop中的循环，查看消息队列
+                    }else {
+                        for (int i = 0; i < contactInfos.size(); i++) {
+                            Log.d("departmentinfo", contactInfos.get(i).getDepartment().toString());
+                            DepartmentInfo departmentInfo = contactInfos.get(i).getDepartment();
+                            departmentInfoDao.insert(departmentInfo);
+                            Log.d(TAG, "contactInfos.get(i).getEmpContactList().size():" + contactInfos.get(i).getEmpContactList().size());
+                            for (int j = 0; j < contactInfos.get(i).getEmpContactList().size(); j++) {
+                                if (contactInfos.get(i).getEmpContactList().get(j).getEmployee()!= null) {
+                                    Log.d(TAG, "contactInfos.get(i).getEmpContactList().get("+j+").getEmployee()" + contactInfos.get(i).getEmpContactList().get(j).getEmployee().toString());
+                                    contactInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getEmployee());
+                                }
+                            }
+                        }
+                        Intent intent = new Intent(AddApplicationActivity.this, DimissionActivity.class);
+                        intent.putExtra("index",0);
+                        startActivity(intent);
+                        finish();
+                    }
+                }else{
+                    Looper.prepare();//解决子线程弹toast问题
+                    Toast.makeText(getApplicationContext(), contactHttpResponseObject.getMsg(), Toast.LENGTH_SHORT).show();
+                    Looper.loop();// 进入loop中的循环，查看消息队列
+                }
+
+            }
+        }).start();
+    }
+
+    private void addFulltimeApplication() {
+        LoadingDialog loadingDialog  = new LoadingDialog(AddApplicationActivity.this,"正在加载数据",true);
+        loadingDialog.show();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SharedPreferences pref = getSharedPreferences("data",MODE_PRIVATE);
+                String s = pref.getString("sessionid","");
+
+                //Todo Service
+                UserInfoService userInfoService = new UserInfoService();
+                //Todo Service.Method
+                ContactHttpResponseObject contactHttpResponseObject = userInfoService.contact(s);
+
+                departmentInfoDao = EntityManager.getInstance().getDepartmentInfo();
+                contactInfoDao = EntityManager.getInstance().getContactInfo();
+                departmentInfoDao.deleteAll();
+                contactInfoDao.deleteAll();
+
+                //ToCheck JsonBean.getStatus()
+                if (contactHttpResponseObject.getStatus()==0) {
+                    ArrayList<ContactJsonBean> contactInfos = contactHttpResponseObject.getData();
+                    Log.d("userinfo", contactInfos.toString());
+                    if(contactInfos.size()==0){
+                        Looper.prepare();//解决子线程弹toast问题
+                        Toast.makeText(getApplicationContext(),"该公司未创建更多的部门和员工", Toast.LENGTH_SHORT).show();
+                        Looper.loop();// 进入loop中的循环，查看消息队列
+                    }else {
+                        for (int i = 0; i < contactInfos.size(); i++) {
+                            Log.d("departmentinfo", contactInfos.get(i).getDepartment().toString());
+                            DepartmentInfo departmentInfo = contactInfos.get(i).getDepartment();
+                            departmentInfoDao.insert(departmentInfo);
+                            Log.d(TAG, "contactInfos.get(i).getEmpContactList().size():" + contactInfos.get(i).getEmpContactList().size());
+                            for (int j = 0; j < contactInfos.get(i).getEmpContactList().size(); j++) {
+                                if (contactInfos.get(i).getEmpContactList().get(j).getEmployee()!= null) {
+                                    Log.d(TAG, "contactInfos.get(i).getEmpContactList().get("+j+").getEmployee()" + contactInfos.get(i).getEmpContactList().get(j).getEmployee().toString());
+                                    contactInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getEmployee());
+                                }
+                            }
+                        }
+                        Intent intent = new Intent(AddApplicationActivity.this, RegularWorkerActivity.class);
+                        intent.putExtra("index",0);
+                        startActivity(intent);
+                        finish();
+                    }
+                }else{
+                    Looper.prepare();//解决子线程弹toast问题
+                    Toast.makeText(getApplicationContext(), contactHttpResponseObject.getMsg(), Toast.LENGTH_SHORT).show();
+                    Looper.loop();// 进入loop中的循环，查看消息队列
+                }
+
+            }
+        }).start();
+    }
+
+    private void addJobTransferApplication() {
+        LoadingDialog loadingDialog  = new LoadingDialog(AddApplicationActivity.this,"正在加载数据",true);
+        loadingDialog.show();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SharedPreferences pref = getSharedPreferences("data",MODE_PRIVATE);
+                String s = pref.getString("sessionid","");
+
+                //Todo Service
+                UserInfoService userInfoService = new UserInfoService();
+                //Todo Service.Method
+                ContactHttpResponseObject contactHttpResponseObject = userInfoService.contact(s);
+
+                departmentInfoDao = EntityManager.getInstance().getDepartmentInfo();
+                contactInfoDao = EntityManager.getInstance().getContactInfo();
+                departmentInfoDao.deleteAll();
+                contactInfoDao.deleteAll();
+
+                //ToCheck JsonBean.getStatus()
+                if (contactHttpResponseObject.getStatus()==0) {
+                    ArrayList<ContactJsonBean> contactInfos = contactHttpResponseObject.getData();
+                    Log.d("userinfo", contactInfos.toString());
+                    if(contactInfos.size()==0){
+                        Looper.prepare();//解决子线程弹toast问题
+                        Toast.makeText(getApplicationContext(),"该公司未创建更多的部门和员工", Toast.LENGTH_SHORT).show();
+                        Looper.loop();// 进入loop中的循环，查看消息队列
+                    }else {
+                        for (int i = 0; i < contactInfos.size(); i++) {
+                            Log.d("departmentinfo", contactInfos.get(i).getDepartment().toString());
+                            DepartmentInfo departmentInfo = contactInfos.get(i).getDepartment();
+                            departmentInfoDao.insert(departmentInfo);
+                            Log.d(TAG, "contactInfos.get(i).getEmpContactList().size():" + contactInfos.get(i).getEmpContactList().size());
+                            for (int j = 0; j < contactInfos.get(i).getEmpContactList().size(); j++) {
+                                if (contactInfos.get(i).getEmpContactList().get(j).getEmployee()!= null) {
+                                    Log.d(TAG, "contactInfos.get(i).getEmpContactList().get("+j+").getEmployee()" + contactInfos.get(i).getEmpContactList().get(j).getEmployee().toString());
+                                    contactInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getEmployee());
+                                }
+                            }
+                        }
+                        Intent intent = new Intent(AddApplicationActivity.this, AdjustPostActivity.class);
+                        intent.putExtra("index",0);
+                        startActivity(intent);
+                        finish();
+                    }
+                }else{
+                    Looper.prepare();//解决子线程弹toast问题
+                    Toast.makeText(getApplicationContext(), contactHttpResponseObject.getMsg(), Toast.LENGTH_SHORT).show();
+                    Looper.loop();// 进入loop中的循环，查看消息队列
+                }
+
+            }
+        }).start();
+    }
+
+    private void addRecruitmentApplication() {
+        LoadingDialog loadingDialog  = new LoadingDialog(AddApplicationActivity.this,"正在加载数据",true);
+        loadingDialog.show();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SharedPreferences pref = getSharedPreferences("data",MODE_PRIVATE);
+                String s = pref.getString("sessionid","");
+
+                //Todo Service
+                UserInfoService userInfoService = new UserInfoService();
+                //Todo Service.Method
+                ContactHttpResponseObject contactHttpResponseObject = userInfoService.contact(s);
+
+                departmentInfoDao = EntityManager.getInstance().getDepartmentInfo();
+                contactInfoDao = EntityManager.getInstance().getContactInfo();
+                departmentInfoDao.deleteAll();
+                contactInfoDao.deleteAll();
+
+                //ToCheck JsonBean.getStatus()
+                if (contactHttpResponseObject.getStatus()==0) {
+                    ArrayList<ContactJsonBean> contactInfos = contactHttpResponseObject.getData();
+                    Log.d("userinfo", contactInfos.toString());
+                    if(contactInfos.size()==0){
+                        Looper.prepare();//解决子线程弹toast问题
+                        Toast.makeText(getApplicationContext(),"该公司未创建更多的部门和员工", Toast.LENGTH_SHORT).show();
+                        Looper.loop();// 进入loop中的循环，查看消息队列
+                    }else {
+                        for (int i = 0; i < contactInfos.size(); i++) {
+                            Log.d("departmentinfo", contactInfos.get(i).getDepartment().toString());
+                            DepartmentInfo departmentInfo = contactInfos.get(i).getDepartment();
+                            departmentInfoDao.insert(departmentInfo);
+                            Log.d(TAG, "contactInfos.get(i).getEmpContactList().size():" + contactInfos.get(i).getEmpContactList().size());
+                            for (int j = 0; j < contactInfos.get(i).getEmpContactList().size(); j++) {
+                                if (contactInfos.get(i).getEmpContactList().get(j).getEmployee()!= null) {
+                                    Log.d(TAG, "contactInfos.get(i).getEmpContactList().get("+j+").getEmployee()" + contactInfos.get(i).getEmpContactList().get(j).getEmployee().toString());
+                                    contactInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getEmployee());
+                                }
+                            }
+                        }
+                        Intent intent = new Intent(AddApplicationActivity.this, RecruitmentActivity.class);
+                        intent.putExtra("index",0);
+                        startActivity(intent);
+                        finish();
+                    }
+                }else{
+                    Looper.prepare();//解决子线程弹toast问题
+                    Toast.makeText(getApplicationContext(), contactHttpResponseObject.getMsg(), Toast.LENGTH_SHORT).show();
+                    Looper.loop();// 进入loop中的循环，查看消息队列
+                }
+
+            }
+        }).start();
     }
 
     @Override
