@@ -1,7 +1,9 @@
 package com.oliveoa.view.notice;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.oliveoa.view.R;
+import com.oliveoa.view.TabLayoutBottomActivity;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -37,11 +40,13 @@ public class AddNoticeActivity extends AppCompatActivity {
         addPersonList = (LinearLayout) findViewById(R.id.approve_list);
 
 
+
         //点击事件
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AddNoticeActivity.this, NoticeActivity.class);
+                Intent intent = new Intent(AddNoticeActivity.this, TabLayoutBottomActivity.class);
+                intent.putExtra("index",1);
                 startActivity(intent);
                 finish();
                 //Toast.makeText(mContext, "你点击了返回", Toast.LENGTH_SHORT).show();

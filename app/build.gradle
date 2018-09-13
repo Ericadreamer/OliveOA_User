@@ -96,5 +96,5 @@ dependencies {
     implementation 'org.greenrobot:greendao:3.2.0'
     implementation 'org.greenrobot:greendao-generator:3.2.0'
     implementation files('libs/library-1.0.2-sources.jar')
-
+    implementation 'com.belerweb:pinyin4j:2.5.1'
 }

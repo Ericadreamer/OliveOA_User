@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,12 +35,14 @@ public class TabLayoutBottomActivity extends AppCompatActivity {
     private final int COUNT = TAB_TITLES.length;
     private MyViewPagerAdapter mAdapter;
     private ViewPager mViewPager;
-
+    private int index = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab_layout_bottom);
+        index = getIntent().getIntExtra("index",index);
+        Log.d("INDEX=", String.valueOf(index));
         initViews();
     }
 
@@ -50,6 +53,8 @@ public class TabLayoutBottomActivity extends AppCompatActivity {
         mAdapter = new MyViewPagerAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
         mViewPager.setAdapter(mAdapter);
+        mViewPager.setCurrentItem(index);
+
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
         mTabLayout.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
     }

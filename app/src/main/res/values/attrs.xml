@@ -10,4 +10,10 @@
         <attr name="classic_contentTextColor" format="color|reference"/>
         <attr name="classic_contentViewHeight" format="dimension|reference"/>
     </declare-styleable>
+
+    <declare-styleable name="SideBar">
+        <attr name="scaleSize" format="integer"/>
+        <attr name="scaleItemCount" format="integer"/>
+        <attr name="scaleWidth" format="dimension"/>
+    </declare-styleable>
 </resources>

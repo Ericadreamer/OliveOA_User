@@ -309,6 +309,9 @@
         <activity android:name=".notice.NoticeInfoActivity"
             android:exported="true"
             android:theme="@style/HomeTheme"></activity>
+        <activity android:name=".addressbook.DepartmentEmployeeActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme"></activity>
     </application>
 
 </manifest>

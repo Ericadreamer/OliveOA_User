@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com.oliveoa.view/tools"
@@ -8,68 +8,53 @@
     android:layout_gravity="center_vertical"
     android:background="#f0f0f0"
     android:gravity="center"
+    android:orientation="vertical"
     tools:context="com.oliveoa.view.note.MyNoteActivity">
+
+
+    //标题栏
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:windowSoftInputMode="adjustResize">
 
-        //标题栏
+        <ImageView
+            android:id="@+id/iback"
+            android:layout_width="19dp"
+            android:layout_height="19dp"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="18dp"
+            android:src="@drawable/note_back" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:text="便签"
+            android:textColor="@color/tv_gray_lit"
+            android:textSize="20sp" />
 
-            <ImageView
-                android:id="@+id/iback"
-                android:layout_width="19dp"
-                android:layout_height="19dp"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="18dp"
-                android:src="@drawable/note_back" />
+        <!--<ImageView
+            android:id="@+id/iadd"
+            android:layout_width="@dimen/dp_22"
+            android:layout_height="22dp"
+            android:gravity="center|right"
+            android:layout_margin="18dp"
+            android:src="@drawable/add" />-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="便签"
-                android:textColor="@color/tv_gray_lit"
-                android:textSize="20sp"
-                android:layout_weight="1" />
+    </LinearLayout>
 
-            <ImageView
-                android:id="@+id/iadd"
-                android:layout_width="@dimen/dp_22"
-                android:layout_height="22dp"
-                android:gravity="center|right"
-                android:layout_margin="18dp"
-                android:src="@drawable/add" />
+    //android:fitsSystemWindows="true":触发View的padding属性来给系统窗口留出空间
+    //可以给任何的view设置，只要设置了这个属性此view的其他padding属性失效
 
-
-        </LinearLayout>
-
-        //便签列表
-        <!--<ScrollView
+    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:id="@+id/note_list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-            </LinearLayout>
-
-        </LinearLayout>
-        </ScrollView>-->
+        android:layout_height="match_parent"
+        android:gravity="center">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_content"
@@ -77,25 +62,26 @@
             android:layout_height="wrap_content"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
+        <!--android:src:FAB中显示的图标
+        app:background:正常的背景颜色
+        app:rippleColor:按下时的背景颜色
+        app:elevation:正常的阴影大小
+        app:pressedTranslitionZ:按下时的阴影大小
+        app:layout_anchor:设置FAB的锚点，即以哪个控件为参照设置位置
+        app:layout_anchorGravity:FAB相对于锚点的位置
+        app:fabSize:-->FAB的大小，normal或mini（分别对应56dp和40dp）
 
-
-        <!--<android.support.design.widget.FloatingActionButton
+        <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
             android:layout_margin="@dimen/dp_16"
             android:onClick="onClickFab"
             android:src="@drawable/ic_toolbar_add"
-            app:backgroundTint="@color/orange_main"
-            app:layout_anchor="@id/vp_content"
-            app:layout_anchorGravity="bottom|right|end" />-->
-
-        <!--<android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/dp_50"/>-->
+            app:backgroundTint="@color/fab_ripple" />
 
 
-    </LinearLayout>
-</RelativeLayout>
+    </android.support.design.widget.CoordinatorLayout>
+
+</LinearLayout>

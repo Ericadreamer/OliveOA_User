@@ -2,38 +2,80 @@ package com.oliveoa.behavior;
 
 import android.content.Context;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.view.ViewPropertyAnimatorListenerAdapter;
+import android.support.v4.view.animation.FastOutLinearInInterpolator;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 
-public class DependentFABBehavior extends CoordinatorLayout.Behavior {
-    public DependentFABBehavior(Context context, AttributeSet attrs) {
-        super(context, attrs);
+import java.util.jar.Attributes;
+
+public class DependentFABBehavior extends FloatingActionButton.Behavior {
+    //加速器实现一个弹射效果
+    private FastOutLinearInInterpolator folistener = new FastOutLinearInInterpolator();
+
+    public DependentFABBehavior(Context context, AttributeSet atttr) {
+        super();
     }
 
-    /**
-     * 判断依赖对象
-     * @param parent
-     * @param child
-     * @param dependency
-     * @return
-     */
+
+    public boolean onStartNestedScroll(CoordinatorLayout coordinatorLayout, FloatingActionButton child, View directTargetChild, View target, int nestedScrollAxes) {
+        //开始滑监听--当观察recycleView开始滑动的时候回调
+        //nestedScrollAxes滑动关联的方向
+        return nestedScrollAxes == ViewGroup.SCROLL_AXIS_VERTICAL || super.onStartNestedScroll(coordinatorLayout, child, directTargetChild, target, nestedScrollAxes);
+    }
+    //正在滑出来
+    boolean isAnimatingOut=false;
     @Override
-    public boolean layoutDependsOn(CoordinatorLayout parent, View child, View dependency) {
-        return dependency instanceof Snackbar.SnackbarLayout;
+    public void onNestedScroll(CoordinatorLayout coordinatorLayout, FloatingActionButton child, View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
+        //不断的调用
+        //判断滑动的方向 dyConsumed 某个方向的增量
+        if(dyConsumed>0&&!isAnimatingOut&&child.getVisibility()==View.VISIBLE){
+            //fab划出去
+            animateOut(child);
+        }else if(dyConsumed<0&&child.getVisibility()!=View.VISIBLE){
+            //fab划进来
+            animateIn(child);
+        }
+        super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
+    }
+    //滑进来
+    private void animateIn(FloatingActionButton child) {
+        child.setVisibility(View.VISIBLE);
+        //属性动画
+        ViewCompat.animate(child).translationX(0).setInterpolator(folistener).setListener(null).start();
+    }
+    //滑出去
+    private void animateOut(FloatingActionButton child) {
+        //属性动画
+        //设置监听判断状态
+        ViewCompat.animate(child).translationX(child.getHeight()).setInterpolator(folistener).setListener(new ViewPropertyAnimatorListenerAdapter(){
+            @Override
+            public void onAnimationStart(View view) {
+                isAnimatingOut=true;
+                super.onAnimationStart(view);
+            }
+
+            @Override
+            public void onAnimationCancel(View view) {
+                isAnimatingOut=false;
+                super.onAnimationCancel(view);
+            }
+
+            @Override
+            public void onAnimationEnd(View view) {
+                view.setVisibility(View.GONE);
+                isAnimatingOut=false;
+                super.onAnimationEnd(view);
+            }
+        }).start();
     }
 
-    /**
-     * 当依赖对象发生变化时,产生回调,自定义改变child view
-     * @param parent
-     * @param child
-     * @param dependency
-     * @return
-     */
     @Override
-    public boolean onDependentViewChanged(CoordinatorLayout parent, View child, View dependency) {
-        float translationY = Math.min(0, dependency.getTranslationY() - dependency.getHeight());
-        child.setTranslationY(translationY);
-        return true;
+    public void onStopNestedScroll(CoordinatorLayout coordinatorLayout, FloatingActionButton child, View target) {
+        super.onStopNestedScroll(coordinatorLayout, child, target);
     }
 }
+
