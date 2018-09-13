@@ -5,28 +5,28 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.oliveoa.view.R;
-import com.oliveoa.view.myapplication.AdjustPostInfoActivity;
+import com.oliveoa.view.TabLayoutBottomActivity;
 import com.oliveoa.view.myapplication.MyApplicationActivity;
+import com.oliveoa.view.notice.NoticeInfoActivity;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class AdjustPostDisposedActivity extends AppCompatActivity {
-    //申请人，被调员工编号，原部门原职位，目标部门职位，调岗原因，列表审批人，列表审批状态，审批意见
-    private TextView tApplicant,tNumber,tOriginalDcpid,tTargetDcpid,tReason,tApprover,tStatus,tadvise;
-    private LinearLayout addListView;  //添加审批进度列表
+public class NoticeUndisposedActivity extends AppCompatActivity {
+    private TextView ttitle,tcontent;
     private ImageView back;
+    private Button bagree,bdisagree; //同意，不同意
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_adjust_post_disposed);
+        setContentView(R.layout.activity_notice_undisposed);
 
         initView();
         initData();
@@ -34,51 +34,43 @@ public class AdjustPostDisposedActivity extends AppCompatActivity {
 
     public void initView(){
         back = (ImageView) findViewById(R.id.iback);
-        tNumber = (TextView) findViewById(R.id.employee_num);
-        tOriginalDcpid = (TextView) findViewById(R.id.original_dpcid);
-        tTargetDcpid = (TextView) findViewById(R.id.target_dpcid);
-        tReason = (TextView) findViewById(R.id.reason);
-        tStatus = (TextView) findViewById(R.id.status);
-        tApprover = (TextView) findViewById(R.id.approver);
-        tApplicant = (TextView) findViewById(R.id.name);
-        tadvise = (TextView) findViewById(R.id.advise);
-        addListView = (LinearLayout) findViewById(R.id.approve_list);
-
+        ttitle = (TextView) findViewById(R.id.title);
+        tcontent = (TextView) findViewById(R.id.content);
+        bagree = (Button) findViewById(R.id.agree);
+        bdisagree = (Button) findViewById(R.id.disagree);
 
         back.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AdjustPostDisposedActivity.this, MyApprovalActivity.class);
-                intent.putExtra("index",1);
+                Intent intent = new Intent(NoticeUndisposedActivity.this, MyApprovalActivity.class);
+                intent.putExtra("index",0);
                 startActivity(intent);
                 finish();
+            }
+        });
+
+        bagree.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(NoticeUndisposedActivity.this, ApprovalAdviseActivity.class);
+                startActivity(intent);
+                finish();
+                //Toast.makeText(mContext, "你点击了返回", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        bdisagree.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(NoticeUndisposedActivity.this, ApprovalAdviseActivity.class);
+                startActivity(intent);
+                finish();
+                //Toast.makeText(mContext, "你点击了返回", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     public void initData(){
-
-    }
-
-    /**
-     * Item排序
-     */
-    private void sortHotelViewItem() {
-        //获取LinearLayout里面所有的view
-    }
-
-    /**
-     * 添加ViewItem，R.layout.approval_status_item
-     * @param view
-     */
-    private void addViewItem(View view){
-
-    }
-
-    /**
-     * Item加载数据
-     */
-    private void InitDataViewItem(){
 
     }
 
@@ -115,5 +107,4 @@ public class AdjustPostDisposedActivity extends AppCompatActivity {
             System.exit(0);
         }
     }
-
 }

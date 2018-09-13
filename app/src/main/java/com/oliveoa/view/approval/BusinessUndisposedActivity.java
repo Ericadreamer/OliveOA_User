@@ -44,7 +44,8 @@ public class BusinessUndisposedActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(BusinessUndisposedActivity.this, UndisposedApprovalActivity.class);
+                Intent intent = new Intent(BusinessUndisposedActivity.this, MyApprovalActivity.class);
+                intent.putExtra("index",0);
                 startActivity(intent);
                 finish();
                 //Toast.makeText(mContext, "你点击了返回", Toast.LENGTH_SHORT).show();

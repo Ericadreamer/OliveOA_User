@@ -43,7 +43,8 @@ public class GoodsUndisposedActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(GoodsUndisposedActivity.this, UndisposedApprovalActivity.class);
+                Intent intent = new Intent(GoodsUndisposedActivity.this, MyApprovalActivity.class);
+                intent.putExtra("index",0);
                 startActivity(intent);
                 finish();
             }

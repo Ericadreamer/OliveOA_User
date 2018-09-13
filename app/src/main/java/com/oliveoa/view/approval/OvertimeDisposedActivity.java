@@ -46,7 +46,8 @@ public class OvertimeDisposedActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(OvertimeDisposedActivity.this, DisposedApprovalActivity.class);
+                Intent intent = new Intent(OvertimeDisposedActivity.this, MyApprovalActivity.class);
+                intent.putExtra("index",1);
                 startActivity(intent);
                 finish();
                 //Toast.makeText(mContext, "你点击了返回", Toast.LENGTH_SHORT).show();

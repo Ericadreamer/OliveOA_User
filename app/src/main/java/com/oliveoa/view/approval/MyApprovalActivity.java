@@ -15,6 +15,7 @@ import com.oliveoa.view.myapplication.MyApplicationActivity;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,13 +43,15 @@ public class MyApprovalActivity extends AppCompatActivity {
     private final int COUNT = TAB_TITLES.length;
     private ApprovalPagerAdapter mAdapter;
     private ViewPager mViewPager;
-
+    private int index = 0;
     private ImageView back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_approval);
+        index = getIntent().getIntExtra("index",index);
+        Log.d("INDEX=", String.valueOf(index));
 
         initViews();
     }
@@ -61,6 +64,7 @@ public class MyApprovalActivity extends AppCompatActivity {
         mAdapter = new ApprovalPagerAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.info_viewpager);
         mViewPager.setAdapter(mAdapter);
+        mViewPager.setCurrentItem(index);
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
         mTabLayout.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 

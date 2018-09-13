@@ -48,6 +48,7 @@ public class BusinessDisposedActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(BusinessDisposedActivity.this, MyApprovalActivity.class);
+                intent.putExtra("index",1);
                 startActivity(intent);
                 finish();
                 //Toast.makeText(mContext, "你点击了返回", Toast.LENGTH_SHORT).show();

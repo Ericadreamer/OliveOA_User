@@ -47,7 +47,8 @@ public class GoodsDisposedActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(GoodsDisposedActivity.this, DisposedApprovalActivity.class);
+                Intent intent = new Intent(GoodsDisposedActivity.this, MyApprovalActivity.class);
+                intent.putExtra("index",1);
                 startActivity(intent);
                 finish();
             }

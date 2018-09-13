@@ -21,7 +21,8 @@
         android:paddingBottom="@dimen/dp_5"
         android:paddingLeft="@dimen/dp_10"
         android:paddingRight="@dimen/dp_10"
-        android:paddingTop="@dimen/dp_5">
+        android:paddingTop="@dimen/dp_5"
+        android:background="#fff">
 
         <ImageView
             android:layout_width="@dimen/dp_35"
