@@ -24,7 +24,7 @@ public class RecruitmentApplicationService {
     /**
      *  发起申请（）
      */
-    public StatusAndMsgJsonBean submitApplication(String s, RecruitmentApplicationItem application, String dcid, ArrayList<String> members){
+    public StatusAndMsgJsonBean submitApplication(String s, RecruitmentApplicationItem application, String dcid, String members){
         try {
             DateFormat dateFormat = new DateFormat();
             OkHttpClient client = new OkHttpClient();
@@ -35,7 +35,7 @@ public class RecruitmentApplicationService {
                     .add("describe",application.getPositionDescribe())
                     .add("request",application.getPositionRequest())
                     .add("salary",application.getSalary())
-                    .add("meetingMember",members.toString())
+                    .add("approvedMember",members)
                     .build();
 
             Request request = new Request.Builder()

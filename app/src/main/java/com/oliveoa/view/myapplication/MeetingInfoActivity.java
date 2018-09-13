@@ -53,7 +53,8 @@ public class MeetingInfoActivity extends AppCompatActivity {
 
         ap = getIntent().getParcelableExtra("ap");
         list = getIntent().getParcelableArrayListExtra("list");
-        Log.i(TAG,"ap="+ap+"---list="+list);
+        Log.i(TAG,"ap="+ap);
+        Log.i(TAG,"list="+list);
         initView();
     }
 
@@ -133,16 +134,16 @@ public class MeetingInfoActivity extends AppCompatActivity {
         ttopic.setText(ap.getTheme());
         ttime.setText(dateFormat.LongtoDatemm(ap.getBegintime())+"--"+dateFormat.LongtoDatemm(ap.getEndtime()));
         tplace.setText(ap.getPlace());
-        ArrayList<String> member = null;
+        ArrayList<String> member = new ArrayList<>();
         if(list!=null) {
             for (int i = 0; i < list.size(); i++) {
                 ContactInfo ci = cidao.queryBuilder().where(ContactInfoDao.Properties.Eid.eq(list.get(i).getEid())).unique();
                 if (ci != null) {
-                    member.add(ci.getName());
                     Log.e(TAG,ci.getName());
+                    member.add(ci.getName());
                 }
             }
-            tmembers.setText(member.toString());
+            tmembers.setText(member.toString().substring(1,member.toString().length()-1));//字符串toString会出现[]包括对象，故substring对第一个和最后一个括号隐藏
         }else{
             tmembers.setText("");
         }

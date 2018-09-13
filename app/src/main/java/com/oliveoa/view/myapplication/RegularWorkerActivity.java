@@ -1,22 +1,57 @@
 package com.oliveoa.view.myapplication;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.oliveoa.common.ContactHttpResponseObject;
+import com.oliveoa.controller.BusinessTripApplicationService;
+import com.oliveoa.controller.FulltimeApplicationService;
+import com.oliveoa.controller.UserInfoService;
+import com.oliveoa.greendao.ApproveNumberDao;
+import com.oliveoa.greendao.BusinessTripApplicationDao;
+import com.oliveoa.greendao.ContactInfoDao;
+import com.oliveoa.greendao.DepartmentInfoDao;
+import com.oliveoa.greendao.DutyInfoDao;
+import com.oliveoa.greendao.FulltimeApplicationDao;
+import com.oliveoa.jsonbean.ContactJsonBean;
+import com.oliveoa.jsonbean.DepartmentInfoJsonBean;
+import com.oliveoa.jsonbean.StatusAndMsgJsonBean;
+import com.oliveoa.pojo.ApproveNumber;
+import com.oliveoa.pojo.BusinessTripApplication;
+import com.oliveoa.pojo.ContactInfo;
+import com.oliveoa.pojo.DepartmentInfo;
+import com.oliveoa.pojo.DutyInfo;
+import com.oliveoa.pojo.FulltimeApplication;
+import com.oliveoa.util.DateFormat;
+import com.oliveoa.util.EntityManager;
 import com.oliveoa.util.LinesEditView;
 import com.oliveoa.view.R;
+import com.oliveoa.widget.LoadingDialog;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import cn.qqtheme.framework.picker.DatePicker;
+import cn.qqtheme.framework.picker.DateTimePicker;
 import cn.qqtheme.framework.util.ConvertUtils;
 
 public class RegularWorkerActivity extends AppCompatActivity {
@@ -25,13 +60,28 @@ public class RegularWorkerActivity extends AppCompatActivity {
     private LinearLayout addPersonList;  //审批人列表
     private String tmpdname;
     private String tmppname;
+    private TextView tnum,tname; //approve_item信息，tnum为第几审批人，tname为审批人名称
 
+    private DateTimePicker picker;
+    private View textAreaView;
+    private EditText treson;
+    private LinearLayout addlistView;
+    private int index;
+    private String TAG = this.getClass().getSimpleName();
+    private DepartmentInfoDao departmentInfoDao;
+    private ContactInfoDao contactInfoDao;
+    private FulltimeApplicationDao applicationDao;
+    private List<ApproveNumber> eps;
+    private ApproveNumberDao approveNumberDao;
+    private FulltimeApplication application;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_regular_worker);
+        index = getIntent().getIntExtra("index",index);//选择1，列表0
+        Log.e("IDDEX=", String.valueOf(index));
+
         initView();
-        initData();
     }
     private void initView() {
         back = (ImageView) findViewById(R.id.iback);
@@ -40,13 +90,22 @@ public class RegularWorkerActivity extends AppCompatActivity {
         tEndDate = (TextView) findViewById(R.id.end_date);
         tDuty = (TextView) findViewById(R.id.content_dpcid);
         taddPerson = (TextView) findViewById(R.id.person_add);
-        addPersonList = (LinearLayout) findViewById(R.id.approve_list);
+        addlistView = (LinearLayout) findViewById(R.id.approve_list);
 
+        textAreaView = (LinesEditView)findViewById(R.id.reason);
+        treson = textAreaView.findViewById(R.id.id_et_input);
+
+        initData();
         //点击事件
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(RegularWorkerActivity.this, MyApplicationActivity.class);
+                if(index==1){
+                    if(eps!=null){
+                        approveNumberDao.deleteAll();
+                    }
+                }
+                Intent intent = new Intent(RegularWorkerActivity.this, MainApplicationActivity.class);
                 startActivity(intent);
                 finish();
                 //Toast.makeText(mContext, "你点击了返回", Toast.LENGTH_SHORT).show();
@@ -55,92 +114,277 @@ public class RegularWorkerActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                save();
+                try {
+                    save();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
         taddPerson.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(RegularWorkerActivity.this, SelectPersonApprovingActivity.class);
-                startActivity(intent);
-                finish();
+                try {
+                    addPerson();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
-        //试用期总结
-        LinesEditView linesEditView = new LinesEditView(RegularWorkerActivity.this);
-        String test = linesEditView.getContentText();
-
         // 默认添加一个Item
-        addViewItem(null);
-
+        if(index==1){
+            addViewItem(null);
+        }
 
     }
+
 
     private void initData() {
+        applicationDao = EntityManager.getInstance().getFulltimeApplicationDao();
+        contactInfoDao = EntityManager.getInstance().getContactInfo();
 
+        departmentInfoDao = EntityManager.getInstance().getDepartmentInfo();
+
+        approveNumberDao = EntityManager.getInstance().getApproveNumberDao();
+        application = new FulltimeApplication();
+        DateFormat dateFormat= new DateFormat();
+        if(index==1) {
+            eps = approveNumberDao.queryBuilder().list();
+            Log.e(TAG,"EPS="+eps);
+            application = applicationDao.queryBuilder().unique();
+            if(application!=null){
+                treson.setText(application.getPersonalSummary());
+                if(application.getBegintime()==0){
+                    //startTime.setText("");
+                }else{
+                    tStartDate.setText(dateFormat.LongtoDatedd(application.getBegintime()));
+                }
+                if(application.getEndtime()==0){
+                    //endTime.setText("");
+                }else{
+                    tEndDate.setText(dateFormat.LongtoDatedd(application.getEndtime()));
+                }
+            }
+        }
     }
-    private void save() {
-
-    }
-
     //添加审批人操作
-    public void personadd(){
+    private void addPerson() throws ParseException {
+        DateFormat dateFormat = new DateFormat();
+        FulltimeApplication ap = new FulltimeApplication();
+        Log.e(TAG,tStartDate.getText().toString().trim()+"==========="+tEndDate.getText().toString().trim());
+            if(tStartDate.getText().toString().trim().equals("")||tStartDate.getText().toString().trim().equals("请选择到岗日期")){
 
+        }else{
+            ap.setBegintime(dateFormat.stringToLong(tStartDate.getText().toString().trim(),"yyyy-MM-dd"));
+        }
+        if(tEndDate.getText().toString().trim().equals("")||tEndDate.getText().toString().trim().equals("请选择截止日期")){
+
+        }else{
+            ap.setEndtime(dateFormat.stringToLong(tEndDate.getText().toString().trim(),"yyyy-MM-dd"));
+        }
+        ap.setPersonalSummary(treson.getText().toString().trim());
+        Log.e(TAG,ap.toString());
+        applicationDao.deleteAll();
+        applicationDao.insert(ap);
+
+        LoadingDialog loadingDialog  = new LoadingDialog(RegularWorkerActivity.this,"正在加载数据",true);
+        loadingDialog.show();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SharedPreferences pref = getSharedPreferences("data",MODE_PRIVATE);
+                String s = pref.getString("sessionid","");
+
+                //Todo Service
+                UserInfoService userInfoService = new UserInfoService();
+                //Todo Service.Method
+                ContactHttpResponseObject contactHttpResponseObject = userInfoService.contact(s);
+
+                departmentInfoDao = EntityManager.getInstance().getDepartmentInfo();
+                contactInfoDao = EntityManager.getInstance().getContactInfo();
+                departmentInfoDao.deleteAll();
+                contactInfoDao.deleteAll();
+
+                //ToCheck JsonBean.getStatus()
+                if (contactHttpResponseObject.getStatus()==0) {
+                    ArrayList<ContactJsonBean> contactInfos = contactHttpResponseObject.getData();
+                    Log.d("userinfo", contactInfos.toString());
+                    if(contactInfos.size()==0){
+                        Looper.prepare();//解决子线程弹toast问题
+                        Toast.makeText(getApplicationContext(),"该公司未创建更多的部门和员工", Toast.LENGTH_SHORT).show();
+                        Looper.loop();// 进入loop中的循环，查看消息队列
+                    }else {
+                        for (int i = 0; i < contactInfos.size(); i++) {
+                            Log.d("departmentinfo", contactInfos.get(i).getDepartment().toString());
+                            DepartmentInfo departmentInfo = contactInfos.get(i).getDepartment();
+                            departmentInfoDao.insert(departmentInfo);
+                            Log.d(TAG, "contactInfos.get(i).getEmpContactList().size():" + contactInfos.get(i).getEmpContactList().size());
+                            for (int j = 0; j < contactInfos.get(i).getEmpContactList().size(); j++) {
+                                if (contactInfos.get(i).getEmpContactList().get(j).getEmployee()!= null) {
+                                    Log.d(TAG, "contactInfos.get(i).getEmpContactList().get("+j+").getEmployee()" + contactInfos.get(i).getEmpContactList().get(j).getEmployee().toString());
+                                    contactInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getEmployee());
+                                }
+                            }
+                        }
+                        Intent intent = new Intent(RegularWorkerActivity.this, SelectPersonApprovingActivity.class);
+                        intent.putExtra("index",6);
+                        startActivity(intent);
+                    }
+                }else{
+                    Looper.prepare();//解决子线程弹toast问题
+                    Toast.makeText(getApplicationContext(), contactHttpResponseObject.getMsg(), Toast.LENGTH_SHORT).show();
+                    Looper.loop();// 进入loop中的循环，查看消息队列
+                }
+
+            }
+        }).start();
     }
+    private void save() throws ParseException {
+        //Toast.makeText(getApplicationContext(), "你点击了保存", Toast.LENGTH_SHORT).show();
 
-    //加载R.layout.item_approve列表
-    private void addViewItem(View view) {
+        DateFormat dateFormat = new DateFormat();
+        if(TextUtils.isEmpty(tStartDate.getText().toString().trim())||TextUtils.isEmpty(tEndDate.getText().toString().trim())
+                ||TextUtils.isEmpty(treson.getText().toString().trim())){
+            Toast.makeText(getApplicationContext(), "信息不得为空！", Toast.LENGTH_SHORT).show();
+        }else {
+            application.setPersonalSummary(treson.getText().toString().trim());
+            application.setBegintime(dateFormat.stringToLong(tStartDate.getText().toString().trim()+" 00:00:00","yyyy-MM-dd HH:mm:ss"));
+            application.setEndtime(dateFormat.stringToLong(tEndDate.getText().toString().trim()+" 00:00:00","yyyy-MM-dd HH:mm:ss"));
+            if (eps==null) {
+                Toast.makeText(getApplicationContext(), "请选择审批人", Toast.LENGTH_SHORT).show();
+            } else if(eps.size()==0){
+                Toast.makeText(getApplicationContext(), "请选择审批人", Toast.LENGTH_SHORT).show();
+            }else {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //读取SharePreferences的cookies
+                        SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
+                        String s = pref.getString("sessionid", "");
 
+                        FulltimeApplicationService service = new FulltimeApplicationService();
+                        StatusAndMsgJsonBean statusAndMsgJsonBean = service.submitApplication(s,application,eps.toString());
+                        if (statusAndMsgJsonBean.getStatus() == 0) {
+                            Looper.prepare();
+                            Toast.makeText(getApplicationContext(), "添加成功！点击返回键返回主页", Toast.LENGTH_SHORT).show();
+                            Looper.loop();
+                        } else {
+                            Looper.prepare();
+                            Toast.makeText(getApplicationContext(), statusAndMsgJsonBean.getMsg(), Toast.LENGTH_SHORT).show();
+                            Looper.loop();
+                        }
+                    }
+                }).start();
+            }
+        }
     }
 
     /**
      * Item排序
      */
-    private void sortHotelViewItem(){
+    private void sortViewItem() {
+        //获取LinearLayout里面所有的view
+        for (int i = 0; i < addlistView.getChildCount(); i++) {
+            final View childAt = addlistView.getChildAt(i);
+            final LinearLayout item = (LinearLayout) childAt.findViewById(R.id.approve_person_item);
+            final ImageView delete = (ImageView)childAt.findViewById(R.id.delete);
 
+            final int finalI = i;
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    tname = (TextView)childAt.findViewById(R.id.leave_type);
+                    Log.e(TAG,"确定删除"+tname.getText().toString()+"??");
+                    addlistView.removeView(item);
+                    approveNumberDao.deleteAll();
+                    ApproveNumber employee = new ApproveNumber();
+                    int h=0;
+                    for(int j=0;j<eps.size();j++){
+                        if(!eps.get(j).getId().equals(eps.get(finalI).getId())){
+                            employee.setId(eps.get(j).getId());
+                            approveNumberDao.insert(employee);
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    //添加ViewItem
+    private void addViewItem(View view) {
+        if (eps==null) {
+            /*Toast.makeText(OvertimeActivity.this, "当前没有审批！", Toast.LENGTH_SHORT).show();*/
+        } else {
+            for(int i = 0;i <eps.size(); i ++){
+                View EvaluateView = View.inflate(RegularWorkerActivity.this, R.layout.item_member, null);
+                addlistView.addView(EvaluateView);
+                InitDataViewItem();
+            }
+            sortViewItem();
+        }
     }
 
     /**
      * Item加载数据
      */
-    private void InitDataViewItem(){
+    private void InitDataViewItem() {
+        int i;
+        for (i = 0; i < addlistView.getChildCount(); i++) {
+            View childAt = addlistView.getChildAt(i);
+            LinearLayout item = (LinearLayout) childAt.findViewById(R.id.approve_person_item);
+            tname = (TextView)childAt.findViewById(R.id.leave_type);
 
+            ContactInfo ci = contactInfoDao.queryBuilder().where(ContactInfoDao.Properties.Eid.eq(eps.get(i).getId())).unique();
+            if(ci!=null){
+                tname.setText(ci.getName());
+                Log.e("eid:",ci.getName());
+            }else{
+                tname.setText("");
+            }
+
+        }
     }
-
     //到岗日期选择
     public void onYearMonthDayPicker1(View view) {
+       /* tEndDate.setText("");
+        Date date = new Date(System.currentTimeMillis());
+        SimpleDateFormat yyyy = new SimpleDateFormat("yyyy", Locale.CHINA);// 输出北京时间
+        SimpleDateFormat mm = new SimpleDateFormat("MM", Locale.CHINA);//
+        SimpleDateFormat dd = new SimpleDateFormat("dd", Locale.CHINA);// 输出北京时间*/
+
         final DatePicker picker = new DatePicker(this);
         picker.setCanceledOnTouchOutside(true);
         picker.setUseWeight(true);
         picker.setTitleText("离职日期选择");
         picker.setTopPadding(ConvertUtils.toPx(this, 10));
-        picker.setRangeEnd(2111, 1, 30);
-        picker.setRangeStart(2018, 8, 1);
-//        picker.setSelectedItem(2050, 10, 14);
+        picker.setRangeEnd(2111, 12, 31);
+        picker.setRangeStart(2018, 1, 1);
+       /* picker.setRangeStart(Integer.parseInt(yyyy.format(date)),Integer.parseInt(mm.format(date)),Integer.parseInt(dd.format(date)));*/
+//      picker.setSelectedItem(2050, 10, 14);
         picker.setResetWhileWheel(false);
         picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
             @Override
             public void onDatePicked(String year, String month, String day) {
-                tStartDate.setText(year + "/" + month + "/" + day);
+                tStartDate.setText(year + "-" + month + "-" + day);
                 // showToast(year + "-" + month + "-" + day);
             }
         });
         picker.setOnWheelListener(new DatePicker.OnWheelListener() {
             @Override
             public void onYearWheeled(int index, String year) {
-                picker.setTitleText(year + "/" + picker.getSelectedMonth() + "/" + picker.getSelectedDay());
+                picker.setTitleText(year + "-" + picker.getSelectedMonth() + "-" + picker.getSelectedDay());
             }
 
             @Override
             public void onMonthWheeled(int index, String month) {
-                picker.setTitleText(picker.getSelectedYear() + "/" + month + "/" + picker.getSelectedDay());
+                picker.setTitleText(picker.getSelectedYear() + "-" + month + "-" + picker.getSelectedDay());
             }
 
             @Override
             public void onDayWheeled(int index, String day) {
-                picker.setTitleText(picker.getSelectedYear() + "/" + picker.getSelectedMonth() + "/" + day);
+                picker.setTitleText(picker.getSelectedYear() + "-" + picker.getSelectedMonth() + "-" + day);
             }
         });
         picker.show();
@@ -154,25 +398,27 @@ public class RegularWorkerActivity extends AppCompatActivity {
         picker.setTitleText("离职日期选择");
         picker.setTopPadding(ConvertUtils.toPx(this, 10));
         picker.setRangeEnd(2111, 1, 30);
-        picker.setRangeStart(2018, 8, 1);
+        //picker.setRangeStart(2018, 8, 1);
+        picker.setRangeStart(Integer.parseInt(tStartDate.getText().toString().trim().substring(0,4)), Integer.parseInt(tStartDate.getText().toString().trim().substring(5,7)), Integer.parseInt(tStartDate.getText().toString().trim().substring(8,10)));
+
 //        picker.setSelectedItem(2050, 10, 14);
         picker.setResetWhileWheel(false);
         picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
             @Override
             public void onDatePicked(String year, String month, String day) {
-                tEndDate.setText(year + "/" + month + "/" + day);
+                tEndDate.setText(year + "-" + month + "-" + day);
                 // showToast(year + "-" + month + "-" + day);
             }
         });
         picker.setOnWheelListener(new DatePicker.OnWheelListener() {
             @Override
             public void onYearWheeled(int index, String year) {
-                picker.setTitleText(year + "/" + picker.getSelectedMonth() + "/" + picker.getSelectedDay());
+                picker.setTitleText(year + "-" + picker.getSelectedMonth() + "-" + picker.getSelectedDay());
             }
 
             @Override
             public void onMonthWheeled(int index, String month) {
-                picker.setTitleText(picker.getSelectedYear() + "/" + month + "/" + picker.getSelectedDay());
+                picker.setTitleText(picker.getSelectedYear() + "-" + month + "-" + picker.getSelectedDay());
             }
 
             @Override

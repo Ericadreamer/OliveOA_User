@@ -83,7 +83,7 @@
                         android:textColor="@color/colorPrimary"
                         android:layout_marginBottom="@dimen/dp_5"/>
                 </LinearLayout>
-                //所属部门职务
+              <!--  //所属部门职务
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -133,7 +133,7 @@
                             android:src="@drawable/ic_next"
                             android:onClick="onLinkagePicker"/>
                     </LinearLayout>
-                </LinearLayout>
+                </LinearLayout>-->
                 //到岗日期
                 <LinearLayout
                     android:layout_width="match_parent"

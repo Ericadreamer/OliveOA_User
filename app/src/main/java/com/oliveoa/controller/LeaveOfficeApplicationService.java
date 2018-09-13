@@ -32,29 +32,38 @@ public class LeaveOfficeApplicationService {
     /**
      *  发起申请（）
      */
-    public StatusAndMsgJsonBean submitApplication(String s, LeaveOfficeApplication application, ArrayList<String> members){
+    public StatusAndMsgJsonBean submitApplication(String s, LeaveOfficeApplication application,String members){
+        DateFormat dateFormat = new DateFormat();
+        String leavedate =dateFormat.LongtoDate(application.getLeavetime());
           try {
-                      DateFormat dateFormat = new DateFormat();
+              System.out.println(leavedate);
+              System.out.println(members);
+              System.out.println(application.toString());
+
                       OkHttpClient client = new OkHttpClient();
                       FormBody body = new FormBody.Builder()
-                              .add("leavetime",dateFormat.LongtoDatemm(application.getLeavetime()))
+                              .add("leavetime",leavedate)
                               .add("handoverMatters",application.getHandoverMatters())
                               .add("reason",application.getReason())
-                              .add("meetingMember",members.toString())
+                              .add("approvedMember",members)
                               .build();
-
+                      System.out.println(body.size());
                       Request request = new Request.Builder()
                               .addHeader("Cookie",s)
                               .url(Const.LEAVEOFFICE_ADD)
                               .post(body)
                               .build();
+                     /* System.out.println(request.toString());
+                      System.out.println(request.url());*/
                       Response response = client.newCall(request).execute();
 
                       String json = response.body().string();
+                      System.out.println(json);
                       Gson gson = new Gson();
                       Type type = new TypeToken<StatusAndMsgJsonBean>() {
                       }.getType();
-              StatusAndMsgJsonBean statusAndMsgJsonBean = gson.fromJson(json, type);
+
+                      StatusAndMsgJsonBean statusAndMsgJsonBean = gson.fromJson(json, type);
 
                       System.out.println("statusAndMsgJsonBean = " +statusAndMsgJsonBean.toString());
 

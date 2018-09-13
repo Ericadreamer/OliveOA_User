@@ -4,11 +4,13 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.oliveoa.common.Const;
 import com.oliveoa.common.ContactHttpResponseObject;
+import com.oliveoa.jsonbean.DutyInfoJsonBean;
 import com.oliveoa.jsonbean.StatusAndMsgJsonBean;
 import com.oliveoa.jsonbean.UserLoginJsonBean;
 import com.oliveoa.pojo.ContactInfo;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
@@ -176,5 +178,38 @@ public class UserInfoService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    //根据部门dcid获取职务
+    public DutyInfoJsonBean getPosition(String dcid){
+          try {
+
+                      OkHttpClient client = new OkHttpClient();
+                      FormBody body = new FormBody.Builder()
+                              .add("dcid",dcid)
+                              .build();
+          
+                      Request request = new Request.Builder()
+                              .url(Const.DUTY_SEARCH)
+                              .post(body)
+                              .build();
+                      Response response = client.newCall(request).execute();
+                      //System.out.println(response.body().string());
+          
+                      String json = response.body().string();
+                      Gson gson = new Gson();
+                      Type type = new TypeToken<DutyInfoJsonBean>() {
+                      }.getType();
+                       DutyInfoJsonBean dutyInfoJsonBean  = gson.fromJson(json, type);
+          
+                      System.out.println("dutyInfoJsonBean  = " +dutyInfoJsonBean);
+          
+                      return dutyInfoJsonBean;
+                  } catch (IOException e) {
+                      //todo handler IOException
+                      //throw new RuntimeException(e);
+                      e.printStackTrace();
+           }
+           return null;
     }
 }

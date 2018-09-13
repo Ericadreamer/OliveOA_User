@@ -26,15 +26,19 @@ public class FulltimeApplicationService {
     /**
      *  发起申请（）
      */
-    public StatusAndMsgJsonBean submitApplication(String s, FulltimeApplication application, ArrayList<String> members){
+    public StatusAndMsgJsonBean submitApplication(String s, FulltimeApplication application, String members){
+        DateFormat dateFormat = new DateFormat();
+        String begintime =dateFormat.LongtoDate(application.getBegintime());
+        String endtime =dateFormat.LongtoDate(application.getEndtime());
+        System.out.println(begintime+"---"+endtime);
+        System.out.println(members);
         try {
-            DateFormat dateFormat = new DateFormat();
             OkHttpClient client = new OkHttpClient();
             FormBody body = new FormBody.Builder()
-                   .add("begintime",dateFormat.LongtoDatemm(application.getBegintime()))
-                    .add("endtime",dateFormat.LongtoDatemm(application.getEndtime()))
+                   .add("begintime",begintime)
+                    .add("endtime",endtime)
                     .add("personalSummary",application.getPersonalSummary())
-                    .add("meetingMember",members.toString())
+                    .add("approvedMember",members)
                     .build();
 
             Request request = new Request.Builder()

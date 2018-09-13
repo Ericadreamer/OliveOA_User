@@ -322,6 +322,14 @@
         <activity android:name=".approval.NoticeUndisposedActivity"
             android:exported="true"
             android:theme="@style/HomeTheme"></activity>
+        <activity
+            android:name=".myapplication.DepartmentSelectActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme" />
+        <activity
+            android:name=".myapplication.DutySelectActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme" />
     </application>
 
 </manifest>

@@ -13,7 +13,10 @@ public class Const {
     public static final String USER_LOGOUT = HOSTPATH +"/oliveoa/employee/logout.do";
     public static final String USER_INFO_UPDATE = HOSTPATH +"/oliveoa/employee/update_info.do";
 
-    //个人消息
+    //根据部门获取职务
+    public static  final  String DUTY_SEARCH = HOSTPATH + "/oliveoa/manage/position/get_position.do";
+
+ //个人消息
     public static final String MESSAGE_SENT = HOSTPATH +"/oliveoa/employee/sent_message.do";
     public static final String MESSAGE_TOME = HOSTPATH +"/oliveoa/employee/get_message_sent_to_me.do";
     public static final String MESSAGE_BYME = HOSTPATH +"/oliveoa/employee/get_message_Isent.do";

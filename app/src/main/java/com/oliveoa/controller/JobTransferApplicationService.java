@@ -26,16 +26,18 @@ public class JobTransferApplicationService {
     /**
      *  发起申请（）
      */
-    public StatusAndMsgJsonBean submitApplication(String s, JobTransferApplication application, ArrayList<String> members){
+    public StatusAndMsgJsonBean submitApplication(String s, JobTransferApplication application, String members){
+        DateFormat dateFormat = new DateFormat();
+        System.out.println(members);
+
         try {
-            DateFormat dateFormat = new DateFormat();
             OkHttpClient client = new OkHttpClient();
             FormBody body = new FormBody.Builder()
                     .add("eid",application.getEid())
                     .add("aimdcid",application.getAimdcid())
                     .add("aimpcid",application.getAimpcid())
                     .add("reason",application.getAimpcid())
-                    .add("meetingMember",members.toString())
+                    .add("approvedMember",members.toString())
                     .build();
 
             Request request = new Request.Builder()

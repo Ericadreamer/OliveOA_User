@@ -16,9 +16,11 @@ import com.oliveoa.common.ContactHttpResponseObject;
 import com.oliveoa.controller.UserInfoService;
 import com.oliveoa.greendao.ContactInfoDao;
 import com.oliveoa.greendao.DepartmentInfoDao;
+import com.oliveoa.greendao.DutyInfoDao;
 import com.oliveoa.greendao.MeetingApplicationDao;
 import com.oliveoa.greendao.OvertimeApplicationDao;
 import com.oliveoa.jsonbean.ContactJsonBean;
+import com.oliveoa.jsonbean.DutyInfoJsonBean;
 import com.oliveoa.pojo.DepartmentInfo;
 import com.oliveoa.pojo.MeetingApplication;
 import com.oliveoa.util.EntityManager;
@@ -36,6 +38,7 @@ public class AddApplicationActivity extends AppCompatActivity {
     private LoadingDialog loadingDialog;
     private DepartmentInfoDao departmentInfoDao;
     private ContactInfoDao contactInfoDao;
+    private DutyInfoDao dutyInfoDao;
     private OvertimeApplicationDao overtimeApplicationDao;
     private ArrayList<String> eps;
     private String TAG = this.getClass().getSimpleName();
@@ -58,7 +61,7 @@ public class AddApplicationActivity extends AppCompatActivity {
         regularWorker = (LinearLayout) findViewById(R.id.regular_work);
         adjustPost = (LinearLayout) findViewById(R.id.adjust_post);
         recruitment = (LinearLayout) findViewById(R.id.recruitment);
-        goods = (LinearLayout) findViewById(R.id.goods);
+        //goods = (LinearLayout) findViewById(R.id.goods);
 
         //点击事件
         back.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
@@ -122,7 +125,7 @@ public class AddApplicationActivity extends AppCompatActivity {
                 addRecruitmentApplication();
             }
         });
-        goods.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
+       /* goods.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(AddApplicationActivity.this, GoodsActivity.class);
@@ -130,7 +133,7 @@ public class AddApplicationActivity extends AppCompatActivity {
                 finish();
 
             }
-        });
+        });*/
 
     }
 
@@ -429,8 +432,10 @@ public class AddApplicationActivity extends AppCompatActivity {
 
                 departmentInfoDao = EntityManager.getInstance().getDepartmentInfo();
                 contactInfoDao = EntityManager.getInstance().getContactInfo();
+                //dutyInfoDao = EntityManager.getInstance().getDutyInfoInfo();
                 departmentInfoDao.deleteAll();
                 contactInfoDao.deleteAll();
+                //dutyInfoDao.deleteAll();
 
                 //ToCheck JsonBean.getStatus()
                 if (contactHttpResponseObject.getStatus()==0) {
@@ -445,6 +450,16 @@ public class AddApplicationActivity extends AppCompatActivity {
                             Log.d("departmentinfo", contactInfos.get(i).getDepartment().toString());
                             DepartmentInfo departmentInfo = contactInfos.get(i).getDepartment();
                             departmentInfoDao.insert(departmentInfo);
+                            /*DutyInfoJsonBean dutyInfoJsonBean = userInfoService.getPosition(departmentInfo.getDcid());
+                            if(dutyInfoJsonBean.getStatus()==0){
+                                for(int k=0;k<dutyInfoJsonBean.getData().size();k++){
+                                    dutyInfoDao.insert(dutyInfoJsonBean.getData().get(k));
+                                }
+                            }else{
+                                Looper.prepare();//解决子线程弹toast问题
+                                Toast.makeText(getApplicationContext(), dutyInfoJsonBean.getMsg(), Toast.LENGTH_SHORT).show();
+                                Looper.loop();// 进入loop中的循环，查看消息队列
+                            }*/
                             Log.d(TAG, "contactInfos.get(i).getEmpContactList().size():" + contactInfos.get(i).getEmpContactList().size());
                             for (int j = 0; j < contactInfos.get(i).getEmpContactList().size(); j++) {
                                 if (contactInfos.get(i).getEmpContactList().get(j).getEmployee()!= null) {

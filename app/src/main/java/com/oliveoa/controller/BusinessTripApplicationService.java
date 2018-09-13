@@ -28,6 +28,7 @@ public class BusinessTripApplicationService {
         String endtime =dateFormat.LongtoDate(businessTripApplication.getEndtime());
         System.out.println(begintime+"---"+endtime);
         System.out.println(approvedMember);
+
         try {
             OkHttpClient client = new OkHttpClient();
             FormBody body = new FormBody.Builder()

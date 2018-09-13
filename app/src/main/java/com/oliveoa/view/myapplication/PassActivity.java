@@ -446,7 +446,7 @@ public class PassActivity extends Fragment {
                     ArrayList<MeetingMember> list = aaol.getMeetingMembers();
                     startActivity( new Intent(mContext, MeetingInfoActivity.class)
                             .putExtra("ap",meetingApplication)
-                            .putParcelableArrayListExtra("aaol",list));
+                            .putParcelableArrayListExtra("list",list));
                 } else {
                     Looper.prepare();//解决子线程弹toast问题
                     Toast.makeText(mContext,"获取会议申请数据失败", Toast.LENGTH_SHORT).show();

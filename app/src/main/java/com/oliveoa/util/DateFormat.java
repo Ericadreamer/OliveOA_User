@@ -27,6 +27,13 @@ public class DateFormat {
         Log.i("LongtoDatemm:",format.format(date1));
         return format.format(date1);
     }
+    //长整型转换为分钟时间型
+    public String LongtoDatedd(long time){
+        Date date1 = new Date(time);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Log.i("LongtoDatemm:",format.format(date1));
+        return format.format(date1);
+    }
 
     // string类型转换为date类型
     // strTime要转换的string类型的时间，formatType要转换的格式yyyy-MM-dd HH:mm:ss//yyyy年MM月dd日

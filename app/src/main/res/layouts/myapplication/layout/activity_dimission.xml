@@ -86,7 +86,7 @@
                 </LinearLayout>
 
                 //离职员工编号
-                <LinearLayout
+                <!--<LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_marginBottom="1dp"
@@ -112,12 +112,13 @@
                         android:gravity="center_vertical|end"
                         android:layout_marginRight="20dp"
                         android:hint="请填写离职员工编号"
+                        android:inputType="number"
                         android:singleLine="true"
                         android:textColorHint="#898989"
                         android:textSize="@dimen/text_size_normal"
                         android:textColor="@color/colorPrimary"
                         />
-                </LinearLayout>
+                </LinearLayout>-->
                 //离职日期
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -159,7 +160,7 @@
                         android:src="@drawable/ic_next"
                         android:onClick="onYearMonthDayPicker"/>
                 </LinearLayout>
-                //所属部门职务
+              <!--  //所属部门职务
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -209,7 +210,7 @@
                             android:src="@drawable/ic_next"
                             android:onClick="onLinkagePicker"/>
                     </LinearLayout>
-                </LinearLayout>
+                </LinearLayout>-->
                 //离职原因
                 <LinearLayout
                     android:layout_width="match_parent"

@@ -257,7 +257,7 @@
                     android:textSize="@dimen/text_size_medium"/>
 
             </LinearLayout>
-            //物品申请
+         <!--   //物品申请
             <LinearLayout
                 android:id="@+id/goods"
                 android:layout_width="match_parent"
@@ -281,7 +281,7 @@
                     android:layout_marginLeft="@dimen/dp_20"
                     android:textSize="@dimen/text_size_medium"/>
 
-            </LinearLayout>
+            </LinearLayout>-->
 
 
         </LinearLayout>
