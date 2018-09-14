@@ -53,5 +53,10 @@
     <string name="undisposed">未处理</string>
     <string name="application_person">申请人</string>
 
+    <!--会议管理-->
+    <string name="inprogress">正在参与</string>
+    <string name="willstart">未开始</string>
+    <string name="finished">已结束</string>
+
 
 </resources>

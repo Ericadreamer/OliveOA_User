@@ -316,12 +316,14 @@
             android:name=".addressbook.DepartmentEmployeeActivity"
             android:exported="true"
             android:theme="@style/HomeTheme" />
-        <activity android:name=".approval.NoticeDisposedActivity"
+        <activity
+            android:name=".approval.NoticeDisposedActivity"
             android:exported="true"
-            android:theme="@style/HomeTheme"/>
-        <activity android:name=".approval.NoticeUndisposedActivity"
+            android:theme="@style/HomeTheme" />
+        <activity
+            android:name=".approval.NoticeUndisposedActivity"
             android:exported="true"
-            android:theme="@style/HomeTheme"></activity>
+            android:theme="@style/HomeTheme" />
         <activity
             android:name=".myapplication.DepartmentSelectActivity"
             android:exported="true"

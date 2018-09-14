@@ -1,29 +1,45 @@
 package com.oliveoa.view.meetingmanagement;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.oliveoa.view.R;
 import com.oliveoa.view.TabLayoutBottomActivity;
-import com.oliveoa.view.myapplication.MeetingActivity;
-import com.oliveoa.view.workschedule.ApprovalWorkActivity;
-import com.oliveoa.view.workschedule.LeadershipApprovalActivity;
-import com.oliveoa.view.workschedule.MyWorkActivity;
 
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class MyMeetingActivity extends AppCompatActivity {
     private ImageView back;
     private TextView ttoptic,ttime; //会议主题，更新时间
-    private LinearLayout addmyMeetingitem;
+    private TabLayout mIndicatorTl;
+    private ViewPager mContentVp;
+
+    private List<String> tabIndicators;
+    private List<Fragment> tabFragments;
+    private ContentPagerAdapter contentAdapter;
+
+    //Tab 文字
+    private final int[] TAB_TITLES = new int[]{R.string.inprogress,R.string.willstart,R.string.finished};
+    //Tab 数目
+    private final int COUNT = TAB_TITLES.length;
+    //Fragment 数组
+    private final Fragment[] TAB_FRAGMENTS = new Fragment[] {new InProgressActivity(),new WillStartActivity(),new FinishedActivity()};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,28 +49,28 @@ public class MyMeetingActivity extends AppCompatActivity {
         initView();
         initData();
 
-        //默认添加一个Item
-        addViewItem(null);
+        mIndicatorTl = (TabLayout) findViewById(R.id.tl_indicator);
+        mContentVp = (ViewPager) findViewById(R.id.vp_content);
+        contentAdapter = new ContentPagerAdapter(getSupportFragmentManager());
+        mContentVp.setAdapter(contentAdapter);
+        mContentVp.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mIndicatorTl));
+        mIndicatorTl.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mContentVp));//点击显示子页面
+
+        initTab();
+
+        initContent(mIndicatorTl,this.getLayoutInflater(),TAB_TITLES);
+
     }
 
     private void initView() {
         back = (ImageView) findViewById(R.id.iback);
-        addmyMeetingitem = (LinearLayout) findViewById(R.id.my_meeting_list);
 
         //点击事件
         back.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MyMeetingActivity.this, TabLayoutBottomActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-        addmyMeetingitem.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MyMeetingActivity.this, MyMeetingInfoActivity.class);
+                intent.putExtra("index",0);
                 startActivity(intent);
                 finish();
             }
@@ -66,25 +82,56 @@ public class MyMeetingActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * Item排序
-     */
-    private void sortHotelViewItem() {
-        //获取LinearLayout里面所有的view
+    //tab的字体和线条颜色
+    private void initTab(){
+        mIndicatorTl.setTabMode(TabLayout.MODE_FIXED);   //设置不可横向水平滑动，MODE_SCROLLABLE支持可横向滑动
+        mIndicatorTl.setTabTextColors(ContextCompat.getColor(this, R.color.tv_gray_deep), ContextCompat.getColor(this, R.color.tab_tv_selected)); //字体颜色
+        mIndicatorTl.setSelectedTabIndicatorColor(ContextCompat.getColor(this, R.color.tab_tv_selected));   //指示器颜色
+        //ViewCompat.setElevation(mIndicatorTl, 10);  //设置阴影
+//        mIndicatorTl.setupWithViewPager(mContentVp);
     }
 
     /**
-     * 添加ViewItem，R.layout.my_meeting_item
-     * @param view
+     * @description: 设置添加Tab
      */
-    private void addViewItem(View view){
+    private void initContent(TabLayout tabLayout, LayoutInflater inflater, int[] tabTitlees){
+        for (int i = 0; i < tabTitlees.length; i++) {
+            TabLayout.Tab tab = tabLayout.newTab();
+            View view = inflater.inflate(R.layout.tab_custom_top,null);
+            tab.setCustomView(view);
 
+            TextView tvTitle = (TextView)view.findViewById(R.id.tv_tab_top);
+            tvTitle.setText(tabTitlees[i]);
+
+            tabLayout.addTab(tab);
+
+        }
     }
 
     /**
-     * Item加载数据
+     * @description: ViewPager 适配器
      */
-    private void InitDataViewItem(){
+
+    class ContentPagerAdapter extends FragmentPagerAdapter {
+
+        public ContentPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return TAB_FRAGMENTS[position];
+        }
+
+        @Override
+        public int getCount() {
+            return COUNT;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return tabIndicators.get(position);
+        }
 
     }
 
