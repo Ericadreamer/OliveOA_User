@@ -2,12 +2,15 @@ package com.oliveoa.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,19 +20,37 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.oliveoa.common.StatusAndDataHttpResponseObject;
+import com.oliveoa.controller.MeetingApplicationService;
+import com.oliveoa.greendao.ApplicationDao;
+import com.oliveoa.greendao.DaoManager;
+import com.oliveoa.greendao.MeetingApplicationAndStatusDao;
+import com.oliveoa.greendao.MeetingApplicationDao;
+import com.oliveoa.jsonbean.MeetingApplicationInfoJsonBean;
+import com.oliveoa.pojo.Application;
+import com.oliveoa.pojo.MeetingApplication;
+import com.oliveoa.pojo.MeetingApplicationAndStatus;
+import com.oliveoa.util.DateFormat;
+import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
 import com.oliveoa.view.approval.MyApprovalActivity;
 import com.oliveoa.view.meetingmanagement.MyMeetingActivity;
 import com.oliveoa.view.myapplication.AddApplicationActivity;
 import com.oliveoa.view.myapplication.MainApplicationActivity;
+import com.oliveoa.view.myapplication.MeetingActivity;
 import com.oliveoa.view.myapplication.MyApplicationActivity;
 import com.oliveoa.view.myapplication.WaitActivity;
 import com.oliveoa.view.myapplication.WaitActivity1;
 import com.oliveoa.view.note.MyNoteActivity;
 import com.oliveoa.view.workschedule.MyWorkActivity;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static android.content.Context.MODE_PRIVATE;
+import static android.support.constraint.Constraints.TAG;
 
 
 public class AdhibitionActivity extends Fragment {
@@ -217,16 +238,89 @@ public class AdhibitionActivity extends Fragment {
 
     //会议管理
     private void meetinginfo() {
-        final Intent it = new Intent(getActivity(), MyMeetingActivity.class);
-        Timer timer = new Timer();
-        TimerTask task = new TimerTask() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
-                startActivity(it); //执行
-            }
-        };
-        timer.schedule(task, 1000 * 0); //0秒后
+                SharedPreferences pref = mContext.getSharedPreferences("data", MODE_PRIVATE);
+                String s = pref.getString("sessionid", "");
 
+                MeetingApplicationService service = new MeetingApplicationService();
+                MeetingApplicationAndStatusDao meetingApplicationAndStatusDao = EntityManager.getInstance().getMeetingApplicationAndStatusDao();
+                MeetingApplicationAndStatus application = new MeetingApplicationAndStatus();
+                DateFormat dateFormat = new DateFormat();
+                int i, j = 0;
+                StatusAndDataHttpResponseObject<ArrayList<MeetingApplication>> arrayListStatusAndDataHttpResponseObject = service.getApplicationIdoing(s);
+                if (arrayListStatusAndDataHttpResponseObject.getStatus() == 0) {
+                    meetingApplicationAndStatusDao.deleteAll();
+                    for ( i = 0; i < arrayListStatusAndDataHttpResponseObject.getData().size(); i++) {
+                        StatusAndDataHttpResponseObject<MeetingApplicationInfoJsonBean> statusAndDataHttpResponseObject  = service.getApplicationInfo(s,arrayListStatusAndDataHttpResponseObject.getData().get(i).getMaid());
+                        if (statusAndDataHttpResponseObject.getStatus() == 0) {
+                            MeetingApplicationInfoJsonBean aaol = statusAndDataHttpResponseObject.getData();
+                            Log.i(TAG, "aaol:" + aaol);
+                           application.setStarttime(dateFormat.LongtoDatemm(aaol.getMeetingApplication().getBegintime()));
+                           application.setEndtime(dateFormat.LongtoDatemm(aaol.getMeetingApplication().getEndtime()));
+                           application.setMaid(aaol.getMeetingApplication().getMaid());
+                           application.setTheme(aaol.getMeetingApplication().getTheme());
+                           application.setStatus(1);
+                        }
+                        meetingApplicationAndStatusDao.insert(application);
+                        //Log.e(TAG,"application["+i+"]-------"+application.toString());
+                    }
+                    //startActivity(new Intent(getActivity(), MyApplicationActivity.class));
+                } else {
+                    Looper.prepare();//解决子线程弹toast问题
+                    Toast.makeText(mContext,"获取数据失败", Toast.LENGTH_SHORT).show();
+                    Looper.loop();// 进入loop中的循环，查看消息队列
+                }
+                arrayListStatusAndDataHttpResponseObject = service.getApplicationIwilldo(s);
+                if (arrayListStatusAndDataHttpResponseObject.getStatus() == 0) {
+                    meetingApplicationAndStatusDao.deleteAll();
+                    for ( i = 0; i < arrayListStatusAndDataHttpResponseObject.getData().size(); i++) {
+                        StatusAndDataHttpResponseObject<MeetingApplicationInfoJsonBean> statusAndDataHttpResponseObject  = service.getApplicationInfo(s,arrayListStatusAndDataHttpResponseObject.getData().get(i).getMaid());
+                        if (statusAndDataHttpResponseObject.getStatus() == 0) {
+                            MeetingApplicationInfoJsonBean aaol = statusAndDataHttpResponseObject.getData();
+                            Log.i(TAG, "aaol:" + aaol);
+                            application.setStarttime(dateFormat.LongtoDatemm(aaol.getMeetingApplication().getBegintime()));
+                            application.setEndtime(dateFormat.LongtoDatemm(aaol.getMeetingApplication().getEndtime()));
+                            application.setMaid(aaol.getMeetingApplication().getMaid());
+                            application.setTheme(aaol.getMeetingApplication().getTheme());
+                            application.setStatus(2);
+
+                        }
+                        meetingApplicationAndStatusDao.insert(application);
+                        //Log.e(TAG,"application["+i+"]-------"+application.toString());
+                    }
+                } else {
+                    Looper.prepare();//解决子线程弹toast问题
+                    Toast.makeText(mContext,"获取数据失败", Toast.LENGTH_SHORT).show();
+                    Looper.loop();// 进入loop中的循环，查看消息队列
+                }
+                arrayListStatusAndDataHttpResponseObject = service.getApplicationIdone(s);
+                if (arrayListStatusAndDataHttpResponseObject.getStatus() == 0) {
+                    meetingApplicationAndStatusDao.deleteAll();
+                    for ( i = 0; i < arrayListStatusAndDataHttpResponseObject.getData().size(); i++) {
+                        StatusAndDataHttpResponseObject<MeetingApplicationInfoJsonBean> statusAndDataHttpResponseObject  = service.getApplicationInfo(s,arrayListStatusAndDataHttpResponseObject.getData().get(i).getMaid());
+                        if (statusAndDataHttpResponseObject.getStatus() == 0) {
+                            MeetingApplicationInfoJsonBean aaol = statusAndDataHttpResponseObject.getData();
+                            Log.i(TAG, "aaol:" + aaol);
+                            application.setStarttime(dateFormat.LongtoDatemm(aaol.getMeetingApplication().getBegintime()));
+                            application.setEndtime(dateFormat.LongtoDatemm(aaol.getMeetingApplication().getEndtime()));
+                            application.setMaid(aaol.getMeetingApplication().getMaid());
+                            application.setTheme(aaol.getMeetingApplication().getTheme());
+                            application.setStatus(3);
+                        }
+                        meetingApplicationAndStatusDao.insert(application);
+                        //Log.e(TAG,"application["+i+"]-------"+application.toString());
+                    }
+                    startActivity(new Intent(getActivity(),MyMeetingActivity.class));
+                } else {
+                    Looper.prepare();//解决子线程弹toast问题
+                    Toast.makeText(mContext,"获取数据失败", Toast.LENGTH_SHORT).show();
+                    Looper.loop();// 进入loop中的循环，查看消息队列
+                }
+            }
+
+        }).start();
     }
 
     //便签

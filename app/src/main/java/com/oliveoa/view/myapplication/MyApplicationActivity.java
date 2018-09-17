@@ -58,13 +58,6 @@ public class MyApplicationActivity extends AppCompatActivity {
     private int index;
     private String TAG = this.getClass().getSimpleName();
     private ApplicationDao applicationDao;
-    private Application application ;
-    private BusinessTripApplicationDao btaDao;
-    private BusinessTripApplicationApprovedOpinionListDao btaaolDao;
-    private LeaveApplicationDao laDao;
-    private LeaveApplicationApprovedOpinionListDao laaolDao;
-    private OvertimeApplicationDao oaDao;
-    private OvertimeApplicationApprovedOpinionListDao oaaolDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

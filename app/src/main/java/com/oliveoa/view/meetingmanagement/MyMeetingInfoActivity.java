@@ -1,8 +1,12 @@
 package com.oliveoa.view.meetingmanagement;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,22 +14,47 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.oliveoa.common.StatusAndDataHttpResponseObject;
+import com.oliveoa.controller.MeetingApplicationService;
+import com.oliveoa.greendao.ApplicationDao;
+import com.oliveoa.greendao.ContactInfoDao;
+import com.oliveoa.pojo.Application;
+import com.oliveoa.pojo.ContactInfo;
+import com.oliveoa.pojo.MeetingApplication;
+import com.oliveoa.pojo.MeetingMember;
+import com.oliveoa.util.DateFormat;
+import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
+import com.oliveoa.view.TabLayoutBottomActivity;
 import com.oliveoa.view.myapplication.MeetingInfoActivity;
 import com.oliveoa.view.myapplication.MyApplicationActivity;
+import com.oliveoa.widget.LoadingDialog;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class MyMeetingInfoActivity extends AppCompatActivity {
     private ImageView back;
     private TextView ttopic,ttime,tplace,tmembers;  //会议主题，会议时间，会议地点，出席人员
+    private ContactInfoDao cidao;
+    private ContactInfo ci;
+    private MeetingApplication ap;
+    private ArrayList<MeetingMember> list;
+    private String TAG = this.getClass().getSimpleName();
+    private ApplicationDao applicationDao;
+    private Application application;
+    private LoadingDialog loadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_meeting_info);
-
+        ap = getIntent().getParcelableExtra("ap");
+        list = getIntent().getParcelableArrayListExtra("list");
+        Log.i(TAG,"ap="+ap);
+        Log.i(TAG,"list="+list);
         initView();
     }
 
@@ -35,17 +64,45 @@ public class MyMeetingInfoActivity extends AppCompatActivity {
         tplace = (TextView) findViewById(R.id.meeting_place);
         tmembers = (TextView) findViewById(R.id.members_list);
         back = (ImageView) findViewById(R.id.iback);
+       loadingDialog = new LoadingDialog(MyMeetingInfoActivity.this,"正在加载数据",true);
 
         back.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MyMeetingInfoActivity.this, MyMeetingActivity.class);
+                Intent intent = new Intent(MyMeetingInfoActivity.this, TabLayoutBottomActivity.class);
                 startActivity(intent);
                 finish();
             }
         });
+        initData();
+        //addViewItem(null);
     }
+    private void back() {
 
+    }
+    private void initData(){
+        cidao = EntityManager.getInstance().getContactInfo();
+        DateFormat dateFormat = new DateFormat();
+
+        ttopic.setText(ap.getTheme());
+        ttime.setText(dateFormat.LongtoDatemm(ap.getBegintime())+"--"+dateFormat.LongtoDatemm(ap.getEndtime()));
+        tplace.setText(ap.getPlace());
+        ArrayList<String> member = new ArrayList<>();
+        if(list!=null) {
+            for (int i = 0; i < list.size(); i++) {
+                ContactInfo ci = cidao.queryBuilder().where(ContactInfoDao.Properties.Eid.eq(list.get(i).getEid())).unique();
+                if (ci != null) {
+                    Log.e(TAG,ci.getName());
+                    member.add(ci.getName());
+                }
+            }
+            tmembers.setText(member.toString().substring(1,member.toString().length()-1));//字符串toString会出现[]包括对象，故substring对第一个和最后一个括号隐藏
+        }else{
+            tmembers.setText("");
+        }
+
+
+    }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 

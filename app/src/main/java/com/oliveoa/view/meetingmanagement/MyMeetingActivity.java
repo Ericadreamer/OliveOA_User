@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +17,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.oliveoa.greendao.ApplicationDao;
+import com.oliveoa.greendao.MeetingApplicationAndStatusDao;
+import com.oliveoa.pojo.Application;
+import com.oliveoa.pojo.MeetingApplicationAndStatus;
+import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
 import com.oliveoa.view.TabLayoutBottomActivity;
 
+import org.greenrobot.greendao.query.QueryBuilder;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -32,7 +41,9 @@ public class MyMeetingActivity extends AppCompatActivity {
     private List<String> tabIndicators;
     private List<Fragment> tabFragments;
     private ContentPagerAdapter contentAdapter;
-
+    private int index;
+    private String TAG = this.getClass().getSimpleName();
+    private MeetingApplicationAndStatusDao applicationDao;
     //Tab 文字
     private final int[] TAB_TITLES = new int[]{R.string.inprogress,R.string.willstart,R.string.finished};
     //Tab 数目
@@ -46,12 +57,14 @@ public class MyMeetingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_meeting);
 
+       /* index = getIntent().getIntExtra("index",index);//正在进行1、未参与2、已结束3
+        Log.e(TAG,"INDEX="+index);*/
         initView();
-        initData();
 
         mIndicatorTl = (TabLayout) findViewById(R.id.tl_indicator);
         mContentVp = (ViewPager) findViewById(R.id.vp_content);
         contentAdapter = new ContentPagerAdapter(getSupportFragmentManager());
+        initData();
         mContentVp.setAdapter(contentAdapter);
         mContentVp.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mIndicatorTl));
         mIndicatorTl.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mContentVp));//点击显示子页面
@@ -69,6 +82,8 @@ public class MyMeetingActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
             @Override
             public void onClick(View view) {
+                applicationDao = EntityManager.getInstance().getMeetingApplicationAndStatusDao();
+                applicationDao.deleteAll();
                 Intent intent = new Intent(MyMeetingActivity.this, TabLayoutBottomActivity.class);
                 intent.putExtra("index",0);
                 startActivity(intent);
@@ -79,6 +94,45 @@ public class MyMeetingActivity extends AppCompatActivity {
     }
 
     private void initData(){
+        applicationDao = EntityManager.getInstance().getMeetingApplicationAndStatusDao();
+
+        List<MeetingApplicationAndStatus> ap = null;
+        Bundle waitbundle = new Bundle();
+        waitbundle.putString("application","");
+        Bundle passbundle = new Bundle();
+        passbundle.putString("application","");
+        Bundle refusebundle = new Bundle();
+        refusebundle.putString("application","");
+       //正在参与
+        QueryBuilder qb = applicationDao.queryBuilder();
+        qb.where(MeetingApplicationAndStatusDao.Properties.Status.eq(1));
+        ap =  qb.list();
+        ArrayList ap1 =(ArrayList<MeetingApplicationAndStatus>) ap;
+        Log.e(TAG,"ArrayList<Application> ap = "+ap1.toString());
+        if(ap!=null){
+            waitbundle.putParcelableArrayList("application",ap1);
+
+        }
+        Log.e(TAG,"waitbundle = "+waitbundle.toString());
+        contentAdapter.getItem(0).setArguments(waitbundle);
+
+        //未参与
+        ap = applicationDao.queryBuilder().where(MeetingApplicationAndStatusDao.Properties.Status.eq(2)).list();
+        ap1 =(ArrayList<MeetingApplicationAndStatus>) ap;
+        Log.e(TAG,"ArrayList<MeetingApplicationAndStatus> ap = "+ap1.toString());
+        if(ap!=null){
+            passbundle.putParcelableArrayList("application",ap1);
+        }
+        contentAdapter.getItem(1).setArguments(passbundle);
+
+        //已结束
+        ap = applicationDao.queryBuilder().where(MeetingApplicationAndStatusDao.Properties.Status.eq(3)).list();
+        ap1 =(ArrayList<MeetingApplicationAndStatus>) ap;
+        Log.e(TAG,"ArrayList<Application> ap = "+ap1.toString());
+        if(ap!=null){
+            refusebundle.putParcelableArrayList("application",ap1);
+        }
+        contentAdapter.getItem(2).setArguments(refusebundle);
 
     }
 
