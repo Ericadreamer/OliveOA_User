@@ -8,6 +8,7 @@ import com.oliveoa.greendao.BusinessTripApplicationApprovedOpinionListDao;
 import com.oliveoa.greendao.BusinessTripApplicationDao;
 import com.oliveoa.greendao.ContactInfoDao;
 import com.oliveoa.greendao.DaoManager;
+import com.oliveoa.greendao.DepartmentAndDutyDao;
 import com.oliveoa.greendao.DepartmentInfoDao;
 import com.oliveoa.greendao.DutyInfoDao;
 import com.oliveoa.greendao.FulltimeApplicationApprovedOpinionDao;
@@ -26,7 +27,9 @@ import com.oliveoa.greendao.MessageDao;
 import com.oliveoa.greendao.OvertimeApplicationApprovedOpinionListDao;
 import com.oliveoa.greendao.OvertimeApplicationDao;
 import com.oliveoa.greendao.RecruitmentApplicationApprovedOpinionDao;
+import com.oliveoa.greendao.RecruitmentApplicationItemDao;
 import com.oliveoa.greendao.WorkDetailDao;
+import com.oliveoa.pojo.RecruitmentApplicationItem;
 
 public class EntityManager {
     private static EntityManager entityManager;
@@ -56,7 +59,8 @@ public class EntityManager {
     public MeetingApplicationDao meetingApplicationDao;
     public MeetingMemberDao meetingMemberDao;
     public RecruitmentApplicationApprovedOpinionDao recruitmentApplicationApprovedOpinionDao;
-
+    public RecruitmentApplicationItemDao recruitmentApplicationItemDao;
+    private DepartmentAndDutyDao departmentAndDutyDao;
 
 
     /**
@@ -277,17 +281,22 @@ public class EntityManager {
   /*  public RecruitmentApplicationDao getRecruitmentApplicationDao() {
         recruitmentApplicationDao = DaoManager.getInstance().getSession().getRecruitmentApplicationDao();
         return recruitmentApplicationDao;
-    }
+    }*/
 
     public RecruitmentApplicationApprovedOpinionDao getRecruitmentApplicationApprovedOpinionDao() {
-        recruitmentApplicationDao = DaoManager.getInstance().getSession().getRecruitmentApplicationDao();
+        recruitmentApplicationApprovedOpinionDao = DaoManager.getInstance().getSession().getRecruitmentApplicationApprovedOpinionDao();
         return recruitmentApplicationApprovedOpinionDao;
     }
 
     public RecruitmentApplicationItemDao getRecruitmentApplicationItemDao() {
         recruitmentApplicationItemDao = DaoManager.getInstance().getSession().getRecruitmentApplicationItemDao();
         return recruitmentApplicationItemDao;
-    }*/
+    }
+
+    public DepartmentAndDutyDao getDepartmentAndDutyDao() {
+        departmentAndDutyDao = DaoManager.getInstance().getSession().getDepartmentAndDutyDao();
+        return departmentAndDutyDao;
+    }
 
     /**
      * 创建单例

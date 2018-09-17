@@ -14,6 +14,7 @@ import com.oliveoa.pojo.JobTransferApplicationApprovedOpinion;
 import com.oliveoa.util.DateFormat;
 
 import java.io.IOException;
+import java.io.SyncFailedException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
@@ -29,14 +30,14 @@ public class JobTransferApplicationService {
     public StatusAndMsgJsonBean submitApplication(String s, JobTransferApplication application, String members){
         DateFormat dateFormat = new DateFormat();
         System.out.println(members);
-
+        System.out.println(application.toString());
         try {
             OkHttpClient client = new OkHttpClient();
             FormBody body = new FormBody.Builder()
                     .add("eid",application.getEid())
                     .add("aimdcid",application.getAimdcid())
                     .add("aimpcid",application.getAimpcid())
-                    .add("reason",application.getAimpcid())
+                    .add("reason",application.getReason())
                     .add("approvedMember",members.toString())
                     .build();
 

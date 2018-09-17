@@ -82,7 +82,6 @@ public class DimissionActivity extends AppCompatActivity {
         index = getIntent().getIntExtra("index",index);//选择1，列表0
         Log.e("IDDEX=", String.valueOf(index));
         initView();
-        initData();
     }
 
     private void initView() {

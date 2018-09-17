@@ -19,10 +19,12 @@ import com.oliveoa.greendao.DepartmentInfoDao;
 import com.oliveoa.greendao.DutyInfoDao;
 import com.oliveoa.greendao.MeetingApplicationDao;
 import com.oliveoa.greendao.OvertimeApplicationDao;
+import com.oliveoa.greendao.RecruitmentApplicationItemDao;
 import com.oliveoa.jsonbean.ContactJsonBean;
 import com.oliveoa.jsonbean.DutyInfoJsonBean;
 import com.oliveoa.pojo.DepartmentInfo;
 import com.oliveoa.pojo.MeetingApplication;
+import com.oliveoa.pojo.RecruitmentApplicationItem;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
 import com.oliveoa.widget.LoadingDialog;
@@ -578,6 +580,10 @@ public class AddApplicationActivity extends AppCompatActivity {
                                 }
                             }
                         }
+                        RecruitmentApplicationItem applicationItem = new RecruitmentApplicationItem();
+                        RecruitmentApplicationItemDao recruitmentApplicationItemDao = EntityManager.getInstance().getRecruitmentApplicationItemDao();
+                        recruitmentApplicationItemDao.deleteAll();
+                        recruitmentApplicationItemDao.insert(applicationItem);
                         Intent intent = new Intent(AddApplicationActivity.this, RecruitmentActivity.class);
                         intent.putExtra("index",0);
                         startActivity(intent);

@@ -159,7 +159,7 @@ private LoadingDialog loadingDialog;
             dp = departmentInfoDao.queryBuilder().where(DepartmentInfoDao.Properties.Dcid.eq(ci.getDcid())).unique();
             tdepartment.setText(dp.getName());
             if(dp!=null){
-                dt = dutyInfoDao.queryBuilder().where(DutyInfoDao.Properties.Pcid.eq(ci.getPcid())).unique();
+                dt = dutyInfoDao.queryBuilder().where(DutyInfoDao.Properties.Pcid.eq(apitem.getPcid())).unique();
                 if(dt!=null){
                    tposition.setText(dt.getName());
                 }

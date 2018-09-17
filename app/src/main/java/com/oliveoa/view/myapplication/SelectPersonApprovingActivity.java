@@ -15,12 +15,14 @@ import com.oliveoa.Adapter.MyBaseExpandableListAdapter;
 import com.oliveoa.greendao.ApproveNumberDao;
 import com.oliveoa.greendao.ContactInfoDao;
 import com.oliveoa.greendao.DepartmentInfoDao;
+import com.oliveoa.greendao.JobTransferApplicationDao;
 import com.oliveoa.greendao.MeetingApplicationDao;
 import com.oliveoa.pojo.ApproveNumber;
 import com.oliveoa.pojo.ContactInfo;
 import com.oliveoa.pojo.DepartmentInfo;
 import com.oliveoa.pojo.Group;
 import com.oliveoa.pojo.Item;
+import com.oliveoa.pojo.JobTransferApplication;
 import com.oliveoa.pojo.MeetingApplication;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
@@ -56,19 +58,20 @@ public class SelectPersonApprovingActivity extends AppCompatActivity {
     private ApproveNumber approveNumber;
     private String mid;
     private MeetingApplicationDao meetingApplicationDao;
+    private JobTransferApplicationDao jobTransferApplicationDao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_person_approving);
 
-        index = getIntent().getIntExtra("index",index);
+        index = getIntent().getIntExtra("index",index);//1-9添加审批人：加班、请假、出差、会议、离职、转正、调岗、招聘、物品；10选择调岗员工
         Log.e("IDDEX=", String.valueOf(index));
         initData();
     }
     public void initData(){
         employeeInfoDao = EntityManager.getInstance().getContactInfo();
         departmentInfoDao =EntityManager.getInstance().getDepartmentInfo();
-
+        jobTransferApplicationDao = EntityManager.getInstance().getJobTransferApplicationDao();
         departmentInfos = departmentInfoDao.queryBuilder().list();
         //eps = approveNumberDao.queryBuilder().list();
         Log.e(TAG,""+employeeInfoDao.queryBuilder().count());
@@ -140,7 +143,16 @@ public class SelectPersonApprovingActivity extends AppCompatActivity {
                             meetingApplicationDao.insert(application);
                             back();
                         }
-                    } else {
+                    }else if(index==10){
+                        JobTransferApplication jobTransferApplication = new JobTransferApplication();
+                        jobTransferApplication = jobTransferApplicationDao.queryBuilder().unique();
+                        if(jobTransferApplication!=null){
+                            jobTransferApplication.setEid(mid);
+                            jobTransferApplicationDao.deleteAll();
+                            jobTransferApplicationDao.insert(jobTransferApplication);
+                            back();
+                        }
+                    }else {
                         ApproveNumber ap = approveNumberDao.queryBuilder().where(ApproveNumberDao.Properties.Id.eq(mid)).unique();
                         if (ap == null) {
                             approveNumber.setId(mid);
@@ -219,6 +231,12 @@ public class SelectPersonApprovingActivity extends AppCompatActivity {
         if(index==8) {
             Intent intent = new Intent(SelectPersonApprovingActivity.this, RecruitmentActivity.class);
             intent.putExtra("index", 1);
+            startActivity(intent);
+            finish();
+        }
+        if(index==10) {
+            Intent intent = new Intent(SelectPersonApprovingActivity.this, AdjustPostActivity.class);
+            intent.putExtra("index", 2);//被调岗员工
             startActivity(intent);
             finish();
         }

@@ -147,7 +147,8 @@ public class AdjustPostInfoActivity extends AppCompatActivity {
 
         ci = cidao.queryBuilder().where(ContactInfoDao.Properties.Eid.eq(ap.getEid())).unique();
         if(ci!=null){
-            tNumber.setText(ci.getId());
+            tNumber.setText(ci.getName());
+            tReason.setText(ap.getReason());
             dp = departmentInfoDao.queryBuilder().where(DepartmentInfoDao.Properties.Dcid.eq(ci.getDcid())).unique();
             if(dp!=null){
                 dt = dutyInfoDao.queryBuilder().where(DutyInfoDao.Properties.Pcid.eq(ci.getPcid())).unique();

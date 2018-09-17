@@ -8,6 +8,8 @@ import org.greenrobot.greendao.annotation.Keep;
 
 import java.util.Date;
 
+@Keep
+@Entity
 public class RecruitmentApplicationItem implements Parcelable{
     private String raiid;
 

@@ -116,7 +116,7 @@
                             android:layout_width="100dp"
                             android:layout_height="match_parent"
                             android:gravity="center|left"
-                            android:text="被调员工编号"
+                            android:text="被调员工姓名"
                             android:textSize="@dimen/text_size_normal"
                             android:textColor="@color/tv_gray_deep"
                             android:layout_marginLeft="@dimen/dp_22"

@@ -26,7 +26,6 @@ public class RecruitmentApplicationService {
      */
     public StatusAndMsgJsonBean submitApplication(String s, RecruitmentApplicationItem application, String dcid, String members){
         try {
-            DateFormat dateFormat = new DateFormat();
             OkHttpClient client = new OkHttpClient();
             FormBody body = new FormBody.Builder()
                     .add("dcid",dcid)

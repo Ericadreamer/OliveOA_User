@@ -35,6 +35,7 @@ import com.oliveoa.greendao.DepartmentInfoDao;
 import com.oliveoa.greendao.DutyInfoDao;
 import com.oliveoa.jsonbean.BusinessTripApplicationInfoJsonBean;
 import com.oliveoa.jsonbean.ContactJsonBean;
+import com.oliveoa.jsonbean.DutyInfoJsonBean;
 import com.oliveoa.jsonbean.FulltimeApplicationInfoJsonBean;
 import com.oliveoa.jsonbean.JobTransferApplicationInfoJsonBean;
 import com.oliveoa.jsonbean.LeaveApplicationInfoJsonBean;
@@ -46,6 +47,7 @@ import com.oliveoa.pojo.Application;
 import com.oliveoa.pojo.BusinessTripApplication;
 import com.oliveoa.pojo.BusinessTripApplicationApprovedOpinionList;
 import com.oliveoa.pojo.DepartmentInfo;
+import com.oliveoa.pojo.DutyInfo;
 import com.oliveoa.pojo.FulltimeApplication;
 import com.oliveoa.pojo.FulltimeApplicationApprovedOpinion;
 import com.oliveoa.pojo.JobTransferApplication;
@@ -63,6 +65,7 @@ import com.oliveoa.pojo.RecruitmentApplicationApprovedOpinion;
 import com.oliveoa.pojo.RecruitmentApplicationItem;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
+import com.oliveoa.widget.LoadingDialog;
 
 import java.util.ArrayList;
 
@@ -217,6 +220,8 @@ public class PassActivity extends Fragment {
 
     }
     private void getovertimeapplicationinfo(final String aid) {
+        LoadingDialog loadingDialog  = new LoadingDialog(getActivity(),"正在加载数据",true);
+        loadingDialog.show();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -277,6 +282,8 @@ public class PassActivity extends Fragment {
     }
 
     private void getleaveapplicationinfo(final String aid) {
+        LoadingDialog loadingDialog  = new LoadingDialog(getActivity(),"正在加载数据",true);
+        loadingDialog.show();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -337,6 +344,8 @@ public class PassActivity extends Fragment {
     }
 
     private void getbusinessapplicationinfo(final String aid) {
+        LoadingDialog loadingDialog  = new LoadingDialog(getActivity(),"正在加载数据",true);
+        loadingDialog.show();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -397,6 +406,8 @@ public class PassActivity extends Fragment {
     }
 
     private void getmeetingapplicationinfo(final String aid) {
+        LoadingDialog loadingDialog  = new LoadingDialog(getActivity(),"正在加载数据",true);
+        loadingDialog.show();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -457,6 +468,8 @@ public class PassActivity extends Fragment {
     }
 
     private void getdimissionapplicationinfo(final String aid) {
+        LoadingDialog loadingDialog  = new LoadingDialog(getActivity(),"正在加载数据",true);
+        loadingDialog.show();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -517,6 +530,8 @@ public class PassActivity extends Fragment {
     }
 
     private void getregularapplicationinfo(final String aid) {
+        LoadingDialog loadingDialog  = new LoadingDialog(getActivity(),"正在加载数据",true);
+        loadingDialog.show();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -577,6 +592,8 @@ public class PassActivity extends Fragment {
     }
 
     private void getadjustapplicationinfo(final String aid) {
+        LoadingDialog loadingDialog  = new LoadingDialog(getActivity(),"正在加载数据",true);
+        loadingDialog.show();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -605,6 +622,17 @@ public class PassActivity extends Fragment {
                         Log.d("departmentinfo", contactInfos.get(i).getDepartment().toString());
                         DepartmentInfo departmentInfo =contactInfos.get(i).getDepartment();
                         departmentInfoDao.insert(departmentInfo);
+                        DutyInfoJsonBean dutyInfoJsonBean = userInfoService.getPosition(departmentInfo.getDcid());
+                        if(dutyInfoJsonBean.getStatus()==0){
+                            ArrayList<DutyInfo> dutyInfos = dutyInfoJsonBean.getData();
+                            for(int k=0;k<dutyInfos.size();k++){
+                                dutyInfoDao.insert(dutyInfos.get(k));
+                            }
+                        }else{
+                            Looper.prepare();//解决子线程弹toast问题
+                            Toast.makeText(mContext, dutyInfoJsonBean.getMsg(), Toast.LENGTH_SHORT).show();
+                            Looper.loop();// 进入loop中的循环，查看消息队列
+                        }
                         Log.d(TAG,"contactInfos.get(i).getEmpContactList().size():"+contactInfos.get(i).getEmpContactList().size());
                         for(int j=0;j<contactInfos.get(i).getEmpContactList().size();j++){
                             if(contactInfos.get(i).getEmpContactList().get(j).getEmployee()!=null) {
@@ -637,6 +665,8 @@ public class PassActivity extends Fragment {
     }
 
     private void getrecruitmentapplicationinfo(final String aid) {
+        LoadingDialog loadingDialog  = new LoadingDialog(getActivity(),"正在加载数据",true);
+        loadingDialog.show();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -665,6 +695,17 @@ public class PassActivity extends Fragment {
                         Log.d("departmentinfo", contactInfos.get(i).getDepartment().toString());
                         DepartmentInfo departmentInfo =contactInfos.get(i).getDepartment();
                         departmentInfoDao.insert(departmentInfo);
+                        DutyInfoJsonBean dutyInfoJsonBean = userInfoService.getPosition(departmentInfo.getDcid());
+                        if(dutyInfoJsonBean.getStatus()==0){
+                            ArrayList<DutyInfo> dutyInfos = dutyInfoJsonBean.getData();
+                            for(int k=0;k<dutyInfos.size();k++){
+                                dutyInfoDao.insert(dutyInfos.get(k));
+                            }
+                        }else{
+                            Looper.prepare();//解决子线程弹toast问题
+                            Toast.makeText(mContext, dutyInfoJsonBean.getMsg(), Toast.LENGTH_SHORT).show();
+                            Looper.loop();// 进入loop中的循环，查看消息队列
+                        }
                         Log.d(TAG,"contactInfos.get(i).getEmpContactList().size():"+contactInfos.get(i).getEmpContactList().size());
                         for(int j=0;j<contactInfos.get(i).getEmpContactList().size();j++){
                             if(contactInfos.get(i).getEmpContactList().get(j).getEmployee()!=null) {

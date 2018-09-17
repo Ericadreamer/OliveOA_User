@@ -17,6 +17,7 @@ import com.oliveoa.greendao.BusinessTripApplicationApprovedOpinionListDao;
 import com.oliveoa.greendao.BusinessTripApplicationDao;
 import com.oliveoa.greendao.ContactInfoDao;
 import com.oliveoa.greendao.DaoManager;
+import com.oliveoa.greendao.DepartmentAndDutyDao;
 import com.oliveoa.greendao.DepartmentInfoDao;
 import com.oliveoa.greendao.DutyInfoDao;
 import com.oliveoa.greendao.LeaveApplicationApprovedOpinionListDao;
@@ -63,14 +64,9 @@ public class LoadingViewActivity extends AppCompatActivity {
     private AnnouncementApprovedOpinionListDao announcementApprovedOpinionListDao;
     private AnnouncementInfoDao announcementInfoDao;
     private ApplicationDao applicationDao;
-    private BusinessTripApplicationDao businessTripApplicationDao;
-    private BusinessTripApplicationApprovedOpinionListDao businessTripApplicationApprovedOpinionListDao;
-    private OvertimeApplicationApprovedOpinionListDao overtimeApplicationApprovedOpinionListDao;
-    private OvertimeApplicationDao overtimeApplicationDao;
-    private LeaveApplicationApprovedOpinionListDao leaveApplicationApprovedOpinionListDao;
-    private LeaveApplicationDao leaveApplicationDao;
     private MeetingApplicationDao meetingApplicationDao;
     private ApproveNumberDao approveNumberDao;
+    private DepartmentAndDutyDao departmentAndDutyDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +93,7 @@ public class LoadingViewActivity extends AppCompatActivity {
         applicationDao = EntityManager.getInstance().getApplicationDao();
         approveNumberDao = EntityManager.getInstance().getApproveNumberDao();
         meetingApplicationDao = EntityManager.getInstance().getMeetingApplicationDao();
+        departmentAndDutyDao = EntityManager.getInstance().getDepartmentAndDutyDao();
 
         contactInfoDao.deleteAll();
         departmentInfoDao.deleteAll();
@@ -104,6 +101,7 @@ public class LoadingViewActivity extends AppCompatActivity {
         applicationDao.deleteAll();
         approveNumberDao.deleteAll();
         meetingApplicationDao.deleteAll();
+        departmentAndDutyDao.deleteAll();
 
         new Thread(new Runnable() {
             @Override

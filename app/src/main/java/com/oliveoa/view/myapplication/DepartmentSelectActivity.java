@@ -1,6 +1,7 @@
 package com.oliveoa.view.myapplication;
 
 import android.content.DialogInterface;
+import android.content.Entity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,10 +16,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.oliveoa.controller.UserInfoService;
+import com.oliveoa.greendao.DepartmentAndDutyDao;
 import com.oliveoa.greendao.DepartmentInfoDao;
+import com.oliveoa.greendao.JobTransferApplicationDao;
 import com.oliveoa.jsonbean.DutyInfoJsonBean;
+import com.oliveoa.pojo.ContactInfo;
+import com.oliveoa.pojo.DepartmentAndDuty;
 import com.oliveoa.pojo.DepartmentInfo;
 import com.oliveoa.pojo.DutyInfo;
+import com.oliveoa.pojo.JobTransferApplication;
+import com.oliveoa.pojo.RecruitmentApplication;
+import com.oliveoa.pojo.RecruitmentApplicationItem;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
 
@@ -42,30 +51,37 @@ public class DepartmentSelectActivity extends AppCompatActivity {
     private LinearLayout addDPlistView;
     private int index;
     private TextView tvname;
+    private DepartmentAndDuty dpdt;
+    private DepartmentAndDutyDao departmentAndDutyDao;
     private DepartmentInfoDao departmentInfoDao;
-    private DepartmentInfo temp;
+    //private RecruitmentApplicationItemDao rpdaoitem;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_department_select);
 
-        departmentInfos= getIntent().getParcelableArrayListExtra("alldp");
-        index = getIntent().getIntExtra("index",index);//编辑部门0，添加部门1，编辑员工2，添加员工3，编辑资产4，添加资产5
+        index = getIntent().getIntExtra("index",index);//调岗0，招聘1
 
         initData();
     }
 
     public void initData(){
-        if(index==0||index==1) {
-            departmentInfoDao = EntityManager.getInstance().getDepartmentInfo();
-            temp = departmentInfoDao.queryBuilder().unique();
+        departmentAndDutyDao =EntityManager.getInstance().getDepartmentAndDutyDao();
+        departmentAndDutyDao.deleteAll();
+        departmentInfoDao = EntityManager.getInstance().getDepartmentInfo();
+        departmentInfos = departmentInfoDao.queryBuilder().list();
+        dpdt = new DepartmentAndDuty();
+        if(departmentInfos!=null){
+            initview();
+        }else{
+            Toast.makeText(getApplicationContext(), "网络错误，部门岗位数据加载错误", Toast.LENGTH_SHORT).show();
         }
-        initview();
     }
 
     public void initview(){
-        back =(ImageView)findViewById(R.id.info_back);
+        back =(ImageView)findViewById(R.id.null_back);
         addDPlistView = (LinearLayout)findViewById(R.id.depart_list);
 
        // 默认添加一个Item
@@ -78,12 +94,16 @@ public class DepartmentSelectActivity extends AppCompatActivity {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(DepartmentSelectActivity.this);
                 dialog.setTitle("提示");
                 if(index==0) {
-                    dialog.setMessage("是否确定退出选择,直接返回部门编辑页面？");
+                    dialog.setMessage("是否确定退出选择,直接返回调岗申请创建页面？");
+                }
+                if(index==1) {
+                    dialog.setMessage("是否确定退出选择,直接返回招聘申请创建页面？");
                 }
                 dialog.setCancelable(false);
                 dialog.setNegativeButton("是", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {back();
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        back();
                     }
                 });
                 dialog.setPositiveButton("否", new DialogInterface.OnClickListener() {
@@ -106,23 +126,33 @@ public class DepartmentSelectActivity extends AppCompatActivity {
 
     private void back() {
         if(index==0) {
-            if(temp!=null) {
-                Log.e(TAG,temp.toString());
-                temp.setDpid("");
-                departmentInfoDao.deleteAll();
-                departmentInfoDao.insert(temp);
-                Log.e(TAG,departmentInfoDao.queryBuilder().unique().toString());
-            }
-         /*   Intent intent = new Intent(DepartmentSelectActivity.this, RedactDepartmentActivity.class);
-            intent.putExtra("dpname", "无");
-            intent.putExtra("index", 1);
-            intent.putExtra("dp",temp);
-            startActivity(intent);
-            finish();*/
+          dpdt.setDcid("");
+          dpdt.setPcid("");
+          dpdt.setDpname("");
+          dpdt.setPname("");
+          departmentAndDutyDao.insert(dpdt);
+          Log.e(TAG,departmentAndDutyDao.queryBuilder().unique().toString());
+          Intent intent = new Intent(DepartmentSelectActivity.this, AdjustPostActivity.class);
+          intent.putExtra("index", 1);
+          startActivity(intent);
+          finish();
         }
+        if(index==1) {
+            dpdt.setDcid("");
+            dpdt.setPcid("");
+            dpdt.setDpname("");
+            dpdt.setPname("");
+            departmentAndDutyDao.insert(dpdt);
+            Log.e(TAG,departmentAndDutyDao.queryBuilder().unique().toString());
+            Intent intent = new Intent(DepartmentSelectActivity.this, RecruitmentActivity.class);
+            intent.putExtra("index", 1);
+            startActivity(intent);
+            finish();
+        }
+
     }
 
-   /*
+   /**
     *   MethodName  sortHotelViewItem()
     *   Description Item排序
     *   @Author Erica
@@ -139,43 +169,89 @@ public class DepartmentSelectActivity extends AppCompatActivity {
             item.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                        // Log.e(TAG,tname.getText().toString());
-                      /*  if(index==0)  {  //编辑部门选择
-                            EditDpSelect(tname);
-                        }*/
+                    Log.e(TAG,tname.getText().toString());
+                      if(index==0)  {  //调岗申请选择
+                            jobTransfer(tname);
+                        }
+                    if(index==1)  {  //招聘申请选择
+                        recruitment(tname);
+                    }
                     }
             });
         }
     }
+    /**
+     *   MethodName  recruitment(TextView tname)
+     *   Description 招聘申请
+     *   @Author Erica
+     */
+    private void recruitment(TextView tname) {
+        for(int i=0;i<departmentInfos.size();i++){
+            Log.e(TAG,departmentInfos.get(i).getName()+tname.getText().toString());
+            if(tname.getText().toString().equals(departmentInfos.get(i).getName())) {
+                //dcid = departmentInfos.get(i).getDcid();
+                dpdt.setDcid(departmentInfos.get(i).getDcid());
+                dpdt.setDpname(departmentInfos.get(i).getName());
+                Log.e(TAG, departmentInfos.get(i).getDcid());
+                break;
+            }
+        }
+        departmentAndDutyDao.deleteAll();
+        departmentAndDutyDao.insert(dpdt);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                UserInfoService service = new UserInfoService();
+                DutyInfoJsonBean dutyInfoJsonBean = service.getPosition(dpdt.getDcid());
+                if(dutyInfoJsonBean.getStatus()==0){
+                    ArrayList<DutyInfo> dutyInfos = dutyInfoJsonBean.getData();
+                    if(dutyInfos.size()==0){
+                        Looper.prepare();//解决子线程弹toast问题
+                        Toast.makeText(getApplicationContext(), "该部门下无职位，请选择其他部门", Toast.LENGTH_SHORT).show();
+                        Looper.loop();// 进入loop中的循环，查看消息队列
+                    }else {
+                        Intent intent = new Intent(DepartmentSelectActivity.this, DutySelectActivity.class);
+                        intent.putExtra("index", 1);
+                        intent.putParcelableArrayListExtra("alldt", dutyInfos);
+                        startActivity(intent);
+                        finish();
+                    }
+                }else{
+                    Looper.prepare();//解决子线程弹toast问题
+                    Toast.makeText(getApplicationContext(), dutyInfoJsonBean.getMsg(), Toast.LENGTH_SHORT).show();
+                    Looper.loop();// 进入loop中的循环，查看消息队列
+                }
+
+            }
+        }).start();
+    }
 
 
-/**
-     *   MethodName  EditPpSelect(TextView tname)
-     *   Description 编辑物品选择
+    /**
+     *   MethodName  jobTransfer(TextView tname)
+     *   Description 调岗申请
      *   @Author Erica
      */
 
-    private void EditPpSelect(TextView tname) {
-       /* if(pp!=null) {
-            Log.e(TAG,pp.toString());
-            String dcid =null;
+    private void jobTransfer(TextView tname) {
+
             for(int i=0;i<departmentInfos.size();i++){
                 Log.e(TAG,departmentInfos.get(i).getName()+tname.getText().toString());
                 if(tname.getText().toString().equals(departmentInfos.get(i).getName())){
-                    dcid = departmentInfos.get(i).getDcid();
+                    //dcid = departmentInfos.get(i).getDcid();
+                    dpdt.setDcid(departmentInfos.get(i).getDcid());
+                    dpdt.setDpname(departmentInfos.get(i).getName());
                     Log.e(TAG,departmentInfos.get(i).getDcid());
                     break;
                 }
             }
-            final String finalDcid = dcid;
+            departmentAndDutyDao.deleteAll();
+            departmentAndDutyDao.insert(dpdt);
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    SharedPreferences pref = getSharedPreferences("data",MODE_PRIVATE);
-                    String s = pref.getString("sessionid","");
-
-                    DutyInfoService dutyInfoService = new DutyInfoService();
-                    DutyInfoJsonBean dutyInfoJsonBean = dutyInfoService.dutyInfo(s, finalDcid);
+                    UserInfoService service = new UserInfoService();
+                    DutyInfoJsonBean dutyInfoJsonBean = service.getPosition(dpdt.getDcid());
                     if(dutyInfoJsonBean.getStatus()==0){
                         ArrayList<DutyInfo> dutyInfos = dutyInfoJsonBean.getData();
                         if(dutyInfos.size()==0){
@@ -184,7 +260,7 @@ public class DepartmentSelectActivity extends AppCompatActivity {
                             Looper.loop();// 进入loop中的循环，查看消息队列
                         }else {
                             Intent intent = new Intent(DepartmentSelectActivity.this, DutySelectActivity.class);
-                            intent.putExtra("index", 4);
+                            intent.putExtra("index", 0);
                             intent.putParcelableArrayListExtra("alldt", dutyInfos);
                             startActivity(intent);
                             finish();
@@ -197,8 +273,8 @@ public class DepartmentSelectActivity extends AppCompatActivity {
 
                 }
             }).start();
-        }*/
-    }
+        }
+
 
 
     //添加ViewItem
