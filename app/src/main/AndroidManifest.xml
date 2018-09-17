@@ -141,10 +141,6 @@
             android:exported="true"
             android:theme="@style/HomeTheme" />
         <activity
-            android:name=".mine.PersonalDetailsEditActivity"
-            android:exported="true"
-            android:theme="@style/HomeTheme" />
-        <activity
             android:name=".mine.PasswordEditActivity"
             android:exported="true"
             android:theme="@style/HomeTheme" />

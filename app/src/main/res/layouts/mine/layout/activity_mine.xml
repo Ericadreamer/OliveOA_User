@@ -9,20 +9,22 @@
 
 
     <LinearLayout
-        android:id="@+id/approval_list"
+        android:id="@+id/personal"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_70"
+        android:layout_height="@dimen/dp_55"
         android:orientation="horizontal"
         android:background="#fff"
         android:layout_marginTop="@dimen/dp_1"
-        android:layout_marginBottom="@dimen/dp_10">
+        android:layout_marginBottom="@dimen/dp_10"
+        android:clickable="true">
 
         <ImageView
-            android:layout_width="@dimen/dp_48"
-            android:layout_height="@dimen/dp_48"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
             android:src="@drawable/yonghu"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/dp_20"/>
+            android:layout_marginLeft="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_7"/>
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -37,7 +39,8 @@
                 android:gravity="center|left"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/dp_16"
-                android:layout_marginTop="@dimen/dp_8"
+                android:singleLine="true"
+                android:layout_marginTop="@dimen/dp_10"
                 android:layout_marginLeft="@dimen/dp_20"/>
             <TextView
                 android:id="@+id/approval_type"
@@ -46,6 +49,7 @@
                 android:layout_weight="1"
                 android:text="编号：001"
                 android:gravity="center|left"
+                android:singleLine="true"
                 android:layout_marginBottom="@dimen/dp_6"
                 android:layout_marginLeft="@dimen/dp_20"/>
         </LinearLayout>
@@ -59,11 +63,12 @@
 
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/password"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_70"
+        android:layout_height="@dimen/dp_55"
         android:orientation="horizontal"
         android:background="#fff"
-        android:layout_marginTop="@dimen/dp_1">
+        android:clickable="true">
 
         <ImageView
             android:layout_width="@dimen/dp_32"
@@ -83,11 +88,13 @@
             />
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/advise"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_70"
+        android:layout_height="@dimen/dp_55"
         android:orientation="horizontal"
         android:background="#fff"
-        android:layout_marginTop="@dimen/dp_1">
+        android:layout_marginTop="@dimen/dp_1"
+        android:clickable="true">
 
         <ImageView
             android:layout_width="@dimen/dp_32"
@@ -107,11 +114,13 @@
             />
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/about_us"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_70"
+        android:layout_height="@dimen/dp_55"
         android:orientation="horizontal"
         android:background="#fff"
-        android:layout_marginTop="@dimen/dp_1">
+        android:layout_marginTop="@dimen/dp_1"
+        android:clickable="true">
 
         <ImageView
             android:layout_width="@dimen/dp_32"
@@ -131,11 +140,13 @@
             />
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/update"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_70"
+        android:layout_height="@dimen/dp_55"
         android:orientation="horizontal"
         android:background="#fff"
-        android:layout_marginTop="@dimen/dp_1">
+        android:layout_marginTop="@dimen/dp_1"
+        android:clickable="true">
 
         <ImageView
             android:layout_width="@dimen/dp_32"
@@ -155,11 +166,13 @@
             />
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/edit"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_70"
+        android:layout_height="@dimen/dp_55"
         android:orientation="horizontal"
         android:background="#fff"
-        android:layout_marginTop="@dimen/dp_1">
+        android:layout_marginTop="@dimen/dp_1"
+        android:clickable="true">
 
         <ImageView
             android:layout_width="@dimen/dp_32"
