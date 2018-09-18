@@ -26,6 +26,7 @@ import com.oliveoa.greendao.ApplicationDao;
 import com.oliveoa.greendao.DaoManager;
 import com.oliveoa.greendao.MeetingApplicationAndStatusDao;
 import com.oliveoa.greendao.MeetingApplicationDao;
+import com.oliveoa.greendao.NoteInfoDao;
 import com.oliveoa.jsonbean.MeetingApplicationInfoJsonBean;
 import com.oliveoa.pojo.Application;
 import com.oliveoa.pojo.MeetingApplication;

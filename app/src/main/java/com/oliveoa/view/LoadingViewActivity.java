@@ -24,6 +24,7 @@ import com.oliveoa.greendao.LeaveApplicationApprovedOpinionListDao;
 import com.oliveoa.greendao.LeaveApplicationDao;
 import com.oliveoa.greendao.MeetingApplicationAndStatusDao;
 import com.oliveoa.greendao.MeetingApplicationDao;
+import com.oliveoa.greendao.NoteInfoDao;
 import com.oliveoa.greendao.OvertimeApplicationApprovedOpinionListDao;
 import com.oliveoa.greendao.OvertimeApplicationDao;
 import com.oliveoa.jsonbean.BusinessTripApplicationInfoJsonBean;
@@ -69,6 +70,7 @@ public class LoadingViewActivity extends AppCompatActivity {
     private ApproveNumberDao approveNumberDao;
     private DepartmentAndDutyDao departmentAndDutyDao;
     private MeetingApplicationAndStatusDao meetingApplicationAndStatusDao;
+    private NoteInfoDao noteInfoDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +99,8 @@ public class LoadingViewActivity extends AppCompatActivity {
         meetingApplicationDao = EntityManager.getInstance().getMeetingApplicationDao();
         departmentAndDutyDao = EntityManager.getInstance().getDepartmentAndDutyDao();
         meetingApplicationAndStatusDao = EntityManager.getInstance().getMeetingApplicationAndStatusDao();
+       // noteInfoDao = EntityManager.getInstance().getNoteInfoDao();
+
 
         contactInfoDao.deleteAll();
         departmentInfoDao.deleteAll();
@@ -106,6 +110,7 @@ public class LoadingViewActivity extends AppCompatActivity {
         meetingApplicationDao.deleteAll();
         departmentAndDutyDao.deleteAll();
         meetingApplicationAndStatusDao.deleteAll();
+
 
         new Thread(new Runnable() {
             @Override

@@ -25,6 +25,7 @@ import com.oliveoa.greendao.MeetingApplicationAndStatusDao;
 import com.oliveoa.greendao.MeetingApplicationDao;
 import com.oliveoa.greendao.MeetingMemberDao;
 import com.oliveoa.greendao.MessageDao;
+import com.oliveoa.greendao.NoteInfoDao;
 import com.oliveoa.greendao.OvertimeApplicationApprovedOpinionListDao;
 import com.oliveoa.greendao.OvertimeApplicationDao;
 import com.oliveoa.greendao.RecruitmentApplicationApprovedOpinionDao;
@@ -61,9 +62,9 @@ public class EntityManager {
     public MeetingMemberDao meetingMemberDao;
     public RecruitmentApplicationApprovedOpinionDao recruitmentApplicationApprovedOpinionDao;
     public RecruitmentApplicationItemDao recruitmentApplicationItemDao;
-    private DepartmentAndDutyDao departmentAndDutyDao;
-   private MeetingApplicationAndStatusDao meetingApplicationAndStatusDao;
-
+    public DepartmentAndDutyDao departmentAndDutyDao;
+    public MeetingApplicationAndStatusDao meetingApplicationAndStatusDao;
+    public NoteInfoDao noteInfoDao;
 
     /**
      * 创建User表实例
@@ -304,6 +305,11 @@ public class EntityManager {
         meetingApplicationAndStatusDao = DaoManager.getInstance().getSession().getMeetingApplicationAndStatusDao();
         return  meetingApplicationAndStatusDao;
 
+    }
+
+    public NoteInfoDao getNoteInfoDao() {
+        noteInfoDao = DaoManager.getInstance().getSession().getNoteInfoDao();
+        return noteInfoDao;
     }
 
     /**

@@ -47,7 +47,6 @@
                 android:ellipsize="end"
                 android:lineSpacingExtra="6dp"
                 android:maxLines="2"
-                android:text="什么什么什么什么什么蛇描述描述描述描述啊啊啊啊啊啊啊啊啊啊啊啊啊噢噢噢噢噢噢噢噢哦哦哦哦哦哦哦哦哦那年您呢扭扭捏捏"
                 android:textColor="#000"
                 android:textSize="16sp" />
 

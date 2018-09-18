@@ -11,6 +11,7 @@ import org.greenrobot.greendao.annotation.Keep;
 public class NoteInfo implements Parcelable{
     private String content;
     private String updatetime;
+    private int orderby;
 
     public NoteInfo() {
     }
@@ -18,6 +19,12 @@ public class NoteInfo implements Parcelable{
     public NoteInfo(String content, String updatetime) {
         this.content = content;
         this.updatetime = updatetime;
+    }
+
+    public NoteInfo(String content, String updatetime, int orderby) {
+        this.content = content;
+        this.updatetime = updatetime;
+        this.orderby = orderby;
     }
 
     public String getContent() {
@@ -36,19 +43,30 @@ public class NoteInfo implements Parcelable{
         this.updatetime = updatetime;
     }
 
+    public int getOrderby() {
+        return orderby;
+    }
+
+    public void setOrderby(int orderby) {
+        this.orderby = orderby;
+    }
+
     @Override
     public String toString() {
         return "NoteInfo{" +
                 "content='" + content + '\'' +
                 ", updatetime='" + updatetime + '\'' +
+                ", orderby=" + orderby +
                 '}';
     }
-     //创建带参Parcel构造器
+
+    //创建带参Parcel构造器
          protected NoteInfo(Parcel in) {
              //这里read字段的顺序要与write的顺序一致
 
              content = in.readString();
              updatetime = in.readString();
+             orderby = in.readInt();
          }
 
          //创建常量Creator，并实现该接口的两个方法
@@ -73,6 +91,7 @@ public class NoteInfo implements Parcelable{
          public void writeToParcel(Parcel parcel, int i) {
              parcel.writeString(content);
              parcel.writeString(updatetime);
+             parcel.writeInt(orderby);
          }
 
          public static Creator<NoteInfo> getCREATOR() {

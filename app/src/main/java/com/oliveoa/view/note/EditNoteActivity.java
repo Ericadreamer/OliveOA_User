@@ -3,28 +3,46 @@ package com.oliveoa.view.note;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.oliveoa.greendao.NoteInfoDao;
+import com.oliveoa.pojo.NoteInfo;
+import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class EditNoteActivity extends AppCompatActivity {
     private ImageView back,delete;
     private EditText enote;
+    private int index;
+    private String TAG = this.getClass().getSimpleName();
+    private NoteInfo noteInfo;
+    private NoteInfoDao noteInfoDao;
+    private List<NoteInfo> list;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_note);
 
+        index = getIntent().getIntExtra("index",index);//修改0，创建新的便签1
+        noteInfo =getIntent().getParcelableExtra("noteinfo");
+        Log.e(TAG,"INDEX="+index);
+        Log.e(TAG,"noteinfo="+noteInfo);
         initView();
-        initData();
+
     }
 
     public void initView() {
@@ -32,21 +50,73 @@ public class EditNoteActivity extends AppCompatActivity {
         delete = (ImageView) findViewById(R.id.delete);
         enote = (EditText) findViewById(R.id.note_edit);
 
+        initData();
 
         //点击事件
         back.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(EditNoteActivity.this, MyNoteActivity.class);
-                startActivity(intent);
-                finish();
+                back();
             }
         });
 
+        delete.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
+            @Override
+            public void onClick(View view) {
+                enote.setText("");
+            }
+        });
+    }
+
+    private void back() {
+        Date date = new Date(System.currentTimeMillis());
+        SimpleDateFormat f = new SimpleDateFormat("yyyy年MM月dd日 HH:mm", Locale.CHINA);// 输出北京时间
+        Log.e(TAG,"enote="+enote.getText().toString().trim());
+        if(!enote.getText().toString().trim().equals("")) {
+            if (index == 0) {
+                NoteInfo temp = new NoteInfo();
+                temp.setContent(enote.getText().toString().trim());
+                temp.setUpdatetime(f.format(date));
+                temp.setOrderby(list.size()-1);
+                Log.i("info:", temp.toString());
+                list = noteInfoDao.queryBuilder().list();
+                if (list != null) {
+                    noteInfoDao.deleteAll();
+                    for (int i = 0; i < list.size(); i++) {
+                        if (list.get(i).getContent().equals(noteInfo.getContent()) && list.get(i).getUpdatetime().equals(noteInfo.getUpdatetime())) {
+
+                        } else {
+                            noteInfoDao.insert(list.get(i));
+                        }
+                    }
+                    noteInfoDao.insert(temp);
+                }
+            }
+            if (index == 1) {
+                NoteInfo temp = new NoteInfo();
+                temp.setContent(enote.getText().toString().trim());
+                temp.setUpdatetime(f.format(date));
+                Log.e(TAG,list.toString());
+                if(list==null){
+                     temp.setOrderby(0);
+                }else{
+                    temp.setOrderby(list.size());
+                }
+
+                noteInfoDao.insert(temp);
+            }
+        }
+        Intent intent = new Intent(EditNoteActivity.this, MyNoteActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     public void initData() {
-
+        noteInfoDao = EntityManager.getInstance().getNoteInfoDao();
+        list = noteInfoDao.queryBuilder().list();
+        if(index==0) {
+            enote.setText(noteInfo.getContent());
+        }
     }
 
 

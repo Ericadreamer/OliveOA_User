@@ -1,13 +1,20 @@
 package com.oliveoa.view.note;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Message;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -22,11 +29,17 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.oliveoa.greendao.NoteInfoDao;
+import com.oliveoa.pojo.NoteInfo;
+import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
 import com.oliveoa.view.TabLayoutBottomActivity;
+import com.oliveoa.view.myapplication.GoodsInfoActivity;
+import com.oliveoa.view.myapplication.MainApplicationActivity;
 import com.oliveoa.view.notice.AddNoticeActivity;
 
 import java.text.DecimalFormat;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -34,24 +47,29 @@ public class MyNoteActivity extends AppCompatActivity {
     private ImageView back,add;
     private RecyclerView mContentRv;
     private FloatingActionButton btn_fab;
+    private List<NoteInfo> noteInfos;
+    private NoteInfoDao noteInfoDao;
+    private String TAG = this.getClass().getSimpleName();
+    private View listview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_note);
 
-        initData();
         initView();
     }
 
     public void initView() {
+        Log.d(TAG,"reloading view");
         back = (ImageView) findViewById(R.id.iback);
         //add = (ImageView) findViewById(R.id.iadd);
         btn_fab = (FloatingActionButton)findViewById(R.id.fab_add);
-
+        initData();
         mContentRv = (RecyclerView) findViewById(R.id.rv_content);
         mContentRv.setLayoutManager(new LinearLayoutManager(this));
         mContentRv.setAdapter(new ContentAdapter());
+
 
         //点击事件
         back.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
@@ -68,7 +86,10 @@ public class MyNoteActivity extends AppCompatActivity {
         btn_fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                NoteInfo noteInfo = new NoteInfo();
                 Intent intent = new Intent(MyNoteActivity.this, EditNoteActivity.class);
+                intent.putExtra("index",1);
+                intent.putExtra("noteInfo",noteInfo);
                 startActivity(intent);
                 finish();
             }
@@ -78,28 +99,81 @@ public class MyNoteActivity extends AppCompatActivity {
 
     private class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ContentHolder>{
 
+
         @Override
         public ContentAdapter.ContentHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new ContentHolder(LayoutInflater.from(MyNoteActivity.this).inflate(R.layout.item_note, parent, false));
+            return new ContentHolder(LayoutInflater.from(MyNoteActivity.this)
+                    .inflate(R.layout.item_note, parent, false));
         }
 
         @Override
-        public void onBindViewHolder(ContentAdapter.ContentHolder holder, int position) {
+        public void onBindViewHolder(final ContentAdapter.ContentHolder holder, final int position) {
             //holder.itemTv.setText("Item "+new DecimalFormat("00").format(position));
+             holder.itemContent.setText(noteInfos.get(position).getContent());
+             holder.itemTime.setText(noteInfos.get(position).getUpdatetime());
+
+             holder.item_note.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                        //Toast.makeText(getApplicationContext(),"你点击了"+holder.itemContent.getText().toString(), Toast.LENGTH_SHORT).show();
+                    Log.e(TAG,holder.itemContent.getText().toString().trim()+"----"+noteInfos.get(position).toString());
+                    Intent intent = new Intent(MyNoteActivity.this, EditNoteActivity.class);
+                    intent.putExtra("index",0);
+                    intent.putExtra("noteinfo",noteInfos.get(position));
+                    startActivity(intent);
+                    finish();
+
+                }
+            });
+             //长按删除
+            holder.item_note.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    //Toast.makeText(getApplicationContext(),"你点击了"+holder.itemContent.getText().toString(), Toast.LENGTH_SHORT).show();
+                    Log.e(TAG,holder.itemContent.getText().toString().trim()+"----"+noteInfos.get(position).toString());
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MyNoteActivity.this);
+                    builder.setTitle("警告");
+                    builder.setMessage("您正在试图删除这条便签，确定删除吗？");
+                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            noteInfoDao.deleteAll();
+                            for (int i =0;i<noteInfos.size();i++){
+                                if(!noteInfos.get(i).equals(noteInfos.get(position))){
+                                    noteInfoDao.insert(noteInfos.get(i));
+                                    Log.e(TAG,"depleting");
+                                }
+                            }
+                            finish();
+                            Intent intent = new Intent(MyNoteActivity.this, MyNoteActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+                    builder.setNegativeButton("取消", null);
+                    builder.show();
+                    return false;
+                }
+            });
+
+
         }
 
         @Override
         public int getItemCount() {
-            return 100;
+            return noteInfos.size();
         }
 
         class ContentHolder extends RecyclerView.ViewHolder{
 
-            private TextView itemTv;
+            private TextView itemContent,itemTime;
+            private CardView item_note;
 
             public ContentHolder(View itemView) {
                 super(itemView);
-                itemTv = (TextView) itemView.findViewById(android.R.id.text1);
+               itemContent = (TextView) itemView.findViewById(R.id.note);
+               itemTime = (TextView) itemView.findViewById(R.id.time);
+               item_note = (CardView) itemView.findViewById(R.id.card_view);
+               listview = itemView;
             }
         }
 
@@ -107,10 +181,15 @@ public class MyNoteActivity extends AppCompatActivity {
 
 
     public void initData() {
+        noteInfoDao = EntityManager.getInstance().getNoteInfoDao();
+        noteInfos = noteInfoDao.queryBuilder().orderDesc(NoteInfoDao.Properties.Orderby).list();
+        Log.e(TAG,noteInfos.toString());
 
     }
 
-    @Override
+
+
+        @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
         if (keyCode == KeyEvent.KEYCODE_BACK) {
