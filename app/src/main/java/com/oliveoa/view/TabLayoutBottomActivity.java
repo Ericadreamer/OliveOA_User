@@ -1,5 +1,8 @@
 package com.oliveoa.view;
 
+import android.content.SharedPreferences;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,10 +18,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.oliveoa.common.ContactHttpResponseObject;
+import com.oliveoa.controller.AnnouncementService;
+import com.oliveoa.controller.UserInfoService;
+import com.oliveoa.greendao.AnnouncementInfoDao;
+import com.oliveoa.greendao.ContactInfoDao;
+import com.oliveoa.greendao.DepartmentInfoDao;
+import com.oliveoa.jsonbean.AnnouncementJsonBean;
+import com.oliveoa.jsonbean.ContactJsonBean;
+import com.oliveoa.pojo.AnnouncementInfo;
+import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.addressbook.AddressBookActivity;
 import com.oliveoa.view.mine.MineActivity;
 import com.oliveoa.view.notice.NoticeActivity;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 

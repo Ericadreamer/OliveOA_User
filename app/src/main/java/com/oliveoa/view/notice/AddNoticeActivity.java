@@ -2,34 +2,84 @@ package com.oliveoa.view.notice;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.oliveoa.common.ContactHttpResponseObject;
+import com.oliveoa.controller.AnnouncementService;
+import com.oliveoa.controller.RecruitmentApplicationService;
+import com.oliveoa.controller.UserInfoService;
+import com.oliveoa.greendao.AnnouncementInfoDao;
+import com.oliveoa.greendao.ApproveNumberDao;
+import com.oliveoa.greendao.ContactInfoDao;
+import com.oliveoa.greendao.DepartmentInfoDao;
+import com.oliveoa.greendao.NoteInfoDao;
+import com.oliveoa.jsonbean.AnnouncementJsonBean;
+import com.oliveoa.jsonbean.ContactJsonBean;
+import com.oliveoa.jsonbean.StatusAndMsgJsonBean;
+import com.oliveoa.pojo.AnnouncementInfo;
+import com.oliveoa.pojo.ApproveNumber;
+import com.oliveoa.pojo.ContactInfo;
+import com.oliveoa.pojo.DepartmentAndDuty;
+import com.oliveoa.pojo.DepartmentInfo;
+import com.oliveoa.pojo.NoteInfo;
+import com.oliveoa.pojo.RecruitmentApplicationItem;
+import com.oliveoa.util.DateFormat;
+import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
 import com.oliveoa.view.TabLayoutBottomActivity;
+import com.oliveoa.view.myapplication.BusinessActivity;
+import com.oliveoa.view.myapplication.RecruitmentActivity;
+import com.oliveoa.view.myapplication.SelectPersonApprovingActivity;
+import com.oliveoa.widget.LoadingDialog;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import cn.qqtheme.framework.picker.DateTimePicker;
+
 public class AddNoticeActivity extends AppCompatActivity {
-    private EditText etitle,econtent;
-    private LinearLayout addPersonList;  //审批人列表
-    private ImageView back,save;
+    private EditText etitle,econtent,esignnature;
+    private TextView taddPerson,tvtime,tname;
+    private LinearLayout addlistView;  //审批人列表
+    private ImageView back,save,itime;
+    private int index;
+    private String TAG = this.getClass().getSimpleName();
+    private DepartmentInfoDao departmentInfoDao;
+    private ContactInfoDao contactInfoDao;
+    private AnnouncementInfoDao announcementInfoDao;
+    private AnnouncementInfo announcementInfo;
+    private List<ApproveNumber> eps;
+    private ApproveNumberDao approveNumberDao;
+    private ContactInfo ci;
+    private DateTimePicker picker;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_notice);
-
+         index = getIntent().getIntExtra("index",index); //0列表，1添加
         initView();
-        initData();
     }
 
     private void initView() {
@@ -37,63 +87,339 @@ public class AddNoticeActivity extends AppCompatActivity {
         save = (ImageView) findViewById(R.id.isave);
         etitle = (EditText) findViewById(R.id.title);
         econtent = (EditText) findViewById(R.id.content);
-        addPersonList = (LinearLayout) findViewById(R.id.approve_list);
-
-
+        addlistView = (LinearLayout) findViewById(R.id.approve_list);
+        taddPerson = (TextView)findViewById(R.id.person_add);
+        esignnature = (EditText)findViewById(R.id.signature);
+        tvtime =(TextView)findViewById(R.id.tv_date);
+        itime = (ImageView)findViewById(R.id.date_select);
+        initData();
 
         //点击事件
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AddNoticeActivity.this, TabLayoutBottomActivity.class);
-                intent.putExtra("index",1);
-                startActivity(intent);
-                finish();
+                back();
                 //Toast.makeText(mContext, "你点击了返回", Toast.LENGTH_SHORT).show();
             }
         });
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                save();
+                try {
+                    save();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
+        taddPerson.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
+            @Override
+            public void onClick(View view) {
+                try {
+                    addPerson();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
         // 默认添加一个Item
-        addViewItem(null);
+        if(index==1){
+            addViewItem(null);
+        }
 
+    }
+
+    private void back() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SharedPreferences pref = getSharedPreferences("data",MODE_PRIVATE);
+                String s = pref.getString("sessionid","");
+
+                AnnouncementInfoDao announcementInfoDao = EntityManager.getInstance().getAnnouncementInfoDao();
+                announcementInfoDao.deleteAll();
+
+                AnnouncementService announcementService = new AnnouncementService();
+                AnnouncementJsonBean announcementJsonBean = announcementService.get_published_annoucements(s);
+                if(announcementJsonBean.getStatus()==0){
+                    List<AnnouncementInfo> announcementInfos = announcementJsonBean.getData();
+                    Log.e("notice",announcementInfos.toString());
+                    for (int i=0;i<announcementInfos.size();i++){
+                        announcementInfoDao.insert(announcementInfos.get(i));
+                    }
+                    Intent intent = new Intent(AddNoticeActivity.this, TabLayoutBottomActivity.class);
+                    intent.putExtra("index",1);
+                    startActivity(intent);
+                    finish();
+                }else{
+                    Looper.prepare();//解决子线程弹toast问题
+                    Toast.makeText(getApplicationContext(), "网络错误，获取公告信息失败", Toast.LENGTH_SHORT).show();
+                    Looper.loop();// 进入loop中的循环，查看消息队列
+                }
+            }
+        }).start();
     }
 
     private void initData() {
+        contactInfoDao = EntityManager.getInstance().getContactInfo();
+        approveNumberDao = EntityManager.getInstance().getApproveNumberDao();
+        announcementInfoDao = EntityManager.getInstance().getAnnouncementInfoDao();
+        announcementInfo = announcementInfoDao.queryBuilder().unique();
+        ci = new ContactInfo();
+        DateFormat dateFormat= new DateFormat();
 
+        //Log.e(TAG,application.toString());
+        //加载暂存本地表的数据
+        if(index==1) {
+            eps = approveNumberDao.queryBuilder().list();
+
+            Log.e(TAG,"EPS="+eps);
+            if(announcementInfo!=null){
+                etitle.setText(String.valueOf(announcementInfo.getTitle()));
+                econtent.setText(announcementInfo.getContent());
+                esignnature.setText(announcementInfo.getSignature());
+                tvtime.setText(dateFormat.LongtoDatemm(announcementInfo.getPublishtime()));
+                Log.e(TAG,"Application="+announcementInfo.toString());
+            }
+
+        }
     }
-    private void save() {
-
-    }
-
     //添加审批人操作
-    public void personadd(){
+    private void addPerson() throws ParseException {
+        //保存表单数据
+        //JobTransferApplication ap = new JobTransferApplication();
+        if(announcementInfo!=null) {
+            DateFormat dateFormat = new DateFormat();
+            announcementInfo.setContent(econtent.getText().toString().trim());
+            announcementInfo.setTitle(etitle.getText().toString().trim());
+            announcementInfo.setSignature(esignnature.getText().toString().trim());
+            Log.e(TAG,tvtime.getText().toString().trim());
+            if(tvtime.getText().toString().trim().equals("")){
 
+            }else{
+                announcementInfo.setPublishtime(dateFormat.stringToLong(tvtime.getText().toString().trim(),"yyyy-MM-dd hh:mm"));
+            }
+
+            Log.e(TAG, announcementInfo.toString());
+            announcementInfoDao.deleteAll();
+            announcementInfoDao.insert(announcementInfo);
+
+            LoadingDialog loadingDialog = new LoadingDialog(AddNoticeActivity.this, "正在加载数据", true);
+            loadingDialog.show();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
+                    String s = pref.getString("sessionid", "");
+
+                    //Todo Service
+                    UserInfoService userInfoService = new UserInfoService();
+                    //Todo Service.Method
+                    ContactHttpResponseObject contactHttpResponseObject = userInfoService.contact(s);
+
+                    departmentInfoDao = EntityManager.getInstance().getDepartmentInfo();
+                    contactInfoDao = EntityManager.getInstance().getContactInfo();
+                    departmentInfoDao.deleteAll();
+                    contactInfoDao.deleteAll();
+
+                    //ToCheck JsonBean.getStatus()
+                    if (contactHttpResponseObject.getStatus() == 0) {
+                        ArrayList<ContactJsonBean> contactInfos = contactHttpResponseObject.getData();
+                        Log.d("userinfo", contactInfos.toString());
+                        if (contactInfos.size() == 0) {
+                            Looper.prepare();//解决子线程弹toast问题
+                            Toast.makeText(getApplicationContext(), "该公司未创建更多的部门和员工", Toast.LENGTH_SHORT).show();
+                            Looper.loop();// 进入loop中的循环，查看消息队列
+                        } else {
+                            for (int i = 0; i < contactInfos.size(); i++) {
+                                Log.d("departmentinfo", contactInfos.get(i).getDepartment().toString());
+                                DepartmentInfo departmentInfo = contactInfos.get(i).getDepartment();
+                                departmentInfoDao.insert(departmentInfo);
+                                Log.d(TAG, "contactInfos.get(i).getEmpContactList().size():" + contactInfos.get(i).getEmpContactList().size());
+                                for (int j = 0; j < contactInfos.get(i).getEmpContactList().size(); j++) {
+                                    if (contactInfos.get(i).getEmpContactList().get(j).getEmployee() != null) {
+                                        Log.d(TAG, "contactInfos.get(i).getEmpContactList().get(" + j + ").getEmployee()" + contactInfos.get(i).getEmpContactList().get(j).getEmployee().toString());
+                                        contactInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getEmployee());
+                                    }
+                                }
+                            }
+                            Intent intent = new Intent(AddNoticeActivity.this, SelectPersonApprovingActivity.class);
+                            intent.putExtra("index", 11);
+                            startActivity(intent);
+                        }
+                    } else {
+                        Looper.prepare();//解决子线程弹toast问题
+                        Toast.makeText(getApplicationContext(), contactHttpResponseObject.getMsg(), Toast.LENGTH_SHORT).show();
+                        Looper.loop();// 进入loop中的循7环，查看消息队列
+                    }
+
+                }
+            }).start();
+        }
     }
 
-    //加载R.layout.item_approve列表
-    private void addViewItem(View view) {
+    private void save() throws ParseException {
+        //Toast.makeText(getApplicationContext(), "你点击了保存", Toast.LENGTH_SHORT).show();
+
+            DateFormat dateFormat = new DateFormat();
+            if (TextUtils.isEmpty(esignnature.getText().toString().trim())||TextUtils.isEmpty(econtent.getText().toString().trim())||TextUtils.isEmpty(etitle.getText().toString().trim())||TextUtils.isEmpty(tvtime.getText().toString().trim()))
+            {
+                Toast.makeText(getApplicationContext(), "信息不得为空！", Toast.LENGTH_SHORT).show();
+            } else {
+                announcementInfo.setContent(econtent.getText().toString().trim());
+                announcementInfo.setTitle(etitle.getText().toString().trim());
+                announcementInfo.setSignature(esignnature.getText().toString().trim());
+                announcementInfo.setPublishtime(dateFormat.stringToLong(tvtime.getText().toString().trim()+":00","yyyy-MM-dd HH:mm:ss"));
+                if (eps == null) {
+                    Toast.makeText(getApplicationContext(), "请选择审批人", Toast.LENGTH_SHORT).show();
+                } else if (eps.size() == 0) {
+                    Toast.makeText(getApplicationContext(), "请选择审批人", Toast.LENGTH_SHORT).show();
+                } else {
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //读取SharePreferences的cookies
+                            SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
+                            String s = pref.getString("sessionid", "");
+
+                            AnnouncementService service = new AnnouncementService();
+                            StatusAndMsgJsonBean statusAndMsgJsonBean = service.submit_annoucements(s,announcementInfo,eps.toString());
+                            if (statusAndMsgJsonBean.getStatus() == 0) {
+                                Looper.prepare();
+                                Toast.makeText(getApplicationContext(), "添加成功！点击返回键返回主页", Toast.LENGTH_SHORT).show();
+                                Looper.loop();
+                            } else {
+                                Looper.prepare();
+                                Toast.makeText(getApplicationContext(), statusAndMsgJsonBean.getMsg(), Toast.LENGTH_SHORT).show();
+                                Looper.loop();
+                            }
+                        }
+                    }).start();
+                }
+            }
 
     }
 
     /**
      * Item排序
      */
-    private void sortHotelViewItem(){
+    private void sortViewItem() {
+        //获取LinearLayout里面所有的view
+        for (int i = 0; i < addlistView.getChildCount(); i++) {
+            final View childAt = addlistView.getChildAt(i);
+            final LinearLayout item = (LinearLayout) childAt.findViewById(R.id.approve_person_item);
+            final ImageView delete = (ImageView)childAt.findViewById(R.id.delete);
 
+            final int finalI = i;
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    tname = (TextView)childAt.findViewById(R.id.leave_type);
+                    Log.e(TAG,"确定删除"+tname.getText().toString()+"??");
+                    addlistView.removeView(item);
+                    approveNumberDao.deleteAll();
+                    ApproveNumber employee = new ApproveNumber();
+                    int h=0;
+                    for(int j=0;j<eps.size();j++){
+                        if(!eps.get(j).getId().equals(eps.get(finalI).getId())){
+                            employee.setId(eps.get(j).getId());
+                            approveNumberDao.insert(employee);
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    //添加ViewItem
+    private void addViewItem(View view) {
+        if (eps==null) {
+            /*Toast.makeText(OvertimeActivity.this, "当前没有审批！", Toast.LENGTH_SHORT).show();*/
+        } else {
+            for(int i = 0;i <eps.size(); i ++){
+                View EvaluateView = View.inflate(AddNoticeActivity.this, R.layout.item_member, null);
+                addlistView.addView(EvaluateView);
+                InitDataViewItem();
+            }
+            sortViewItem();
+        }
     }
 
     /**
      * Item加载数据
      */
-    private void InitDataViewItem(){
+    private void InitDataViewItem() {
+        int i;
+        for (i = 0; i < addlistView.getChildCount(); i++) {
+            View childAt = addlistView.getChildAt(i);
+            LinearLayout item = (LinearLayout) childAt.findViewById(R.id.approve_person_item);
+            tname = (TextView)childAt.findViewById(R.id.leave_type);
 
+            ContactInfo ci = contactInfoDao.queryBuilder().where(ContactInfoDao.Properties.Eid.eq(eps.get(i).getId())).unique();
+            if(ci!=null){
+                tname.setText(ci.getName());
+                Log.e("eid:",ci.getName());
+            }else{
+                tname.setText("");
+            }
+
+        }
+    }
+
+
+    //年月日时分选择器
+    public void onYearMonthDayTimePicker(View view) {
+
+        Date date = new Date(System.currentTimeMillis());
+        SimpleDateFormat yyyy = new SimpleDateFormat("yyyy", Locale.CHINA);// 输出北京时间
+        SimpleDateFormat mm = new SimpleDateFormat("MM", Locale.CHINA);//
+        SimpleDateFormat dd = new SimpleDateFormat("dd", Locale.CHINA);// 输出北京时间
+        SimpleDateFormat HH = new SimpleDateFormat("HH", Locale.CHINA);// 输出北京时间
+        SimpleDateFormat aa = new SimpleDateFormat("aa", Locale.CHINA);// 输出北京时间
+        picker = new DateTimePicker(AddNoticeActivity.this, DateTimePicker.HOUR_24);
+        picker.setDividerColor(Color.rgb(0, 178, 238));//设置分割线的颜色
+        picker.setLabelTextColor(Color.GRAY);
+        picker.setTopLineColor(Color.GRAY);
+        picker.setSubmitTextSize(16);
+        picker.setCancelTextSize(16);
+        picker.setTitleTextColor(Color.BLACK);
+        picker.setTitleText("年月日时分选择");
+        int hour = Integer.parseInt(HH.format(date));
+        Log.e("AM/PM=",aa.format(date));
+        if(aa.format(date).equals("上午")||aa.format(date).equals("PM")){
+            if(hour<12){
+                switch (hour){
+                    case 1:hour=13;break;
+                    case 2:hour=14;break;
+                    case 3:hour=15;break;
+                    case 4:hour=16;break;
+                    case 5:hour=17;break;
+                    case 6:hour=18;break;
+                    case 7:hour=19;break;
+                    case 8:hour=20;break;
+                    case 9:hour=21;break;
+                    case 10:hour=22;break;
+                    case 11:hour=23;break;
+                }
+            }
+        }
+        picker.setDateRangeStart(Integer.parseInt(yyyy.format(date)),Integer.parseInt(mm.format(date)),Integer.parseInt(dd.format(date)));
+        picker.setTimeRangeStart(0,0);
+        picker.setSelectedItem(
+                Integer.parseInt(yyyy.format(date)),Integer.parseInt(mm.format(date)),Integer.parseInt(dd.format(date)),
+                hour,date.getMinutes());
+        picker.setDateRangeEnd(2025, 12, 31);
+        picker.setTimeRangeEnd(23, 59);
+        picker.setOnDateTimePickListener(new DateTimePicker.OnYearMonthDayTimePickListener() {
+            @Override
+            public void onDateTimePicked(String year, String month, String day, String hour, String minute) {
+               tvtime.setText(year+"-"+month+"-"+day + " " + hour + ":" + minute);
+                //showToast(year + "-" + month + "-" + day + " " + hour + ":" + minute);
+            }
+        });
+        picker.show();
     }
 
 

@@ -110,16 +110,19 @@ public class AnnouncementService {
      *   Description： 提交公告
      *   @Author： Erica
      */
-     public StatusAndMsgJsonBean submit_annoucements(String s,AnnouncementInfo announcementInfo,ArrayList<String> approvedMember){
-           try {
-                       DateFormat dateFormat = new DateFormat();
+     public StatusAndMsgJsonBean submit_annoucements(String s,AnnouncementInfo announcementInfo,String approvedMember){
+         DateFormat dateFormat = new DateFormat();
+         String time =dateFormat.LongtoDate(announcementInfo.getPublishtime());
+         System.out.println(time);
+         System.out.println(approvedMember);
+         try {
                        OkHttpClient client = new OkHttpClient();
                        FormBody body = new FormBody.Builder()
                                .add("title",announcementInfo.getTitle())
                                .add("content",announcementInfo.getContent())
                                .add("signature",announcementInfo.getSignature())
-                               .add("publishtime",dateFormat.LongtoDate(announcementInfo.getPublishtime()))
-                               .add("approvedMember", String.valueOf(approvedMember))
+                               .add("publishtime",time)
+                               .add("approvedMember", approvedMember)
                                .build();
 
                        Request request = new Request.Builder()

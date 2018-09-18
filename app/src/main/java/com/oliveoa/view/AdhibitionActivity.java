@@ -45,6 +45,7 @@ import com.oliveoa.view.myapplication.WaitActivity;
 import com.oliveoa.view.myapplication.WaitActivity1;
 import com.oliveoa.view.note.MyNoteActivity;
 import com.oliveoa.view.workschedule.MyWorkActivity;
+import com.oliveoa.widget.LoadingDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -120,6 +121,8 @@ public class AdhibitionActivity extends Fragment {
             @Override
             public void onClick(View view) {
                 //Toast.makeText(mContext, "您点击了会议管理", Toast.LENGTH_SHORT).show();
+                LoadingDialog loadingDialog  = new LoadingDialog(getActivity(),"正在加载数据",true);
+                loadingDialog.show();
                 meetinginfo();
             }
         });

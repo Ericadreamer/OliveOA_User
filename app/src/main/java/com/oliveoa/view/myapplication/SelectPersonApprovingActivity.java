@@ -26,6 +26,7 @@ import com.oliveoa.pojo.JobTransferApplication;
 import com.oliveoa.pojo.MeetingApplication;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
+import com.oliveoa.view.notice.AddNoticeActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +65,7 @@ public class SelectPersonApprovingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_person_approving);
 
-        index = getIntent().getIntExtra("index",index);//1-9添加审批人：加班、请假、出差、会议、离职、转正、调岗、招聘、物品；10选择调岗员工
+        index = getIntent().getIntExtra("index",index);//1-9添加审批人：加班、请假、出差、会议、离职、转正、调岗、招聘、物品；10选择调岗员工;11公告添加审批人
         Log.e("IDDEX=", String.valueOf(index));
         initData();
     }
@@ -237,6 +238,12 @@ public class SelectPersonApprovingActivity extends AppCompatActivity {
         if(index==10) {
             Intent intent = new Intent(SelectPersonApprovingActivity.this, AdjustPostActivity.class);
             intent.putExtra("index", 2);//被调岗员工
+            startActivity(intent);
+            finish();
+        }
+        if(index==11) {
+            Intent intent = new Intent(SelectPersonApprovingActivity.this, AddNoticeActivity.class);
+            intent.putExtra("index", 1);
             startActivity(intent);
             finish();
         }

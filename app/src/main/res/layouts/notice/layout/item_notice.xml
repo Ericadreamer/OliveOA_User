@@ -58,7 +58,6 @@
                 android:ellipsize="end"
                 android:lineSpacingExtra="6dp"
                 android:maxLines="2"
-                android:text="大家可以去旅游放松放松咯哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈啊哈哈哈哈哈哈哈"
                 android:textColor="@color/colorPrimary"
                 android:textSize="14sp" />
 

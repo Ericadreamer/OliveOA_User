@@ -13,9 +13,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.oliveoa.common.BusinessTripApplicationHttpResponseObject;
+import com.oliveoa.common.ContactHttpResponseObject;
 import com.oliveoa.common.LeaveApplicationHttpResponseObject;
 import com.oliveoa.common.OvertimeApplicationHttpResponseObject;
 import com.oliveoa.common.StatusAndDataHttpResponseObject;
+import com.oliveoa.controller.AnnouncementService;
 import com.oliveoa.controller.BusinessTripApplicationService;
 import com.oliveoa.controller.FulltimeApplicationService;
 import com.oliveoa.controller.JobTransferApplicationService;
@@ -24,9 +26,15 @@ import com.oliveoa.controller.LeaveOfficeApplicationService;
 import com.oliveoa.controller.MeetingApplicationService;
 import com.oliveoa.controller.OvertimeApplictionService;
 import com.oliveoa.controller.RecruitmentApplicationService;
+import com.oliveoa.controller.UserInfoService;
+import com.oliveoa.greendao.AnnouncementInfoDao;
 import com.oliveoa.greendao.ApplicationDao;
+import com.oliveoa.greendao.ContactInfoDao;
+import com.oliveoa.greendao.DepartmentInfoDao;
+import com.oliveoa.jsonbean.AnnouncementJsonBean;
 import com.oliveoa.jsonbean.BusinessTripApplicationInfoJsonBean;
 import com.oliveoa.jsonbean.BusinessTripApplicationJsonBean;
+import com.oliveoa.jsonbean.ContactJsonBean;
 import com.oliveoa.jsonbean.FulltimeApplicationInfoJsonBean;
 import com.oliveoa.jsonbean.JobTransferApplicationInfoJsonBean;
 import com.oliveoa.jsonbean.LeaveApplicationInfoJsonBean;
@@ -36,6 +44,7 @@ import com.oliveoa.jsonbean.MeetingApplicationInfoJsonBean;
 import com.oliveoa.jsonbean.OvertimeApplicationInfoJsonBean;
 import com.oliveoa.jsonbean.OvertimeApplicationJsonBean;
 import com.oliveoa.jsonbean.RecruitmentApplicationInfoJsonBean;
+import com.oliveoa.pojo.AnnouncementInfo;
 import com.oliveoa.pojo.Application;
 import com.oliveoa.pojo.FulltimeApplication;
 import com.oliveoa.pojo.JobTransferApplication;
@@ -44,6 +53,8 @@ import com.oliveoa.pojo.MeetingApplication;
 import com.oliveoa.pojo.RecruitmentApplication;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
+import com.oliveoa.view.TabLayoutBottomActivity;
+import com.oliveoa.view.notice.AddNoticeActivity;
 import com.oliveoa.widget.LoadingDialog;
 
 import java.util.ArrayList;
@@ -150,7 +161,66 @@ private LoadingDialog loadingDialog;
         if(ap.getType()==8){
             backMyRecruitmentApplication();
         }
+        if(ap.getType()==9){
+            LoadingDialog loadingDialog  = new LoadingDialog(ApprovedInfoActivity.this,"正在加载数据",true);
+            loadingDialog.show();
+            backMyNotice();
+        }
 
+    }
+
+    private void backMyNotice() {
+           new Thread(new Runnable() {
+                       @Override
+                       public void run() {
+                           SharedPreferences pref = getSharedPreferences("data",MODE_PRIVATE);
+                           String s = pref.getString("sessionid","");
+
+                           //Todo Service
+                           UserInfoService userInfoService = new UserInfoService();
+                           //Todo Service.Method
+                           ContactHttpResponseObject contactHttpResponseObject = userInfoService.contact(s);
+
+                           DepartmentInfoDao departmentInfoDao = EntityManager.getInstance().getDepartmentInfo();
+                           ContactInfoDao contactInfoDao = EntityManager.getInstance().getContactInfo();
+                           AnnouncementInfoDao announcementInfoDao = EntityManager.getInstance().getAnnouncementInfoDao();
+                           departmentInfoDao.deleteAll();
+                           contactInfoDao.deleteAll();
+                           announcementInfoDao.deleteAll();
+                           //ToCheck JsonBean.getStatus()
+                           if(contactHttpResponseObject.getStatus()==0){
+                               ArrayList<ContactJsonBean> contactJsonBean = contactHttpResponseObject.getData();
+                               for(int i =0;i<contactJsonBean.size();i++){
+                                   departmentInfoDao.insert(contactJsonBean.get(i).getDepartment());
+                                   for(int j=0;j<contactJsonBean.get(i).getEmpContactList().size();j++){
+                                       contactInfoDao.insert(contactJsonBean.get(i).getEmpContactList().get(j).getEmployee());
+                                   }
+                               }
+                           }else{
+                               Looper.prepare();//解决子线程弹toast问题
+                               Toast.makeText(getApplicationContext(), contactHttpResponseObject.getMsg(), Toast.LENGTH_SHORT).show();
+                               Looper.loop();// 进入loop中的循环，查看消息队列
+                           }
+                           AnnouncementService announcementService = new AnnouncementService();
+                           AnnouncementJsonBean announcementJsonBean = announcementService.get_published_annoucements(s);
+                           if(announcementJsonBean.getStatus()==0){
+                               List<AnnouncementInfo> announcementInfos = announcementJsonBean.getData();
+                               Log.e(TAG,announcementInfos.toString());
+                               for (int i=0;i<announcementInfos.size();i++){
+                                   announcementInfoDao.insert(announcementInfos.get(i));
+                               }
+                               Intent intent = new Intent(ApprovedInfoActivity.this, TabLayoutBottomActivity.class);
+                               intent.putExtra("index",1);
+                               startActivity(intent);
+                               finish();
+                           }else{
+                               Looper.prepare();//解决子线程弹toast问题
+                               Toast.makeText(getApplicationContext(), "网络错误，获取公告信息失败", Toast.LENGTH_SHORT).show();
+                               Looper.loop();// 进入loop中的循环，查看消息队列
+                           }
+
+                       }
+                   }).start();
     }
 
     private void backMyOvertimeApplication() {
