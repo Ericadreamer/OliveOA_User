@@ -34,6 +34,7 @@ import com.oliveoa.pojo.MeetingApplicationAndStatus;
 import com.oliveoa.util.DateFormat;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
+import com.oliveoa.view.approval.MainApprovalActivity;
 import com.oliveoa.view.approval.MyApprovalActivity;
 import com.oliveoa.view.meetingmanagement.MyMeetingActivity;
 import com.oliveoa.view.myapplication.AddApplicationActivity;
@@ -219,7 +220,7 @@ public class AdhibitionActivity extends Fragment {
 
     //审批
     private void approvalinfo() {
-        final Intent it = new Intent(getActivity(), MyApprovalActivity.class);
+        final Intent it = new Intent(getActivity(), MainApprovalActivity.class);
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             @Override
