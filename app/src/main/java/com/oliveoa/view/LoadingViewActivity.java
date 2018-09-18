@@ -32,6 +32,7 @@ import com.oliveoa.greendao.OvertimeApplicationDao;
 import com.oliveoa.jsonbean.AnnouncementJsonBean;
 import com.oliveoa.jsonbean.BusinessTripApplicationInfoJsonBean;
 import com.oliveoa.jsonbean.ContactJsonBean;
+import com.oliveoa.jsonbean.DutyInfoJsonBean;
 import com.oliveoa.jsonbean.EmpContactListJsonBean;
 import com.oliveoa.jsonbean.LeaveApplicationInfoJsonBean;
 import com.oliveoa.jsonbean.OvertimeApplicationJsonBean;
@@ -144,8 +145,17 @@ public class LoadingViewActivity extends AppCompatActivity {
                     ArrayList<ContactJsonBean> contactJsonBean = contactHttpResponseObject.getData();
                     for(int i =0;i<contactJsonBean.size();i++){
                         departmentInfoDao.insert(contactJsonBean.get(i).getDepartment());
+                        DutyInfoJsonBean dutyInfoJsonBean = userInfoService.getPosition(contactJsonBean.get(i).getDepartment().getDcid());
+                        if(dutyInfoJsonBean.getStatus()==0){
+                            for(int j=0;j<dutyInfoJsonBean.getData().size();j++){
+                                dutyInfoDao.insert(dutyInfoJsonBean.getData().get(j));
+                            }
+                        }else{
+                            Looper.prepare();//解决子线程弹toast问题
+                            Toast.makeText(getApplicationContext(),dutyInfoJsonBean.getMsg(), Toast.LENGTH_SHORT).show();
+                            Looper.loop();// 进入loop中的循环，查看消息队列
+                        }
                         for(int j=0;j<contactJsonBean.get(i).getEmpContactList().size();j++){
-
                             contactInfoDao.insert(contactJsonBean.get(i).getEmpContactList().get(j).getEmployee());
                         }
                     }

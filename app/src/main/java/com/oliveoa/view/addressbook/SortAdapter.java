@@ -1,13 +1,21 @@
 package com.oliveoa.view.addressbook;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.oliveoa.greendao.ContactInfoDao;
+import com.oliveoa.pojo.ContactInfo;
+import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
+import com.oliveoa.view.TabLayoutBottomActivity;
+import com.oliveoa.view.mine.PersonalDetailsActivity;
 
 import java.util.List;
 
@@ -49,6 +57,7 @@ public class SortAdapter extends BaseAdapter{
             view = LayoutInflater.from(mContext).inflate(R.layout.item, null);
             viewHolder.name = (TextView) view.findViewById(R.id.name);
             viewHolder.catalog = (TextView) view.findViewById(R.id.catalog);
+            viewHolder.linearLayout = (LinearLayout)view.findViewById(R.id.contact_content);
             view.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) view.getTag();
@@ -67,13 +76,26 @@ public class SortAdapter extends BaseAdapter{
 
         viewHolder.name.setText(this.list.get(position).getName());
 
+        viewHolder.linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("name=",list.get(position).getName()+"-----"+list.get(position).getEid());
+                ContactInfoDao contactInfoDao = EntityManager.getInstance().getContactInfo();
+                ContactInfo ci = contactInfoDao.queryBuilder().where(ContactInfoDao.Properties.Eid.eq(list.get(position).getEid())).unique();
+                if(ci!=null){
+                    Intent intent = new Intent(mContext,PersonalDetailsActivity.class);
+                    intent.putExtra("ci",ci);
+                    mContext.startActivity(intent);
+                }
+            }
+        });
         return view;
-
     }
 
     final static class ViewHolder {
         TextView catalog;
         TextView name;
+        LinearLayout linearLayout;
     }
 
     /**

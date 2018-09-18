@@ -1,33 +1,66 @@
 package com.oliveoa.view.addressbook;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.oliveoa.Adapter.MyBaseExpandableListAdapter;
+import com.oliveoa.greendao.ApproveNumberDao;
+import com.oliveoa.greendao.ContactInfoDao;
+import com.oliveoa.greendao.DepartmentInfoDao;
+import com.oliveoa.pojo.ApproveNumber;
+import com.oliveoa.pojo.ContactInfo;
+import com.oliveoa.pojo.DepartmentInfo;
+import com.oliveoa.pojo.Group;
+import com.oliveoa.pojo.Item;
+import com.oliveoa.pojo.JobTransferApplication;
+import com.oliveoa.pojo.MeetingApplication;
+import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
 import com.oliveoa.view.TabLayoutBottomActivity;
+import com.oliveoa.view.mine.PersonalDetailsActivity;
+import com.oliveoa.view.myapplication.SelectPersonApprovingActivity;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class DepartmentEmployeeActivity extends AppCompatActivity {
-    private ImageView back;
+    private transient ArrayList<Group> gData = null;
+    private transient ArrayList<ArrayList<Item>> iData = null;
+    private transient ArrayList<Item> lData = null;
 
+    private Context mContext;
+    private ExpandableListView exlist_staff;
+    private MyBaseExpandableListAdapter myAdapter = null;
+
+    private ImageView back;
+    private String TAG = this.getClass().getSimpleName();
+    private List<ContactInfo> employeeInfos;
+    private List<DepartmentInfo> departmentInfos;
+
+    private ContactInfoDao employeeInfoDao;
+    private DepartmentInfoDao departmentInfoDao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_department_employee);
 
-        initView();
         initData();
     }
 
     public void initView() {
+        mContext = DepartmentEmployeeActivity.this;
         back = (ImageView) findViewById(R.id.iback);
+        exlist_staff = (ExpandableListView) findViewById(R.id.exlist_staff);
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,11 +70,69 @@ public class DepartmentEmployeeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        exlist_staff.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                Log.i("" + DepartmentEmployeeActivity.this, "group " + groupPosition);
+                return false;
+            }
+        });
 
-    }
+        if (employeeInfoDao.queryBuilder().count() > 0) {
+            //数据准备
+            gData = new ArrayList<Group>();
+            iData = new ArrayList<ArrayList<Item>>();
+            if (departmentInfos != null) {
+                for (int i = 0; i < departmentInfos.size(); i++) {
+                    gData.add(new Group(departmentInfos.get(i).getName()));
+
+                    lData = new ArrayList<Item>();
+
+                    employeeInfos = employeeInfoDao.queryBuilder().where(ContactInfoDao.Properties.Dcid.eq(departmentInfos.get(i).getDcid())).list();
+                    if (employeeInfos != null) {
+                        for (int j = 0; j < employeeInfos.size(); j++)
+                            lData.add(new Item(R.drawable.yonghu, employeeInfos.get(j).getName() + "", employeeInfos.get(j).getEid()));
+                    }
+
+                    iData.add(lData);
+                }
+
+                myAdapter = new MyBaseExpandableListAdapter(gData, iData, mContext);
+                exlist_staff.setAdapter(myAdapter);
+            }
+
+            exlist_staff.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+                @Override
+                public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                    Log.i(TAG, "被点击的员工Eid：" + iData.get(groupPosition).get(childPosition).getiEid());
+                    ContactInfoDao contactInfoDao = EntityManager.getInstance().getContactInfo();
+                    ContactInfo ci = contactInfoDao.queryBuilder().where(ContactInfoDao.Properties.Eid.eq(iData.get(groupPosition).get(childPosition).getiEid())).unique();
+                    if(ci!=null){
+                        Intent intent = new Intent(mContext,PersonalDetailsActivity.class);
+                        intent.putExtra("ci",ci);
+                        mContext.startActivity(intent);
+                    }
+                    return false;
+                }
+            });
+            exlist_staff.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+                @Override
+                public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                    //Log.i("" + EmployeelistActivity.this, "group " + groupPosition);
+                    Log.i(TAG, "GroupSize=" + gData.get(groupPosition).getgName() + "_________ChildSize=" + iData.get(groupPosition).size());
+                    if (iData.get(groupPosition).size() == 0)
+                        Toast.makeText(getApplicationContext(), "提示：没有员工在" + gData.get(groupPosition).getgName() + "门哦！", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+            });
+        }
+        }
 
     public void initData() {
-
+        employeeInfoDao = EntityManager.getInstance().getContactInfo();
+        departmentInfoDao =EntityManager.getInstance().getDepartmentInfo();
+        departmentInfos = departmentInfoDao.queryBuilder().list();
+        initView();
     }
 
     @Override
