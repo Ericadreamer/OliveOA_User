@@ -328,9 +328,10 @@
             android:name=".myapplication.DutySelectActivity"
             android:exported="true"
             android:theme="@style/HomeTheme" />
-        <activity android:name=".approval.MainApprovalActivity"
+        <activity
+            android:name=".approval.MainApprovalActivity"
             android:exported="true"
-            android:theme="@style/HomeTheme"></activity>
+            android:theme="@style/HomeTheme" />
     </application>
 
 </manifest>

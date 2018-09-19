@@ -58,5 +58,9 @@
     <string name="willstart">未开始</string>
     <string name="finished">已结束</string>
 
+    <!--公告-->
+    <string name="notice_list">当前公告</string>
+    <string name="my_sumission">我提交的</string>
+
 
 </resources>
