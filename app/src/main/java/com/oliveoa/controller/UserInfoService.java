@@ -105,13 +105,14 @@ public class UserInfoService {
     }
 
     //修改用户密码
-    public StatusAndMsgJsonBean updatepassword(String s, String pwd) {
+    public StatusAndMsgJsonBean updatepassword(String s, String pwd,String newpwd) {
 
         try {
          //   Log.i("info_Login","知道了session："+s);
          //   Log.d("updatepwd",pwd);
             FormBody body = new FormBody.Builder()
-                    .add("newPassword",pwd)
+                    .add("password",pwd)
+                    .add("newPassword",newpwd)
                     .build();
             //Log.d("updatepwdbody",body.toString());
 

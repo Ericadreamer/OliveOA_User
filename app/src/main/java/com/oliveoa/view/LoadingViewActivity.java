@@ -1,5 +1,6 @@
 package com.oliveoa.view;
 
+import android.content.EntityIterator;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Looper;
@@ -15,20 +16,15 @@ import com.oliveoa.greendao.AnnouncementApprovedOpinionListDao;
 import com.oliveoa.greendao.AnnouncementInfoDao;
 import com.oliveoa.greendao.ApplicationDao;
 import com.oliveoa.greendao.ApproveNumberDao;
-import com.oliveoa.greendao.BusinessTripApplicationApprovedOpinionListDao;
-import com.oliveoa.greendao.BusinessTripApplicationDao;
 import com.oliveoa.greendao.ContactInfoDao;
 import com.oliveoa.greendao.DaoManager;
 import com.oliveoa.greendao.DepartmentAndDutyDao;
 import com.oliveoa.greendao.DepartmentInfoDao;
 import com.oliveoa.greendao.DutyInfoDao;
-import com.oliveoa.greendao.LeaveApplicationApprovedOpinionListDao;
-import com.oliveoa.greendao.LeaveApplicationDao;
 import com.oliveoa.greendao.MeetingApplicationAndStatusDao;
 import com.oliveoa.greendao.MeetingApplicationDao;
 import com.oliveoa.greendao.NoteInfoDao;
-import com.oliveoa.greendao.OvertimeApplicationApprovedOpinionListDao;
-import com.oliveoa.greendao.OvertimeApplicationDao;
+import com.oliveoa.greendao.UserInfoDao;
 import com.oliveoa.jsonbean.AnnouncementJsonBean;
 import com.oliveoa.jsonbean.BusinessTripApplicationInfoJsonBean;
 import com.oliveoa.jsonbean.ContactJsonBean;
@@ -43,6 +39,7 @@ import com.oliveoa.pojo.ContactInfo;
 import com.oliveoa.pojo.LeaveApplication;
 import com.oliveoa.pojo.Message;
 import com.oliveoa.pojo.OvertimeApplication;
+import com.oliveoa.pojo.UserInfo;
 import com.oliveoa.util.EntityManager;
 
 import java.util.ArrayList;
@@ -77,7 +74,7 @@ public class LoadingViewActivity extends AppCompatActivity {
     private DepartmentAndDutyDao departmentAndDutyDao;
     private MeetingApplicationAndStatusDao meetingApplicationAndStatusDao;
     private NoteInfoDao noteInfoDao;
-
+    private UserInfoDao userInfoDao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,7 +103,7 @@ public class LoadingViewActivity extends AppCompatActivity {
         departmentAndDutyDao = EntityManager.getInstance().getDepartmentAndDutyDao();
         meetingApplicationAndStatusDao = EntityManager.getInstance().getMeetingApplicationAndStatusDao();
        // noteInfoDao = EntityManager.getInstance().getNoteInfoDao();
-
+        userInfoDao = EntityManager.getInstance().getUserInfoDao();
 
         announcementInfoDao.deleteAll();//公告
         contactInfoDao.deleteAll();
@@ -117,6 +114,7 @@ public class LoadingViewActivity extends AppCompatActivity {
         meetingApplicationDao.deleteAll();
         departmentAndDutyDao.deleteAll();
         meetingApplicationAndStatusDao.deleteAll();
+        userInfoDao.deleteAll();
 
 
         new Thread(new Runnable() {
@@ -139,6 +137,26 @@ public class LoadingViewActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "网络错误，获取个人信息失败", Toast.LENGTH_SHORT).show();
                     Looper.loop();// 进入loop中的循环，查看消息队列
                 }*/
+                  UserLoginJsonBean userLoginJsonBean = userInfoService.userinfo(s);
+                  if(userLoginJsonBean.getStatus()==0){
+                      UserInfo userInfo = new UserInfo();
+                      userInfo.setEid(userLoginJsonBean.getData().getEid());
+                      userInfo.setId(userLoginJsonBean.getData().getId());
+                      userInfo.setDcid(userLoginJsonBean.getData().getDcid());
+                      userInfo.setPcid(userLoginJsonBean.getData().getPcid());
+                      userInfo.setOrderby(userLoginJsonBean.getData().getOrderby());
+                      userInfo.setEmail(userLoginJsonBean.getData().getEmail());
+                      userInfo.setName(userLoginJsonBean.getData().getName());
+                      userInfo.setSex(userLoginJsonBean.getData().getSex());
+                      userInfo.setBirth(userLoginJsonBean.getData().getBirth());
+                      userInfo.setAddress(userLoginJsonBean.getData().getAddress());
+                      userInfo.setTel(userLoginJsonBean.getData().getTel());
+                      userInfoDao.insert(userInfo);
+                  }else{
+                      Looper.prepare();//解决子线程弹toast问题
+                      Toast.makeText(getApplicationContext(),userLoginJsonBean.getMsg(), Toast.LENGTH_SHORT).show();
+                      Looper.loop();// 进入loop中的循环，查看消息队列
+                  }
 
                 ContactHttpResponseObject contactHttpResponseObject = userInfoService.contact(s);
                 if(contactHttpResponseObject.getStatus()==0){
@@ -179,7 +197,7 @@ public class LoadingViewActivity extends AppCompatActivity {
 //                    Looper.loop();// 进入loop中的循环，查看消息队列
 //                }
 
-                AnnouncementService announcementService = new AnnouncementService();
+               /* AnnouncementService announcementService = new AnnouncementService();
                 AnnouncementJsonBean announcementJsonBean = announcementService.get_published_annoucements(s);
                 if(announcementJsonBean.getStatus()==0){
                     List<AnnouncementInfo> announcementInfos = announcementJsonBean.getData();
@@ -191,7 +209,8 @@ public class LoadingViewActivity extends AppCompatActivity {
                     Looper.prepare();//解决子线程弹toast问题
                     Toast.makeText(getApplicationContext(), "网络错误，获取公告信息失败", Toast.LENGTH_SHORT).show();
                     Looper.loop();// 进入loop中的循环，查看消息队列
-                }
+                }*/
+
 
 
             }

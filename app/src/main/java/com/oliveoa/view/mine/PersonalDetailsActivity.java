@@ -34,12 +34,14 @@ public class PersonalDetailsActivity extends AppCompatActivity {
     private TextView tname,tid,tsex,ttel,tduty,tbirth,tmail,taddress;
     private ContactInfo contactInfo;
     private ImageView imgUser;
+    private int index;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_details);
         contactInfo = getIntent().getParcelableExtra("ci");
+        index = getIntent().getIntExtra("index",index);//通讯录0，登录信息1
         Log.e("ContactInfo=",contactInfo.toString());
         //隐藏状态栏和actionbar
         if (Build.VERSION.SDK_INT >= 21) {
@@ -73,7 +75,11 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(PersonalDetailsActivity.this, TabLayoutBottomActivity.class);
-                intent.putExtra("index",2);
+                if(index==0) {
+                    intent.putExtra("index", 2);
+                }else{
+                    intent.putExtra("index",3);
+                }
                 startActivity(intent);
                 finish();
             }
@@ -110,6 +116,11 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         tsex.setText(contactInfo.getSex());
         ttel.setText(contactInfo.getTel());
         tname.setText(contactInfo.getName());
+        if(contactInfo.getSex().equals("男")){
+            imgUser.setImageResource(R.drawable.boy);
+        }else{
+            imgUser.setImageResource(R.drawable.user_pic);
+        }
 
         DepartmentInfoDao departmentInfoDao = EntityManager.getInstance().getDepartmentInfo();
         DepartmentInfo departmentInfo = departmentInfoDao.queryBuilder().where(DepartmentInfoDao.Properties.Dcid.eq(contactInfo.getDcid())).unique();

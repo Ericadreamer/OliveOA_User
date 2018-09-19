@@ -30,12 +30,15 @@ import com.oliveoa.greendao.OvertimeApplicationApprovedOpinionListDao;
 import com.oliveoa.greendao.OvertimeApplicationDao;
 import com.oliveoa.greendao.RecruitmentApplicationApprovedOpinionDao;
 import com.oliveoa.greendao.RecruitmentApplicationItemDao;
+import com.oliveoa.greendao.UserInfoDao;
+import com.oliveoa.greendao.UserLoginInfoDao;
 import com.oliveoa.greendao.WorkDetailDao;
 import com.oliveoa.pojo.RecruitmentApplicationItem;
 
 public class EntityManager {
     private static EntityManager entityManager;
     public ContactInfoDao userDao;
+    public ContactInfoDao contactInfoDao;
     public DepartmentInfoDao departmentInfoDao;
     public DutyInfoDao dutyInfoDao;
     public MessageDao messageDao;
@@ -65,6 +68,7 @@ public class EntityManager {
     public DepartmentAndDutyDao departmentAndDutyDao;
     public MeetingApplicationAndStatusDao meetingApplicationAndStatusDao;
     public NoteInfoDao noteInfoDao;
+    public UserInfoDao userInfoDao;
 
     /**
      * 创建User表实例
@@ -74,6 +78,11 @@ public class EntityManager {
     public ContactInfoDao getContactInfo(){
         userDao = DaoManager.getInstance().getSession().getContactInfoDao();
         return userDao;
+    }
+
+    public UserInfoDao getUserInfoDao() {
+        userInfoDao = DaoManager.getInstance().getSession().getUserInfoDao();
+        return userInfoDao;
     }
 
     /**
@@ -311,6 +320,8 @@ public class EntityManager {
         noteInfoDao = DaoManager.getInstance().getSession().getNoteInfoDao();
         return noteInfoDao;
     }
+
+
 
     /**
      * 创建单例

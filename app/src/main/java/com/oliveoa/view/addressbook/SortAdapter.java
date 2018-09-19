@@ -85,6 +85,7 @@ public class SortAdapter extends BaseAdapter{
                 if(ci!=null){
                     Intent intent = new Intent(mContext,PersonalDetailsActivity.class);
                     intent.putExtra("ci",ci);
+                    intent.putExtra("index",0);
                     mContext.startActivity(intent);
                 }
             }

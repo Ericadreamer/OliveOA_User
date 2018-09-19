@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
 
+import com.oliveoa.controller.UserInfoService;
+import com.oliveoa.jsonbean.StatusAndMsgJsonBean;
 import com.oliveoa.view.LoginActivity;
 import com.oliveoa.view.R;
 import com.oliveoa.view.TabLayoutBottomActivity;
@@ -27,14 +29,12 @@ public class PasswordEditActivity extends AppCompatActivity implements OnClickLi
     private Button btn;
     private Boolean showPassword = true;
     private  String comfirmpwd;
-    private String userpwd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password_edit);
 
-        userpwd = getIntent().getStringExtra("UserPassword");
         initView();
         initData();
         setupEvents();
@@ -111,15 +111,17 @@ public class PasswordEditActivity extends AppCompatActivity implements OnClickLi
     private void setOldPasswordVisibility() {
         if (showPassword) {  //显示密码
             ivold.setImageDrawable(getResources().getDrawable(R.drawable.ic_see_pass));
-            eold.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-            eold.setSelection(eold.getText().toString().length());
-            showPassword = !showPassword;
+          /*  eold.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            eold.setSelection(eold.getText().toString().length());*/
+            eold.setInputType(android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            showPassword = false;
         }
         else {  //隐藏密码
             ivold.setImageDrawable(getResources().getDrawable(R.drawable.ic_nosee_pass));
-            eold.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-            eold.setSelection(eold.getText().toString().length());
-            showPassword = !showPassword;
+           /* eold.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            eold.setSelection(eold.getText().toString().length());*/
+            eold.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            showPassword = true;
         }
     }
 
@@ -127,14 +129,12 @@ public class PasswordEditActivity extends AppCompatActivity implements OnClickLi
     private void setNewPasswordVisibility() {
         if (showPassword) {  //显示密码
             ivnew.setImageDrawable(getResources().getDrawable(R.drawable.ic_see_pass));
-            enew.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-            enew.setSelection(enew.getText().toString().length());
+            enew.setInputType(android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
             showPassword = !showPassword;
         }
         else {  //隐藏密码
             ivnew.setImageDrawable(getResources().getDrawable(R.drawable.ic_nosee_pass));
-            enew.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-            enew.setSelection(enew.getText().toString().length());
+            enew.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);
             showPassword = !showPassword;
         }
 
@@ -144,21 +144,19 @@ public class PasswordEditActivity extends AppCompatActivity implements OnClickLi
     private void setPasswordVisibility() {
         if (showPassword) {  //显示密码
             ivpwd.setImageDrawable(getResources().getDrawable(R.drawable.ic_see_pass));
-            epwd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-            epwd.setSelection(epwd.getText().toString().length());
+            epwd.setInputType(android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
             showPassword = !showPassword;
         }
         else {  //隐藏密码
             ivpwd.setImageDrawable(getResources().getDrawable(R.drawable.ic_nosee_pass));
-            epwd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-            epwd.setSelection(epwd.getText().toString().length());
+            epwd.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);
             showPassword = !showPassword;
         }
 
     }
 
     public void save() {
-        String originpwd = eold.getText().toString().trim();
+        final String originpwd = eold.getText().toString().trim();
         String newpwd = enew.getText().toString().trim();
         comfirmpwd = epwd.getText().toString().trim();
 
@@ -166,26 +164,24 @@ public class PasswordEditActivity extends AppCompatActivity implements OnClickLi
             Toast.makeText(getApplicationContext(), "信息不得为空！请检查输入信息", Toast.LENGTH_SHORT).show();
         } else if(!newpwd.equals(comfirmpwd)){
             Toast.makeText(getApplicationContext(), "新密码与确认密码输入不一致！请重新输入", Toast.LENGTH_SHORT).show();
-        } else if(!userpwd.equals(originpwd)) {
-            Toast.makeText(getApplicationContext(), "原密码输入错误！请重新输入", Toast.LENGTH_SHORT).show();
-        }else if(!isPassword(comfirmpwd)){
+        } /*else if(!isPassword(comfirmpwd)){
             Toast.makeText(getApplicationContext(), "密码格式输入错误！请按错提示输入", Toast.LENGTH_SHORT).show();
-        } else {
+        } */else {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    /*SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
+                    SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
                     String s = pref.getString("sessionid", "");
 
-                    CompanyInfoService companyInfoService = new CompanyInfoService();
-                    UpdateCompanyInfoJsonBean updateCompanyInfoJsonBean = companyInfoService.updatepassword(s,comfirmpwd);
-                    Log.d("update" ,updateCompanyInfoJsonBean.getMsg()+"");
+                    UserInfoService userInfoService = new UserInfoService();
+                    StatusAndMsgJsonBean statusAndMsgJsonBean = userInfoService.updatepassword(s,originpwd,comfirmpwd);
+                    Log.d("update" ,statusAndMsgJsonBean.getMsg()+"");
 
-                    if (updateCompanyInfoJsonBean.getStatus() == 0) {
+                    if (statusAndMsgJsonBean.getStatus() == 0) {
                         pref.edit().remove("sessionid").commit();//移除指定数值
                         Looper.prepare();
                         Toast.makeText(getApplicationContext(), "修改成功！请重新登录", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(PasswordEditActivity.this, TabLayoutBottomActivity.class);
+                        Intent intent = new Intent(PasswordEditActivity.this, LoginActivity.class);
                         intent.putExtra("index",3);
                         startActivity(intent);
                         finish();
@@ -193,9 +189,9 @@ public class PasswordEditActivity extends AppCompatActivity implements OnClickLi
 
                     } else {
                         Looper.prepare();
-                        Toast.makeText(getApplicationContext(), updateCompanyInfoJsonBean.getMsg(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), statusAndMsgJsonBean.getMsg(), Toast.LENGTH_SHORT).show();
                         Looper.loop();
-                    }*/
+                    }
 
                 }
             }).start();
