@@ -17,6 +17,7 @@ import com.oliveoa.greendao.ContactInfoDao;
 import com.oliveoa.greendao.DepartmentInfoDao;
 import com.oliveoa.greendao.JobTransferApplicationDao;
 import com.oliveoa.greendao.MeetingApplicationDao;
+import com.oliveoa.greendao.WorkDetailDao;
 import com.oliveoa.pojo.ApproveNumber;
 import com.oliveoa.pojo.ContactInfo;
 import com.oliveoa.pojo.DepartmentInfo;
@@ -24,9 +25,12 @@ import com.oliveoa.pojo.Group;
 import com.oliveoa.pojo.Item;
 import com.oliveoa.pojo.JobTransferApplication;
 import com.oliveoa.pojo.MeetingApplication;
+import com.oliveoa.pojo.WorkDetail;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
 import com.oliveoa.view.notice.AddNoticeActivity;
+import com.oliveoa.view.workschedule.ProtocolWorkActivity;
+import com.oliveoa.view.workschedule.WorkAllocationActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,12 +64,13 @@ public class SelectPersonApprovingActivity extends AppCompatActivity {
     private String mid;
     private MeetingApplicationDao meetingApplicationDao;
     private JobTransferApplicationDao jobTransferApplicationDao;
+    private WorkDetailDao workDetailDao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_person_approving);
 
-        index = getIntent().getIntExtra("index",index);//1-9添加审批人：加班、请假、出差、会议、离职、转正、调岗、招聘、物品；10选择调岗员工;11公告添加审批人
+        index = getIntent().getIntExtra("index",index);//1-9添加审批人：加班、请假、出差、会议、离职、转正、调岗、招聘、物品；10选择调岗员工;11公告添加审批人;12工作拟定批阅人;13工作分配对象
         Log.e("IDDEX=", String.valueOf(index));
         initData();
     }
@@ -73,6 +78,7 @@ public class SelectPersonApprovingActivity extends AppCompatActivity {
         employeeInfoDao = EntityManager.getInstance().getContactInfo();
         departmentInfoDao =EntityManager.getInstance().getDepartmentInfo();
         jobTransferApplicationDao = EntityManager.getInstance().getJobTransferApplicationDao();
+        workDetailDao = EntityManager.getInstance().getWorkDetailDao();
         departmentInfos = departmentInfoDao.queryBuilder().list();
         //eps = approveNumberDao.queryBuilder().list();
         Log.e(TAG,""+employeeInfoDao.queryBuilder().count());
@@ -153,6 +159,21 @@ public class SelectPersonApprovingActivity extends AppCompatActivity {
                             jobTransferApplicationDao.insert(jobTransferApplication);
                             back();
                         }
+                    }else if(index==12){
+                        WorkDetail workDetail = new WorkDetail();
+                        workDetail = workDetailDao.queryBuilder().unique();
+                        if(workDetail!=null){
+                            workDetail.setAeid(mid);
+                            workDetailDao.deleteAll();
+                            workDetailDao.insert(workDetail);
+                            back();
+                        }
+                    }else if(index==13){
+                       approveNumberDao.deleteAll();
+                       ApproveNumber ap = new ApproveNumber();
+                       ap.setId(mid);
+                       approveNumberDao.insert(ap);
+                       back();
                     }else {
                         ApproveNumber ap = approveNumberDao.queryBuilder().where(ApproveNumberDao.Properties.Id.eq(mid)).unique();
                         if (ap == null) {
@@ -243,6 +264,18 @@ public class SelectPersonApprovingActivity extends AppCompatActivity {
         }
         if(index==11) {
             Intent intent = new Intent(SelectPersonApprovingActivity.this, AddNoticeActivity.class);
+            intent.putExtra("index", 1);
+            startActivity(intent);
+            finish();
+        }
+        if(index==12) {
+            Intent intent = new Intent(SelectPersonApprovingActivity.this, ProtocolWorkActivity.class);
+            intent.putExtra("index", 1);
+            startActivity(intent);
+            finish();
+        }
+        if(index==13) {
+            Intent intent = new Intent(SelectPersonApprovingActivity.this, WorkAllocationActivity.class);
             intent.putExtra("index", 1);
             startActivity(intent);
             finish();

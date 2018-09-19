@@ -20,12 +20,12 @@ import okhttp3.Response;
 public class WorkDetailService {
 
     //发布工作给下属（members,content,begintime,endtime）
-    public StatusAndMsgJsonBean managework(ArrayList<String> members, String s, IssueWork issueWork){
+    public StatusAndMsgJsonBean managework(String members, String s, IssueWork issueWork){
         try {
             DateFormat dateFormat =new DateFormat();
             OkHttpClient client = new OkHttpClient();
             FormBody body = new FormBody.Builder()
-                    .add("members", members.toString())
+                    .add("members", members)
                     .add("content",issueWork.getContent())
                     .add("begintime",dateFormat.LongtoDate(issueWork.getBegintime()))
                     .add("endtime",dateFormat.LongtoDate(issueWork.getEndtime()))

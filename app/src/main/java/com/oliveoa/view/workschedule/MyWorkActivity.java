@@ -12,6 +12,11 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.oliveoa.greendao.IssueWorkDao;
+import com.oliveoa.greendao.WorkDetailDao;
+import com.oliveoa.pojo.IssueWork;
+import com.oliveoa.pojo.WorkDetail;
+import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
 import com.oliveoa.view.TabLayoutBottomActivity;
 import com.oliveoa.view.myapplication.LeaveInfoActivity;
@@ -25,6 +30,10 @@ public class MyWorkActivity extends AppCompatActivity {
     private ImageView back;
     private RadioButton protocolWork, leadershipApproval, workAllocation;  //工作拟定，领导审批，工作审批
     private LinearLayout addMyWorkItem;
+    private WorkDetailDao workDetailDao;
+    private WorkDetail workDetail;
+    private IssueWork issueWork;
+    private IssueWorkDao issueWorkDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,15 +66,19 @@ public class MyWorkActivity extends AppCompatActivity {
 
         protocolWork.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
             @Override
-            public void onClick(View view) {
+            public void onClick(View view) { //工作拟定
+                workDetailDao = EntityManager.getInstance().getWorkDetailDao();
+                workDetail  = new WorkDetail();
+                workDetailDao.insert(workDetail);
                 Intent intent = new Intent(MyWorkActivity.this, ProtocolWorkActivity.class);
+                intent.putExtra("index",0);
                 startActivity(intent);
                 finish();
             }
         });
         leadershipApproval.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
             @Override
-            public void onClick(View view) {
+            public void onClick(View view) {//领导批阅
                 Intent intent = new Intent(MyWorkActivity.this, LeadershipApprovalActivity.class);
                 startActivity(intent);
                 finish();
@@ -73,8 +86,12 @@ public class MyWorkActivity extends AppCompatActivity {
         });
         workAllocation.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
             @Override
-            public void onClick(View view) {
+            public void onClick(View view) {//
+                issueWorkDao = EntityManager.getInstance().getIssueWorkDao();
+                issueWork  = new IssueWork();
+                issueWorkDao.insert(issueWork);
                 Intent intent = new Intent(MyWorkActivity.this, WorkAllocationActivity.class);
+                intent.putExtra("index",0);
                 startActivity(intent);
                 finish();
             }

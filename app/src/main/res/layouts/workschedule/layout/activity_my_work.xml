@@ -109,7 +109,7 @@
                             android:drawablePadding="@dimen/dp_6"
                             android:drawableTop="@drawable/allocation_pic"
                             android:gravity="center"
-                            android:text="工作审批" />
+                            android:text="工作分配" />
 
 
                     </LinearLayout>
