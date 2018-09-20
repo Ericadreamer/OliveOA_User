@@ -7,7 +7,7 @@
     android:background="#f0f0f0"
     android:layout_gravity="center_vertical"
     android:gravity="center"
-    tools:context="com.oliveoa.view.myapplication.OvertimeActivity">
+    tools:context="com.oliveoa.view.workschedule.ApprovalWorkActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
