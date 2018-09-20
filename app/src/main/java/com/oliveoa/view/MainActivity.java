@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         fragment = new AdhibitionActivity();    listFragment.add(fragment);
         fragment = new NoticeActivity();    listFragment.add(fragment);
         fragment = new AddressBookActivity();  listFragment.add(fragment);
-        fragment = new MineActivity();   listFragment.add(fragment);
+        fragment = new MyProtocolActivity();   listFragment.add(fragment);
 
         //默认激活第一个按钮 和 第一个fragment
         navButton0.setChecked(true);

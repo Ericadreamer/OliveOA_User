@@ -4,9 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Looper;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,19 +15,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.oliveoa.controller.LoginService;
-import com.oliveoa.controller.UserInfoService;
 import com.oliveoa.greendao.ContactInfoDao;
 import com.oliveoa.greendao.UserInfoDao;
 import com.oliveoa.jsonbean.LogoutJsonBean;
-import com.oliveoa.jsonbean.UserLoginJsonBean;
 import com.oliveoa.pojo.ContactInfo;
 import com.oliveoa.pojo.UserInfo;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.LoginActivity;
-import com.oliveoa.view.MainActivity;
 import com.oliveoa.view.R;
-import com.oliveoa.view.note.EditNoteActivity;
-import com.oliveoa.view.note.MyNoteActivity;
 
 import static android.content.Context.MODE_PRIVATE;
 

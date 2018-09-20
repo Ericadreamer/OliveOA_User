@@ -62,5 +62,9 @@
     <string name="notice_list">当前公告</string>
     <string name="my_sumission">我提交的</string>
 
+    <!--工作日程-->
+    <string name="to_me">分配与我</string>
+    <string name="mine_">我的拟定</string>
+
 
 </resources>
