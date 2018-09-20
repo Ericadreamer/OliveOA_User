@@ -332,12 +332,17 @@
             android:name=".approval.MainApprovalActivity"
             android:exported="true"
             android:theme="@style/HomeTheme" />
-        <activity android:name=".workschedule.WorkInfoActivity"
+        <activity
+            android:name=".workschedule.WorkInfoActivity"
             android:exported="true"
             android:theme="@style/HomeTheme" />
-        <activity android:name=".workschedule.ToMyWorkInfoActivity"
+        <activity
+            android:name=".workschedule.ToMyWorkInfoActivity"
             android:exported="true"
-            android:theme="@style/HomeTheme" ></activity>
+            android:theme="@style/HomeTheme" />
+        <activity android:name=".mine.PersonalDetailsEditActivity"
+            android:exported="true"
+            android:theme="@style/HomeTheme"></activity>
     </application>
 
 </manifest>

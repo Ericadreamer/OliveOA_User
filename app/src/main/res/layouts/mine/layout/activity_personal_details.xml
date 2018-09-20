@@ -125,15 +125,37 @@
                         
                     </LinearLayout>
                 </LinearLayout>
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="基本信息"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="16sp"
-                    android:layout_marginTop="@dimen/dp_30"
-                    android:layout_marginLeft="@dimen/dp_10"
-                    android:layout_marginBottom="@dimen/dp_10"/>
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="基本信息"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16sp"
+                        android:layout_marginTop="@dimen/dp_30"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_marginBottom="@dimen/dp_10"/>
+                    <TextView
+                        android:id="@+id/edit"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="编  辑"
+                        android:textColor="@color/orange_main"
+                        android:textSize="16sp"
+                        android:layout_marginTop="@dimen/dp_30"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_marginBottom="@dimen/dp_10"
+                        android:layout_centerVertical="true"
+                        android:gravity="end"
+                        android:layout_marginRight="@dimen/dp_20"/>
+
+                </LinearLayout>
+
                 //联系电话
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -168,7 +190,8 @@
                         android:layout_height="@dimen/dp_32"
                         android:layout_gravity="center"
                         android:layout_marginLeft="@dimen/dp_25"
-                        android:src="@drawable/call" />
+                        android:src="@drawable/call"
+                        android:layout_marginRight="@dimen/dp_10"/>
                 </LinearLayout>
                 //部门职位
                 <LinearLayout
@@ -182,7 +205,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="部门职位："
+                        android:text="部门职务："
                         android:gravity="center|left"
                         android:textSize="16sp"
                         android:textColor="@color/colorPrimary"

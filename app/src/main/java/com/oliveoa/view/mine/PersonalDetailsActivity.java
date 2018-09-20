@@ -35,6 +35,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
     private ContactInfo contactInfo;
     private ImageView imgUser;
     private int index;
+    private TextView tedit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +68,7 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         tbirth = (TextView) findViewById(R.id.birth);
         tmail = (TextView) findViewById(R.id.mail);
         taddress = (TextView) findViewById(R.id.address);
+        tedit = (TextView) findViewById(R.id.edit);
 
         initData();
 
@@ -80,6 +82,15 @@ public class PersonalDetailsActivity extends AppCompatActivity {
                 }else{
                     intent.putExtra("index",3);
                 }
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        tedit.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(PersonalDetailsActivity.this, PersonalDetailsEditActivity.class);
                 startActivity(intent);
                 finish();
             }
