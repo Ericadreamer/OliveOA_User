@@ -117,7 +117,7 @@ public class LeaveOfficeApplicationService {
     /**
      *  获取待我审核申请（）
      */
-    public StatusAndDataHttpResponseObject<ArrayList<LeaveOfficeApplication>> getApplicationIapproved(String s){
+    public StatusAndDataHttpResponseObject<ArrayList<LeaveOfficeApplication>> getApplicationIunapproved(String s){
         try {
             OkHttpClient client = new OkHttpClient();
             FormBody body = new FormBody.Builder()
@@ -126,6 +126,38 @@ public class LeaveOfficeApplicationService {
             Request request = new Request.Builder()
                     .addHeader("Cookie",s)
                     .url(Const.LEAVEOFFICE_NEEDAPPROVED_SEARCH)
+                    .post(body)
+                    .build();
+            Response response = client.newCall(request).execute();
+
+            String json = response.body().string();
+            Gson gson = new Gson();
+            Type type = new TypeToken<StatusAndDataHttpResponseObject<ArrayList<LeaveOfficeApplication>>>() {
+            }.getType();
+            StatusAndDataHttpResponseObject<ArrayList<LeaveOfficeApplication>> la = gson.fromJson(json, type);
+
+            System.out.println("la = " +la.toString());
+
+            return la;
+        } catch (IOException e) {
+            //todo handler IOException
+            //throw new RuntimeException(e);
+            e.printStackTrace();
+        }
+        return null;
+    }
+    /**
+     *  获取我已经审核申请（）
+     */
+    public StatusAndDataHttpResponseObject<ArrayList<LeaveOfficeApplication>> getApplicationIapproved(String s){
+        try {
+            OkHttpClient client = new OkHttpClient();
+            FormBody body = new FormBody.Builder()
+                    .build();
+
+            Request request = new Request.Builder()
+                    .addHeader("Cookie",s)
+                    .url(Const.LEAVEOFFICE_APPROVED_SEARCH)
                     .post(body)
                     .build();
             Response response = client.newCall(request).execute();

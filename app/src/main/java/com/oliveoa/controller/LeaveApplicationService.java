@@ -134,6 +134,37 @@ public class LeaveApplicationService {
         return null;
     }
 
+    //获取我已审核的请假申请
+    public LeaveApplicationJsonBean getlapplicationapproved(String s){
+        try {
+            OkHttpClient client = new OkHttpClient();
+            FormBody body = new FormBody.Builder()
+                    .build();
+
+            Request request = new Request.Builder()
+                    .addHeader("Cookie",s)
+                    .url(Const.LAPPLICATION_APPROVED_SEARCH)
+                    .post(body)
+                    .build();
+            Response response = client.newCall(request).execute();
+            //System.out.println(response.body().string());
+
+            String json = response.body().string();
+            Gson gson = new Gson();
+            java.lang.reflect.Type type = new TypeToken<LeaveApplicationJsonBean>() {
+            }.getType();
+            LeaveApplicationJsonBean leaveapplications = gson.fromJson(json, type);
+            System.out.println("LeaveApplicationJsonBean = " + leaveapplications);
+
+            return leaveapplications;
+        } catch (IOException e) {
+            //todo handler IOException
+            //throw new RuntimeException(e);
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     //获取我提交的请假申请
     public LeaveApplicationJsonBean getlapplicationsubmited(String s){
         try {

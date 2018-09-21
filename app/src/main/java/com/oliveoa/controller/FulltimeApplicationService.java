@@ -106,7 +106,7 @@ public class FulltimeApplicationService {
     /**
      *  获取待我审核申请（）
      */
-    public StatusAndDataHttpResponseObject<ArrayList<FulltimeApplication>> getApplicationIapproved(String s){
+    public StatusAndDataHttpResponseObject<ArrayList<FulltimeApplication>> getApplicationIunapproved(String s){
         try {
             OkHttpClient client = new OkHttpClient();
             FormBody body = new FormBody.Builder()
@@ -135,6 +135,40 @@ public class FulltimeApplicationService {
         }
         return null;
     }
+
+    /**
+     *  获取我已经审核申请（）
+     */
+    public StatusAndDataHttpResponseObject<ArrayList<FulltimeApplication>> getApplicationIapproved(String s){
+        try {
+            OkHttpClient client = new OkHttpClient();
+            FormBody body = new FormBody.Builder()
+                    .build();
+
+            Request request = new Request.Builder()
+                    .addHeader("Cookie",s)
+                    .url(Const.FULLTIME_APPROVED_SEARCH)
+                    .post(body)
+                    .build();
+            Response response = client.newCall(request).execute();
+
+            String json = response.body().string();
+            Gson gson = new Gson();
+            Type type = new TypeToken<StatusAndDataHttpResponseObject<ArrayList<FulltimeApplication>>>() {
+            }.getType();
+            StatusAndDataHttpResponseObject<ArrayList<FulltimeApplication>> fa = gson.fromJson(json, type);
+
+            System.out.println("fa = " +fa.toString());
+
+            return fa;
+        } catch (IOException e) {
+            //todo handler IOException
+            //throw new RuntimeException(e);
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
 
     /**

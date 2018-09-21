@@ -142,7 +142,39 @@ public class BusinessTripApplicationService {
 
             Request request = new Request.Builder()
                     .addHeader("Cookie",s)
-                    .url(Const.BTAPPLICATION_APPROVED)
+                    .url(Const.BTAPPLICATION_NEEDAPPROVED_SEARCH)
+                    .post(body)
+                    .build();
+            Response response = client.newCall(request).execute();
+            //System.out.println(response.body().string());
+
+            String json = response.body().string();
+            Gson gson = new Gson();
+            java.lang.reflect.Type type = new TypeToken<BusinessTripApplicationJsonBean>() {
+            }.getType();
+            BusinessTripApplicationJsonBean btapplication = gson.fromJson(json, type);
+            System.out.println("BusinessTripApplicationJsonBean = " + btapplication);
+
+
+            return btapplication;
+        } catch (IOException e) {
+            //todo handler IOException
+            //throw new RuntimeException(e);
+            e.printStackTrace();
+        }
+        return null;
+    }
+    //获取我已经审核的出差申请
+    public BusinessTripApplicationJsonBean getbtapplicationapproved(String s){
+
+        try {
+            OkHttpClient client = new OkHttpClient();
+            FormBody body = new FormBody.Builder()
+                    .build();
+
+            Request request = new Request.Builder()
+                    .addHeader("Cookie",s)
+                    .url(Const.BTAPPLICATION_APPROVED_SEARCH)
                     .post(body)
                     .build();
             Response response = client.newCall(request).execute();

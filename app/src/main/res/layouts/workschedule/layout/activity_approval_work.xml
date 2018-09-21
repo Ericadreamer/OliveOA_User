@@ -160,7 +160,41 @@
                         android:lineSpacingExtra="6dp"/>
 
                 </LinearLayout>
-
+                //是否同意
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_40"
+                    android:orientation="horizontal"
+                    android:background="#fff"
+                    android:layout_marginBottom="@dimen/dp_1">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="是否同意"
+                        android:gravity="center|left"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:textSize="@dimen/text_size_normal"
+                        android:textColor="@color/tv_gray_deep" />
+                    <TextView
+                        android:id="@+id/isapproval"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:hint="请选择是否同意"
+                        android:gravity="center|end"
+                        android:textSize="@dimen/text_size_normal"
+                        android:textColor="@color/colorPrimary"
+                        android:layout_marginRight="@dimen/dp_20"/>
+                    <ImageView
+                        android:id="@+id/inext"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_next"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="@dimen/dp_20"
+                        android:onClick="onOptionPicker"/>
+                </LinearLayout>
                 //批阅意见
                 <LinearLayout
                     android:layout_width="match_parent"

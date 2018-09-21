@@ -3,6 +3,7 @@ package com.oliveoa.util;
 import com.oliveoa.greendao.AnnouncementApprovedOpinionListDao;
 import com.oliveoa.greendao.AnnouncementInfoDao;
 import com.oliveoa.greendao.ApplicationDao;
+import com.oliveoa.greendao.ApprovalDao;
 import com.oliveoa.greendao.ApproveNumberDao;
 import com.oliveoa.greendao.BusinessTripApplicationApprovedOpinionListDao;
 import com.oliveoa.greendao.BusinessTripApplicationDao;
@@ -33,6 +34,7 @@ import com.oliveoa.greendao.RecruitmentApplicationItemDao;
 import com.oliveoa.greendao.UserInfoDao;
 import com.oliveoa.greendao.UserLoginInfoDao;
 import com.oliveoa.greendao.WorkDetailDao;
+import com.oliveoa.greendao.WorkdetailAndStatusDao;
 import com.oliveoa.pojo.RecruitmentApplicationItem;
 
 public class EntityManager {
@@ -69,6 +71,8 @@ public class EntityManager {
     public MeetingApplicationAndStatusDao meetingApplicationAndStatusDao;
     public NoteInfoDao noteInfoDao;
     public UserInfoDao userInfoDao;
+    public ApprovalDao approvalDao;
+    public WorkdetailAndStatusDao workdetailAndStatusDao;
 
     /**
      * 创建User表实例
@@ -321,6 +325,15 @@ public class EntityManager {
         return noteInfoDao;
     }
 
+    public ApprovalDao getApprovalDao(){
+        approvalDao = DaoManager.getInstance().getSession().getApprovalDao();
+        return approvalDao;
+    }
+
+    public WorkdetailAndStatusDao getWorkdetailAndStatusDao(){
+        workdetailAndStatusDao = DaoManager.getInstance().getSession().getWorkdetailAndStatusDao();
+        return workdetailAndStatusDao;
+    }
 
 
     /**

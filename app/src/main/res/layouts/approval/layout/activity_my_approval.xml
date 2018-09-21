@@ -32,6 +32,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_margin="20dp"/>
             <TextView
+                android:id="@+id/tvtitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="我的审批"

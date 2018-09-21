@@ -16,15 +16,15 @@
         android:layout_marginLeft="@dimen/dp_20"/>
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/dp_70"
         android:layout_weight="1"
         android:orientation="vertical">
         <TextView
             android:id="@+id/person_name"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/dp_10"
             android:layout_weight="1"
-            android:text="阿蕉"
+            android:text=""
             android:gravity="center|left"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/dp_16"
@@ -33,9 +33,9 @@
         <TextView
             android:id="@+id/approval_content"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="10dp"
             android:layout_weight="1"
-            android:text="到北京出差一个月"
+            android:text=""
             android:gravity="center|left"
             android:singleLine="true"
             android:layout_marginBottom="@dimen/dp_6"
@@ -49,9 +49,9 @@
         <TextView
             android:id="@+id/type"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="@dimen/dp_2"
             android:layout_weight="1"
-            android:text="出差申请"
+            android:text=""
             android:gravity="center|end"
             android:textSize="@dimen/dp_14"
             android:layout_marginRight="@dimen/dp_20"
@@ -60,7 +60,7 @@
         <TextView
             android:id="@+id/status"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="2dp"
             android:layout_weight="1"
             android:text="审批中"
             android:gravity="center|end"

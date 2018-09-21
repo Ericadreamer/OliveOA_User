@@ -166,6 +166,7 @@ public class SelectPersonApprovingActivity extends AppCompatActivity {
                             workDetail.setAeid(mid);
                             workDetailDao.deleteAll();
                             workDetailDao.insert(workDetail);
+                            Log.e(TAG,workDetail.toString());
                             back();
                         }
                     }else if(index==13){

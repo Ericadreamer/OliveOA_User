@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.oliveoa.common.ContactHttpResponseObject;
+import com.oliveoa.common.StatusAndMsgAndDataHttpResponseObject;
 import com.oliveoa.controller.UserInfoService;
 import com.oliveoa.controller.WorkDetailService;
 import com.oliveoa.greendao.ApproveNumberDao;
@@ -24,6 +25,7 @@ import com.oliveoa.greendao.ContactInfoDao;
 import com.oliveoa.greendao.DepartmentInfoDao;
 import com.oliveoa.greendao.IssueWorkDao;
 import com.oliveoa.greendao.WorkDetailDao;
+import com.oliveoa.greendao.WorkdetailAndStatusDao;
 import com.oliveoa.jsonbean.ContactJsonBean;
 import com.oliveoa.jsonbean.StatusAndMsgJsonBean;
 import com.oliveoa.pojo.ApproveNumber;
@@ -31,6 +33,7 @@ import com.oliveoa.pojo.ContactInfo;
 import com.oliveoa.pojo.DepartmentInfo;
 import com.oliveoa.pojo.IssueWork;
 import com.oliveoa.pojo.WorkDetail;
+import com.oliveoa.pojo.WorkdetailAndStatus;
 import com.oliveoa.util.DateFormat;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.util.LinesEditView;
@@ -103,9 +106,7 @@ public class WorkAllocationActivity extends AppCompatActivity {
                         approveNumberDao.deleteAll();
                     }
                 }
-                Intent intent = new Intent(WorkAllocationActivity.this, MyWorkActivity.class);
-                startActivity(intent);
-                finish();
+               back();
                 //Toast.makeText(mContext, "你点击了返回", Toast.LENGTH_SHORT).show();
             }
         });
@@ -161,6 +162,60 @@ public class WorkAllocationActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+    private void back() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SharedPreferences pref =getSharedPreferences("data", MODE_PRIVATE);
+                String s = pref.getString("sessionid", "");
+                Log.d(TAG,"cookie=="+s);
+                WorkDetailService service = new WorkDetailService();
+                StatusAndMsgAndDataHttpResponseObject<ArrayList<WorkDetail>> statusAndMsgAndDataHttpResponseObject = service.getsubmitedwork(s, 0);
+                WorkdetailAndStatus workdetailAndStatus = new WorkdetailAndStatus();
+                WorkdetailAndStatusDao workdetailAndStatusDao = EntityManager.getInstance().getWorkdetailAndStatusDao();
+                workdetailAndStatusDao.deleteAll();
+                if (statusAndMsgAndDataHttpResponseObject.getStatus() == 0) {
+                    List<WorkDetail> workDetails = statusAndMsgAndDataHttpResponseObject.getData();
+                    Log.e(TAG, workDetails.toString());
+                    DateFormat dateFormat = new DateFormat();
+                    for (int i = 0; i < workDetails.size(); i++) {
+                        workdetailAndStatus.setWaid(workDetails.get(i).getSwid());
+                        workdetailAndStatus.setStarttime(dateFormat.LongtoDatedd(workDetails.get(i).getBegintime()));
+                        workdetailAndStatus.setEndtime(dateFormat.LongtoDatedd(workDetails.get(i).getEndtime()));
+                        workdetailAndStatus.setStatus(0);
+                        workdetailAndStatus.setTheme(workDetails.get(i).getContent());
+                        workdetailAndStatusDao.insert(workdetailAndStatus);
+                    }
+                    // startActivity(new Intent(getActivity(), MyWorkActivity.class));
+
+                } else {
+                    Looper.prepare();//解决子线程弹toast问题
+                    Toast.makeText(getApplicationContext(), "网络错误，获取我的拟定工作信息失败", Toast.LENGTH_SHORT).show();
+                    Looper.loop();// 进入loop中的循环，查看消息队列
+                }
+                StatusAndMsgAndDataHttpResponseObject<ArrayList<IssueWork>> isswork = service.getIssueworktome(s,0);
+                if (isswork.getStatus()==0){
+                    List<IssueWork> workDetails = isswork.getData();
+                    Log.e(TAG,workDetails.toString());
+                    DateFormat dateFormat = new DateFormat();
+                    for(int i =0;i<workDetails.size();i++){
+                        workdetailAndStatus.setWaid(workDetails.get(i).getIwid());
+                        workdetailAndStatus.setStarttime(dateFormat.LongtoDatedd(workDetails.get(i).getBegintime()));
+                        workdetailAndStatus.setEndtime(dateFormat.LongtoDatedd(workDetails.get(i).getEndtime()));
+                        workdetailAndStatus.setStatus(1);
+                        workdetailAndStatus.setTheme(workDetails.get(i).getContent());
+                        workdetailAndStatusDao.insert(workdetailAndStatus);
+                    }
+                    startActivity(new Intent(WorkAllocationActivity.this, MyWorkActivity.class));
+                    finish();
+                }else{
+                    Looper.prepare();//解决子线程弹toast问题
+                    Toast.makeText(getApplicationContext(), "网络错误，获取分配与我工作信息失败", Toast.LENGTH_SHORT).show();
+                    Looper.loop();// 进入loop中的循环，查看消息队列
+                }
+            }
+        }).start();
     }
 
     //添加审批人操作
@@ -256,11 +311,14 @@ public class WorkAllocationActivity extends AppCompatActivity {
                         SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
                         String s = pref.getString("sessionid", "");
                         Log.e(TAG,"S="+s);
+
+                        ArrayList<ApproveNumber> approveNumbers = new ArrayList<>();
+                        approveNumbers.add(ep);
                         WorkDetailService service = new WorkDetailService();
-                        StatusAndMsgJsonBean statusAndMsgJsonBean = service.managework(ep.toString(),s,issueWork);
+                        StatusAndMsgJsonBean statusAndMsgJsonBean = service.managework(approveNumbers.toString(),s,issueWork);
                         if (statusAndMsgJsonBean.getStatus() == 0) {
                             Looper.prepare();
-                            Toast.makeText(getApplicationContext(), "添加成功！点击返回键返回主页", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "分配工作成功！点击返回键返回工作日程", Toast.LENGTH_SHORT).show();
                             Looper.loop();
                         } else {
                             Looper.prepare();

@@ -129,7 +129,7 @@ public class OvertimeApplictionService {
     }
 
     //获取待我审核的加班申请
-    public OvertimeApplicationApprovedOpinionListInfoJsonBean unapprovedotapplication(String s){
+    public OvertimeApplicationInfoJsonBean unapprovedotapplication(String s){
         try {
             OkHttpClient client = new OkHttpClient();
             FormBody body = new FormBody.Builder()
@@ -142,9 +142,38 @@ public class OvertimeApplictionService {
 
             String json = response.body().string();
             Gson gson = new Gson();
-            java.lang.reflect.Type type = new TypeToken<OvertimeApplicationApprovedOpinionListInfoJsonBean>() {
+            java.lang.reflect.Type type = new TypeToken<OvertimeApplicationInfoJsonBean>() {
             }.getType();
-            OvertimeApplicationApprovedOpinionListInfoJsonBean oa = gson.fromJson(json, type);
+            OvertimeApplicationInfoJsonBean oa = gson.fromJson(json, type);
+
+            System.out.println("OvertimeApplicationApprovedOpinionListInfoJsonBean = " + oa);
+
+            return oa;
+        } catch (IOException e) {
+            //todo handler IOException
+            //throw new RuntimeException(e);
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    //获取我已审核的加班申请
+    public OvertimeApplicationInfoJsonBean approvedotapplication(String s){
+        try {
+            OkHttpClient client = new OkHttpClient();
+            FormBody body = new FormBody.Builder()
+                    .build();
+
+            Request request = new Request.Builder()
+                    .addHeader("Cookie",s).url(Const.OTAPPLICATION_APPROVED_SEARCH).post(body).build();
+            Response response = client.newCall(request).execute();
+            //System.out.println(response.body().string());
+
+            String json = response.body().string();
+            Gson gson = new Gson();
+            java.lang.reflect.Type type = new TypeToken<OvertimeApplicationInfoJsonBean>() {
+            }.getType();
+            OvertimeApplicationInfoJsonBean oa = gson.fromJson(json, type);
 
             System.out.println("OvertimeApplicationApprovedOpinionListInfoJsonBean = " + oa);
 

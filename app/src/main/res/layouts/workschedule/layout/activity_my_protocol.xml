@@ -15,7 +15,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_content"
                 android:layout_width="match_parent"
@@ -32,7 +31,8 @@
                 android:text="没有更多数据了"
                 android:textColor="@color/tv_gray_lit"
                 android:textSize="14sp"
-                android:visibility="gone" />
+                android:visibility="gone"
+                />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

@@ -188,6 +188,43 @@ public class AnnouncementService {
     }
 
 
+      /**
+     *   MethodName： get_unapprovedannoucement
+     *   Description： 获取待我审核的公告
+     *   @Author： Erica
+     */
+    public AnnouncementJsonBean  get_unapprovedannoucement(String s){
+        try {
+            DateFormat dateFormat = new DateFormat();
+            OkHttpClient client = new OkHttpClient();
+            FormBody body = new FormBody.Builder()
+                    .build();
+
+            Request request = new Request.Builder()
+                    .addHeader("Cookie",s)
+                    .url(Const.ANNOUNCEMENT_NEEDAPPROVED_SEARCH)
+                    .post(body)
+                    .build();
+            Response response = client.newCall(request).execute();
+            //System.out.println(response.body().string());
+
+            String json = response.body().string();
+            Gson gson = new Gson();
+            Type type = new TypeToken<AnnouncementJsonBean>() {
+            }.getType();
+            AnnouncementJsonBean announcementJsonBean  = gson.fromJson(json, type);
+
+            System.out.println(" AnnouncementJsonBean = " +announcementJsonBean );
+
+            return announcementJsonBean;
+        } catch (IOException e) {
+            //todo handler IOException
+            //throw new RuntimeException(e);
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     /**
      *   MethodName： get_approvedannoucement
      *   Description： 获取待我审核的公告
@@ -224,7 +261,6 @@ public class AnnouncementService {
         }
         return null;
     }
-
 
     /**
      *   MethodName： get_isubmitannoucements

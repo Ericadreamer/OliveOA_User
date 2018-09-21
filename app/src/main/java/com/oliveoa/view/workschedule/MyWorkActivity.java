@@ -2,7 +2,9 @@ package com.oliveoa.view.workschedule;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.os.Looper;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -24,13 +26,22 @@ import android.widget.Toast;
 
 import com.oliveoa.Adapter.GridViewAdapter;
 import com.oliveoa.Adapter.WorkGridViewAdapter;
+import com.oliveoa.common.StatusAndMsgAndDataHttpResponseObject;
+import com.oliveoa.controller.WorkDetailService;
+import com.oliveoa.greendao.ContactInfoDao;
 import com.oliveoa.greendao.IssueWorkDao;
+import com.oliveoa.greendao.MeetingApplicationAndStatusDao;
 import com.oliveoa.greendao.WorkDetailDao;
+import com.oliveoa.greendao.WorkdetailAndStatusDao;
+import com.oliveoa.pojo.ContactInfo;
 import com.oliveoa.pojo.IssueWork;
+import com.oliveoa.pojo.MeetingApplicationAndStatus;
 import com.oliveoa.pojo.WorkDetail;
+import com.oliveoa.pojo.WorkdetailAndStatus;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
 import com.oliveoa.view.TabLayoutBottomActivity;
+import com.oliveoa.view.meetingmanagement.MyMeetingActivity;
 import com.oliveoa.view.mine.MineActivity;
 import com.oliveoa.view.myapplication.LeaveInfoActivity;
 import com.oliveoa.view.myapplication.MainApplicationActivity;
@@ -40,6 +51,10 @@ import com.oliveoa.view.notice.NoticeActivity;
 import com.oliveoa.view.notice.NoticeListActivity;
 import com.oliveoa.widget.LoadingDialog;
 
+import org.greenrobot.greendao.query.QueryBuilder;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -52,7 +67,7 @@ public class MyWorkActivity extends AppCompatActivity {
     private WorkDetail workDetail;
     private IssueWork issueWork;
     private IssueWorkDao issueWorkDao;
-
+    private WorkdetailAndStatusDao workdetailAndStatusDao;
     //两个tab
     private TabLayout mTabLayout;
     //Tab 文字
@@ -65,6 +80,9 @@ public class MyWorkActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private int index = 0;
 
+
+    private String TAG = this.getClass().getSimpleName();
+
     //图文按钮
     WorkGridViewAdapter adapter;
     GridView gridView;
@@ -75,15 +93,14 @@ public class MyWorkActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_work);
 
-        index = getIntent().getIntExtra("index",index);
-        Log.d("INDEX=", String.valueOf(index));
+        /*index = getIntent().getIntExtra("index",index);
+        Log.d("INDEX=", String.valueOf(index));*/
 
         adapter = new WorkGridViewAdapter(this);
 
         //默认添加一个Item
         addViewItem(null);
         initView();
-        initData();
     }
 
     private void initView() {
@@ -99,6 +116,7 @@ public class MyWorkActivity extends AppCompatActivity {
         mAdapter = new MyWorkPagerAdapter(getSupportFragmentManager());
 
         mViewPager = (ViewPager) findViewById(R.id.info_viewpager);
+        initData();
         mViewPager.setAdapter(mAdapter);
         mViewPager.setCurrentItem(index);
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
@@ -113,44 +131,12 @@ public class MyWorkActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MyWorkActivity.this, TabLayoutBottomActivity.class);
+                intent.putExtra("index",0);
                 startActivity(intent);
                 finish();
             }
         });
 
-        /*protocolWork.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
-            @Override
-            public void onClick(View view) { //工作拟定
-                workDetailDao = EntityManager.getInstance().getWorkDetailDao();
-                workDetail  = new WorkDetail();
-                workDetailDao.insert(workDetail);
-                Intent intent = new Intent(MyWorkActivity.this, ProtocolWorkActivity.class);
-                intent.putExtra("index",0);
-                startActivity(intent);
-                finish();
-            }
-        });
-        leadershipApproval.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
-            @Override
-            public void onClick(View view) {//领导批阅
-                Intent intent = new Intent(MyWorkActivity.this, LeadershipApprovalActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-        workAllocation.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
-            @Override
-            public void onClick(View view) {//
-                issueWorkDao = EntityManager.getInstance().getIssueWorkDao();
-                issueWork  = new IssueWork();
-                issueWorkDao.insert(issueWork);
-                Intent intent = new Intent(MyWorkActivity.this, WorkAllocationActivity.class);
-                intent.putExtra("index",0);
-                startActivity(intent);
-                finish();
-            }
-        });
-*/
         //九宫格跳转
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -178,30 +164,57 @@ public class MyWorkActivity extends AppCompatActivity {
             }
 
         });
-
-//        Drawable drawableApplication = getResources().getDrawable(R.drawable.protocol_work_pic);
-//        drawableApplication.setBounds(0, 0, 150, 150);//第一0是距左右边距离，第二0是距上下边距离，第三69长度,第四宽度
-//        protocolWork.setCompoundDrawables(null, drawableApplication, null, null);//只放上面
-//
-//        Drawable drawableSchedule = getResources().getDrawable(R.drawable.leadership_approval_pic);
-//        drawableSchedule.setBounds(0, 0, 150, 150);//第一0是距左右边距离，第二0是距上下边距离，第三69长度,第四宽度
-//        leadershipApproval.setCompoundDrawables(null, drawableSchedule, null, null);//只放上面
-//
-//        Drawable drawableApproval = getResources().getDrawable(R.drawable.allocation_pic);
-//        drawableApproval.setBounds(0, 0, 150, 150);//第一0是距左右边距离，第二0是距上下边距离，第三69长度,第四宽度
-//        workAllocation.setCompoundDrawables(null, drawableApproval, null, null);//只放上面
     }
 
     private void GetProtocolWorkSubmited() {
-
+        workDetailDao = EntityManager.getInstance().getWorkDetailDao();
+        workDetail  = new WorkDetail();
+        workDetailDao.insert(workDetail);
+        Intent intent = new Intent(MyWorkActivity.this, ProtocolWorkActivity.class);
+        intent.putExtra("index",0);
+        startActivity(intent);
+        finish();
     }
 
     private void GetLeadershipApprovalSubmited() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SharedPreferences pref = getSharedPreferences("data",MODE_PRIVATE);
+                String s = pref.getString("sessionid","");
 
+                //Todo Service
+                WorkDetailService service = new WorkDetailService();
+                //Todo Service.Method
+                StatusAndMsgAndDataHttpResponseObject<ArrayList<WorkDetail>> statusAndDataHttpResponseObject = service.getworkunapproved(s,0);
+                //ToCheck JsonBean.getStatus()
+                if (statusAndDataHttpResponseObject.getStatus() == 0) {
+                    ArrayList<WorkDetail> workDetails = statusAndDataHttpResponseObject.getData();
+                    WorkDetailDao workDetailDao = EntityManager.getInstance().getWorkDetailDao();
+                    workDetailDao.deleteAll();
+                    for (int i =0;i<workDetails.size();i++){
+                        workDetailDao.insert(workDetails.get(i));
+                    }
+                    Intent intent = new Intent(MyWorkActivity.this, LeadershipApprovalActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Looper.prepare();//解决子线程弹toast问题
+                    Toast.makeText(getApplicationContext(),statusAndDataHttpResponseObject.getMsg(), Toast.LENGTH_SHORT).show();
+                    Looper.loop();// 进入loop中的循环，查看消息队列
+                }
+            }
+        }).start();
     }
 
     private void GetWorkAlLocationSubmited() {
-
+        issueWorkDao = EntityManager.getInstance().getIssueWorkDao();
+        issueWork  = new IssueWork();
+        issueWorkDao.insert(issueWork);
+        Intent intent = new Intent(MyWorkActivity.this, WorkAllocationActivity.class);
+        intent.putExtra("index",0);
+        startActivity(intent);
+        finish();
     }
 
 
@@ -228,7 +241,6 @@ public class MyWorkActivity extends AppCompatActivity {
         public MyWorkPagerAdapter(FragmentManager fm) {
             super(fm);
         }
-
         @Override
         public Fragment getItem(int position) {
             return TAB_FRAGMENTS[position];
@@ -263,6 +275,36 @@ public class MyWorkActivity extends AppCompatActivity {
     }
 
     private void initData(){
+       workdetailAndStatusDao = EntityManager.getInstance().getWorkdetailAndStatusDao();
+
+       List<WorkdetailAndStatus> ap = null;
+        Bundle submitbymebundle = new Bundle(); //我拟定的
+        submitbymebundle .putString("work","");
+        Bundle submittomebundle = new Bundle(); //分配予我
+        submittomebundle.putString("work","");
+
+        //我拟定的
+        QueryBuilder qb = workdetailAndStatusDao.queryBuilder();
+        qb.where(WorkdetailAndStatusDao.Properties.Status.eq(0));
+        ap =  qb.list();
+        ArrayList ap1 =(ArrayList<WorkdetailAndStatus>) ap;
+        Log.e(TAG,"ArrayList<WorkdetailAndStatus> ap = "+ap1.toString());
+        if(ap!=null){
+            submitbymebundle .putParcelableArrayList("work",ap1);
+
+        }
+        Log.e(TAG,"submitbymebundle  = "+submitbymebundle .toString());
+        mAdapter.getItem(1).setArguments(submitbymebundle );
+
+        //分配与我
+        ap = workdetailAndStatusDao.queryBuilder().where(WorkdetailAndStatusDao.Properties.Status.eq(1)).list();
+        ap1 =(ArrayList<WorkdetailAndStatus>) ap;
+        Log.e(TAG,"ArrayList<WorkdetailAndStatus> ap = "+ap1.toString());
+        if(ap!=null){
+            submittomebundle.putParcelableArrayList("work",ap1);
+        }
+        mAdapter.getItem(0).setArguments(submittomebundle);
+
 
     }
 
