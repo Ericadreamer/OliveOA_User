@@ -5,11 +5,11 @@ import android.os.Bundle;
 
 import com.oliveoa.view.R;
 
-public class DocumentDepartmentActivity extends AppCompatActivity {
+public class DocumentManagementActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_document_department);
+        setContentView(R.layout.activity_document_management);
     }
 }
