@@ -103,6 +103,8 @@ public class ProtocolWorkActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                LoadingDialog loadingDialog  = new LoadingDialog(ProtocolWorkActivity.this,"正在加载数据",true);
+                loadingDialog.show();
                 back();
                 //Toast.makeText(mContext, "你点击了返回", Toast.LENGTH_SHORT).show();
             }

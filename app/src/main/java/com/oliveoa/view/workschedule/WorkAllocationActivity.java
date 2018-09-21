@@ -106,6 +106,8 @@ public class WorkAllocationActivity extends AppCompatActivity {
                         approveNumberDao.deleteAll();
                     }
                 }
+                LoadingDialog loadingDialog  = new LoadingDialog(WorkAllocationActivity.this,"正在加载数据",true);
+                loadingDialog.show();
                back();
                 //Toast.makeText(mContext, "你点击了返回", Toast.LENGTH_SHORT).show();
             }

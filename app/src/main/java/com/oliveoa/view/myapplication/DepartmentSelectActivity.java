@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.oliveoa.controller.UserInfoService;
+import com.oliveoa.greendao.ContactInfoDao;
 import com.oliveoa.greendao.DepartmentAndDutyDao;
 import com.oliveoa.greendao.DepartmentInfoDao;
 import com.oliveoa.greendao.JobTransferApplicationDao;
@@ -30,6 +31,7 @@ import com.oliveoa.pojo.RecruitmentApplication;
 import com.oliveoa.pojo.RecruitmentApplicationItem;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
+import com.oliveoa.view.mine.PersonalDetailsEditActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +56,8 @@ public class DepartmentSelectActivity extends AppCompatActivity {
     private DepartmentAndDuty dpdt;
     private DepartmentAndDutyDao departmentAndDutyDao;
     private DepartmentInfoDao departmentInfoDao;
+    private ContactInfoDao contactInfoDao;
+    private ContactInfo contactInfo;
     //private RecruitmentApplicationItemDao rpdaoitem;
 
 
@@ -62,7 +66,7 @@ public class DepartmentSelectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_department_select);
 
-        index = getIntent().getIntExtra("index",index);//调岗0，招聘1
+        index = getIntent().getIntExtra("index",index);//调岗0，招聘1,个人资料修改2
 
         initData();
     }
@@ -70,14 +74,19 @@ public class DepartmentSelectActivity extends AppCompatActivity {
     public void initData(){
         departmentAndDutyDao =EntityManager.getInstance().getDepartmentAndDutyDao();
         departmentAndDutyDao.deleteAll();
+        contactInfoDao = EntityManager.getInstance().getContactInfo();
         departmentInfoDao = EntityManager.getInstance().getDepartmentInfo();
         departmentInfos = departmentInfoDao.queryBuilder().list();
         dpdt = new DepartmentAndDuty();
+        if(index==2){
+              contactInfo = contactInfoDao.queryBuilder().unique();
+        }
         if(departmentInfos!=null){
             initview();
         }else{
             Toast.makeText(getApplicationContext(), "网络错误，部门岗位数据加载错误", Toast.LENGTH_SHORT).show();
         }
+
     }
 
     public void initview(){
@@ -98,6 +107,9 @@ public class DepartmentSelectActivity extends AppCompatActivity {
                 }
                 if(index==1) {
                     dialog.setMessage("是否确定退出选择,直接返回招聘申请创建页面？");
+                }
+                if(index==2) {
+                    dialog.setMessage("是否确定退出选择,直接返回个人资料修改创建页面？");
                 }
                 dialog.setCancelable(false);
                 dialog.setNegativeButton("是", new DialogInterface.OnClickListener() {
@@ -149,6 +161,18 @@ public class DepartmentSelectActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
+        if(index==2) {
+            if(contactInfo!=null){
+                contactInfo.setDcid("");
+                contactInfo.setPcid("");
+                contactInfoDao.deleteAll();
+                contactInfoDao.insert(contactInfo);
+            }
+            Intent intent = new Intent(DepartmentSelectActivity.this, PersonalDetailsEditActivity.class);
+            intent.putExtra("index", 1);
+            startActivity(intent);
+            finish();
+        }
 
     }
 
@@ -176,10 +200,59 @@ public class DepartmentSelectActivity extends AppCompatActivity {
                     if(index==1)  {  //招聘申请选择
                         recruitment(tname);
                     }
+                    if(index==2)  {  //个人资料修改选择
+                        userinfo(tname);
+                    }
                     }
             });
         }
     }
+    /**
+     *   MethodName  userinfo(TextView tname)
+     *   Description 个人资料修改
+     *   @Author Erica
+     */
+    private void userinfo(TextView tname) {
+        for(int i=0;i<departmentInfos.size();i++){
+            Log.e(TAG,departmentInfos.get(i).getName()+tname.getText().toString());
+            if(tname.getText().toString().equals(departmentInfos.get(i).getName())) {
+                if(contactInfo!=null) {
+                    contactInfo.setDcid(departmentInfos.get(i).getDcid());
+                    Log.e(TAG, departmentInfos.get(i).getDcid());
+                }
+                break;
+            }
+        }
+        contactInfoDao.deleteAll();
+        contactInfoDao.insert(contactInfo);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                UserInfoService service = new UserInfoService();
+                DutyInfoJsonBean dutyInfoJsonBean = service.getPosition(dpdt.getDcid());
+                if(dutyInfoJsonBean.getStatus()==0){
+                    ArrayList<DutyInfo> dutyInfos = dutyInfoJsonBean.getData();
+                    if(dutyInfos.size()==0){
+                        Looper.prepare();//解决子线程弹toast问题
+                        Toast.makeText(getApplicationContext(), "该部门下无职位，请选择其他部门", Toast.LENGTH_SHORT).show();
+                        Looper.loop();// 进入loop中的循环，查看消息队列
+                    }else {
+                        Intent intent = new Intent(DepartmentSelectActivity.this, DutySelectActivity.class);
+                        intent.putExtra("index", 2);
+                        intent.putParcelableArrayListExtra("alldt", dutyInfos);
+                        startActivity(intent);
+                        finish();
+                    }
+                }else{
+                    Looper.prepare();//解决子线程弹toast问题
+                    Toast.makeText(getApplicationContext(), dutyInfoJsonBean.getMsg(), Toast.LENGTH_SHORT).show();
+                    Looper.loop();// 进入loop中的循环，查看消息队列
+                }
+
+            }
+        }).start();
+    }
+
     /**
      *   MethodName  recruitment(TextView tname)
      *   Description 招聘申请

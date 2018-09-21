@@ -48,6 +48,7 @@
                 android:layout_height="30dp"
                 android:layout_gravity="center_vertical"
                 android:layout_margin="20dp"
+                android:src="@drawable/ic_save"
                 android:background="@null" />
 
         </LinearLayout>
@@ -86,6 +87,7 @@
                         android:layout_marginRight="20dp"
                         android:layout_weight="1"
                         android:background="@null"
+                        android:hint="请输入姓名"
                         android:gravity="center_vertical|end"
                         android:singleLine="true"
                         android:textColor="@color/colorPrimary"
@@ -120,6 +122,7 @@
                         android:layout_weight="1"
                         android:background="@null"
                         android:gravity="center_vertical|end"
+                        android:hint="请选择性别"
                         android:singleLine="true"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/text_size_normal"/>
@@ -160,6 +163,7 @@
                         android:layout_weight="1"
                         android:background="@null"
                         android:gravity="center_vertical|end"
+                        android:hint="请输入联系电话"
                         android:singleLine="true"
                         android:textColor="@color/colorPrimary"
                         android:textColorHint="#898989"
@@ -196,6 +200,7 @@
                         android:singleLine="true"
                         android:textSize="@dimen/text_size_normal"
                         android:textColorHint="#898989"
+                        android:hint="请选择出生日期"
                         android:textColor="@color/colorPrimary"
                         />
                     <ImageView
@@ -211,54 +216,55 @@
 
                 //所属部门职务
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="1dp"
-                    android:background="#fff"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
+                <!-- <LinearLayout
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginBottom="1dp"
+                     android:background="#fff"
+                     android:gravity="center_vertical"
+                     android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp_10"
-                        android:layout_marginLeft="20dp"
-                        android:gravity="center_vertical"
-                        android:textAlignment="center"
-                        android:text="部门职务"
-                        android:textSize="@dimen/text_size_normal"
-                        android:textColor="@color/tv_gray_deep" />
+                     <TextView
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:layout_marginTop="@dimen/dp_10"
+                         android:layout_marginLeft="20dp"
+                         android:gravity="center_vertical"
+                         android:textAlignment="center"
+                         android:text="部门职务"
+                         android:textSize="@dimen/text_size_normal"
+                         android:textColor="@color/tv_gray_deep" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="35dp"
-                        android:orientation="horizontal"
-                        android:layout_marginBottom="@dimen/dp_5"
-                        android:layout_marginTop="@dimen/dp_5">
-                        <TextView
-                            android:id="@+id/dpcid"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="@null"
-                            android:gravity="center_vertical|start"
-                            android:layout_marginLeft="@dimen/dp_20"
-                            android:textColor="@color/textcolor"
-                            android:singleLine="true"
-                            android:textColorHint="#898989"
-                            android:textSize="@dimen/text_size_normal"
-                            />
-                        <ImageView
-                            android:id="@+id/dpdtselect"
-                            android:layout_width="@dimen/dp_16"
-                            android:layout_height="@dimen/dp_16"
-                            android:layout_marginLeft="@dimen/dp_15"
-                            android:layout_marginRight="@dimen/dp_20"
-                            android:layout_gravity="center_vertical"
-                            android:src="@drawable/ic_next" />
-                    </LinearLayout>
-                </LinearLayout>
+                     <LinearLayout
+                         android:layout_width="match_parent"
+                         android:layout_height="35dp"
+                         android:orientation="horizontal"
+                         android:layout_marginBottom="@dimen/dp_5"
+                         android:layout_marginTop="@dimen/dp_5">
+                         <TextView
+                             android:id="@+id/dpcid"
+                             android:layout_width="0dp"
+                             android:layout_height="match_parent"
+                             android:layout_weight="1"
+                             android:background="@null"
+                             android:gravity="center_vertical|start"
+                             android:layout_marginLeft="@dimen/dp_20"
+                             android:textColor="@color/textcolor"
+                             android:hint="请选择部门职务"
+                             android:singleLine="true"
+                             android:textColorHint="#898989"
+                             android:textSize="@dimen/text_size_normal"
+                             />
+                        &lt;!&ndash; <ImageView
+                             android:id="@+id/dpdtselect"
+                             android:layout_width="@dimen/dp_16"
+                             android:layout_height="@dimen/dp_16"
+                             android:layout_marginLeft="@dimen/dp_15"
+                             android:layout_marginRight="@dimen/dp_20"
+                             android:layout_gravity="center_vertical"
+                             android:src="@drawable/ic_next" />&ndash;&gt;
+                     </LinearLayout>
+                </LinearLayout>-->
 
                 //个人邮箱
 
@@ -285,6 +291,7 @@
                         android:gravity="center_vertical|end"
                         android:layout_marginRight="@dimen/dp_20"
                         android:textSize="@dimen/text_size_normal"
+                        android:hint="请输入个人邮箱"
                         android:textColor="@color/colorPrimary"
                         android:textColorHint="#898989" />
 
@@ -320,6 +327,7 @@
                         android:gravity="center_vertical|start"
                         android:layout_marginLeft="@dimen/dp_20"
                         android:textSize="@dimen/text_size_normal"
+                        android:hint="请输入居住地址"
                         android:textColor="@color/colorPrimary"
                         android:textColorHint="#898989"
                         android:layout_margin="@dimen/dp_20"/>

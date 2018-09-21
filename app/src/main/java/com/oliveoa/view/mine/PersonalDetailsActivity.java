@@ -91,6 +91,8 @@ public class PersonalDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(PersonalDetailsActivity.this, PersonalDetailsEditActivity.class);
+                intent.putExtra("ci",contactInfo);
+                intent.putExtra("index",0);
                 startActivity(intent);
                 finish();
             }

@@ -67,6 +67,8 @@ public class LeadershipApprovalActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
             @Override
             public void onClick(View view) {
+                LoadingDialog loadingDialog  = new LoadingDialog(LeadershipApprovalActivity.this,"正在加载数据",true);
+                loadingDialog.show();
                 back();
             }
         });
