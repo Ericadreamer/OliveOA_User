@@ -344,7 +344,7 @@
             android:name=".mine.PersonalDetailsEditActivity"
             android:exported="true"
             android:theme="@style/HomeTheme" />
-        <activity android:name=".documentmanagement.DocumentDepartmentActivity"
+        <activity android:name=".documentmanagement.DocumentManagementActivity"
             android:exported="true"
             android:theme="@style/HomeTheme"/>
         <activity android:name=".documentmanagement.DraftAddActivity"

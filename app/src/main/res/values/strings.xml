@@ -66,5 +66,12 @@
     <string name="to_me">分配与我</string>
     <string name="mine_">我的拟定</string>
 
+    <!--公文管理-->
+    <string name="draft">拟稿</string>
+    <string name="nuclear">核稿</string>
+    <string name="issue">签发</string>
+    <string name="receive">签收</string>
+    <string name="read">办理公文</string>
+
 
 </resources>
