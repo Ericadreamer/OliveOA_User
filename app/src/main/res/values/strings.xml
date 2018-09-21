@@ -73,5 +73,12 @@
     <string name="receive">签收</string>
     <string name="read">办理公文</string>
 
+    <string name="nuclear_wait">待核稿</string>
+    <string name="nuclear_done">已核稿</string>
+    <string name="issue_wait">待签发</string>
+    <string name="issue_done">已签发</string>
+    <string name="read_wait">待办理</string>
+    <string name="read_done">已办理</string>
+
 
 </resources>

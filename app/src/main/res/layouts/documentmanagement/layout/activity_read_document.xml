@@ -25,8 +25,8 @@
 
             <ImageView
                 android:id="@+id/iback"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
                 android:layout_gravity="center_vertical"
                 android:layout_margin="20dp"
                 android:background="@null"
@@ -45,8 +45,8 @@
 
             <ImageView
                 android:id="@+id/add"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:layout_gravity="center_vertical"
                 android:layout_margin="20dp"
                 android:background="@null"
@@ -54,17 +54,25 @@
 
         </LinearLayout>
 
-        <ScrollView
+        <!--顶部tab标签容器-->
+        <android.support.design.widget.TabLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:id="@+id/tab_layout"
+            android:background="@color/white"
+            app:tabIndicatorColor="@color/tab_tv_selected"
+            app:tabSelectedTextColor="@color/tab_tv_selected"
+            app:tabTextColor="@color/tv_gray_deep"
+            android:elevation="@dimen/dp_3"
+            app:tabMode="fixed">
+        </android.support.design.widget.TabLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-            </LinearLayout>
-        </ScrollView>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/info_viewpager"
+            android:layout_marginTop="@dimen/dp_55"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            />
 
     </LinearLayout>
 

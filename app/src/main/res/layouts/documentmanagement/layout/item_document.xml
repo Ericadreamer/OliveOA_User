@@ -38,7 +38,7 @@
                     android:lineSpacingExtra="6dp"-->
 
             <TextView
-                android:id="@+id/topic"
+                android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dp_15"
