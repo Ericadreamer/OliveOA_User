@@ -3,10 +3,15 @@ package com.oliveoa.view.documentmanagement;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.oliveoa.view.R;
@@ -17,6 +22,7 @@ import java.util.TimerTask;
 public class ReceiveActivity extends AppCompatActivity {
     private RecyclerView mContentRv;
     private ImageView back;
+    private View listview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +35,10 @@ public class ReceiveActivity extends AppCompatActivity {
 
     private void initView() {
         back = (ImageView) findViewById(R.id.iback);
+
+        mContentRv = (RecyclerView) findViewById(R.id.rv_content);
+        mContentRv.setLayoutManager(new LinearLayoutManager(this));
+        mContentRv.setAdapter(new ReceiveContentAdapter());
 
         //点击事件
         back.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
@@ -44,6 +54,40 @@ public class ReceiveActivity extends AppCompatActivity {
 
     public void initData() {
 
+    }
+
+    private class ReceiveContentAdapter extends RecyclerView.Adapter<ReceiveContentAdapter.ContentHolder> {
+
+
+        @Override
+        public ReceiveContentAdapter.ContentHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            return new ReceiveContentAdapter.ContentHolder(LayoutInflater.from(ReceiveActivity.this)
+                    .inflate(R.layout.item_document, parent, false));
+        }
+
+        @Override
+        public void onBindViewHolder(ReceiveContentAdapter.ContentHolder holder, int position) {
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return 0;
+        }
+
+
+        class ContentHolder extends RecyclerView.ViewHolder {
+
+            private TextView itemTitle, itemContext;
+            private CardView item_document;
+
+            public ContentHolder(View itemView) {
+                super(itemView);
+                itemTitle = (TextView) itemView.findViewById(R.id.title);
+                itemContext = (TextView) itemView.findViewById(R.id.content);
+                item_document = (CardView) itemView.findViewById(R.id.card_view);
+            }
+        }
     }
 
     @Override
