@@ -5,7 +5,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.oliveoa.view.R;
@@ -14,7 +17,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class DraftAddActivity extends AppCompatActivity {
-    private ImageView back,save;
+    private ImageView back,save,nuclearSelect,issueSelect;
+    private EditText etitle,econtent;
+    private TextView tnuclear,tissue,fileName;
+    private LinearLayout file,cancel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +34,15 @@ public class DraftAddActivity extends AppCompatActivity {
     private void initView() {
         back = (ImageView) findViewById(R.id.iback);
         save = (ImageView) findViewById(R.id.save);
+        nuclearSelect = (ImageView) findViewById(R.id.nuclear_select);
+        issueSelect = (ImageView) findViewById(R.id.issue_select);
+        etitle = (EditText) findViewById(R.id.title);
+        econtent = (EditText) findViewById(R.id.content);
+        tnuclear = (TextView) findViewById(R.id.nuclear_person);
+        tissue = (TextView) findViewById(R.id.issue_person);
+        file = (LinearLayout) findViewById(R.id.select_file);
+        cancel = (LinearLayout) findViewById(R.id.cancel);
+        fileName = (TextView) findViewById(R.id.file_name);
 
         //点击事件
         back.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
