@@ -63,6 +63,168 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+                //公文标题
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="1dp"
+                    android:background="#fff"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:gravity="center|left"
+                        android:text="公文标题"
+                        android:textColor="@color/tv_gray_deep"
+                        android:textSize="@dimen/text_size_normal" />
+
+                    <TextView
+                        android:id="@+id/title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:background="@null"
+                        android:gravity="center_vertical|start"
+                        android:lineSpacingExtra="6dp"
+                        android:singleLine="true"
+                        android:textColor="@color/textcolor"
+                        android:textColorHint="#898989"
+                        android:textSize="@dimen/text_size_normal" />
+                </LinearLayout>
+                //公文内容
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="1dp"
+                    android:background="#fff"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:gravity="center|left"
+                        android:text="公文内容"
+                        android:textColor="@color/tv_gray_deep"
+                        android:textSize="@dimen/text_size_normal" />
+
+                    <TextView
+                        android:id="@+id/content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:background="@null"
+                        android:gravity="center_vertical|start"
+                        android:lineSpacingExtra="6dp"
+                        android:singleLine="true"
+                        android:textColor="@color/textcolor"
+                        android:textColorHint="#898989"
+                        android:textSize="@dimen/text_size_normal" />
+                </LinearLayout>
+
+                //签发人
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginBottom="@dimen/dp_1"
+                    android:background="#fff"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/dp_10">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="20dp"
+                        android:text="签发人"
+                        android:textColor="@color/tv_gray_deep"
+                        android:textSize="@dimen/text_size_normal" />
+
+                    <TextView
+                        android:id="@+id/issue_person"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="center_vertical|end"
+                        android:singleLine="true"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/text_size_normal"
+                        android:layout_marginRight="@dimen/dp_20"/>
+
+                </LinearLayout>
+
+                //办理报告
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="1dp"
+                    android:background="#fff"
+                    android:orientation="vertical"
+                    android:layout_marginTop="@dimen/dp_10">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:gravity="center|left"
+                        android:text="办理报告"
+                        android:textColor="@color/tv_gray_deep"
+                        android:textSize="@dimen/text_size_normal" />
+
+                    <TextView
+                        android:id="@+id/report"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:background="@null"
+                        android:gravity="center_vertical|start"
+                        android:lineSpacingExtra="6dp"
+                        android:singleLine="true"
+                        android:textColor="@color/textcolor"
+                        android:textSize="@dimen/text_size_normal" />
+                </LinearLayout>
+
+                //下载附件
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_50"
+                    android:layout_marginBottom="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/download"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/dp_10"
+                        android:layout_marginRight="@dimen/dp_10"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_orange_selector"
+                        android:text="下载附件"
+                        android:textColor="@android:color/white"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
             </LinearLayout>
         </ScrollView>
 
