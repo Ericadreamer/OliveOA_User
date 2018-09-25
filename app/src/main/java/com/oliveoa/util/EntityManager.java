@@ -32,10 +32,8 @@ import com.oliveoa.greendao.OvertimeApplicationDao;
 import com.oliveoa.greendao.RecruitmentApplicationApprovedOpinionDao;
 import com.oliveoa.greendao.RecruitmentApplicationItemDao;
 import com.oliveoa.greendao.UserInfoDao;
-import com.oliveoa.greendao.UserLoginInfoDao;
 import com.oliveoa.greendao.WorkDetailDao;
 import com.oliveoa.greendao.WorkdetailAndStatusDao;
-import com.oliveoa.pojo.RecruitmentApplicationItem;
 
 public class EntityManager {
     private static EntityManager entityManager;

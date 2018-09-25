@@ -16,30 +16,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.oliveoa.common.ContactHttpResponseObject;
-import com.oliveoa.controller.BusinessTripApplicationService;
 import com.oliveoa.controller.JobTransferApplicationService;
 import com.oliveoa.controller.UserInfoService;
-import com.oliveoa.greendao.ApplicationDao;
 import com.oliveoa.greendao.ApproveNumberDao;
 import com.oliveoa.greendao.ContactInfoDao;
 import com.oliveoa.greendao.DepartmentAndDutyDao;
 import com.oliveoa.greendao.DepartmentInfoDao;
 import com.oliveoa.greendao.JobTransferApplicationDao;
-import com.oliveoa.greendao.LeaveOfficeApplicationDao;
 import com.oliveoa.jsonbean.ContactJsonBean;
 import com.oliveoa.jsonbean.StatusAndMsgJsonBean;
 import com.oliveoa.pojo.ApproveNumber;
-import com.oliveoa.pojo.BusinessTripApplication;
 import com.oliveoa.pojo.ContactInfo;
 import com.oliveoa.pojo.DepartmentAndDuty;
 import com.oliveoa.pojo.DepartmentInfo;
 import com.oliveoa.pojo.JobTransferApplication;
-import com.oliveoa.pojo.LeaveOfficeApplication;
 import com.oliveoa.util.DateFormat;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.util.LinesEditView;
 import com.oliveoa.view.R;
-import com.oliveoa.view.TabLayoutBottomActivity;
 import com.oliveoa.widget.LoadingDialog;
 
 import java.text.ParseException;
@@ -47,8 +41,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import cn.qqtheme.framework.picker.DateTimePicker;
 
 /**
  * 原部门职务根据输入的被调员工编号自动获取

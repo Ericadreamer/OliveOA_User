@@ -12,21 +12,16 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.oliveoa.Adapter.MyBaseExpandableListAdapter;
-import com.oliveoa.greendao.ApproveNumberDao;
 import com.oliveoa.greendao.ContactInfoDao;
 import com.oliveoa.greendao.DepartmentInfoDao;
-import com.oliveoa.pojo.ApproveNumber;
 import com.oliveoa.pojo.ContactInfo;
 import com.oliveoa.pojo.DepartmentInfo;
 import com.oliveoa.pojo.Group;
 import com.oliveoa.pojo.Item;
-import com.oliveoa.pojo.JobTransferApplication;
-import com.oliveoa.pojo.MeetingApplication;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
 import com.oliveoa.view.TabLayoutBottomActivity;
 import com.oliveoa.view.mine.PersonalDetailsActivity;
-import com.oliveoa.view.myapplication.SelectPersonApprovingActivity;
 
 import java.util.ArrayList;
 import java.util.List;

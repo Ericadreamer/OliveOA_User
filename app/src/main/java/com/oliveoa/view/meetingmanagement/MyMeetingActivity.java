@@ -17,9 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.oliveoa.greendao.ApplicationDao;
 import com.oliveoa.greendao.MeetingApplicationAndStatusDao;
-import com.oliveoa.pojo.Application;
 import com.oliveoa.pojo.MeetingApplicationAndStatus;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;

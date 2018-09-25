@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -70,6 +69,15 @@ import com.oliveoa.pojo.RecruitmentApplicationApprovedOpinion;
 import com.oliveoa.pojo.RecruitmentApplicationItem;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
+import com.oliveoa.view.myapplication.AdjustPostInfoActivity;
+import com.oliveoa.view.myapplication.BusinessInfoActivity;
+import com.oliveoa.view.myapplication.DimissionInfoActivity;
+import com.oliveoa.view.myapplication.LeaveInfoActivity;
+import com.oliveoa.view.myapplication.MeetingInfoActivity;
+import com.oliveoa.view.myapplication.OvertimeInfoActivity;
+import com.oliveoa.view.myapplication.RecruitmentInfoActivity;
+import com.oliveoa.view.myapplication.RegularWorkerInfoActivity;
+import com.oliveoa.view.notice.NoticeInfoActivity;
 import com.oliveoa.widget.LoadingDialog;
 
 import java.util.ArrayList;
@@ -195,7 +203,30 @@ public class DisposedApprovalActivity extends Fragment {
 
             View childAt =   addlistView.getChildAt(i);
             tstatus = (TextView)childAt.findViewById(R.id.status);
-            tstatus.setVisibility(View.GONE);
+            switch (approvalList.get(i).getStatus()){
+                case -1:
+                    tstatus.setText("不同意");
+                    tstatus.setTextColor(getResources().getColor(R.color.tv_refuse));
+                    break;
+                case 1:
+                    tstatus.setText("同意");
+                    tstatus.setTextColor(getResources().getColor(R.color.tv_pass));
+                    break;
+                case 0:
+                    tstatus.setText("审核中");
+                    tstatus.setTextColor(getResources().getColor(R.color.list_glide));
+                    break;
+                case -2:
+                    tstatus.setText("审核中");
+                    tstatus.setTextColor(getResources().getColor(R.color.list_glide));
+                    break;
+                default:
+                    tstatus.setText("");
+                    //tstatus.setTextColor(getResources().getColor(R.color.tv_refuse));
+                    break;
+
+            }
+            //tstatus.setVisibility(View.GONE);
             tname = (TextView) childAt.findViewById(R.id.person_name);
             contactInfoDao = EntityManager.getInstance().getContactInfo();
             ContactInfo ci = contactInfoDao.queryBuilder().where(ContactInfoDao.Properties.Eid.eq(approvalList.get(i).getSeid())).unique();
@@ -204,7 +235,7 @@ public class DisposedApprovalActivity extends Fragment {
             }
             tcontent = (TextView) childAt.findViewById(R.id.approval_content);
             tcontent.setText(approvalList.get(i).getContent());
-            ttype = (TextView) childAt.findViewById(R.id.type);
+           /* ttype = (TextView) childAt.findViewById(R.id.type);
             if(approvalList.get(i).getType()==1){
                 ttype.setText("加班申请");
             }else if(approvalList.get(i).getType()==2){
@@ -223,7 +254,7 @@ public class DisposedApprovalActivity extends Fragment {
                 ttype.setText("招聘申请");
             }else{
                 ttype.setText("公告审批");
-            }
+            }*/
         }
 
     }
@@ -278,8 +309,9 @@ public class DisposedApprovalActivity extends Fragment {
                     OvertimeApplicationJsonBean overtimeApplicationJsonBean = overtimeApplicationHttpResponseObject.getOvertimeApplicationJsonBean();
                     OvertimeApplication overtimeApplication = overtimeApplicationJsonBean.getOvertimeApplications();
                     ArrayList<OvertimeApplicationApprovedOpinionList> overtimeApplicationApprovedOpinionLists  = overtimeApplicationJsonBean.getOvertimeApplicationApprovedOpinionLists();
-                    startActivity( new Intent(mContext, OvertimeDisposedActivity.class)
+                    startActivity( new Intent(mContext, OvertimeInfoActivity.class)
                             .putExtra("oa",overtimeApplication)
+                            .putExtra("index",1)
                             .putParcelableArrayListExtra("oaaol",overtimeApplicationApprovedOpinionLists));
                 } else {
                     Looper.prepare();//解决子线程弹toast问题
@@ -340,8 +372,9 @@ public class DisposedApprovalActivity extends Fragment {
                     LeaveApplicationInfoJsonBean leaveApplicationInfoJsonBean = leaveApplicationHttpResponseObject.getData();
                     LeaveApplication leaveApplication =leaveApplicationInfoJsonBean.getLeaveApplication();
                     ArrayList<LeaveApplicationApprovedOpinionList> leaveApplicationApprovedOpinionLists  = leaveApplicationInfoJsonBean.getLeaveApplicationApprovedOpinionLists();
-                    startActivity( new Intent(mContext, LeaveDisposedActivity.class)
+                    startActivity( new Intent(mContext, LeaveInfoActivity.class)
                             .putExtra("la",leaveApplication)
+                            .putExtra("index",1)
                             .putParcelableArrayListExtra("laaol",leaveApplicationApprovedOpinionLists));
                 } else {
                     Looper.prepare();//解决子线程弹toast问题
@@ -402,8 +435,9 @@ public class DisposedApprovalActivity extends Fragment {
                     BusinessTripApplicationInfoJsonBean businessTripApplicationInfoJsonBean  = businessTripApplicationHttpResponseObject.getData();
                     BusinessTripApplication businessTripApplication = businessTripApplicationInfoJsonBean.getBusinessTripApplication();
                     ArrayList<BusinessTripApplicationApprovedOpinionList> businessTripApplicationApprovedOpinionLists = businessTripApplicationInfoJsonBean.getBusinessTripApplicationApprovedOpinionLists();
-                    startActivity( new Intent(mContext, BusinessDisposedActivity.class)
+                    startActivity( new Intent(mContext, BusinessInfoActivity.class)
                             .putExtra("bta",businessTripApplication)
+                            .putExtra("index",1)
                             .putParcelableArrayListExtra("btaaol",businessTripApplicationApprovedOpinionLists));
                 } else {
                     Looper.prepare();//解决子线程弹toast问题
@@ -464,8 +498,9 @@ public class DisposedApprovalActivity extends Fragment {
                     MeetingApplicationInfoJsonBean aaol  = statusAndDataHttpResponseObject.getData();
                     MeetingApplication meetingApplication = aaol.getMeetingApplication();
                     ArrayList<MeetingMember> list = aaol.getMeetingMembers();
-                    startActivity( new Intent(mContext, MeetingDisposedActivity.class)
+                    startActivity( new Intent(mContext, MeetingInfoActivity.class)
                             .putExtra("ap",meetingApplication)
+                            .putExtra("index",1)
                             .putParcelableArrayListExtra("list",list));
                 } else {
                     Looper.prepare();//解决子线程弹toast问题
@@ -525,9 +560,10 @@ public class DisposedApprovalActivity extends Fragment {
                 if (statusAndDataHttpResponseObject.getStatus() == 0) {
                     LeaveOfficeApplicationJsonBean aaol  = statusAndDataHttpResponseObject.getData();
                     LeaveOfficeApplication ap = aaol.getLeaveOfficeApplication();
-                    ArrayList<LeaveOfficeApplicationApprovedOpinion> list = aaol.getLeaveOfficeApplicationApprovedOpinions();
-                    startActivity( new Intent(mContext, DimissionDisposedActivity.class)
+                    ArrayList<LeaveOfficeApplicationApprovedOpinion> list = aaol.getLeaveOfficeApplicationApprovedOpinionList();
+                    startActivity( new Intent(mContext, DimissionInfoActivity.class)
                             .putExtra("ap",ap)
+                            .putExtra("index",1)
                             .putParcelableArrayListExtra("aaol",list));
                 } else {
                     Looper.prepare();//解决子线程弹toast问题
@@ -587,9 +623,10 @@ public class DisposedApprovalActivity extends Fragment {
                 if (statusAndDataHttpResponseObject.getStatus() == 0) {
                     FulltimeApplicationInfoJsonBean aaol  = statusAndDataHttpResponseObject.getData();
                     FulltimeApplication ap = aaol.getFulltimeApplication();
-                    ArrayList<FulltimeApplicationApprovedOpinion> list = aaol.getFulltimeApplicationApprovedOpinions();
-                    startActivity( new Intent(mContext, RegularWorkerDisposedActivity.class)
+                    ArrayList<FulltimeApplicationApprovedOpinion> list = aaol.getFulltimeApplicationApprovedOpinionList();
+                    startActivity( new Intent(mContext, RegularWorkerInfoActivity.class)
                             .putExtra("ap",ap)
+                            .putExtra("index",1)
                             .putParcelableArrayListExtra("aaol",list));
                 } else {
                     Looper.prepare();//解决子线程弹toast问题
@@ -659,9 +696,10 @@ public class DisposedApprovalActivity extends Fragment {
                 if (statusAndDataHttpResponseObject.getStatus() == 0) {
                     JobTransferApplicationInfoJsonBean aaol  = statusAndDataHttpResponseObject.getData();
                     JobTransferApplication ap = aaol.getJobTransferApplication();
-                    ArrayList<JobTransferApplicationApprovedOpinion> list = aaol.getJobTransferApplicationApprovedOpinions();
-                    startActivity( new Intent(mContext, AdjustPostDisposedActivity.class)
+                    ArrayList<JobTransferApplicationApprovedOpinion> list = aaol.getJobTransferApplicationApprovedOpinionList();
+                    startActivity( new Intent(mContext, AdjustPostInfoActivity.class)
                             .putExtra("ap",ap)
+                            .putExtra("index",1)
                             .putParcelableArrayListExtra("aaol",list));
                 } else {
                     Looper.prepare();//解决子线程弹toast问题
@@ -733,9 +771,10 @@ public class DisposedApprovalActivity extends Fragment {
                     RecruitmentApplication ap = aaol.getRecruitmentApplication();
                     RecruitmentApplicationItem apitem = aaol.getRecruitmentApplicationItem();
                     ArrayList<RecruitmentApplicationApprovedOpinion> list = aaol.getRecruitmentApplicationApprovedOpinions();
-                    startActivity( new Intent(mContext, RecruitmentDisposedActivity.class)
+                    startActivity( new Intent(mContext, RecruitmentInfoActivity.class)
                             .putExtra("ap",ap)
                             .putExtra("apitem",apitem)
+                            .putExtra("index",1)
                             .putParcelableArrayListExtra("aaol",list));
                 } else {
                     Looper.prepare();//解决子线程弹toast问题
@@ -805,8 +844,9 @@ public class DisposedApprovalActivity extends Fragment {
                     AnnouncementInfoJsonBean aaol  = statusAndDataHttpResponseObject.getData();
                     AnnouncementInfo ap = aaol.getAnnouncement();
                     ArrayList<AnnouncementApprovedOpinionList> list = aaol.getAnnouncementApprovedOpinionList();
-                    startActivity( new Intent(mContext, NoticeDisposedActivity.class)
+                    startActivity( new Intent(mContext, NoticeInfoActivity.class)
                             .putExtra("ap",ap)
+                            .putExtra("index",1)
                             .putParcelableArrayListExtra("aaol",list));
                 } else {
                     Looper.prepare();//解决子线程弹toast问题

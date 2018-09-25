@@ -441,10 +441,10 @@ public class MainApplicationActivity extends AppCompatActivity {
                             application.setAid(arrayListStatusAndDataHttpResponseObject.getData().get(i).getLoaid());
                             application.setDescribe(arrayListStatusAndDataHttpResponseObject.getData().get(i).getReason());
                             application.setType(5);
-                            if (aaol.getLeaveOfficeApplicationApprovedOpinions() != null) {
-                                Log.i(TAG, "aaol.getLeaveOfficeApplicationApprovedOpinions()====" + aaol.getLeaveOfficeApplicationApprovedOpinions());
-                                for (j=0;j<aaol.getLeaveOfficeApplicationApprovedOpinions().size();j++) {
-                                    switch (aaol.getLeaveOfficeApplicationApprovedOpinions().get(j).getIsapproved()) {
+                            if (aaol.getLeaveOfficeApplicationApprovedOpinionList() != null) {
+                                Log.i(TAG, "aaol.getLeaveOfficeApplicationApprovedOpinionList()()====" + aaol.getLeaveOfficeApplicationApprovedOpinionList());
+                                for (j=0;j<aaol.getLeaveOfficeApplicationApprovedOpinionList().size();j++) {
+                                    switch (aaol.getLeaveOfficeApplicationApprovedOpinionList().get(j).getIsapproved()) {
                                         case -2:
                                             application.setStatus(-2);
                                             break;
@@ -503,9 +503,9 @@ public class MainApplicationActivity extends AppCompatActivity {
                             application.setAid(arrayListStatusAndDataHttpResponseObject.getData().get(i).getFaid());
                             application.setDescribe(arrayListStatusAndDataHttpResponseObject.getData().get(i).getPersonalSummary());
                             application.setType(6);
-                            if (aaol.getFulltimeApplicationApprovedOpinions() != null) {
-                                for (j=0;j<aaol.getFulltimeApplicationApprovedOpinions().size();j++) {
-                                    switch (aaol.getFulltimeApplicationApprovedOpinions().get(j).getIsapproved()) {
+                            if (aaol.getFulltimeApplicationApprovedOpinionList() != null) {
+                                for (j=0;j<aaol.getFulltimeApplicationApprovedOpinionList().size();j++) {
+                                    switch (aaol.getFulltimeApplicationApprovedOpinionList().get(j).getIsapproved()) {
                                         case -2:
                                             application.setStatus(-2);
                                             break;
@@ -564,9 +564,9 @@ public class MainApplicationActivity extends AppCompatActivity {
                             application.setAid(arrayListStatusAndDataHttpResponseObject.getData().get(i).getJtaid());
                             application.setDescribe(arrayListStatusAndDataHttpResponseObject.getData().get(i).getReason());
                             application.setType(7);
-                            if (aaol.getJobTransferApplicationApprovedOpinions() != null) {
-                                for (j=0;j<aaol.getJobTransferApplicationApprovedOpinions().size();j++) {
-                                    switch (aaol.getJobTransferApplicationApprovedOpinions().get(j).getIsapproved()) {
+                            if (aaol.getJobTransferApplicationApprovedOpinionList() != null) {
+                                for (j=0;j<aaol.getJobTransferApplicationApprovedOpinionList().size();j++) {
+                                    switch (aaol.getJobTransferApplicationApprovedOpinionList().get(j).getIsapproved()) {
                                         case -2:
                                             application.setStatus(-2);
                                             break;

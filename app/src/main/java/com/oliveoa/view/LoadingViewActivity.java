@@ -1,16 +1,13 @@
 package com.oliveoa.view;
 
-import android.content.EntityIterator;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.oliveoa.common.ContactHttpResponseObject;
-import com.oliveoa.controller.AnnouncementService;
 import com.oliveoa.controller.UserInfoService;
 import com.oliveoa.greendao.AnnouncementApprovedOpinionListDao;
 import com.oliveoa.greendao.AnnouncementInfoDao;
@@ -25,7 +22,6 @@ import com.oliveoa.greendao.MeetingApplicationAndStatusDao;
 import com.oliveoa.greendao.MeetingApplicationDao;
 import com.oliveoa.greendao.NoteInfoDao;
 import com.oliveoa.greendao.UserInfoDao;
-import com.oliveoa.jsonbean.AnnouncementJsonBean;
 import com.oliveoa.jsonbean.BusinessTripApplicationInfoJsonBean;
 import com.oliveoa.jsonbean.ContactJsonBean;
 import com.oliveoa.jsonbean.DutyInfoJsonBean;
@@ -33,7 +29,6 @@ import com.oliveoa.jsonbean.EmpContactListJsonBean;
 import com.oliveoa.jsonbean.LeaveApplicationInfoJsonBean;
 import com.oliveoa.jsonbean.OvertimeApplicationJsonBean;
 import com.oliveoa.jsonbean.UserLoginJsonBean;
-import com.oliveoa.pojo.AnnouncementInfo;
 import com.oliveoa.pojo.BusinessTripApplication;
 import com.oliveoa.pojo.ContactInfo;
 import com.oliveoa.pojo.LeaveApplication;
@@ -43,7 +38,6 @@ import com.oliveoa.pojo.UserInfo;
 import com.oliveoa.util.EntityManager;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 

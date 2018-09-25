@@ -18,13 +18,11 @@ import android.widget.Toast;
 
 import com.oliveoa.common.ContactHttpResponseObject;
 import com.oliveoa.common.StatusAndMsgAndDataHttpResponseObject;
-import com.oliveoa.controller.LeaveOfficeApplicationService;
 import com.oliveoa.controller.UserInfoService;
 import com.oliveoa.controller.WorkDetailService;
 import com.oliveoa.greendao.ApproveNumberDao;
 import com.oliveoa.greendao.ContactInfoDao;
 import com.oliveoa.greendao.DepartmentInfoDao;
-import com.oliveoa.greendao.LeaveOfficeApplicationDao;
 import com.oliveoa.greendao.WorkDetailDao;
 import com.oliveoa.greendao.WorkdetailAndStatusDao;
 import com.oliveoa.jsonbean.ContactJsonBean;
@@ -33,7 +31,6 @@ import com.oliveoa.pojo.ApproveNumber;
 import com.oliveoa.pojo.ContactInfo;
 import com.oliveoa.pojo.DepartmentInfo;
 import com.oliveoa.pojo.IssueWork;
-import com.oliveoa.pojo.LeaveOfficeApplication;
 import com.oliveoa.pojo.WorkDetail;
 import com.oliveoa.pojo.WorkdetailAndStatus;
 import com.oliveoa.util.DateFormat;
@@ -55,8 +52,6 @@ import java.util.TimerTask;
 import cn.qqtheme.framework.picker.DatePicker;
 import cn.qqtheme.framework.picker.DateTimePicker;
 import cn.qqtheme.framework.util.ConvertUtils;
-
-import static android.support.constraint.Constraints.TAG;
 
 public class ProtocolWorkActivity extends AppCompatActivity {
 

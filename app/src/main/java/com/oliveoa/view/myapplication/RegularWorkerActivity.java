@@ -2,7 +2,6 @@ package com.oliveoa.view.myapplication;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,23 +16,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.oliveoa.common.ContactHttpResponseObject;
-import com.oliveoa.controller.BusinessTripApplicationService;
 import com.oliveoa.controller.FulltimeApplicationService;
 import com.oliveoa.controller.UserInfoService;
 import com.oliveoa.greendao.ApproveNumberDao;
-import com.oliveoa.greendao.BusinessTripApplicationDao;
 import com.oliveoa.greendao.ContactInfoDao;
 import com.oliveoa.greendao.DepartmentInfoDao;
-import com.oliveoa.greendao.DutyInfoDao;
 import com.oliveoa.greendao.FulltimeApplicationDao;
 import com.oliveoa.jsonbean.ContactJsonBean;
-import com.oliveoa.jsonbean.DepartmentInfoJsonBean;
 import com.oliveoa.jsonbean.StatusAndMsgJsonBean;
 import com.oliveoa.pojo.ApproveNumber;
-import com.oliveoa.pojo.BusinessTripApplication;
 import com.oliveoa.pojo.ContactInfo;
 import com.oliveoa.pojo.DepartmentInfo;
-import com.oliveoa.pojo.DutyInfo;
 import com.oliveoa.pojo.FulltimeApplication;
 import com.oliveoa.util.DateFormat;
 import com.oliveoa.util.EntityManager;
@@ -42,11 +35,8 @@ import com.oliveoa.view.R;
 import com.oliveoa.widget.LoadingDialog;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 

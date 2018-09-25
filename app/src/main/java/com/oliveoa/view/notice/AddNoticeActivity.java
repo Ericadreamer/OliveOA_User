@@ -1,12 +1,10 @@
 package com.oliveoa.view.notice;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Looper;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -20,29 +18,22 @@ import android.widget.Toast;
 
 import com.oliveoa.common.ContactHttpResponseObject;
 import com.oliveoa.controller.AnnouncementService;
-import com.oliveoa.controller.RecruitmentApplicationService;
 import com.oliveoa.controller.UserInfoService;
 import com.oliveoa.greendao.AnnouncementInfoDao;
 import com.oliveoa.greendao.ApproveNumberDao;
 import com.oliveoa.greendao.ContactInfoDao;
 import com.oliveoa.greendao.DepartmentInfoDao;
-import com.oliveoa.greendao.NoteInfoDao;
 import com.oliveoa.jsonbean.AnnouncementJsonBean;
 import com.oliveoa.jsonbean.ContactJsonBean;
 import com.oliveoa.jsonbean.StatusAndMsgJsonBean;
 import com.oliveoa.pojo.AnnouncementInfo;
 import com.oliveoa.pojo.ApproveNumber;
 import com.oliveoa.pojo.ContactInfo;
-import com.oliveoa.pojo.DepartmentAndDuty;
 import com.oliveoa.pojo.DepartmentInfo;
-import com.oliveoa.pojo.NoteInfo;
-import com.oliveoa.pojo.RecruitmentApplicationItem;
 import com.oliveoa.util.DateFormat;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
 import com.oliveoa.view.TabLayoutBottomActivity;
-import com.oliveoa.view.myapplication.BusinessActivity;
-import com.oliveoa.view.myapplication.RecruitmentActivity;
 import com.oliveoa.view.myapplication.SelectPersonApprovingActivity;
 import com.oliveoa.widget.LoadingDialog;
 

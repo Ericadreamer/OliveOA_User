@@ -10,20 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.oliveoa.greendao.ContactInfoDao;
 import com.oliveoa.pojo.ContactInfo;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
-import com.oliveoa.view.notice.AddNoticeActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class AddressBookActivity extends Fragment {
 

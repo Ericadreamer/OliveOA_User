@@ -16,16 +16,20 @@ import android.widget.Toast;
 import com.oliveoa.common.BusinessTripApplicationHttpResponseObject;
 import com.oliveoa.controller.BusinessTripApplicationService;
 import com.oliveoa.greendao.ApplicationDao;
+import com.oliveoa.greendao.ApprovalDao;
 import com.oliveoa.greendao.ContactInfoDao;
 import com.oliveoa.jsonbean.BusinessTripApplicationInfoJsonBean;
 import com.oliveoa.jsonbean.BusinessTripApplicationJsonBean;
 import com.oliveoa.pojo.Application;
+import com.oliveoa.pojo.Approval;
 import com.oliveoa.pojo.BusinessTripApplication;
 import com.oliveoa.pojo.BusinessTripApplicationApprovedOpinionList;
 import com.oliveoa.pojo.ContactInfo;
 import com.oliveoa.util.DateFormat;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
+import com.oliveoa.view.approval.MainApprovalActivity;
+import com.oliveoa.view.approval.MyApprovalActivity;
 import com.oliveoa.widget.LoadingDialog;
 
 import java.util.ArrayList;
@@ -47,6 +51,7 @@ public class BusinessInfoActivity extends AppCompatActivity {
     private String TAG = this.getClass().getSimpleName();
     private ApplicationDao applicationDao;
     private Application application;
+    private int index;
 private LoadingDialog loadingDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,8 @@ private LoadingDialog loadingDialog;
 
         bta = getIntent().getParcelableExtra("bta");
         btaaol = getIntent().getParcelableArrayListExtra("btaaol");
+        index = getIntent().getIntExtra("index",index);
+        Log.e(TAG,"index="+index);
         Log.i(TAG,"bta="+bta+"---btaaol="+btaaol);
 
         initView();
@@ -73,13 +80,92 @@ private LoadingDialog loadingDialog;
         back.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
             @Override
             public void onClick(View view) {
-              loadingDialog.show();back();
+              loadingDialog.show();
+                if(index==0){
+                    back();
+                }else{
+                    backAppoval();
+                }
             }
         });
 
         initData();
         addViewItem(null);
     }
+
+    private void backAppoval() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
+                String s = pref.getString("sessionid", "");
+                //Todo Service
+                BusinessTripApplicationService service = new BusinessTripApplicationService();
+                //审批
+                ApprovalDao approvalDao = EntityManager.getInstance().getApprovalDao();
+                Approval approval = new Approval();
+                int i, j = 0;
+                BusinessTripApplicationJsonBean infoJsonBean = service.getbtapplicationunapproved(s); //获取待我审核的申请
+                Log.e(TAG, infoJsonBean.toString());
+                if (infoJsonBean.getStatus() == 0) {
+                    approvalDao.deleteAll();
+                    for (i = 0; i < infoJsonBean.getData().size(); i++) {
+                        approval.setAid( infoJsonBean.getData().get(i).getBtaid());
+                        approval.setSeid(infoJsonBean.getData().get(i).getEid());
+                        approval.setContent(infoJsonBean.getData().get(i).getTask());
+                        approval.setStatus(0);
+                        approval.setType(3);
+                        approvalDao.insert(approval);
+                    }
+                    //startActivity(new Intent(MainApprovalActivity.this, MyApprovalActivity.class).putExtra("index",3));
+                } else {
+                    Looper.prepare();//解决子线程弹toast问题
+                    Toast.makeText(getApplicationContext(), infoJsonBean.getMsg(), Toast.LENGTH_SHORT).show();
+                    Looper.loop();// 进入loop中的循环，查看消息队列
+                }
+                infoJsonBean = service.getbtapplicationapproved(s); //获取我已经审核的申请
+                Log.e(TAG, infoJsonBean.toString());
+                if (infoJsonBean.getStatus() == 0) {
+                    approvalDao.deleteAll();
+                    for (i = 0; i < infoJsonBean.getData().size(); i++) {
+                        BusinessTripApplicationHttpResponseObject httpResponseObject = service.getbtapplicationinfo(s, infoJsonBean.getData().get(i).getBtaid());
+                        if (httpResponseObject.getStatus() == 0) {
+                            approval.setAid(infoJsonBean.getData().get(i).getBtaid());
+                            approval.setSeid(infoJsonBean.getData().get(i).getEid());
+                            approval.setContent(infoJsonBean.getData().get(i).getTask());
+                            approval.setStatus(1);
+                            approval.setType(3);
+                            for (j = 0; j < httpResponseObject.getData().getBusinessTripApplicationApprovedOpinionLists().size(); j++) {
+                                switch (httpResponseObject.getData().getBusinessTripApplicationApprovedOpinionLists().get(j).getIsapproved()) {
+                                    case -2:
+                                        approval.setStatus(-2);
+                                        break;
+                                    case -1:
+                                        approval.setStatus(-1);
+                                        break;
+                                    case 0:
+                                        approval.setStatus(0);
+                                        break;
+                                    case 1:
+                                        approval.setStatus(1);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            approvalDao.insert(approval);
+                        }
+                    }
+                    startActivity(new Intent(BusinessInfoActivity.this, MyApprovalActivity.class).putExtra("index",3));
+                } else {
+                    Looper.prepare();//解决子线程弹toast问题
+                    Toast.makeText(getApplicationContext(), infoJsonBean.getMsg(), Toast.LENGTH_SHORT).show();
+                    Looper.loop();// 进入loop中的循环，查看消息队列
+                }
+            }
+        }).start();
+    }
+
     private void back() {
         new Thread(new Runnable() {
             @Override

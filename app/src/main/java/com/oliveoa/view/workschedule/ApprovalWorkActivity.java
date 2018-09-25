@@ -15,9 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.oliveoa.common.StatusAndDataHttpResponseObject;
 import com.oliveoa.common.StatusAndMsgAndDataHttpResponseObject;
-import com.oliveoa.controller.LeaveApplicationService;
 import com.oliveoa.controller.WorkDetailService;
 import com.oliveoa.greendao.ContactInfoDao;
 import com.oliveoa.greendao.WorkDetailDao;
@@ -28,8 +26,6 @@ import com.oliveoa.util.DateFormat;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.util.LinesEditView;
 import com.oliveoa.view.R;
-import com.oliveoa.view.myapplication.MyApplicationActivity;
-import com.oliveoa.view.myapplication.OvertimeActivity;
 import com.oliveoa.widget.LoadingDialog;
 
 import java.util.ArrayList;

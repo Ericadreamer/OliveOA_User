@@ -21,16 +21,12 @@ import com.oliveoa.greendao.ContactInfoDao;
 import com.oliveoa.greendao.WorkDetailDao;
 import com.oliveoa.greendao.WorkdetailAndStatusDao;
 import com.oliveoa.jsonbean.ContactJsonBean;
-import com.oliveoa.pojo.DepartmentInfo;
 import com.oliveoa.pojo.IssueWork;
 import com.oliveoa.pojo.WorkDetail;
 import com.oliveoa.pojo.WorkdetailAndStatus;
 import com.oliveoa.util.DateFormat;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
-import com.oliveoa.view.TabLayoutBottomActivity;
-import com.oliveoa.view.approval.LeaveUndisposedActivity;
-import com.oliveoa.view.myapplication.LeaveActivity;
 import com.oliveoa.view.myapplication.SelectPersonApprovingActivity;
 import com.oliveoa.widget.LoadingDialog;
 

@@ -6,7 +6,7 @@
     android:orientation="horizontal"
     android:background="#fff"
     android:clickable="true"
-    android:layout_marginBottom="@dimen/dp_1">
+    android:layout_marginBottom="@dimen/dp_2">
 
     <ImageView
         android:layout_width="@dimen/dp_48"
@@ -46,7 +46,7 @@
         android:layout_width="120dp"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <TextView
+      <!--  <TextView
             android:id="@+id/type"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_2"
@@ -56,17 +56,17 @@
             android:textSize="@dimen/dp_14"
             android:layout_marginRight="@dimen/dp_20"
             android:layout_marginTop="@dimen/dp_8"
-            android:layout_marginLeft="@dimen/dp_20"/>
+            android:layout_marginLeft="@dimen/dp_20"/>-->
         <TextView
             android:id="@+id/status"
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_weight="1"
-            android:text="审批中"
+            android:text="待审批"
             android:gravity="center|end"
-            android:textColor="#ef3939"
+            android:textColor="#efc539"
             android:textSize="@dimen/dp_16"
-            android:layout_marginBottom="@dimen/dp_8"
+            android:layout_marginBottom="@dimen/dp_1"
             android:layout_marginLeft="@dimen/dp_20"
             android:layout_marginRight="@dimen/dp_20"/>
     </LinearLayout>

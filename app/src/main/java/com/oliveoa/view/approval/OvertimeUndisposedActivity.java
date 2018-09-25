@@ -1,8 +1,12 @@
 package com.oliveoa.view.approval;
 
+import android.content.Entity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -10,8 +14,64 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.oliveoa.common.BusinessTripApplicationHttpResponseObject;
+import com.oliveoa.common.ContactHttpResponseObject;
+import com.oliveoa.common.LeaveApplicationHttpResponseObject;
+import com.oliveoa.common.OvertimeApplicationHttpResponseObject;
+import com.oliveoa.common.StatusAndDataHttpResponseObject;
+import com.oliveoa.controller.AnnouncementService;
+import com.oliveoa.controller.BusinessTripApplicationService;
+import com.oliveoa.controller.FulltimeApplicationService;
+import com.oliveoa.controller.JobTransferApplicationService;
+import com.oliveoa.controller.LeaveApplicationService;
+import com.oliveoa.controller.LeaveOfficeApplicationService;
+import com.oliveoa.controller.MeetingApplicationService;
+import com.oliveoa.controller.OvertimeApplictionService;
+import com.oliveoa.controller.RecruitmentApplicationService;
+import com.oliveoa.controller.UserInfoService;
+import com.oliveoa.greendao.ContactInfoDao;
+import com.oliveoa.greendao.DepartmentInfoDao;
+import com.oliveoa.greendao.DutyInfoDao;
+import com.oliveoa.jsonbean.AnnouncementInfoJsonBean;
+import com.oliveoa.jsonbean.BusinessTripApplicationInfoJsonBean;
+import com.oliveoa.jsonbean.ContactJsonBean;
+import com.oliveoa.jsonbean.DutyInfoJsonBean;
+import com.oliveoa.jsonbean.FulltimeApplicationInfoJsonBean;
+import com.oliveoa.jsonbean.JobTransferApplicationInfoJsonBean;
+import com.oliveoa.jsonbean.LeaveApplicationInfoJsonBean;
+import com.oliveoa.jsonbean.LeaveOfficeApplicationJsonBean;
+import com.oliveoa.jsonbean.MeetingApplicationInfoJsonBean;
+import com.oliveoa.jsonbean.OvertimeApplicationJsonBean;
+import com.oliveoa.jsonbean.RecruitmentApplicationInfoJsonBean;
+import com.oliveoa.pojo.AnnouncementApprovedOpinionList;
+import com.oliveoa.pojo.AnnouncementInfo;
+import com.oliveoa.pojo.BusinessTripApplication;
+import com.oliveoa.pojo.BusinessTripApplicationApprovedOpinionList;
+import com.oliveoa.pojo.ContactInfo;
+import com.oliveoa.pojo.DepartmentInfo;
+import com.oliveoa.pojo.DutyInfo;
+import com.oliveoa.pojo.FulltimeApplication;
+import com.oliveoa.pojo.FulltimeApplicationApprovedOpinion;
+import com.oliveoa.pojo.JobTransferApplication;
+import com.oliveoa.pojo.JobTransferApplicationApprovedOpinion;
+import com.oliveoa.pojo.LeaveApplication;
+import com.oliveoa.pojo.LeaveApplicationApprovedOpinionList;
+import com.oliveoa.pojo.LeaveOfficeApplication;
+import com.oliveoa.pojo.LeaveOfficeApplicationApprovedOpinion;
+import com.oliveoa.pojo.MeetingApplication;
+import com.oliveoa.pojo.MeetingMember;
+import com.oliveoa.pojo.OvertimeApplication;
+import com.oliveoa.pojo.OvertimeApplicationApprovedOpinionList;
+import com.oliveoa.pojo.RecruitmentApplication;
+import com.oliveoa.pojo.RecruitmentApplicationApprovedOpinion;
+import com.oliveoa.pojo.RecruitmentApplicationItem;
+import com.oliveoa.util.DateFormat;
+import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
+import com.oliveoa.view.myapplication.OvertimeInfoActivity;
+import com.oliveoa.widget.LoadingDialog;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -21,14 +81,21 @@ public class OvertimeUndisposedActivity extends AppCompatActivity {
     //申请人，加班时间，加班原因
     private TextView tApplicant,ttime,treason;
     private Button bagree,bdisagree;
-
+    private OvertimeApplication oa;
+    private ArrayList<OvertimeApplicationApprovedOpinionList> oaaol;
+    private ContactInfo ci;
+    private String TAG = this.getClass().getSimpleName();
+    private LoadingDialog loadingDialog;
+    private int index;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_overtime_undisposed);
-
+        oa = getIntent().getParcelableExtra("oa");
+        index = getIntent().getIntExtra("index",index);//0为列表，1为审批意见返回
+        Log.i(TAG,"oa="+oa);
+        Log.i(TAG,"index="+index);
         initView();
-        initData();
     }
     private void initView() {
         back = (ImageView) findViewById(R.id.iback);
@@ -37,6 +104,9 @@ public class OvertimeUndisposedActivity extends AppCompatActivity {
         tApplicant = (TextView) findViewById(R.id.name);
         bagree = (Button) findViewById(R.id.agree);
         bdisagree = (Button) findViewById(R.id.disagree);
+
+        loadingDialog = new LoadingDialog(OvertimeUndisposedActivity.this,"正在加载数据",true);
+        initData();
 
         //点击事件
         back.setOnClickListener(new View.OnClickListener() {
@@ -54,6 +124,7 @@ public class OvertimeUndisposedActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(OvertimeUndisposedActivity.this, ApprovalAdviseActivity.class);
+                intent.putExtra("index",11);//1同意
                 startActivity(intent);
                 finish();
                 //Toast.makeText(mContext, "你点击了返回", Toast.LENGTH_SHORT).show();
@@ -64,6 +135,7 @@ public class OvertimeUndisposedActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(OvertimeUndisposedActivity.this, ApprovalAdviseActivity.class);
+                intent.putExtra("index",11);//0不同意
                 startActivity(intent);
                 finish();
                 //Toast.makeText(mContext, "你点击了返回", Toast.LENGTH_SHORT).show();
@@ -72,8 +144,19 @@ public class OvertimeUndisposedActivity extends AppCompatActivity {
     }
 
     private void initData() {
+        DateFormat dateFormat = new DateFormat();
+        ttime.setText(dateFormat.LongtoDatemm(oa.getBegintime())+"--"+dateFormat.LongtoDatemm(oa.getEndtime()));
+        treason.setText(oa.getReason());
+        ContactInfoDao cidao = EntityManager.getInstance().getContactInfo();
+        ci = cidao.queryBuilder().where(ContactInfoDao.Properties.Eid.eq(oa.getEid())).unique();
+        if(ci!=null) {
+            tApplicant.setText(ci.getName());
+        }else{
+            tApplicant.setText("");
+        }
 
     }
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

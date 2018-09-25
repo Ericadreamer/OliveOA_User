@@ -7,14 +7,14 @@ import java.util.ArrayList;
 
 public class LeaveOfficeApplicationJsonBean {
     private LeaveOfficeApplication leaveOfficeApplication;
-    private ArrayList<LeaveOfficeApplicationApprovedOpinion> leaveOfficeApplicationApprovedOpinions;
+    private ArrayList<LeaveOfficeApplicationApprovedOpinion> leaveOfficeApplicationApprovedOpinionList;
 
     public LeaveOfficeApplicationJsonBean() {
     }
 
-    public LeaveOfficeApplicationJsonBean(LeaveOfficeApplication leaveOfficeApplication, ArrayList<LeaveOfficeApplicationApprovedOpinion> leaveOfficeApplicationApprovedOpinions) {
+    public LeaveOfficeApplicationJsonBean(LeaveOfficeApplication leaveOfficeApplication, ArrayList<LeaveOfficeApplicationApprovedOpinion> leaveOfficeApplicationApprovedOpinionsList) {
         this.leaveOfficeApplication = leaveOfficeApplication;
-        this.leaveOfficeApplicationApprovedOpinions = leaveOfficeApplicationApprovedOpinions;
+        this.leaveOfficeApplicationApprovedOpinionList = leaveOfficeApplicationApprovedOpinionList;
     }
 
     public LeaveOfficeApplication getLeaveOfficeApplication() {
@@ -25,19 +25,19 @@ public class LeaveOfficeApplicationJsonBean {
         this.leaveOfficeApplication = leaveOfficeApplication;
     }
 
-    public ArrayList<LeaveOfficeApplicationApprovedOpinion> getLeaveOfficeApplicationApprovedOpinions() {
-        return leaveOfficeApplicationApprovedOpinions;
+    public ArrayList<LeaveOfficeApplicationApprovedOpinion> getLeaveOfficeApplicationApprovedOpinionList() {
+        return leaveOfficeApplicationApprovedOpinionList;
     }
 
-    public void setLeaveOfficeApplicationApprovedOpinions(ArrayList<LeaveOfficeApplicationApprovedOpinion> leaveOfficeApplicationApprovedOpinions) {
-        this.leaveOfficeApplicationApprovedOpinions = leaveOfficeApplicationApprovedOpinions;
+    public void setLeaveOfficeApplicationApprovedOpinionList(ArrayList<LeaveOfficeApplicationApprovedOpinion> leaveOfficeApplicationApprovedOpinionList) {
+        this.leaveOfficeApplicationApprovedOpinionList = leaveOfficeApplicationApprovedOpinionList;
     }
 
     @Override
     public String toString() {
         return "LeaveOfficeApplicationJsonBean{" +
                 "leaveOfficeApplication=" + leaveOfficeApplication +
-                ", leaveOfficeApplicationApprovedOpinions=" + leaveOfficeApplicationApprovedOpinions +
+                ", leaveOfficeApplicationApprovedOpinionList=" + leaveOfficeApplicationApprovedOpinionList +
                 '}';
     }
 }

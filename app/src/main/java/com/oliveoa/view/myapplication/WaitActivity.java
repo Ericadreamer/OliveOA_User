@@ -271,6 +271,7 @@ public class WaitActivity extends Fragment {
                     ArrayList<OvertimeApplicationApprovedOpinionList> overtimeApplicationApprovedOpinionLists  = overtimeApplicationJsonBean.getOvertimeApplicationApprovedOpinionLists();
                     startActivity( new Intent(mContext, OvertimeInfoActivity.class)
                             .putExtra("oa",overtimeApplication)
+                           .putExtra("index",0)
                             .putParcelableArrayListExtra("oaaol",overtimeApplicationApprovedOpinionLists));
                 } else {
                     Looper.prepare();//解决子线程弹toast问题
@@ -333,6 +334,7 @@ public class WaitActivity extends Fragment {
                     ArrayList<LeaveApplicationApprovedOpinionList> leaveApplicationApprovedOpinionLists  = leaveApplicationInfoJsonBean.getLeaveApplicationApprovedOpinionLists();
                     startActivity( new Intent(mContext, LeaveInfoActivity.class)
                             .putExtra("la",leaveApplication)
+                           .putExtra("index",0)
                             .putParcelableArrayListExtra("laaol",leaveApplicationApprovedOpinionLists));
                 } else {
                     Looper.prepare();//解决子线程弹toast问题
@@ -395,6 +397,7 @@ public class WaitActivity extends Fragment {
                     ArrayList<BusinessTripApplicationApprovedOpinionList> businessTripApplicationApprovedOpinionLists = businessTripApplicationInfoJsonBean.getBusinessTripApplicationApprovedOpinionLists();
                     startActivity( new Intent(mContext, BusinessInfoActivity.class)
                             .putExtra("bta",businessTripApplication)
+                            .putExtra("index",0)
                             .putParcelableArrayListExtra("btaaol",businessTripApplicationApprovedOpinionLists));
                 } else {
                     Looper.prepare();//解决子线程弹toast问题
@@ -457,6 +460,7 @@ public class WaitActivity extends Fragment {
                     ArrayList<MeetingMember> list = aaol.getMeetingMembers();
                     startActivity( new Intent(mContext, MeetingInfoActivity.class)
                             .putExtra("ap",meetingApplication)
+                            .putExtra("index",0)
                             .putParcelableArrayListExtra("list",list));
                 } else {
                     Looper.prepare();//解决子线程弹toast问题
@@ -516,10 +520,12 @@ public class WaitActivity extends Fragment {
                 if (statusAndDataHttpResponseObject.getStatus() == 0) {
                     LeaveOfficeApplicationJsonBean aaol  = statusAndDataHttpResponseObject.getData();
                     LeaveOfficeApplication ap = aaol.getLeaveOfficeApplication();
-                    ArrayList<LeaveOfficeApplicationApprovedOpinion> list = aaol.getLeaveOfficeApplicationApprovedOpinions();
+                    ArrayList<LeaveOfficeApplicationApprovedOpinion> list = aaol.getLeaveOfficeApplicationApprovedOpinionList();
+                    Log.e(TAG,list.toString());
                     startActivity( new Intent(mContext, DimissionInfoActivity.class)
                             .putExtra("ap",ap)
-                            .putParcelableArrayListExtra("aaol",list));
+                            .putExtra("index",0)
+                            .putParcelableArrayListExtra("list",list));
                 } else {
                     Looper.prepare();//解决子线程弹toast问题
                     Toast.makeText(mContext,"获取离职申请数据失败", Toast.LENGTH_SHORT).show();
@@ -578,10 +584,11 @@ public class WaitActivity extends Fragment {
                 if (statusAndDataHttpResponseObject.getStatus() == 0) {
                     FulltimeApplicationInfoJsonBean aaol  = statusAndDataHttpResponseObject.getData();
                     FulltimeApplication ap = aaol.getFulltimeApplication();
-                    ArrayList<FulltimeApplicationApprovedOpinion> list = aaol.getFulltimeApplicationApprovedOpinions();
+                    ArrayList<FulltimeApplicationApprovedOpinion> list = aaol.getFulltimeApplicationApprovedOpinionList();
                     startActivity( new Intent(mContext, RegularWorkerInfoActivity.class)
                             .putExtra("ap",ap)
-                            .putParcelableArrayListExtra("aaol",list));
+                            .putExtra("index",0)
+                            .putParcelableArrayListExtra("list",list));
                 } else {
                     Looper.prepare();//解决子线程弹toast问题
                     Toast.makeText(mContext,"获取转正申请数据失败", Toast.LENGTH_SHORT).show();
@@ -650,10 +657,11 @@ public class WaitActivity extends Fragment {
                 if (statusAndDataHttpResponseObject.getStatus() == 0) {
                     JobTransferApplicationInfoJsonBean aaol  = statusAndDataHttpResponseObject.getData();
                     JobTransferApplication ap = aaol.getJobTransferApplication();
-                    ArrayList<JobTransferApplicationApprovedOpinion> list = aaol.getJobTransferApplicationApprovedOpinions();
+                    ArrayList<JobTransferApplicationApprovedOpinion> list = aaol.getJobTransferApplicationApprovedOpinionList();
                     startActivity( new Intent(mContext, AdjustPostInfoActivity.class)
                             .putExtra("ap",ap)
-                            .putParcelableArrayListExtra("aaol",list));
+                            .putExtra("index",0)
+                            .putParcelableArrayListExtra("list",list));
                 } else {
                     Looper.prepare();//解决子线程弹toast问题
                     Toast.makeText(mContext,"获取会议申请数据失败", Toast.LENGTH_SHORT).show();
@@ -727,7 +735,8 @@ public class WaitActivity extends Fragment {
                     startActivity( new Intent(mContext, RecruitmentInfoActivity.class)
                             .putExtra("ap",ap)
                             .putExtra("apitem",apitem)
-                            .putParcelableArrayListExtra("aaol",list));
+                            .putExtra("index",0)
+                            .putParcelableArrayListExtra("list",list));
                 } else {
                     Looper.prepare();//解决子线程弹toast问题
                     Toast.makeText(mContext,"获取会议申请数据失败", Toast.LENGTH_SHORT).show();

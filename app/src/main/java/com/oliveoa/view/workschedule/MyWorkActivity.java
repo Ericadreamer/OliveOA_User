@@ -1,9 +1,7 @@
 package com.oliveoa.view.workschedule;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.os.Looper;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -24,31 +22,18 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.oliveoa.Adapter.GridViewAdapter;
 import com.oliveoa.Adapter.WorkGridViewAdapter;
 import com.oliveoa.common.StatusAndMsgAndDataHttpResponseObject;
 import com.oliveoa.controller.WorkDetailService;
-import com.oliveoa.greendao.ContactInfoDao;
 import com.oliveoa.greendao.IssueWorkDao;
-import com.oliveoa.greendao.MeetingApplicationAndStatusDao;
 import com.oliveoa.greendao.WorkDetailDao;
 import com.oliveoa.greendao.WorkdetailAndStatusDao;
-import com.oliveoa.pojo.ContactInfo;
 import com.oliveoa.pojo.IssueWork;
-import com.oliveoa.pojo.MeetingApplicationAndStatus;
 import com.oliveoa.pojo.WorkDetail;
 import com.oliveoa.pojo.WorkdetailAndStatus;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
 import com.oliveoa.view.TabLayoutBottomActivity;
-import com.oliveoa.view.meetingmanagement.MyMeetingActivity;
-import com.oliveoa.view.mine.MineActivity;
-import com.oliveoa.view.myapplication.LeaveInfoActivity;
-import com.oliveoa.view.myapplication.MainApplicationActivity;
-import com.oliveoa.view.myapplication.MyApplicationActivity;
-import com.oliveoa.view.notice.MySubmissionActivity;
-import com.oliveoa.view.notice.NoticeActivity;
-import com.oliveoa.view.notice.NoticeListActivity;
 import com.oliveoa.widget.LoadingDialog;
 
 import org.greenrobot.greendao.query.QueryBuilder;

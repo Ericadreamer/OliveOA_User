@@ -31,7 +31,6 @@ import com.oliveoa.pojo.DepartmentInfo;
 import com.oliveoa.pojo.MeetingApplication;
 import com.oliveoa.util.DateFormat;
 import com.oliveoa.util.EntityManager;
-import com.oliveoa.util.LinesEditView;
 import com.oliveoa.view.R;
 import com.oliveoa.widget.LoadingDialog;
 

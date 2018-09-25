@@ -1,19 +1,16 @@
 package com.oliveoa.view.approval;
 
 import android.content.Context;
-import android.content.Entity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,7 +46,6 @@ import com.oliveoa.jsonbean.OvertimeApplicationJsonBean;
 import com.oliveoa.jsonbean.RecruitmentApplicationInfoJsonBean;
 import com.oliveoa.pojo.AnnouncementApprovedOpinionList;
 import com.oliveoa.pojo.AnnouncementInfo;
-import com.oliveoa.pojo.Application;
 import com.oliveoa.pojo.Approval;
 import com.oliveoa.pojo.BusinessTripApplication;
 import com.oliveoa.pojo.BusinessTripApplicationApprovedOpinionList;
@@ -73,14 +69,6 @@ import com.oliveoa.pojo.RecruitmentApplicationApprovedOpinion;
 import com.oliveoa.pojo.RecruitmentApplicationItem;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
-import com.oliveoa.view.myapplication.AdjustPostInfoActivity;
-import com.oliveoa.view.myapplication.BusinessInfoActivity;
-import com.oliveoa.view.myapplication.DimissionInfoActivity;
-import com.oliveoa.view.myapplication.LeaveInfoActivity;
-import com.oliveoa.view.myapplication.MeetingInfoActivity;
-import com.oliveoa.view.myapplication.OvertimeInfoActivity;
-import com.oliveoa.view.myapplication.RecruitmentInfoActivity;
-import com.oliveoa.view.myapplication.RegularWorkerInfoActivity;
 import com.oliveoa.widget.LoadingDialog;
 
 import java.util.ArrayList;
@@ -209,9 +197,9 @@ public class UndisposedApprovalActivity extends Fragment {
             }
             tcontent = (TextView) childAt.findViewById(R.id.approval_content);
             tcontent.setText(approvalList.get(i).getContent());
-            ttype = (TextView) childAt.findViewById(R.id.type);
+           // ttype = (TextView) childAt.findViewById(R.id.type);
 
-            if(approvalList.get(i).getType()==1){
+          /*  if(approvalList.get(i).getType()==1){
                 ttype.setText("加班申请");
             }else if(approvalList.get(i).getType()==2){
                 ttype.setText("请假申请");;
@@ -229,7 +217,7 @@ public class UndisposedApprovalActivity extends Fragment {
                 ttype.setText("招聘申请");
             }else{
                 ttype.setText("公告审批");
-            }
+            }*/
         }
 
     }
@@ -286,7 +274,7 @@ public class UndisposedApprovalActivity extends Fragment {
                     ArrayList<OvertimeApplicationApprovedOpinionList> overtimeApplicationApprovedOpinionLists  = overtimeApplicationJsonBean.getOvertimeApplicationApprovedOpinionLists();
                     startActivity( new Intent(mContext, OvertimeUndisposedActivity.class)
                             .putExtra("oa",overtimeApplication)
-                            .putParcelableArrayListExtra("oaaol",overtimeApplicationApprovedOpinionLists));
+                            .putExtra("index",0));
                 } else {
                     Looper.prepare();//解决子线程弹toast问题
                     Toast.makeText(mContext,overtimeApplicationHttpResponseObject.getMsg(), Toast.LENGTH_SHORT).show();
@@ -348,7 +336,7 @@ public class UndisposedApprovalActivity extends Fragment {
                     ArrayList<LeaveApplicationApprovedOpinionList> leaveApplicationApprovedOpinionLists  = leaveApplicationInfoJsonBean.getLeaveApplicationApprovedOpinionLists();
                     startActivity( new Intent(mContext, LeaveUndisposedActivity.class)
                             .putExtra("la",leaveApplication)
-                            .putParcelableArrayListExtra("laaol",leaveApplicationApprovedOpinionLists));
+                            .putExtra("index",0));
                 } else {
                     Looper.prepare();//解决子线程弹toast问题
                     Toast.makeText(mContext,leaveApplicationHttpResponseObject.getMsg(), Toast.LENGTH_SHORT).show();
@@ -410,7 +398,7 @@ public class UndisposedApprovalActivity extends Fragment {
                     ArrayList<BusinessTripApplicationApprovedOpinionList> businessTripApplicationApprovedOpinionLists = businessTripApplicationInfoJsonBean.getBusinessTripApplicationApprovedOpinionLists();
                     startActivity( new Intent(mContext, BusinessUndisposedActivity.class)
                             .putExtra("bta",businessTripApplication)
-                            .putParcelableArrayListExtra("btaaol",businessTripApplicationApprovedOpinionLists));
+                            .putExtra("index",0));
                 } else {
                     Looper.prepare();//解决子线程弹toast问题
                     Toast.makeText(mContext,businessTripApplicationHttpResponseObject.getMsg(), Toast.LENGTH_SHORT).show();
@@ -472,7 +460,7 @@ public class UndisposedApprovalActivity extends Fragment {
                     ArrayList<MeetingMember> list = aaol.getMeetingMembers();
                     startActivity( new Intent(mContext, MeetingUndisposedActivity.class)
                             .putExtra("ap",meetingApplication)
-                            .putParcelableArrayListExtra("list",list));
+                            .putExtra("index",0));
                 } else {
                     Looper.prepare();//解决子线程弹toast问题
                     Toast.makeText(mContext,"获取会议申请数据失败", Toast.LENGTH_SHORT).show();
@@ -531,10 +519,10 @@ public class UndisposedApprovalActivity extends Fragment {
                 if (statusAndDataHttpResponseObject.getStatus() == 0) {
                     LeaveOfficeApplicationJsonBean aaol  = statusAndDataHttpResponseObject.getData();
                     LeaveOfficeApplication ap = aaol.getLeaveOfficeApplication();
-                    ArrayList<LeaveOfficeApplicationApprovedOpinion> list = aaol.getLeaveOfficeApplicationApprovedOpinions();
+                    ArrayList<LeaveOfficeApplicationApprovedOpinion> list = aaol.getLeaveOfficeApplicationApprovedOpinionList();
                     startActivity( new Intent(mContext, DimissionUndisposedActivity.class)
                             .putExtra("ap",ap)
-                            .putParcelableArrayListExtra("aaol",list));
+                            .putExtra("index",0));
                 } else {
                     Looper.prepare();//解决子线程弹toast问题
                     Toast.makeText(mContext,"获取离职申请数据失败", Toast.LENGTH_SHORT).show();
@@ -593,10 +581,10 @@ public class UndisposedApprovalActivity extends Fragment {
                 if (statusAndDataHttpResponseObject.getStatus() == 0) {
                     FulltimeApplicationInfoJsonBean aaol  = statusAndDataHttpResponseObject.getData();
                     FulltimeApplication ap = aaol.getFulltimeApplication();
-                    ArrayList<FulltimeApplicationApprovedOpinion> list = aaol.getFulltimeApplicationApprovedOpinions();
+                    ArrayList<FulltimeApplicationApprovedOpinion> list = aaol.getFulltimeApplicationApprovedOpinionList();
                     startActivity( new Intent(mContext, RegularWorkerUndisposedActivity.class)
                             .putExtra("ap",ap)
-                            .putParcelableArrayListExtra("aaol",list));
+                            .putExtra("index",0));
                 } else {
                     Looper.prepare();//解决子线程弹toast问题
                     Toast.makeText(mContext,"获取转正申请数据失败", Toast.LENGTH_SHORT).show();
@@ -665,10 +653,10 @@ public class UndisposedApprovalActivity extends Fragment {
                 if (statusAndDataHttpResponseObject.getStatus() == 0) {
                     JobTransferApplicationInfoJsonBean aaol  = statusAndDataHttpResponseObject.getData();
                     JobTransferApplication ap = aaol.getJobTransferApplication();
-                    ArrayList<JobTransferApplicationApprovedOpinion> list = aaol.getJobTransferApplicationApprovedOpinions();
+                    ArrayList<JobTransferApplicationApprovedOpinion> list = aaol.getJobTransferApplicationApprovedOpinionList();
                     startActivity( new Intent(mContext, AdjustPostUndisposedActivity.class)
                             .putExtra("ap",ap)
-                            .putParcelableArrayListExtra("aaol",list));
+                            .putExtra("index",0));
                 } else {
                     Looper.prepare();//解决子线程弹toast问题
                     Toast.makeText(mContext,"获取调岗申请数据失败", Toast.LENGTH_SHORT).show();
@@ -742,7 +730,7 @@ public class UndisposedApprovalActivity extends Fragment {
                     startActivity( new Intent(mContext, RecruitmentUndisposedActivity.class)
                             .putExtra("ap",ap)
                             .putExtra("apitem",apitem)
-                            .putParcelableArrayListExtra("aaol",list));
+                            .putExtra("index",0));
                 } else {
                     Looper.prepare();//解决子线程弹toast问题
                     Toast.makeText(mContext,"获取招聘申请数据失败", Toast.LENGTH_SHORT).show();
@@ -813,7 +801,7 @@ public class UndisposedApprovalActivity extends Fragment {
                     ArrayList<AnnouncementApprovedOpinionList> list = aaol.getAnnouncementApprovedOpinionList();
                     startActivity( new Intent(mContext, NoticeUndisposedActivity.class)
                             .putExtra("ap",ap)
-                            .putParcelableArrayListExtra("aaol",list));
+                            .putExtra("index",0));
                 } else {
                     Looper.prepare();//解决子线程弹toast问题
                     Toast.makeText(mContext,"获取公告数据失败", Toast.LENGTH_SHORT).show();

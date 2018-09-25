@@ -16,16 +16,20 @@ import android.widget.Toast;
 import com.oliveoa.common.LeaveApplicationHttpResponseObject;
 import com.oliveoa.controller.LeaveApplicationService;
 import com.oliveoa.greendao.ApplicationDao;
+import com.oliveoa.greendao.ApprovalDao;
 import com.oliveoa.greendao.ContactInfoDao;
 import com.oliveoa.jsonbean.LeaveApplicationInfoJsonBean;
 import com.oliveoa.jsonbean.LeaveApplicationJsonBean;
 import com.oliveoa.pojo.Application;
+import com.oliveoa.pojo.Approval;
 import com.oliveoa.pojo.ContactInfo;
 import com.oliveoa.pojo.LeaveApplication;
 import com.oliveoa.pojo.LeaveApplicationApprovedOpinionList;
 import com.oliveoa.util.DateFormat;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
+import com.oliveoa.view.approval.MainApprovalActivity;
+import com.oliveoa.view.approval.MyApprovalActivity;
 import com.oliveoa.widget.LoadingDialog;
 
 import java.util.ArrayList;
@@ -46,6 +50,7 @@ public class LeaveInfoActivity extends AppCompatActivity {
     private String TAG = this.getClass().getSimpleName();
     private ApplicationDao applicationDao;
     private Application application;
+    private int index;
 private LoadingDialog loadingDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +59,8 @@ private LoadingDialog loadingDialog;
 
         la = getIntent().getParcelableExtra("la");
         laaol = getIntent().getParcelableArrayListExtra("laaol");
+        index = getIntent().getIntExtra("index",index);
+        Log.e(TAG,"index="+index);
         Log.i(TAG,"la="+la+"---laaol="+laaol);
 
         initView();
@@ -72,12 +79,90 @@ private LoadingDialog loadingDialog;
         back.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
             @Override
             public void onClick(View view) {
-              loadingDialog.show();back();
+              loadingDialog.show();
+                if(index==0){
+                    back();
+                }else{
+                    backAppoval();
+                }
             }
         });
         initData();
         addViewItem(null);
     }
+
+    private void backAppoval() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
+                String s = pref.getString("sessionid", "");
+                //Todo Service
+                LeaveApplicationService service = new LeaveApplicationService();
+                //审批
+                ApprovalDao approvalDao = EntityManager.getInstance().getApprovalDao();
+                Approval approval = new Approval();
+                int i, j = 0;
+                LeaveApplicationJsonBean infoJsonBean = service.getlapplicationunapproved(s); //获取待我审核的申请
+                Log.e(TAG, infoJsonBean.toString());
+                if (infoJsonBean.getStatus() == 0) {
+                    approvalDao.deleteAll();
+                    for (i = 0; i < infoJsonBean.getData().size(); i++) {
+                        approval.setAid( infoJsonBean.getData().get(i).getLaid());
+                        approval.setSeid(infoJsonBean.getData().get(i).getEid());
+                        approval.setContent(infoJsonBean.getData().get(i).getReason());
+                        approval.setStatus(0);
+                        approval.setType(2);
+                        approvalDao.insert(approval);
+                    }
+                    //startActivity(new Intent(MainApprovalActivity.this, MyApprovalActivity.class).putExtra("index",2));
+                } else {
+                    Looper.prepare();//解决子线程弹toast问题
+                    Toast.makeText(getApplicationContext(), infoJsonBean.getMsg(), Toast.LENGTH_SHORT).show();
+                    Looper.loop();// 进入loop中的循环，查看消息队列
+                }
+                infoJsonBean = service.getlapplicationapproved(s); //获取我已经审核的申请
+                Log.e(TAG, infoJsonBean.toString());
+                if (infoJsonBean.getStatus() == 0) {
+                    for (i = 0; i < infoJsonBean.getData().size(); i++) {
+                        LeaveApplicationHttpResponseObject httpResponseObject = service.getlapplicationinfo(s,infoJsonBean.getData().get(i).getLaid());
+                        if(httpResponseObject.getStatus()==0) {
+                            approval.setAid(infoJsonBean.getData().get(i).getLaid());
+                            approval.setSeid(infoJsonBean.getData().get(i).getEid());
+                            approval.setContent(infoJsonBean.getData().get(i).getReason());
+                            approval.setStatus(1);
+                            approval.setType(2);
+                            for (j = 0; j < httpResponseObject.getData().getLeaveApplicationApprovedOpinionLists().size(); j++) {
+                                switch (httpResponseObject.getData().getLeaveApplicationApprovedOpinionLists().get(j).getIsapproved()) {
+                                    case -2:
+                                        approval.setStatus(-2);
+                                        break;
+                                    case -1:
+                                        approval.setStatus(-1);
+                                        break;
+                                    case 0:
+                                        approval.setStatus(0);
+                                        break;
+                                    case 1:
+                                        approval.setStatus(1);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            approvalDao.insert(approval);
+                        }
+                    }
+                    startActivity(new Intent(LeaveInfoActivity.this, MyApprovalActivity.class).putExtra("index",2));
+                } else {
+                    Looper.prepare();//解决子线程弹toast问题
+                    Toast.makeText(getApplicationContext(), infoJsonBean.getMsg(), Toast.LENGTH_SHORT).show();
+                    Looper.loop();// 进入loop中的循环，查看消息队列
+                }
+            }
+        }).start();
+    }
+
     private void back() {
         new Thread(new Runnable() {
             @Override

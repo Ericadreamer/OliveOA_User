@@ -54,7 +54,6 @@ import com.oliveoa.pojo.RecruitmentApplication;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
 import com.oliveoa.view.TabLayoutBottomActivity;
-import com.oliveoa.view.notice.AddNoticeActivity;
 import com.oliveoa.widget.LoadingDialog;
 
 import java.util.ArrayList;
@@ -512,10 +511,10 @@ private LoadingDialog loadingDialog;
                             application.setAid(arrayListStatusAndDataHttpResponseObject.getData().get(i).getLoaid());
                             application.setDescribe(arrayListStatusAndDataHttpResponseObject.getData().get(i).getReason());
                             application.setType(5);
-                            if (aaol.getLeaveOfficeApplicationApprovedOpinions() != null) {
+                            if (aaol.getLeaveOfficeApplicationApprovedOpinionList() != null) {
 
-                                for (j=0;j<aaol.getLeaveOfficeApplicationApprovedOpinions().size();j++) {
-                                    switch (aaol.getLeaveOfficeApplicationApprovedOpinions().get(j).getIsapproved()) {
+                                for (j=0;j<aaol.getLeaveOfficeApplicationApprovedOpinionList().size();j++) {
+                                    switch (aaol.getLeaveOfficeApplicationApprovedOpinionList().get(j).getIsapproved()) {
                                         case -2:
                                             application.setStatus(-2);
                                             break;
@@ -572,10 +571,10 @@ private LoadingDialog loadingDialog;
                             application.setAid(arrayListStatusAndDataHttpResponseObject.getData().get(i).getFaid());
                             application.setDescribe(arrayListStatusAndDataHttpResponseObject.getData().get(i).getPersonalSummary());
                             application.setType(6);
-                            if (aaol.getFulltimeApplicationApprovedOpinions() != null) {
+                            if (aaol.getFulltimeApplicationApprovedOpinionList() != null) {
 
-                                for (j=0;j<aaol.getFulltimeApplicationApprovedOpinions().size();j++) {
-                                    switch (aaol.getFulltimeApplicationApprovedOpinions().get(j).getIsapproved()) {
+                                for (j=0;j<aaol.getFulltimeApplicationApprovedOpinionList().size();j++) {
+                                    switch (aaol.getFulltimeApplicationApprovedOpinionList().get(j).getIsapproved()) {
                                         case -2:
                                             application.setStatus(-2);
                                             break;
@@ -634,10 +633,10 @@ private LoadingDialog loadingDialog;
                             application.setAid(arrayListStatusAndDataHttpResponseObject.getData().get(i).getJtaid());
                             application.setDescribe(arrayListStatusAndDataHttpResponseObject.getData().get(i).getReason());
                             application.setType(7);
-                            if (aaol.getJobTransferApplicationApprovedOpinions() != null) {
+                            if (aaol.getJobTransferApplicationApprovedOpinionList() != null) {
 
-                                for (j=0;j<aaol.getJobTransferApplicationApprovedOpinions().size();j++) {
-                                    switch (aaol.getJobTransferApplicationApprovedOpinions().get(j).getIsapproved()) {
+                                for (j=0;j<aaol.getJobTransferApplicationApprovedOpinionList().size();j++) {
+                                    switch (aaol.getJobTransferApplicationApprovedOpinionList().get(j).getIsapproved()) {
                                         case -2:
                                             application.setStatus(-2);
                                             break;

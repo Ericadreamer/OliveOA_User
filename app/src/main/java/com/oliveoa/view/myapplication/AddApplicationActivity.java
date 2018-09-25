@@ -21,7 +21,6 @@ import com.oliveoa.greendao.MeetingApplicationDao;
 import com.oliveoa.greendao.OvertimeApplicationDao;
 import com.oliveoa.greendao.RecruitmentApplicationItemDao;
 import com.oliveoa.jsonbean.ContactJsonBean;
-import com.oliveoa.jsonbean.DutyInfoJsonBean;
 import com.oliveoa.pojo.DepartmentInfo;
 import com.oliveoa.pojo.MeetingApplication;
 import com.oliveoa.pojo.RecruitmentApplicationItem;

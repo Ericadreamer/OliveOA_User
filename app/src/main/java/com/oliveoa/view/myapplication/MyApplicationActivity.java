@@ -18,12 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.oliveoa.greendao.ApplicationDao;
-import com.oliveoa.greendao.BusinessTripApplicationApprovedOpinionListDao;
-import com.oliveoa.greendao.BusinessTripApplicationDao;
-import com.oliveoa.greendao.LeaveApplicationApprovedOpinionListDao;
-import com.oliveoa.greendao.LeaveApplicationDao;
-import com.oliveoa.greendao.OvertimeApplicationApprovedOpinionListDao;
-import com.oliveoa.greendao.OvertimeApplicationDao;
 import com.oliveoa.pojo.Application;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;

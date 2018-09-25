@@ -7,14 +7,14 @@ import java.util.ArrayList;
 
 public class FulltimeApplicationInfoJsonBean {
     private FulltimeApplication fulltimeApplication;
-    private ArrayList<FulltimeApplicationApprovedOpinion> fulltimeApplicationApprovedOpinions;
+    private ArrayList<FulltimeApplicationApprovedOpinion> fulltimeApplicationApprovedOpinionList;
 
     public FulltimeApplicationInfoJsonBean() {
     }
 
-    public FulltimeApplicationInfoJsonBean(FulltimeApplication fulltimeApplication, ArrayList<FulltimeApplicationApprovedOpinion> fulltimeApplicationApprovedOpinions) {
+    public FulltimeApplicationInfoJsonBean(FulltimeApplication fulltimeApplication, ArrayList<FulltimeApplicationApprovedOpinion> fulltimeApplicationApprovedOpinionList) {
         this.fulltimeApplication = fulltimeApplication;
-        this.fulltimeApplicationApprovedOpinions = fulltimeApplicationApprovedOpinions;
+        this.fulltimeApplicationApprovedOpinionList = fulltimeApplicationApprovedOpinionList;
     }
 
     public FulltimeApplication getFulltimeApplication() {
@@ -25,19 +25,19 @@ public class FulltimeApplicationInfoJsonBean {
         this.fulltimeApplication = fulltimeApplication;
     }
 
-    public ArrayList<FulltimeApplicationApprovedOpinion> getFulltimeApplicationApprovedOpinions() {
-        return fulltimeApplicationApprovedOpinions;
+    public ArrayList<FulltimeApplicationApprovedOpinion> getFulltimeApplicationApprovedOpinionList() {
+        return fulltimeApplicationApprovedOpinionList;
     }
 
-    public void setFulltimeApplicationApprovedOpinions(ArrayList<FulltimeApplicationApprovedOpinion> fulltimeApplicationApprovedOpinions) {
-        this.fulltimeApplicationApprovedOpinions = fulltimeApplicationApprovedOpinions;
+    public void setFulltimeApplicationApprovedOpinionList(ArrayList<FulltimeApplicationApprovedOpinion> fulltimeApplicationApprovedOpinionList) {
+        this.fulltimeApplicationApprovedOpinionList = fulltimeApplicationApprovedOpinionList;
     }
 
     @Override
     public String toString() {
         return "FulltimeApplicationInfoJsonBean{" +
                 "fulltimeApplication=" + fulltimeApplication +
-                ", fulltimeApplicationApprovedOpinions=" + fulltimeApplicationApprovedOpinions +
+                ", fulltimeApplicationApprovedOpinionList=" + fulltimeApplicationApprovedOpinionList +
                 '}';
     }
 }

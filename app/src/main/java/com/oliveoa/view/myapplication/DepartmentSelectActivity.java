@@ -1,9 +1,7 @@
 package com.oliveoa.view.myapplication;
 
 import android.content.DialogInterface;
-import android.content.Entity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.v7.app.AlertDialog;
@@ -20,15 +18,11 @@ import com.oliveoa.controller.UserInfoService;
 import com.oliveoa.greendao.ContactInfoDao;
 import com.oliveoa.greendao.DepartmentAndDutyDao;
 import com.oliveoa.greendao.DepartmentInfoDao;
-import com.oliveoa.greendao.JobTransferApplicationDao;
 import com.oliveoa.jsonbean.DutyInfoJsonBean;
 import com.oliveoa.pojo.ContactInfo;
 import com.oliveoa.pojo.DepartmentAndDuty;
 import com.oliveoa.pojo.DepartmentInfo;
 import com.oliveoa.pojo.DutyInfo;
-import com.oliveoa.pojo.JobTransferApplication;
-import com.oliveoa.pojo.RecruitmentApplication;
-import com.oliveoa.pojo.RecruitmentApplicationItem;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
 import com.oliveoa.view.mine.PersonalDetailsEditActivity;

@@ -27,8 +27,9 @@ public class ApprovalDao extends AbstractDao<Approval, Void> {
         public final static Property Aid = new Property(0, String.class, "aid", false, "AID");
         public final static Property Seid = new Property(1, String.class, "seid", false, "SEID");
         public final static Property Content = new Property(2, String.class, "content", false, "CONTENT");
-        public final static Property Type = new Property(3, int.class, "type", false, "TYPE");
-        public final static Property Status = new Property(4, int.class, "status", false, "STATUS");
+        public final static Property Status = new Property(3, int.class, "status", false, "STATUS");
+        public final static Property Type = new Property(4, int.class, "type", false, "TYPE");
+        public final static Property Isapprove = new Property(5, int.class, "isapprove", false, "ISAPPROVE");
     }
 
 
@@ -47,8 +48,9 @@ public class ApprovalDao extends AbstractDao<Approval, Void> {
                 "\"AID\" TEXT," + // 0: aid
                 "\"SEID\" TEXT," + // 1: seid
                 "\"CONTENT\" TEXT," + // 2: content
-                "\"TYPE\" INTEGER NOT NULL ," + // 3: type
-                "\"STATUS\" INTEGER NOT NULL );"); // 4: status
+                "\"STATUS\" INTEGER NOT NULL ," + // 3: status
+                "\"TYPE\" INTEGER NOT NULL ," + // 4: type
+                "\"ISAPPROVE\" INTEGER NOT NULL );"); // 5: isapprove
     }
 
     /** Drops the underlying database table. */
@@ -75,8 +77,9 @@ public class ApprovalDao extends AbstractDao<Approval, Void> {
         if (content != null) {
             stmt.bindString(3, content);
         }
-        stmt.bindLong(4, entity.getType());
-        stmt.bindLong(5, entity.getStatus());
+        stmt.bindLong(4, entity.getStatus());
+        stmt.bindLong(5, entity.getType());
+        stmt.bindLong(6, entity.getIsapprove());
     }
 
     @Override
@@ -97,8 +100,9 @@ public class ApprovalDao extends AbstractDao<Approval, Void> {
         if (content != null) {
             stmt.bindString(3, content);
         }
-        stmt.bindLong(4, entity.getType());
-        stmt.bindLong(5, entity.getStatus());
+        stmt.bindLong(4, entity.getStatus());
+        stmt.bindLong(5, entity.getType());
+        stmt.bindLong(6, entity.getIsapprove());
     }
 
     @Override
@@ -112,8 +116,9 @@ public class ApprovalDao extends AbstractDao<Approval, Void> {
             cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0), // aid
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // seid
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // content
-            cursor.getInt(offset + 3), // type
-            cursor.getInt(offset + 4) // status
+            cursor.getInt(offset + 3), // status
+            cursor.getInt(offset + 4), // type
+            cursor.getInt(offset + 5) // isapprove
         );
         return entity;
     }
@@ -123,8 +128,9 @@ public class ApprovalDao extends AbstractDao<Approval, Void> {
         entity.setAid(cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0));
         entity.setSeid(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setContent(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setType(cursor.getInt(offset + 3));
-        entity.setStatus(cursor.getInt(offset + 4));
+        entity.setStatus(cursor.getInt(offset + 3));
+        entity.setType(cursor.getInt(offset + 4));
+        entity.setIsapprove(cursor.getInt(offset + 5));
      }
     
     @Override

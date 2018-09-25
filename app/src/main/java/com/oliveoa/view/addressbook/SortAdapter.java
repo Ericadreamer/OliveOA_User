@@ -14,7 +14,6 @@ import com.oliveoa.greendao.ContactInfoDao;
 import com.oliveoa.pojo.ContactInfo;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
-import com.oliveoa.view.TabLayoutBottomActivity;
 import com.oliveoa.view.mine.PersonalDetailsActivity;
 
 import java.util.List;

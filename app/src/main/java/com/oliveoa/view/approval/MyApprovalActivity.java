@@ -3,20 +3,13 @@ package com.oliveoa.view.approval;
 import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.oliveoa.greendao.ApplicationDao;
 import com.oliveoa.greendao.ApprovalDao;
-import com.oliveoa.pojo.Application;
 import com.oliveoa.pojo.Approval;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
-import com.oliveoa.view.TabLayoutBottomActivity;
-import com.oliveoa.view.myapplication.MyApplicationActivity;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -26,7 +19,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.TabLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 

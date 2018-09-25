@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -16,11 +17,13 @@ import android.widget.Toast;
 import com.oliveoa.common.StatusAndDataHttpResponseObject;
 import com.oliveoa.controller.LeaveOfficeApplicationService;
 import com.oliveoa.greendao.ApplicationDao;
+import com.oliveoa.greendao.ApprovalDao;
 import com.oliveoa.greendao.ContactInfoDao;
 import com.oliveoa.greendao.DepartmentInfoDao;
 import com.oliveoa.greendao.DutyInfoDao;
 import com.oliveoa.jsonbean.LeaveOfficeApplicationJsonBean;
 import com.oliveoa.pojo.Application;
+import com.oliveoa.pojo.Approval;
 import com.oliveoa.pojo.ContactInfo;
 import com.oliveoa.pojo.DepartmentInfo;
 import com.oliveoa.pojo.DutyInfo;
@@ -29,6 +32,8 @@ import com.oliveoa.pojo.LeaveOfficeApplicationApprovedOpinion;
 import com.oliveoa.util.DateFormat;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
+import com.oliveoa.view.approval.MainApprovalActivity;
+import com.oliveoa.view.approval.MyApprovalActivity;
 import com.oliveoa.widget.LoadingDialog;
 
 import java.util.ArrayList;
@@ -55,6 +60,7 @@ public class DimissionInfoActivity extends AppCompatActivity {
     private ApplicationDao applicationDao;
     private Application application;
     private LoadingDialog loadingDialog;
+    private int index;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +68,10 @@ public class DimissionInfoActivity extends AppCompatActivity {
 
         ap = getIntent().getParcelableExtra("ap");
         list = getIntent().getParcelableArrayListExtra("list");
+        index = getIntent().getIntExtra("index",index);
+        Log.e(TAG,"index="+index);
         Log.i(TAG,"ap="+ap+"---list="+list);
+
         initView();
     }
 
@@ -75,17 +84,100 @@ public class DimissionInfoActivity extends AppCompatActivity {
         back = (ImageView) findViewById(R.id.iback);
         tname = (TextView) findViewById(R.id.person_approving);
         tstatus = (TextView) findViewById(R.id.status);
+        addlistView = (LinearLayout)findViewById(R.id.approve_list);
         loadingDialog = new LoadingDialog(DimissionInfoActivity.this,"正在加载数据",true);
 
         back.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
             @Override
             public void onClick(View view) {
                 loadingDialog.show();
-                back();
+                if(index==0){
+                    back();
+                }else{
+                    backAppoval();
+                }
             }
         });
         initData();
         addViewItem(null);
+    }
+
+    private void backAppoval() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
+                String s = pref.getString("sessionid", "");
+                //Todo Service
+                LeaveOfficeApplicationService service = new LeaveOfficeApplicationService();
+                //审批
+                ApprovalDao approvalDao = EntityManager.getInstance().getApprovalDao();
+                Approval approval = new Approval();
+                int i,j= 0;
+                StatusAndDataHttpResponseObject<ArrayList<LeaveOfficeApplication>> infoJsonBean = service.getApplicationIunapproved(s); //获取待我审核的申请
+                Log.e(TAG, infoJsonBean.toString());
+                if (infoJsonBean.getStatus() == 0) {
+                    approvalDao.deleteAll();
+                    for (i = 0; i < infoJsonBean.getData().size(); i++) {
+                        approval.setAid( infoJsonBean.getData().get(i).getLoaid());
+                        approval.setSeid(infoJsonBean.getData().get(i).getEid());
+                        approval.setContent(infoJsonBean.getData().get(i).getReason());
+                        approval.setStatus(0);
+                        approval.setType(5);
+                        approvalDao.insert(approval);
+                    }
+                    //startActivity(new Intent(MainApprovalActivity.this, MyApprovalActivity.class).putExtra("index",5));
+                } else {
+                    Looper.prepare();//解决子线程弹toast问题
+                    Toast.makeText(getApplicationContext(),"获取待审批离职申请数据失败", Toast.LENGTH_SHORT).show();
+                    Looper.loop();// 进入loop中的循环，查看消息队列
+                }
+                infoJsonBean = service.getApplicationIapproved(s); //获取我已经审核的申请
+                Log.e(TAG, infoJsonBean.toString());
+                if (infoJsonBean.getStatus() == 0) {
+                    approvalDao.deleteAll();
+                    for (i = 0; i < infoJsonBean.getData().size(); i++) {
+                        StatusAndDataHttpResponseObject<LeaveOfficeApplicationJsonBean> httpResponseObject = service.getApplicationInfo(s,infoJsonBean.getData().get(i).getLoaid());
+                        if(httpResponseObject.getStatus()==0){
+                            approval.setAid( infoJsonBean.getData().get(i).getLoaid());
+                            approval.setSeid(infoJsonBean.getData().get(i).getEid());
+                            approval.setContent(infoJsonBean.getData().get(i).getReason());
+                            approval.setStatus(1);
+                            approval.setType(5);
+
+                            for (j = 0; j < httpResponseObject.getData().getLeaveOfficeApplicationApprovedOpinionList().size(); j++) {
+                                switch (httpResponseObject.getData().getLeaveOfficeApplicationApprovedOpinionList().get(j).getIsapproved()) {
+                                    case -2:
+                                        approval.setStatus(-2);
+                                        break;
+                                    case -1:
+                                        approval.setStatus(-1);
+                                        break;
+                                    case 0:
+                                        approval.setStatus(0);
+                                        break;
+                                    case 1:
+                                        approval.setStatus(1);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            approvalDao.insert(approval);
+                        }else{
+                            Looper.prepare();//解决子线程弹toast问题
+                            Toast.makeText(getApplicationContext(),"获取已审批离职申请数据失败", Toast.LENGTH_SHORT).show();
+                            Looper.loop();// 进入loop中的循环，查看消息队列
+                        }
+                    }
+                    startActivity(new Intent(DimissionInfoActivity.this, MyApprovalActivity.class).putExtra("index",5));
+                } else {
+                    Looper.prepare();//解决子线程弹toast问题
+                    Toast.makeText(getApplicationContext(),"获取已审批离职申请数据失败", Toast.LENGTH_SHORT).show();
+                    Looper.loop();// 进入loop中的循环，查看消息队列
+                }
+            }
+        }).start();
     }
 
     private void back() {
@@ -111,9 +203,9 @@ public class DimissionInfoActivity extends AppCompatActivity {
                         application.setAid(statusAndDataHttpResponseObject.getData().get(i).getLoaid());
                         application.setDescribe(statusAndDataHttpResponseObject.getData().get(i).getReason());
                         application.setType(5);
-                        if(infojsonbean.getData().getLeaveOfficeApplicationApprovedOpinions()!=null) {
-                            for(j=0;j<infojsonbean.getData().getLeaveOfficeApplicationApprovedOpinions().size();j++)
-                            switch (infojsonbean.getData().getLeaveOfficeApplicationApprovedOpinions().get(j).getIsapproved()) {
+                        if(infojsonbean.getData().getLeaveOfficeApplicationApprovedOpinionList()!=null) {
+                            for(j=0;j<infojsonbean.getData().getLeaveOfficeApplicationApprovedOpinionList().size();j++)
+                            switch (infojsonbean.getData().getLeaveOfficeApplicationApprovedOpinionList().get(j).getIsapproved()) {
                                 case -2:
                                     application.setStatus(-2);
                                     break;

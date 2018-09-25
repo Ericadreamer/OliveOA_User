@@ -61,7 +61,7 @@ public class Const {
     public static final String ANNOUNCEMENT_INFO = HOSTPATH + "/oliveoa/employee/get_announcement_details.do";
     public static final String ANNOUNCEMENT_PUBLISHED_SEARCH= HOSTPATH + "/oliveoa/employee/get_announcement_publish.do";
     public static final String ANNOUNCEMENT_NEEDAPPROVED_SEARCH= HOSTPATH + "/oliveoa/employee/get_announcement_need_approved.do";
-    public static final String ANNOUNCEMENT_APPROVED_SEARCH =HOSTPATH+"/oliveoa/employee/application/get_announcement_approved.do";
+    public static final String ANNOUNCEMENT_APPROVED_SEARCH =HOSTPATH+"/oliveoa/employee/get_announcement_approved.do";
     public static final String ANNOUNCEMENT_ISUBMITED_SEARCH= HOSTPATH + "/oliveoa/employee/get_announcement_Isubmit.do";
 
     //会议申请

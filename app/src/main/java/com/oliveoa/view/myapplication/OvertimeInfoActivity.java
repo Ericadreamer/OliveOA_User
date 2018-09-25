@@ -16,16 +16,20 @@ import android.widget.Toast;
 import com.oliveoa.common.OvertimeApplicationHttpResponseObject;
 import com.oliveoa.controller.OvertimeApplictionService;
 import com.oliveoa.greendao.ApplicationDao;
+import com.oliveoa.greendao.ApprovalDao;
 import com.oliveoa.greendao.ContactInfoDao;
 import com.oliveoa.jsonbean.OvertimeApplicationInfoJsonBean;
 import com.oliveoa.jsonbean.OvertimeApplicationJsonBean;
 import com.oliveoa.pojo.Application;
+import com.oliveoa.pojo.Approval;
 import com.oliveoa.pojo.ContactInfo;
 import com.oliveoa.pojo.OvertimeApplication;
 import com.oliveoa.pojo.OvertimeApplicationApprovedOpinionList;
 import com.oliveoa.util.DateFormat;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
+import com.oliveoa.view.approval.MainApprovalActivity;
+import com.oliveoa.view.approval.MyApprovalActivity;
 import com.oliveoa.widget.LoadingDialog;
 
 import java.util.ArrayList;
@@ -42,11 +46,11 @@ public class OvertimeInfoActivity extends AppCompatActivity {
     private ContactInfoDao cidao;
     private ContactInfo ci;
     private LinearLayout addOAlistView;
-
     private String TAG = this.getClass().getSimpleName();
     private ApplicationDao applicationDao;
     private Application application;
-private LoadingDialog loadingDialog;
+    private LoadingDialog loadingDialog;
+    private int index;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +58,8 @@ private LoadingDialog loadingDialog;
 
         oa = getIntent().getParcelableExtra("oa");
         oaaol = getIntent().getParcelableArrayListExtra("oaaol");
+        index = getIntent().getIntExtra("index",index);//0申请，1审批
+        Log.e(TAG,"index="+index);
         Log.i(TAG,"oa="+oa);
         Log.i(TAG,"oaaol="+oaaol);
         initView();
@@ -69,13 +75,96 @@ private LoadingDialog loadingDialog;
         back.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
             @Override
             public void onClick(View view) {
-               loadingDialog.show();back();
+               loadingDialog.show();
+               if(index==0){
+                   back();
+                }else{
+                   backAppoval();
+                }
             }
         });
 
         initData();
         addViewItem(null);
 
+    }
+
+    private void backAppoval() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
+                String s = pref.getString("sessionid", "");
+                //Todo Service
+                OvertimeApplictionService overtimeApplictionService = new OvertimeApplictionService();
+                //加班
+               ApprovalDao approvalDao = EntityManager.getInstance().getApprovalDao();
+               Approval approval = new Approval();
+                int i, j = 0;
+                OvertimeApplicationInfoJsonBean overtimeApplicationInfoJsonBean = overtimeApplictionService.unapprovedotapplication(s); //获取待我审核的申请
+                Log.e(TAG, overtimeApplicationInfoJsonBean.toString());
+                if (overtimeApplicationInfoJsonBean.getStatus() == 0) {
+                    approvalDao.deleteAll();
+                    for (i = 0; i < overtimeApplicationInfoJsonBean.getData().size(); i++) {
+                        approval.setAid( overtimeApplicationInfoJsonBean.getData().get(i).getOaid());
+                        approval.setSeid(overtimeApplicationInfoJsonBean.getData().get(i).getEid());
+                        approval.setContent(overtimeApplicationInfoJsonBean.getData().get(i).getReason());
+                        approval.setStatus(0);
+                        approval.setType(1);
+                        approval.setIsapprove(-2);
+                        approvalDao.insert(approval);
+                    }
+                    //startActivity(new Intent(MainApprovalActivity.this, MyApprovalActivity.class).putExtra("index",1));
+                } else {
+                    Looper.prepare();//解决子线程弹toast问题
+                    Toast.makeText(getApplicationContext(), overtimeApplicationInfoJsonBean.getMsg(), Toast.LENGTH_SHORT).show();
+                    Looper.loop();// 进入loop中的循环，查看消息队列
+                }
+                overtimeApplicationInfoJsonBean = overtimeApplictionService.approvedotapplication(s); //获取我已经审核的申请
+                Log.e(TAG, overtimeApplicationInfoJsonBean.toString());
+                if (overtimeApplicationInfoJsonBean.getStatus() == 0) {
+                    approvalDao.deleteAll();
+                    for (i = 0; i < overtimeApplicationInfoJsonBean.getData().size(); i++) {
+                        OvertimeApplicationHttpResponseObject httpResponseObject = overtimeApplictionService.overtimeapplication(s,overtimeApplicationInfoJsonBean.getData().get(i).getOaid());
+                        if(httpResponseObject.getStatus()==0){
+                            approval.setAid( overtimeApplicationInfoJsonBean.getData().get(i).getOaid());
+                            approval.setSeid(overtimeApplicationInfoJsonBean.getData().get(i).getEid());
+                            approval.setContent(overtimeApplicationInfoJsonBean.getData().get(i).getReason());
+                            approval.setStatus(1);
+                            approval.setType(1);
+                            for (j = 0;j<httpResponseObject.getOvertimeApplicationJsonBean().getOvertimeApplicationApprovedOpinionLists().size();j++){
+                                switch (httpResponseObject.getOvertimeApplicationJsonBean().getOvertimeApplicationApprovedOpinionLists().get(j).getIsapproved()) {
+                                    case -2:
+                                        approval.setStatus(-2);
+                                        break;
+                                    case -1:
+                                        approval.setStatus(-1);
+                                        break;
+                                    case 0:
+                                        approval.setStatus(0);
+                                        break;
+                                    case 1:
+                                        approval.setStatus(1);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            approvalDao.insert(approval);
+                        }else{
+                            Looper.prepare();//解决子线程弹toast问题
+                            Toast.makeText(getApplicationContext(), httpResponseObject.getMsg(), Toast.LENGTH_SHORT).show();
+                            Looper.loop();// 进入loop中的循环，查看消息队列
+                        }
+                    }
+                    startActivity(new Intent(OvertimeInfoActivity.this, MyApprovalActivity.class).putExtra("index",1));
+                } else {
+                    Looper.prepare();//解决子线程弹toast问题
+                    Toast.makeText(getApplicationContext(), overtimeApplicationInfoJsonBean.getMsg(), Toast.LENGTH_SHORT).show();
+                    Looper.loop();// 进入loop中的循环，查看消息队列
+                }
+            }
+        }).start();
     }
 
     private void back() {

@@ -1,6 +1,5 @@
 package com.oliveoa.view.notice;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,7 +7,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -137,6 +135,7 @@ public class MySubmissionActivity extends Fragment {
                                 Intent intent = new Intent(getActivity(), NoticeInfoActivity.class);
                                 intent.putExtra("notice", announcementInfos.get(position));
                                 intent.putExtra("list", announcementApprovedOpinionLists);
+                                intent.putExtra("index",0);
                                 startActivity(intent);
                                 getActivity().finish();
 

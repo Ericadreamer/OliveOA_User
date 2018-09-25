@@ -2,45 +2,25 @@ package com.oliveoa.view.notice;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
-import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.oliveoa.common.StatusAndDataHttpResponseObject;
-import com.oliveoa.controller.AnnouncementService;
 import com.oliveoa.greendao.AnnouncementInfoDao;
-import com.oliveoa.greendao.ContactInfoDao;
-import com.oliveoa.jsonbean.AnnouncementInfoJsonBean;
-import com.oliveoa.jsonbean.AnnouncementJsonBean;
-import com.oliveoa.pojo.AnnouncementApprovedOpinionList;
 import com.oliveoa.pojo.AnnouncementInfo;
-import com.oliveoa.pojo.ContactInfo;
-import com.oliveoa.util.DateFormat;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
-import com.oliveoa.view.myapplication.BusinessActivity;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class NoticeActivity extends Fragment {
     private RecyclerView mContentRv;

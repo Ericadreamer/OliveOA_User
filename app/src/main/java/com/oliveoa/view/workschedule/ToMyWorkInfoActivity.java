@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.oliveoa.greendao.ContactInfoDao;
 import com.oliveoa.pojo.ContactInfo;
 import com.oliveoa.pojo.IssueWork;
-import com.oliveoa.pojo.WorkDetail;
 import com.oliveoa.util.DateFormat;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;

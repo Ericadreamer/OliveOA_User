@@ -23,23 +23,15 @@ import com.oliveoa.greendao.DepartmentInfoDao;
 import com.oliveoa.greendao.DutyInfoDao;
 import com.oliveoa.greendao.UserInfoDao;
 import com.oliveoa.jsonbean.ContactJsonBean;
-import com.oliveoa.jsonbean.DutyInfoJsonBean;
 import com.oliveoa.jsonbean.StatusAndMsgJsonBean;
 import com.oliveoa.jsonbean.UserLoginJsonBean;
 import com.oliveoa.pojo.ContactInfo;
 import com.oliveoa.pojo.DepartmentAndDuty;
-import com.oliveoa.pojo.DepartmentInfo;
-import com.oliveoa.pojo.DutyInfo;
 import com.oliveoa.pojo.UserInfo;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
-import com.oliveoa.view.addressbook.User;
-import com.oliveoa.view.myapplication.AdjustPostActivity;
-import com.oliveoa.view.myapplication.DepartmentSelectActivity;
-import com.oliveoa.view.workschedule.ApprovalWorkActivity;
 import com.oliveoa.widget.LoadingDialog;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -50,10 +42,7 @@ import cn.qqtheme.framework.util.ConvertUtils;
 import cn.qqtheme.framework.widget.WheelView;
 
 import static com.oliveoa.util.Validator.isEmail;
-import static com.oliveoa.util.Validator.isFixPhone;
 import static com.oliveoa.util.Validator.isMobile;
-import static com.oliveoa.util.Validator.isUrl;
-import static com.oliveoa.util.Validator.isZipCode;
 
 public class PersonalDetailsEditActivity extends AppCompatActivity {
     private EditText ename, etel, email, eaddress;

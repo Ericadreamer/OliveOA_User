@@ -16,14 +16,18 @@ import android.widget.Toast;
 import com.oliveoa.common.StatusAndDataHttpResponseObject;
 import com.oliveoa.controller.MeetingApplicationService;
 import com.oliveoa.greendao.ApplicationDao;
+import com.oliveoa.greendao.ApprovalDao;
 import com.oliveoa.greendao.ContactInfoDao;
 import com.oliveoa.pojo.Application;
+import com.oliveoa.pojo.Approval;
 import com.oliveoa.pojo.ContactInfo;
 import com.oliveoa.pojo.MeetingApplication;
 import com.oliveoa.pojo.MeetingMember;
 import com.oliveoa.util.DateFormat;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
+import com.oliveoa.view.approval.MainApprovalActivity;
+import com.oliveoa.view.approval.MyApprovalActivity;
 import com.oliveoa.widget.LoadingDialog;
 
 import java.util.ArrayList;
@@ -46,6 +50,7 @@ public class MeetingInfoActivity extends AppCompatActivity {
     private ApplicationDao applicationDao;
     private Application application;
     private LoadingDialog loadingDialog;
+    private int index;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +58,8 @@ public class MeetingInfoActivity extends AppCompatActivity {
 
         ap = getIntent().getParcelableExtra("ap");
         list = getIntent().getParcelableArrayListExtra("list");
+        index = getIntent().getIntExtra("index",index);
+        Log.e(TAG,"index="+index);
         Log.i(TAG,"ap="+ap);
         Log.i(TAG,"list="+list);
         initView();
@@ -72,12 +79,86 @@ public class MeetingInfoActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
             @Override
             public void onClick(View view) {
-               loadingDialog.show();back();
+               loadingDialog.show();
+                if(index==0){
+                    back();
+                }else{
+                    backAppoval();
+                }
             }
         });
         initData();
         addViewItem(null);
     }
+
+    private void backAppoval() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
+                String s = pref.getString("sessionid", "");
+                //Todo Service
+                MeetingApplicationService service = new MeetingApplicationService();
+                //审批
+                ApprovalDao approvalDao = EntityManager.getInstance().getApprovalDao();
+                Approval approval = new Approval();
+                int i, j = 0;
+                StatusAndDataHttpResponseObject<ArrayList<MeetingApplication>> infoJsonBean = service.getApplicationIunapproved(s); //获取待我审核的申请
+                Log.e(TAG, infoJsonBean.toString());
+                if (infoJsonBean.getStatus() == 0) {
+                    approvalDao.deleteAll();
+                    for (i = 0; i < infoJsonBean.getData().size(); i++) {
+                        approval.setAid( infoJsonBean.getData().get(i).getMaid());
+                        approval.setSeid(infoJsonBean.getData().get(i).getEid());
+                        approval.setContent(infoJsonBean.getData().get(i).getTheme());
+                        approval.setStatus(0);
+                        approval.setType(4);
+                        approvalDao.insert(approval);
+                    }
+                    //startActivity(new Intent(MainApprovalActivity.this, MyApprovalActivity.class).putExtra("index",4));
+                } else {
+                    Looper.prepare();//解决子线程弹toast问题
+                    Toast.makeText(getApplicationContext(), "获取待审批会议申请数据失败", Toast.LENGTH_SHORT).show();
+                    Looper.loop();// 进入loop中的循环，查看消息队列
+                }
+                infoJsonBean = service.getApplicationIapproved(s); //获取我已经审核的申请
+                Log.e(TAG, infoJsonBean.toString());
+                if (infoJsonBean.getStatus() == 0) {
+                    approvalDao.deleteAll();
+                    for (i = 0; i < infoJsonBean.getData().size(); i++) {
+                        approval.setAid( infoJsonBean.getData().get(i).getMaid());
+                        approval.setSeid(infoJsonBean.getData().get(i).getEid());
+                        approval.setContent(infoJsonBean.getData().get(i).getTheme());
+                        approval.setStatus(1);
+                        approval.setType(4);
+                        switch (infoJsonBean.getData().get(i).getIsapproved()) {
+                            case -2:
+                                approval.setStatus(-2);
+                                break;
+                            case -1:
+                                approval.setStatus(-1);
+                                break;
+                            case 0:
+                                approval.setStatus(0);
+                                break;
+                            case 1:
+                                approval.setStatus(1);
+                                break;
+                            default:
+                                break;
+                        }
+                        approvalDao.insert(approval);
+                    }
+                    startActivity(new Intent(MeetingInfoActivity.this, MyApprovalActivity.class).putExtra("index",4));
+                } else {
+                    Looper.prepare();//解决子线程弹toast问题
+                    Toast.makeText(getApplicationContext(), "获取已审批会议申请数据失败", Toast.LENGTH_SHORT).show();
+                    Looper.loop();// 进入loop中的循环，查看消息队列
+                }
+            }
+        }).start();
+    }
+
     private void back() {
         new Thread(new Runnable() {
             @Override

@@ -24,7 +24,6 @@ import com.oliveoa.greendao.ApproveNumberDao;
 import com.oliveoa.greendao.ContactInfoDao;
 import com.oliveoa.greendao.DepartmentInfoDao;
 import com.oliveoa.greendao.IssueWorkDao;
-import com.oliveoa.greendao.WorkDetailDao;
 import com.oliveoa.greendao.WorkdetailAndStatusDao;
 import com.oliveoa.jsonbean.ContactJsonBean;
 import com.oliveoa.jsonbean.StatusAndMsgJsonBean;
