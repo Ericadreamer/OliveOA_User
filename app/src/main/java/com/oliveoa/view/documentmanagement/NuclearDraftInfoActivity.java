@@ -1,11 +1,15 @@
 package com.oliveoa.view.documentmanagement;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.oliveoa.view.R;
@@ -15,6 +19,8 @@ import java.util.TimerTask;
 
 public class NuclearDraftInfoActivity extends AppCompatActivity {
     private ImageView back;
+    private TextView ttitle,tcontent,tadvise;
+    private Button btn_download;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +33,10 @@ public class NuclearDraftInfoActivity extends AppCompatActivity {
 
     private void initView() {
         back = (ImageView) findViewById(R.id.iback);
+        ttitle = (TextView) findViewById(R.id.title);
+        tcontent = (TextView) findViewById(R.id.content);
+        tadvise = (TextView) findViewById(R.id.nuclear_advise);
+        btn_download = (Button) findViewById(R.id.download);
 
         //点击事件
         back.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
@@ -38,6 +48,33 @@ public class NuclearDraftInfoActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        btn_download.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(NuclearDraftInfoActivity.this);
+                dialog.setTitle("提示");
+                dialog.setMessage("是否下载附件");
+                dialog.setCancelable(false);
+                dialog.setNegativeButton("是", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        download();
+                    }
+                });
+                dialog.setPositiveButton("否", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                dialog.show();
+            }
+        });
+
+    }
+
+    public void download() {
 
     }
 
