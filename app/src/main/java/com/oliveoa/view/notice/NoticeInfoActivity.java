@@ -24,6 +24,7 @@ import com.oliveoa.pojo.AnnouncementInfo;
 import com.oliveoa.pojo.Application;
 import com.oliveoa.pojo.Approval;
 import com.oliveoa.pojo.ContactInfo;
+import com.oliveoa.util.DateFormat;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
 import com.oliveoa.view.TabLayoutBottomActivity;
@@ -36,7 +37,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class NoticeInfoActivity extends AppCompatActivity {
-    private TextView ttitle,tcontent,tvsignature;
+    private TextView ttitle,tcontent,tvsignature,tvtime;
     private LinearLayout addlistView;  //审批人列表
     private TextView tname,tstatus;  //审批进度item，审批人和审批状态
     private ImageView back;
@@ -64,6 +65,8 @@ public class NoticeInfoActivity extends AppCompatActivity {
         tstatus = (TextView) findViewById(R.id.status);
         ttitle = (TextView) findViewById(R.id.title);
         tcontent = (TextView) findViewById(R.id.content);
+        tvtime =(TextView)findViewById(R.id.tv_date);
+
         addlistView = (LinearLayout)findViewById(R.id.approve_list);
         tvsignature =(TextView)findViewById(R.id.signature);
         initData();
@@ -108,6 +111,7 @@ public class NoticeInfoActivity extends AppCompatActivity {
                         approval.setContent(infoJsonBean.getData().get(i).getContent());
                         approval.setStatus(0);
                         approval.setType(9);
+                        approval.setIsapprove(-2);
                         approvalDao.insert(approval);
                     }
                    // startActivity(new Intent(MainApprovalActivity.this, MyApprovalActivity.class).putExtra("index",9));
@@ -119,7 +123,6 @@ public class NoticeInfoActivity extends AppCompatActivity {
                 infoJsonBean = service.get_approvedannoucement(s); //获取我已经审核的申请
                 Log.e(TAG, infoJsonBean.toString());
                 if (infoJsonBean.getStatus() == 0) {
-                    approvalDao.deleteAll();
                     for (i = 0; i < infoJsonBean.getData().size(); i++) {
                         StatusAndDataHttpResponseObject<AnnouncementInfoJsonBean> httpResponseObject = service.get_annoucementinfo(s,infoJsonBean.getData().get(i).getAid());
                         if(httpResponseObject.getStatus()==0){
@@ -132,16 +135,16 @@ public class NoticeInfoActivity extends AppCompatActivity {
                             for (j = 0; j < httpResponseObject.getData().getAnnouncementApprovedOpinionList().size(); j++) {
                                 switch (httpResponseObject.getData().getAnnouncementApprovedOpinionList().get(j).getIsapproved()) {
                                     case -2:
-                                        approval.setStatus(-2);
+                                        approval.setIsapprove(-2);
                                         break;
                                     case -1:
-                                        approval.setStatus(-1);
+                                        approval.setIsapprove(-1);
                                         break;
                                     case 0:
-                                        approval.setStatus(0);
+                                        approval.setIsapprove(0);
                                         break;
                                     case 1:
-                                        approval.setStatus(1);
+                                        approval.setIsapprove(1);
                                         break;
                                     default:
                                         break;
@@ -171,6 +174,8 @@ public class NoticeInfoActivity extends AppCompatActivity {
             ttitle.setText(announcementInfo.getTitle());
             tcontent.setText(announcementInfo.getContent());
             tvsignature.setText(announcementInfo.getSignature());
+            DateFormat dateFormat = new DateFormat();
+            tvtime.setText(dateFormat.LongtoDatemm(announcementInfo.getPublishtime()));
         }
     }
 

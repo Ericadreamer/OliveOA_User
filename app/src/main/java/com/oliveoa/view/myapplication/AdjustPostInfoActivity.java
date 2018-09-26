@@ -121,6 +121,7 @@ public class AdjustPostInfoActivity extends AppCompatActivity {
                         approval.setContent(infoJsonBean.getData().get(i).getReason());
                         approval.setStatus(0);
                         approval.setType(7);
+                        approval.setIsapprove(-2);
                         approvalDao.insert(approval);
                     }
                     //startActivity(new Intent(MainApprovalActivity.this, MyApprovalActivity.class).putExtra("index",7));
@@ -132,7 +133,6 @@ public class AdjustPostInfoActivity extends AppCompatActivity {
                 infoJsonBean = service.getApplicationIapproved(s); //获取我已经审核的申请
                 Log.e(TAG, infoJsonBean.toString());
                 if (infoJsonBean.getStatus() == 0) {
-                    approvalDao.deleteAll();
                     for (i = 0; i < infoJsonBean.getData().size(); i++) {
                         StatusAndDataHttpResponseObject<JobTransferApplicationInfoJsonBean> httpResponseObject = service.getApplicationInfo(s,infoJsonBean.getData().get(i).getJtaid());
                         if(httpResponseObject.getStatus()==0){
@@ -144,16 +144,16 @@ public class AdjustPostInfoActivity extends AppCompatActivity {
                             for (j = 0; j < httpResponseObject.getData().getJobTransferApplicationApprovedOpinionList().size(); j++) {
                                 switch (httpResponseObject.getData().getJobTransferApplicationApprovedOpinionList().get(j).getIsapproved()) {
                                     case -2:
-                                        approval.setStatus(-2);
+                                        approval.setIsapprove(-2);
                                         break;
                                     case -1:
-                                        approval.setStatus(-1);
+                                        approval.setIsapprove(-1);
                                         break;
                                     case 0:
-                                        approval.setStatus(0);
+                                        approval.setIsapprove(0);
                                         break;
                                     case 1:
-                                        approval.setStatus(1);
+                                        approval.setIsapprove(1);
                                         break;
                                     default:
                                         break;
@@ -257,7 +257,16 @@ public class AdjustPostInfoActivity extends AppCompatActivity {
         }else{
             Toast.makeText(AdjustPostInfoActivity.this,"获取详情内容失败",Toast.LENGTH_SHORT);
         }
-
+        LinearLayout seid = (LinearLayout)findViewById(R.id.seid);
+        if(index==0){
+            seid.setVisibility(View.GONE);
+        }else{
+            ci = cidao.queryBuilder().where(ContactInfoDao.Properties.Eid.eq(ap.getEid())).unique();
+            TextView seidname = (TextView)findViewById(R.id.seidname);
+            if(ci!=null){
+                seidname.setText(ci.getName());
+            }
+        }
 
     }
 
@@ -279,7 +288,11 @@ public class AdjustPostInfoActivity extends AppCompatActivity {
                     String epname =tname.getText().toString().trim();
                     Application application = new Application();
                     application.setDescribe(list.get(finalI).getOpinion());
-                    application.setType(7);
+                    if(index==1) {
+                        application.setType(17);
+                    }else{
+                        application.setType(7);
+                    }
                     application.setAid(ap.getJtaid());
                     application.setStatus(list.get(finalI).getIsapproved());
 

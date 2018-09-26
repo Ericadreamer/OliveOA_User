@@ -127,6 +127,7 @@ private LoadingDialog loadingDialog;
                             approval.setContent(applcaitoninfo.getData().getRecruitmentApplicationItem().getPositionDescribe());
                             approval.setStatus(0);
                             approval.setType(8);
+                            approval.setIsapprove(-2);
                             approvalDao.insert(approval);
                         }else{
                             Looper.prepare();//解决子线程弹toast问题
@@ -144,7 +145,6 @@ private LoadingDialog loadingDialog;
                 infoJsonBean = service.getApplicationIapproved(s); //获取我已经审核的申请
                 Log.e(TAG, infoJsonBean.toString());
                 if (infoJsonBean.getStatus() == 0) {
-                    approvalDao.deleteAll();
                     for (i = 0; i < infoJsonBean.getData().size(); i++) {
                         StatusAndDataHttpResponseObject<RecruitmentApplicationInfoJsonBean> applcaitoninfo = service.getApplicationInfo(s,infoJsonBean.getData().get(i).getRaid());
                         if(applcaitoninfo.getStatus()==0){
@@ -158,16 +158,16 @@ private LoadingDialog loadingDialog;
                                 for (j = 0; j < httpResponseObject.getData().getRecruitmentApplicationApprovedOpinions().size(); j++) {
                                     switch (httpResponseObject.getData().getRecruitmentApplicationApprovedOpinions().get(j).getIsapproved()) {
                                         case -2:
-                                            approval.setStatus(-2);
+                                            approval.setIsapprove(-2);
                                             break;
                                         case -1:
-                                            approval.setStatus(-1);
+                                            approval.setIsapprove(-1);
                                             break;
                                         case 0:
-                                            approval.setStatus(0);
+                                            approval.setIsapprove(0);
                                             break;
                                         case 1:
-                                            approval.setStatus(1);
+                                            approval.setIsapprove(1);
                                             break;
                                         default:
                                             break;
@@ -270,6 +270,16 @@ private LoadingDialog loadingDialog;
                 }
             }
         }
+        LinearLayout seid = (LinearLayout)findViewById(R.id.seid);
+        if(index==0){
+            seid.setVisibility(View.GONE);
+        }else{
+            ci = cidao.queryBuilder().where(ContactInfoDao.Properties.Eid.eq(ap.getEid())).unique();
+            TextView seidname = (TextView)findViewById(R.id.seidname);
+            if(ci!=null){
+                seidname.setText(ci.getName());
+            }
+        }
 
 
     }
@@ -292,7 +302,11 @@ private LoadingDialog loadingDialog;
                     String epname =tname.getText().toString().trim();
                     Application application = new Application();
                     application.setDescribe(apitem.getPositionDescribe());
-                    application.setType(8);
+                    if(index==1){
+                        application.setType(18);
+                    }else{
+                        application.setType(8);
+                    }
                     application.setAid(apitem.getRaid());
                     application.setStatus(list.get(finalI).getIsapproved());
                     Intent intent = new Intent(RecruitmentInfoActivity.this, ApprovedInfoActivity.class);

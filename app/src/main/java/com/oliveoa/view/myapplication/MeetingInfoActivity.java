@@ -113,6 +113,7 @@ public class MeetingInfoActivity extends AppCompatActivity {
                         approval.setContent(infoJsonBean.getData().get(i).getTheme());
                         approval.setStatus(0);
                         approval.setType(4);
+                        approval.setIsapprove(-2);
                         approvalDao.insert(approval);
                     }
                     //startActivity(new Intent(MainApprovalActivity.this, MyApprovalActivity.class).putExtra("index",4));
@@ -124,7 +125,6 @@ public class MeetingInfoActivity extends AppCompatActivity {
                 infoJsonBean = service.getApplicationIapproved(s); //获取我已经审核的申请
                 Log.e(TAG, infoJsonBean.toString());
                 if (infoJsonBean.getStatus() == 0) {
-                    approvalDao.deleteAll();
                     for (i = 0; i < infoJsonBean.getData().size(); i++) {
                         approval.setAid( infoJsonBean.getData().get(i).getMaid());
                         approval.setSeid(infoJsonBean.getData().get(i).getEid());
@@ -133,16 +133,16 @@ public class MeetingInfoActivity extends AppCompatActivity {
                         approval.setType(4);
                         switch (infoJsonBean.getData().get(i).getIsapproved()) {
                             case -2:
-                                approval.setStatus(-2);
+                                approval.setIsapprove(-2);
                                 break;
                             case -1:
-                                approval.setStatus(-1);
+                                approval.setIsapprove(-1);
                                 break;
                             case 0:
-                                approval.setStatus(0);
+                                approval.setIsapprove(0);
                                 break;
                             case 1:
-                                approval.setStatus(1);
+                                approval.setIsapprove(1);
                                 break;
                             default:
                                 break;
@@ -228,6 +228,16 @@ public class MeetingInfoActivity extends AppCompatActivity {
         }else{
             tmembers.setText("");
         }
+        LinearLayout seid = (LinearLayout)findViewById(R.id.seid);
+        if(index==0){
+            seid.setVisibility(View.GONE);
+        }else{
+            ci = cidao.queryBuilder().where(ContactInfoDao.Properties.Eid.eq(ap.getEid())).unique();
+            TextView seidname = (TextView)findViewById(R.id.seidname);
+            if(ci!=null){
+                seidname.setText(ci.getName());
+            }
+        }
 
 
     }
@@ -250,7 +260,11 @@ public class MeetingInfoActivity extends AppCompatActivity {
                     String epname =tname.getText().toString().trim();
                     Application application = new Application();
                     application.setDescribe(ap.getOpinion());
-                    application.setType(4);
+                    if(index==1){
+                        application.setType(14);
+                    }else{
+                        application.setType(4);
+                    }
                     application.setAid(ap.getMaid());
                     application.setStatus(ap.getIsapproved());
                     Intent intent = new Intent(MeetingInfoActivity.this, ApprovedInfoActivity.class);

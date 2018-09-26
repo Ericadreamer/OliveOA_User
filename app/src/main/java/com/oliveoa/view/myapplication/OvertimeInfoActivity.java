@@ -70,6 +70,7 @@ public class OvertimeInfoActivity extends AppCompatActivity {
         ttime = (TextView) findViewById(R.id.time);
         treason = (TextView) findViewById(R.id.reason);
         addOAlistView = (LinearLayout)findViewById(R.id.approve_list);
+
         loadingDialog = new LoadingDialog(OvertimeInfoActivity.this,"正在加载数据",true);
 
         back.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
@@ -123,7 +124,6 @@ public class OvertimeInfoActivity extends AppCompatActivity {
                 overtimeApplicationInfoJsonBean = overtimeApplictionService.approvedotapplication(s); //获取我已经审核的申请
                 Log.e(TAG, overtimeApplicationInfoJsonBean.toString());
                 if (overtimeApplicationInfoJsonBean.getStatus() == 0) {
-                    approvalDao.deleteAll();
                     for (i = 0; i < overtimeApplicationInfoJsonBean.getData().size(); i++) {
                         OvertimeApplicationHttpResponseObject httpResponseObject = overtimeApplictionService.overtimeapplication(s,overtimeApplicationInfoJsonBean.getData().get(i).getOaid());
                         if(httpResponseObject.getStatus()==0){
@@ -135,16 +135,16 @@ public class OvertimeInfoActivity extends AppCompatActivity {
                             for (j = 0;j<httpResponseObject.getOvertimeApplicationJsonBean().getOvertimeApplicationApprovedOpinionLists().size();j++){
                                 switch (httpResponseObject.getOvertimeApplicationJsonBean().getOvertimeApplicationApprovedOpinionLists().get(j).getIsapproved()) {
                                     case -2:
-                                        approval.setStatus(-2);
+                                        approval.setIsapprove(-2);
                                         break;
                                     case -1:
-                                        approval.setStatus(-1);
+                                        approval.setIsapprove(-1);
                                         break;
                                     case 0:
-                                        approval.setStatus(0);
+                                        approval.setIsapprove(0);
                                         break;
                                     case 1:
-                                        approval.setStatus(1);
+                                        approval.setIsapprove(1);
                                         break;
                                     default:
                                         break;
@@ -241,6 +241,16 @@ public class OvertimeInfoActivity extends AppCompatActivity {
         DateFormat dateFormat = new DateFormat();
         ttime.setText(dateFormat.LongtoDatemm(oa.getBegintime())+"--"+dateFormat.LongtoDatemm(oa.getEndtime()));
         treason.setText(oa.getReason());
+        LinearLayout seid = (LinearLayout)findViewById(R.id.seid);
+        if(index==0){
+            seid.setVisibility(View.GONE);
+        }else{
+            ci = cidao.queryBuilder().where(ContactInfoDao.Properties.Eid.eq(oa.getEid())).unique();
+            TextView seidname = (TextView)findViewById(R.id.seidname);
+            if(ci!=null){
+                seidname.setText(ci.getName());
+            }
+        }
     }
     /**
      * Item排序
@@ -260,7 +270,11 @@ public class OvertimeInfoActivity extends AppCompatActivity {
                     String epname =tname.getText().toString().trim();
                     Application application = new Application();
                     application.setDescribe(oaaol.get(finalI).getOpinion());
-                    application.setType(1);
+                    if(index==1){
+                        application.setType(11);
+                    }else{
+                        application.setType(1);
+                    }
                     application.setAid(oaaol.get(finalI).getOaid());
                     application.setStatus(oaaol.get(finalI).getIsapproved());
                     Log.e(TAG,"APPLICATION="+application.toString());

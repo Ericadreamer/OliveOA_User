@@ -113,6 +113,7 @@ private LoadingDialog loadingDialog;
                         approval.setContent(infoJsonBean.getData().get(i).getReason());
                         approval.setStatus(0);
                         approval.setType(2);
+                        approval.setIsapprove(-2);
                         approvalDao.insert(approval);
                     }
                     //startActivity(new Intent(MainApprovalActivity.this, MyApprovalActivity.class).putExtra("index",2));
@@ -135,16 +136,16 @@ private LoadingDialog loadingDialog;
                             for (j = 0; j < httpResponseObject.getData().getLeaveApplicationApprovedOpinionLists().size(); j++) {
                                 switch (httpResponseObject.getData().getLeaveApplicationApprovedOpinionLists().get(j).getIsapproved()) {
                                     case -2:
-                                        approval.setStatus(-2);
+                                        approval.setIsapprove(-2);
                                         break;
                                     case -1:
-                                        approval.setStatus(-1);
+                                        approval.setIsapprove(-1);
                                         break;
                                     case 0:
-                                        approval.setStatus(0);
+                                        approval.setIsapprove(0);
                                         break;
                                     case 1:
-                                        approval.setStatus(1);
+                                        approval.setIsapprove(1);
                                         break;
                                     default:
                                         break;
@@ -264,6 +265,16 @@ private LoadingDialog loadingDialog;
                  ttype.setText("其他");
                  break;
         }
+        LinearLayout seid = (LinearLayout)findViewById(R.id.seid);
+        if(index==0){
+            seid.setVisibility(View.GONE);
+        }else{
+            ci = cidao.queryBuilder().where(ContactInfoDao.Properties.Eid.eq(la.getEid())).unique();
+            TextView seidname = (TextView)findViewById(R.id.seidname);
+            if(ci!=null){
+                seidname.setText(ci.getName());
+            }
+        }
     }
 
     /**
@@ -284,7 +295,11 @@ private LoadingDialog loadingDialog;
                     String epname =tname.getText().toString().trim();
                     Application application = new Application();
                     application.setDescribe(laaol.get(finalI).getOpinion());
-                    application.setType(2);
+                    if(index==1){
+                        application.setType(12);
+                    }else{
+                        application.setType(2);
+                    }
                     application.setAid(laaol.get(finalI).getLaid());
                     application.setStatus(laaol.get(finalI).getIsapproved());
                     Intent intent = new Intent(LeaveInfoActivity.this, ApprovedInfoActivity.class);

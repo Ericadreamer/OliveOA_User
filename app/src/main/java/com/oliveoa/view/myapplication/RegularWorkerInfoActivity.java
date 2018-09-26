@@ -120,6 +120,7 @@ public class RegularWorkerInfoActivity extends AppCompatActivity {
                         approval.setContent(infoJsonBean.getData().get(i).getPersonalSummary());
                         approval.setStatus(0);
                         approval.setType(6);
+                        approval.setIsapprove(-2);
                         approvalDao.insert(approval);
                     }
                     //startActivity(new Intent(MainApprovalActivity.this, MyApprovalActivity.class).putExtra("index",6));
@@ -131,7 +132,6 @@ public class RegularWorkerInfoActivity extends AppCompatActivity {
                 infoJsonBean = service.getApplicationIapproved(s); //获取我已经审核的申请
                 Log.e(TAG, infoJsonBean.toString());
                 if (infoJsonBean.getStatus() == 0) {
-                    approvalDao.deleteAll();
                     for (i = 0; i < infoJsonBean.getData().size(); i++) {
                         StatusAndDataHttpResponseObject<FulltimeApplicationInfoJsonBean> httpResponseObject = service.getApplicationInfo(s,infoJsonBean.getData().get(i).getFaid());
                         if(httpResponseObject.getStatus()==0){
@@ -143,16 +143,16 @@ public class RegularWorkerInfoActivity extends AppCompatActivity {
                             for (j = 0; j < httpResponseObject.getData().getFulltimeApplicationApprovedOpinionList().size(); j++) {
                                 switch (httpResponseObject.getData().getFulltimeApplicationApprovedOpinionList().get(j).getIsapproved()) {
                                     case -2:
-                                        approval.setStatus(-2);
+                                        approval.setIsapprove(-2);
                                         break;
                                     case -1:
-                                        approval.setStatus(-1);
+                                        approval.setIsapprove(-1);
                                         break;
                                     case 0:
-                                        approval.setStatus(0);
+                                        approval.setIsapprove(0);
                                         break;
                                     case 1:
-                                        approval.setStatus(1);
+                                        approval.setIsapprove(1);
                                         break;
                                     default:
                                         break;
@@ -236,12 +236,13 @@ public class RegularWorkerInfoActivity extends AppCompatActivity {
         departmentInfoDao = EntityManager.getInstance().getDepartmentInfo();
         dutyInfoDao = EntityManager.getInstance().getDutyInfoInfo();
 
-        tstartDate.setText(dateFormat.LongtoDate(ap.getBegintime()));
-        tendDate.setText(dateFormat.LongtoDate(ap.getEndtime()));
+        tstartDate.setText(dateFormat.LongtoDatedd(ap.getBegintime()));
+        tendDate.setText(dateFormat.LongtoDatedd(ap.getEndtime()));
         tsummary.setText(ap.getPersonalSummary());
 
         ci = cidao.queryBuilder().where(ContactInfoDao.Properties.Eid.eq(ap.getEid())).unique();
         if(ci!=null){
+            Log.i(TAG,ci.toString());
             dp = departmentInfoDao.queryBuilder().where(DepartmentInfoDao.Properties.Dcid.eq(ci.getDcid())).unique();
             if(dp!=null){
                 dt = dutyInfoDao.queryBuilder().where(DutyInfoDao.Properties.Pcid.eq(ci.getPcid())).unique();
@@ -251,6 +252,15 @@ public class RegularWorkerInfoActivity extends AppCompatActivity {
             }
         }else{
             tContentDcpid.setText("");
+        }
+        LinearLayout seid = (LinearLayout)findViewById(R.id.seid);
+        if(index==0){
+            seid.setVisibility(View.GONE);
+        }else{
+            TextView seidname = (TextView)findViewById(R.id.seidname);
+            if(ci!=null){
+                seidname.setText(ci.getName());
+            }
         }
 
 
@@ -274,7 +284,11 @@ public class RegularWorkerInfoActivity extends AppCompatActivity {
                     String epname =tname.getText().toString().trim();
                     Application application = new Application();
                     application.setDescribe(ap.getPersonalSummary());
-                    application.setType(6);
+                    if(index==1){
+                        application.setType(16);
+                    }else{
+                        application.setType(6);
+                    }
                     application.setAid(ap.getFaid());
                     application.setStatus(list.get(finalI).getIsapproved());
                     Intent intent = new Intent(RegularWorkerInfoActivity.this, ApprovedInfoActivity.class);

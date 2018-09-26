@@ -29,6 +29,7 @@ import com.oliveoa.controller.MeetingApplicationService;
 import com.oliveoa.controller.OvertimeApplictionService;
 import com.oliveoa.controller.RecruitmentApplicationService;
 import com.oliveoa.controller.UserInfoService;
+import com.oliveoa.greendao.ApprovalDao;
 import com.oliveoa.greendao.ContactInfoDao;
 import com.oliveoa.greendao.DepartmentInfoDao;
 import com.oliveoa.greendao.DutyInfoDao;
@@ -41,10 +42,12 @@ import com.oliveoa.jsonbean.JobTransferApplicationInfoJsonBean;
 import com.oliveoa.jsonbean.LeaveApplicationInfoJsonBean;
 import com.oliveoa.jsonbean.LeaveOfficeApplicationJsonBean;
 import com.oliveoa.jsonbean.MeetingApplicationInfoJsonBean;
+import com.oliveoa.jsonbean.OvertimeApplicationInfoJsonBean;
 import com.oliveoa.jsonbean.OvertimeApplicationJsonBean;
 import com.oliveoa.jsonbean.RecruitmentApplicationInfoJsonBean;
 import com.oliveoa.pojo.AnnouncementApprovedOpinionList;
 import com.oliveoa.pojo.AnnouncementInfo;
+import com.oliveoa.pojo.Approval;
 import com.oliveoa.pojo.BusinessTripApplication;
 import com.oliveoa.pojo.BusinessTripApplicationApprovedOpinionList;
 import com.oliveoa.pojo.ContactInfo;
@@ -72,6 +75,7 @@ import com.oliveoa.view.myapplication.OvertimeInfoActivity;
 import com.oliveoa.widget.LoadingDialog;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -82,7 +86,7 @@ public class OvertimeUndisposedActivity extends AppCompatActivity {
     private TextView tApplicant,ttime,treason;
     private Button bagree,bdisagree;
     private OvertimeApplication oa;
-    private ArrayList<OvertimeApplicationApprovedOpinionList> oaaol;
+    private ContactInfoDao contactInfoDao;
     private ContactInfo ci;
     private String TAG = this.getClass().getSimpleName();
     private LoadingDialog loadingDialog;
@@ -112,10 +116,8 @@ public class OvertimeUndisposedActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(OvertimeUndisposedActivity.this, MyApprovalActivity.class);
-                intent.putExtra("index",0);
-                startActivity(intent);
-                finish();
+                loadingDialog.show();
+              back();
                 //Toast.makeText(mContext, "你点击了返回", Toast.LENGTH_SHORT).show();
             }
         });
@@ -125,6 +127,7 @@ public class OvertimeUndisposedActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(OvertimeUndisposedActivity.this, ApprovalAdviseActivity.class);
                 intent.putExtra("index",11);//1同意
+                intent.putExtra("aid",oa.getOaid());
                 startActivity(intent);
                 finish();
                 //Toast.makeText(mContext, "你点击了返回", Toast.LENGTH_SHORT).show();
@@ -135,7 +138,8 @@ public class OvertimeUndisposedActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(OvertimeUndisposedActivity.this, ApprovalAdviseActivity.class);
-                intent.putExtra("index",11);//0不同意
+                intent.putExtra("index",10);//0不同意
+                intent.putExtra("aid",oa.getOaid());
                 startActivity(intent);
                 finish();
                 //Toast.makeText(mContext, "你点击了返回", Toast.LENGTH_SHORT).show();
@@ -143,12 +147,90 @@ public class OvertimeUndisposedActivity extends AppCompatActivity {
         });
     }
 
+    private void back() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
+                String s = pref.getString("sessionid", "");
+                //Todo Service
+                OvertimeApplictionService overtimeApplictionService = new OvertimeApplictionService();
+                //加班
+                ApprovalDao approvalDao = EntityManager.getInstance().getApprovalDao();
+                Approval approval = new Approval();
+                int i, j = 0;
+                OvertimeApplicationInfoJsonBean overtimeApplicationInfoJsonBean = overtimeApplictionService.unapprovedotapplication(s); //获取待我审核的申请
+                Log.e(TAG, overtimeApplicationInfoJsonBean.toString());
+                if (overtimeApplicationInfoJsonBean.getStatus() == 0) {
+                    approvalDao.deleteAll();
+                    for (i = 0; i < overtimeApplicationInfoJsonBean.getData().size(); i++) {
+                        approval.setAid( overtimeApplicationInfoJsonBean.getData().get(i).getOaid());
+                        approval.setSeid(overtimeApplicationInfoJsonBean.getData().get(i).getEid());
+                        approval.setContent(overtimeApplicationInfoJsonBean.getData().get(i).getReason());
+                        approval.setStatus(0);
+                        approval.setType(1);
+                        approval.setIsapprove(-2);
+                        approvalDao.insert(approval);
+                    }
+                    //startActivity(new Intent(MainApprovalActivity.this, MyApprovalActivity.class).putExtra("index",1));
+                } else {
+                    Looper.prepare();//解决子线程弹toast问题
+                    Toast.makeText(getApplicationContext(), overtimeApplicationInfoJsonBean.getMsg(), Toast.LENGTH_SHORT).show();
+                    Looper.loop();// 进入loop中的循环，查看消息队列
+                }
+                overtimeApplicationInfoJsonBean = overtimeApplictionService.approvedotapplication(s); //获取我已经审核的申请
+                Log.e(TAG, overtimeApplicationInfoJsonBean.toString());
+                if (overtimeApplicationInfoJsonBean.getStatus() == 0) {
+                    for (i = 0; i < overtimeApplicationInfoJsonBean.getData().size(); i++) {
+                        OvertimeApplicationHttpResponseObject httpResponseObject = overtimeApplictionService.overtimeapplication(s,overtimeApplicationInfoJsonBean.getData().get(i).getOaid());
+                        if(httpResponseObject.getStatus()==0){
+                            approval.setAid( overtimeApplicationInfoJsonBean.getData().get(i).getOaid());
+                            approval.setSeid(overtimeApplicationInfoJsonBean.getData().get(i).getEid());
+                            approval.setContent(overtimeApplicationInfoJsonBean.getData().get(i).getReason());
+                            approval.setStatus(1);
+                            approval.setType(1);
+                            for (j = 0;j<httpResponseObject.getOvertimeApplicationJsonBean().getOvertimeApplicationApprovedOpinionLists().size();j++){
+                                switch (httpResponseObject.getOvertimeApplicationJsonBean().getOvertimeApplicationApprovedOpinionLists().get(j).getIsapproved()) {
+                                    case -2:
+                                        approval.setIsapprove(-2);
+                                        break;
+                                    case -1:
+                                        approval.setIsapprove(-1);
+                                        break;
+                                    case 0:
+                                        approval.setIsapprove(0);
+                                        break;
+                                    case 1:
+                                        approval.setIsapprove(1);
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }
+                            approvalDao.insert(approval);
+                        }else{
+                            Looper.prepare();//解决子线程弹toast问题
+                            Toast.makeText(getApplicationContext(), httpResponseObject.getMsg(), Toast.LENGTH_SHORT).show();
+                            Looper.loop();// 进入loop中的循环，查看消息队列
+                        }
+                    }
+                    startActivity(new Intent(OvertimeUndisposedActivity.this, MyApprovalActivity.class).putExtra("index",1));
+                } else {
+                    Looper.prepare();//解决子线程弹toast问题
+                    Toast.makeText(getApplicationContext(), overtimeApplicationInfoJsonBean.getMsg(), Toast.LENGTH_SHORT).show();
+                    Looper.loop();// 进入loop中的循环，查看消息队列
+                }
+            }
+        }).start();
+    }
+
     private void initData() {
+        contactInfoDao = EntityManager.getInstance().getContactInfo();
         DateFormat dateFormat = new DateFormat();
         ttime.setText(dateFormat.LongtoDatemm(oa.getBegintime())+"--"+dateFormat.LongtoDatemm(oa.getEndtime()));
         treason.setText(oa.getReason());
-        ContactInfoDao cidao = EntityManager.getInstance().getContactInfo();
-        ci = cidao.queryBuilder().where(ContactInfoDao.Properties.Eid.eq(oa.getEid())).unique();
+        ci = contactInfoDao.queryBuilder().where(ContactInfoDao.Properties.Eid.eq(oa.getEid())).unique();
+
         if(ci!=null) {
             tApplicant.setText(ci.getName());
         }else{

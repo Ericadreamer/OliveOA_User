@@ -141,12 +141,8 @@ public class MainApprovalActivity extends AppCompatActivity {
                         loadingDialog.show();
                         GetMyRecruitmentApplicationApproved();
                     }
-                    case 8://点击图片招聘跳转
-                    {
-                        loadingDialog.show();
-                        GetMyRecruitmentApplicationApproved();
-                    }
-                    case 9://点击图片招聘跳转
+                    break;
+                    case 8://点击图片公告跳转
                     {
                         loadingDialog.show();
                         GetMyNoticeApproved();
@@ -183,6 +179,7 @@ public class MainApprovalActivity extends AppCompatActivity {
                         approval.setStatus(0);
                         approval.setType(1);
                         approval.setIsapprove(-2);
+                        Log.e(TAG,"unapproved"+approval.toString());
                         approvalDao.insert(approval);
                         }
                     //startActivity(new Intent(MainApprovalActivity.this, MyApprovalActivity.class).putExtra("index",1));
@@ -194,7 +191,6 @@ public class MainApprovalActivity extends AppCompatActivity {
                overtimeApplicationInfoJsonBean = overtimeApplictionService.approvedotapplication(s); //获取我已经审核的申请
                 Log.e(TAG, overtimeApplicationInfoJsonBean.toString());
                 if (overtimeApplicationInfoJsonBean.getStatus() == 0) {
-                    approvalDao.deleteAll();
                     for (i = 0; i < overtimeApplicationInfoJsonBean.getData().size(); i++) {
                         OvertimeApplicationHttpResponseObject httpResponseObject = overtimeApplictionService.overtimeapplication(s,overtimeApplicationInfoJsonBean.getData().get(i).getOaid());
                         if(httpResponseObject.getStatus()==0){
@@ -206,21 +202,22 @@ public class MainApprovalActivity extends AppCompatActivity {
                             for (j = 0;j<httpResponseObject.getOvertimeApplicationJsonBean().getOvertimeApplicationApprovedOpinionLists().size();j++){
                                 switch (httpResponseObject.getOvertimeApplicationJsonBean().getOvertimeApplicationApprovedOpinionLists().get(j).getIsapproved()) {
                                     case -2:
-                                        approval.setStatus(-2);
+                                        approval.setIsapprove(-2);
                                         break;
                                     case -1:
-                                        approval.setStatus(-1);
+                                        approval.setIsapprove(-1);
                                         break;
                                     case 0:
-                                        approval.setStatus(0);
+                                        approval.setIsapprove(0);
                                         break;
                                     case 1:
-                                        approval.setStatus(1);
+                                        approval.setIsapprove(1);
                                         break;
                                     default:
                                         break;
                                 }
                             }
+                            Log.e(TAG,"approved"+approval.toString());
                             approvalDao.insert(approval);
                         }else{
                             Looper.prepare();//解决子线程弹toast问题
@@ -261,6 +258,7 @@ public class MainApprovalActivity extends AppCompatActivity {
                         approval.setContent(infoJsonBean.getData().get(i).getReason());
                         approval.setStatus(0);
                         approval.setType(2);
+                        approval.setIsapprove(-2);
                         approvalDao.insert(approval);
                     }
                     //startActivity(new Intent(MainApprovalActivity.this, MyApprovalActivity.class).putExtra("index",2));
@@ -283,16 +281,16 @@ public class MainApprovalActivity extends AppCompatActivity {
                             for (j = 0; j < httpResponseObject.getData().getLeaveApplicationApprovedOpinionLists().size(); j++) {
                                 switch (httpResponseObject.getData().getLeaveApplicationApprovedOpinionLists().get(j).getIsapproved()) {
                                     case -2:
-                                        approval.setStatus(-2);
+                                        approval.setIsapprove(-2);
                                         break;
                                     case -1:
-                                        approval.setStatus(-1);
+                                        approval.setIsapprove(-1);
                                         break;
                                     case 0:
-                                        approval.setStatus(0);
+                                        approval.setIsapprove(0);
                                         break;
                                     case 1:
-                                        approval.setStatus(1);
+                                        approval.setIsapprove(1);
                                         break;
                                     default:
                                         break;
@@ -333,6 +331,7 @@ public class MainApprovalActivity extends AppCompatActivity {
                         approval.setContent(infoJsonBean.getData().get(i).getTask());
                         approval.setStatus(0);
                         approval.setType(3);
+                        approval.setIsapprove(-2);
                         approvalDao.insert(approval);
                     }
                     //startActivity(new Intent(MainApprovalActivity.this, MyApprovalActivity.class).putExtra("index",3));
@@ -344,7 +343,6 @@ public class MainApprovalActivity extends AppCompatActivity {
                 infoJsonBean = service.getbtapplicationapproved(s); //获取我已经审核的申请
                 Log.e(TAG, infoJsonBean.toString());
                 if (infoJsonBean.getStatus() == 0) {
-                    approvalDao.deleteAll();
                     for (i = 0; i < infoJsonBean.getData().size(); i++) {
                         BusinessTripApplicationHttpResponseObject httpResponseObject = service.getbtapplicationinfo(s, infoJsonBean.getData().get(i).getBtaid());
                         if (httpResponseObject.getStatus() == 0) {
@@ -356,16 +354,16 @@ public class MainApprovalActivity extends AppCompatActivity {
                             for (j = 0; j < httpResponseObject.getData().getBusinessTripApplicationApprovedOpinionLists().size(); j++) {
                                 switch (httpResponseObject.getData().getBusinessTripApplicationApprovedOpinionLists().get(j).getIsapproved()) {
                                     case -2:
-                                        approval.setStatus(-2);
+                                        approval.setIsapprove(-2);
                                         break;
                                     case -1:
-                                        approval.setStatus(-1);
+                                        approval.setIsapprove(-1);
                                         break;
                                     case 0:
-                                        approval.setStatus(0);
+                                        approval.setIsapprove(0);
                                         break;
                                     case 1:
-                                        approval.setStatus(1);
+                                        approval.setIsapprove(1);
                                         break;
                                     default:
                                         break;
@@ -406,6 +404,7 @@ public class MainApprovalActivity extends AppCompatActivity {
                         approval.setContent(infoJsonBean.getData().get(i).getTheme());
                         approval.setStatus(0);
                         approval.setType(4);
+                        approval.setIsapprove(-2);
                         approvalDao.insert(approval);
                     }
                     //startActivity(new Intent(MainApprovalActivity.this, MyApprovalActivity.class).putExtra("index",4));
@@ -417,7 +416,6 @@ public class MainApprovalActivity extends AppCompatActivity {
                 infoJsonBean = service.getApplicationIapproved(s); //获取我已经审核的申请
                 Log.e(TAG, infoJsonBean.toString());
                 if (infoJsonBean.getStatus() == 0) {
-                    approvalDao.deleteAll();
                     for (i = 0; i < infoJsonBean.getData().size(); i++) {
                             approval.setAid( infoJsonBean.getData().get(i).getMaid());
                             approval.setSeid(infoJsonBean.getData().get(i).getEid());
@@ -426,16 +424,16 @@ public class MainApprovalActivity extends AppCompatActivity {
                             approval.setType(4);
                                 switch (infoJsonBean.getData().get(i).getIsapproved()) {
                                     case -2:
-                                        approval.setStatus(-2);
+                                        approval.setIsapprove(-2);
                                         break;
                                     case -1:
-                                        approval.setStatus(-1);
+                                        approval.setIsapprove(-1);
                                         break;
                                     case 0:
-                                        approval.setStatus(0);
+                                        approval.setIsapprove(0);
                                         break;
                                     case 1:
-                                        approval.setStatus(1);
+                                        approval.setIsapprove(1);
                                         break;
                                     default:
                                         break;
@@ -474,6 +472,7 @@ public class MainApprovalActivity extends AppCompatActivity {
                         approval.setContent(infoJsonBean.getData().get(i).getReason());
                         approval.setStatus(0);
                         approval.setType(5);
+                        approval.setIsapprove(-2);
                         approvalDao.insert(approval);
                     }
                     //startActivity(new Intent(MainApprovalActivity.this, MyApprovalActivity.class).putExtra("index",5));
@@ -485,7 +484,6 @@ public class MainApprovalActivity extends AppCompatActivity {
                 infoJsonBean = service.getApplicationIapproved(s); //获取我已经审核的申请
                 Log.e(TAG, infoJsonBean.toString());
                 if (infoJsonBean.getStatus() == 0) {
-                    approvalDao.deleteAll();
                     for (i = 0; i < infoJsonBean.getData().size(); i++) {
                         StatusAndDataHttpResponseObject<LeaveOfficeApplicationJsonBean> httpResponseObject = service.getApplicationInfo(s,infoJsonBean.getData().get(i).getLoaid());
                         if(httpResponseObject.getStatus()==0){
@@ -498,16 +496,16 @@ public class MainApprovalActivity extends AppCompatActivity {
                             for (j = 0; j < httpResponseObject.getData().getLeaveOfficeApplicationApprovedOpinionList().size(); j++) {
                                 switch (httpResponseObject.getData().getLeaveOfficeApplicationApprovedOpinionList().get(j).getIsapproved()) {
                                     case -2:
-                                        approval.setStatus(-2);
+                                        approval.setIsapprove(-2);
                                         break;
                                     case -1:
-                                        approval.setStatus(-1);
+                                        approval.setIsapprove(-1);
                                         break;
                                     case 0:
-                                        approval.setStatus(0);
+                                        approval.setIsapprove(0);
                                         break;
                                     case 1:
-                                        approval.setStatus(1);
+                                        approval.setIsapprove(1);
                                         break;
                                     default:
                                         break;
@@ -552,6 +550,7 @@ public class MainApprovalActivity extends AppCompatActivity {
                         approval.setContent(infoJsonBean.getData().get(i).getPersonalSummary());
                         approval.setStatus(0);
                         approval.setType(6);
+                        approval.setIsapprove(-2);
                         approvalDao.insert(approval);
                     }
                     //startActivity(new Intent(MainApprovalActivity.this, MyApprovalActivity.class).putExtra("index",6));
@@ -563,7 +562,6 @@ public class MainApprovalActivity extends AppCompatActivity {
                 infoJsonBean = service.getApplicationIapproved(s); //获取我已经审核的申请
                 Log.e(TAG, infoJsonBean.toString());
                 if (infoJsonBean.getStatus() == 0) {
-                    approvalDao.deleteAll();
                     for (i = 0; i < infoJsonBean.getData().size(); i++) {
                         StatusAndDataHttpResponseObject<FulltimeApplicationInfoJsonBean> httpResponseObject = service.getApplicationInfo(s,infoJsonBean.getData().get(i).getFaid());
                         if(httpResponseObject.getStatus()==0){
@@ -575,16 +573,16 @@ public class MainApprovalActivity extends AppCompatActivity {
                             for (j = 0; j < httpResponseObject.getData().getFulltimeApplicationApprovedOpinionList().size(); j++) {
                                 switch (httpResponseObject.getData().getFulltimeApplicationApprovedOpinionList().get(j).getIsapproved()) {
                                     case -2:
-                                        approval.setStatus(-2);
+                                        approval.setIsapprove(-2);
                                         break;
                                     case -1:
-                                        approval.setStatus(-1);
+                                        approval.setIsapprove(-1);
                                         break;
                                     case 0:
-                                        approval.setStatus(0);
+                                        approval.setIsapprove(0);
                                         break;
                                     case 1:
-                                        approval.setStatus(1);
+                                        approval.setIsapprove(1);
                                         break;
                                     default:
                                         break;
@@ -629,6 +627,7 @@ public class MainApprovalActivity extends AppCompatActivity {
                         approval.setContent(infoJsonBean.getData().get(i).getReason());
                         approval.setStatus(0);
                         approval.setType(7);
+                        approval.setIsapprove(-2);
                         approvalDao.insert(approval);
                     }
                     //startActivity(new Intent(MainApprovalActivity.this, MyApprovalActivity.class).putExtra("index",7));
@@ -640,7 +639,6 @@ public class MainApprovalActivity extends AppCompatActivity {
                 infoJsonBean = service.getApplicationIapproved(s); //获取我已经审核的申请
                 Log.e(TAG, infoJsonBean.toString());
                 if (infoJsonBean.getStatus() == 0) {
-                    approvalDao.deleteAll();
                     for (i = 0; i < infoJsonBean.getData().size(); i++) {
                         StatusAndDataHttpResponseObject<JobTransferApplicationInfoJsonBean> httpResponseObject = service.getApplicationInfo(s,infoJsonBean.getData().get(i).getJtaid());
                         if(httpResponseObject.getStatus()==0){
@@ -652,16 +650,16 @@ public class MainApprovalActivity extends AppCompatActivity {
                             for (j = 0; j < httpResponseObject.getData().getJobTransferApplicationApprovedOpinionList().size(); j++) {
                                 switch (httpResponseObject.getData().getJobTransferApplicationApprovedOpinionList().get(j).getIsapproved()) {
                                     case -2:
-                                        approval.setStatus(-2);
+                                        approval.setIsapprove(-2);
                                         break;
                                     case -1:
-                                        approval.setStatus(-1);
+                                        approval.setIsapprove(-1);
                                         break;
                                     case 0:
-                                        approval.setStatus(0);
+                                        approval.setIsapprove(0);
                                         break;
                                     case 1:
-                                        approval.setStatus(1);
+                                        approval.setIsapprove(1);
                                         break;
                                     default:
                                         break;
@@ -708,6 +706,7 @@ public class MainApprovalActivity extends AppCompatActivity {
                             approval.setContent(applcaitoninfo.getData().getRecruitmentApplicationItem().getPositionDescribe());
                             approval.setStatus(0);
                             approval.setType(8);
+                            approval.setIsapprove(-2);
                             approvalDao.insert(approval);
                         }else{
                             Looper.prepare();//解决子线程弹toast问题
@@ -725,7 +724,6 @@ public class MainApprovalActivity extends AppCompatActivity {
                 infoJsonBean = service.getApplicationIapproved(s); //获取我已经审核的申请
                 Log.e(TAG, infoJsonBean.toString());
                 if (infoJsonBean.getStatus() == 0) {
-                    approvalDao.deleteAll();
                     for (i = 0; i < infoJsonBean.getData().size(); i++) {
                         StatusAndDataHttpResponseObject<RecruitmentApplicationInfoJsonBean> applcaitoninfo = service.getApplicationInfo(s,infoJsonBean.getData().get(i).getRaid());
                         if(applcaitoninfo.getStatus()==0){
@@ -739,16 +737,16 @@ public class MainApprovalActivity extends AppCompatActivity {
                                 for (j = 0; j < httpResponseObject.getData().getRecruitmentApplicationApprovedOpinions().size(); j++) {
                                     switch (httpResponseObject.getData().getRecruitmentApplicationApprovedOpinions().get(j).getIsapproved()) {
                                         case -2:
-                                            approval.setStatus(-2);
+                                            approval.setIsapprove(-2);
                                             break;
                                         case -1:
-                                            approval.setStatus(-1);
+                                            approval.setIsapprove(-1);
                                             break;
                                         case 0:
-                                            approval.setStatus(0);
+                                            approval.setIsapprove(0);
                                             break;
                                         case 1:
-                                            approval.setStatus(1);
+                                            approval.setIsapprove(1);
                                             break;
                                         default:
                                             break;
@@ -799,6 +797,7 @@ public class MainApprovalActivity extends AppCompatActivity {
                         approval.setContent(infoJsonBean.getData().get(i).getContent());
                         approval.setStatus(0);
                         approval.setType(9);
+                        approval.setIsapprove(-2);
                         approvalDao.insert(approval);
                     }
                   //  startActivity(new Intent(MainApprovalActivity.this, MyApprovalActivity.class).putExtra("index",9));
@@ -810,7 +809,6 @@ public class MainApprovalActivity extends AppCompatActivity {
                 infoJsonBean = service.get_approvedannoucement(s); //获取我已经审核的申请
                 Log.e(TAG, infoJsonBean.toString());
                 if (infoJsonBean.getStatus() == 0) {
-                    approvalDao.deleteAll();
                     for (i = 0; i < infoJsonBean.getData().size(); i++) {
                         StatusAndDataHttpResponseObject<AnnouncementInfoJsonBean> httpResponseObject = service.get_annoucementinfo(s,infoJsonBean.getData().get(i).getAid());
                         if(httpResponseObject.getStatus()==0){
@@ -823,16 +821,16 @@ public class MainApprovalActivity extends AppCompatActivity {
                             for (j = 0; j < httpResponseObject.getData().getAnnouncementApprovedOpinionList().size(); j++) {
                                 switch (httpResponseObject.getData().getAnnouncementApprovedOpinionList().get(j).getIsapproved()) {
                                     case -2:
-                                        approval.setStatus(-2);
+                                        approval.setIsapprove(-2);
                                         break;
                                     case -1:
-                                        approval.setStatus(-1);
+                                        approval.setIsapprove(-1);
                                         break;
                                     case 0:
-                                        approval.setStatus(0);
+                                        approval.setIsapprove(0);
                                         break;
                                     case 1:
-                                        approval.setStatus(1);
+                                        approval.setIsapprove(1);
                                         break;
                                     default:
                                         break;

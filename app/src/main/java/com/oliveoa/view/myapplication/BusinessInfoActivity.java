@@ -115,7 +115,9 @@ private LoadingDialog loadingDialog;
                         approval.setContent(infoJsonBean.getData().get(i).getTask());
                         approval.setStatus(0);
                         approval.setType(3);
+                        approval.setIsapprove(-2);
                         approvalDao.insert(approval);
+
                     }
                     //startActivity(new Intent(MainApprovalActivity.this, MyApprovalActivity.class).putExtra("index",3));
                 } else {
@@ -126,7 +128,6 @@ private LoadingDialog loadingDialog;
                 infoJsonBean = service.getbtapplicationapproved(s); //获取我已经审核的申请
                 Log.e(TAG, infoJsonBean.toString());
                 if (infoJsonBean.getStatus() == 0) {
-                    approvalDao.deleteAll();
                     for (i = 0; i < infoJsonBean.getData().size(); i++) {
                         BusinessTripApplicationHttpResponseObject httpResponseObject = service.getbtapplicationinfo(s, infoJsonBean.getData().get(i).getBtaid());
                         if (httpResponseObject.getStatus() == 0) {
@@ -138,16 +139,16 @@ private LoadingDialog loadingDialog;
                             for (j = 0; j < httpResponseObject.getData().getBusinessTripApplicationApprovedOpinionLists().size(); j++) {
                                 switch (httpResponseObject.getData().getBusinessTripApplicationApprovedOpinionLists().get(j).getIsapproved()) {
                                     case -2:
-                                        approval.setStatus(-2);
+                                        approval.setIsapprove(-2);
                                         break;
                                     case -1:
-                                        approval.setStatus(-1);
+                                        approval.setIsapprove(-1);
                                         break;
                                     case 0:
-                                        approval.setStatus(0);
+                                        approval.setIsapprove(0);
                                         break;
                                     case 1:
-                                        approval.setStatus(1);
+                                        approval.setIsapprove(1);
                                         break;
                                     default:
                                         break;
@@ -232,6 +233,16 @@ private LoadingDialog loadingDialog;
         ttime.setText(dateFormat.LongtoDatemm(bta.getBegintime())+"--"+dateFormat.LongtoDatemm(bta.getEndtime()));
         treason.setText(bta.getTask());
         tplace.setText(bta.getPlace());
+        LinearLayout seid = (LinearLayout)findViewById(R.id.seid);
+        if(index==0){
+            seid.setVisibility(View.GONE);
+        }else{
+            ci = cidao.queryBuilder().where(ContactInfoDao.Properties.Eid.eq(bta.getEid())).unique();
+            TextView seidname = (TextView)findViewById(R.id.seidname);
+            if(ci!=null){
+                seidname.setText(ci.getName());
+            }
+        }
     }
 
     /**
@@ -252,7 +263,11 @@ private LoadingDialog loadingDialog;
                     String epname =tname.getText().toString().trim();
                     Application application = new Application();
                     application.setDescribe(btaaol.get(finalI).getOpinion());
-                    application.setType(3);
+                    if(index==1){
+                        application.setType(13);
+                    }else{
+                        application.setType(3);
+                    }
                     application.setAid(btaaol.get(finalI).getBtaid());
                     application.setStatus(btaaol.get(finalI).getIsapproved());
                     Intent intent = new Intent(BusinessInfoActivity.this, ApprovedInfoActivity.class);

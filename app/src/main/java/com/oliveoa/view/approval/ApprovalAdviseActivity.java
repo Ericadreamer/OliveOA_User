@@ -32,7 +32,9 @@ import com.oliveoa.greendao.ContactInfoDao;
 import com.oliveoa.greendao.DepartmentInfoDao;
 import com.oliveoa.greendao.DutyInfoDao;
 import com.oliveoa.jsonbean.AnnouncementInfoJsonBean;
+import com.oliveoa.jsonbean.AnnouncementJsonBean;
 import com.oliveoa.jsonbean.BusinessTripApplicationInfoJsonBean;
+import com.oliveoa.jsonbean.BusinessTripApplicationJsonBean;
 import com.oliveoa.jsonbean.ContactJsonBean;
 import com.oliveoa.jsonbean.DutyInfoJsonBean;
 import com.oliveoa.jsonbean.FulltimeApplicationInfoJsonBean;
@@ -45,6 +47,7 @@ import com.oliveoa.jsonbean.OvertimeApplicationInfoJsonBean;
 import com.oliveoa.jsonbean.OvertimeApplicationJsonBean;
 import com.oliveoa.jsonbean.RecruitmentApplicationInfoJsonBean;
 import com.oliveoa.jsonbean.StatusAndMsgJsonBean;
+import com.oliveoa.jsonbean.StatusJsonBean;
 import com.oliveoa.pojo.AnnouncementApprovedOpinionList;
 import com.oliveoa.pojo.AnnouncementInfo;
 import com.oliveoa.pojo.Approval;
@@ -70,6 +73,7 @@ import com.oliveoa.pojo.RecruitmentApplicationItem;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.util.LinesEditView;
 import com.oliveoa.view.R;
+import com.oliveoa.view.myapplication.ApprovedInfoActivity;
 import com.oliveoa.view.myapplication.MyApplicationActivity;
 import com.oliveoa.view.myapplication.OvertimeActivity;
 import com.oliveoa.widget.LoadingDialog;
@@ -95,6 +99,8 @@ public class ApprovalAdviseActivity extends AppCompatActivity {
 
         index = getIntent().getIntExtra("index",index);//十位数1-9 各申请及公告类型，个位数0为不同意，1为同意
         aid = getIntent().getStringExtra("aid");
+        Log.i(TAG,"index="+index);
+        Log.i(TAG,"aid="+aid);
         initView();
 
     }
@@ -125,6 +131,8 @@ public class ApprovalAdviseActivity extends AppCompatActivity {
     }
 
     private void back() {
+        LoadingDialog loadingDialog = new LoadingDialog(ApprovalAdviseActivity.this,"正在加载数据",true);
+        loadingDialog.show();
         if(index==10||index==11){
             getovertimeapplicationinfo();
         }
@@ -155,12 +163,15 @@ public class ApprovalAdviseActivity extends AppCompatActivity {
     }
 
     private void save() {
-        if(TextUtils.isEmpty(econtent.getText().toString().trim())){
+        Log.e(TAG,econtent.getText().toString().trim());
+        if(TextUtils.isEmpty(econtent.getText().toString().trim())||econtent.getText().toString().trim().equals("请输入内容")){
             Toast.makeText(getApplicationContext(), "信息不得为空", Toast.LENGTH_SHORT).show();
         }else{
+            LoadingDialog loadingDialog = new LoadingDialog(ApprovalAdviseActivity.this,"正在加载数据",true);
+            loadingDialog.show();
             if(index==10||index==11){
                 switch (index){
-                    case 10:isApproved=0;break;
+                    case 10:isApproved=-1;break;
                     case 11:isApproved =1;break;
                     default:break;
                 }
@@ -168,7 +179,7 @@ public class ApprovalAdviseActivity extends AppCompatActivity {
             }
             if(index==20||index==21){
                 switch (index){
-                    case 20:isApproved=0;break;
+                    case 20:isApproved=-1;break;
                     case 21:isApproved =1;break;
                     default:break;
                 }
@@ -176,7 +187,7 @@ public class ApprovalAdviseActivity extends AppCompatActivity {
             }
             if(index==30||index==31){
                 switch (index){
-                    case 30:isApproved=0;break;
+                    case 30:isApproved=-1;break;
                     case 31:isApproved =1;break;
                     default:break;
                 }
@@ -184,7 +195,7 @@ public class ApprovalAdviseActivity extends AppCompatActivity {
             }
             if(index==40||index==41){
                 switch (index){
-                    case 40:isApproved=0;break;
+                    case 40:isApproved=-1;break;
                     case 41:isApproved =1;break;
                     default:break;
                 }
@@ -192,7 +203,7 @@ public class ApprovalAdviseActivity extends AppCompatActivity {
             }
             if(index==50||index==51){
                 switch (index){
-                    case 50:isApproved=0;break;
+                    case 50:isApproved=-1;break;
                     case 51:isApproved =1;break;
                     default:break;
                 }
@@ -200,7 +211,7 @@ public class ApprovalAdviseActivity extends AppCompatActivity {
             }
             if(index==60||index==61){
                 switch (index){
-                    case 60:isApproved=0;break;
+                    case 60:isApproved=-1;break;
                     case 61:isApproved =1;break;
                     default:break;
                 }
@@ -208,7 +219,7 @@ public class ApprovalAdviseActivity extends AppCompatActivity {
             }
             if(index==70||index==71){
                 switch (index){
-                    case 70:isApproved=0;break;
+                    case 70:isApproved=-1;break;
                     case 71:isApproved =1;break;
                     default:break;
                 }
@@ -216,7 +227,7 @@ public class ApprovalAdviseActivity extends AppCompatActivity {
             }
             if(index==80||index==81){
                 switch (index){
-                    case 80:isApproved=0;break;
+                    case 80:isApproved=-1;break;
                     case 81:isApproved =1;break;
                     default:break;
                 }
@@ -224,7 +235,7 @@ public class ApprovalAdviseActivity extends AppCompatActivity {
             }
             if(index==90||index==91){
                 switch (index){
-                    case 90: isApproved=0;break;
+                    case 90: isApproved=-1;break;
                     case 91: isApproved=1;break;
                     default:break;
                 }
@@ -244,6 +255,7 @@ public class ApprovalAdviseActivity extends AppCompatActivity {
                 approval.setIsapproved(isApproved);
                 approval.setOaid(aid);
                 approval.setOpinion(econtent.getText().toString().trim());
+                Log.e(TAG,approval.toString());
                 //Todo Service
                 OvertimeApplictionService service = new OvertimeApplictionService();
                 //Todo Service.Method
@@ -276,7 +288,6 @@ public class ApprovalAdviseActivity extends AppCompatActivity {
                     overtimeApplicationInfoJsonBean = service.approvedotapplication(s); //获取我已经审核的申请
                     Log.e(TAG, overtimeApplicationInfoJsonBean.toString());
                     if (overtimeApplicationInfoJsonBean.getStatus() == 0) {
-                        apDao.deleteAll();
                         for (i = 0; i < overtimeApplicationInfoJsonBean.getData().size(); i++) {
                             OvertimeApplicationHttpResponseObject httpResponseObject = service.overtimeapplication(s,overtimeApplicationInfoJsonBean.getData().get(i).getOaid());
                             if(httpResponseObject.getStatus()==0){
@@ -288,16 +299,16 @@ public class ApprovalAdviseActivity extends AppCompatActivity {
                                 for (j = 0;j<httpResponseObject.getOvertimeApplicationJsonBean().getOvertimeApplicationApprovedOpinionLists().size();j++){
                                     switch (httpResponseObject.getOvertimeApplicationJsonBean().getOvertimeApplicationApprovedOpinionLists().get(j).getIsapproved()) {
                                         case -2:
-                                            ap.setStatus(-2);
+                                            ap.setIsapprove(-2);
                                             break;
                                         case -1:
-                                            ap.setStatus(-1);
+                                            ap.setIsapprove(-1);
                                             break;
                                         case 0:
-                                            ap.setStatus(0);
+                                            ap.setIsapprove(0);
                                             break;
                                         case 1:
-                                            ap.setStatus(1);
+                                            ap.setIsapprove(1);
                                             break;
                                         default:
                                             break;
@@ -342,6 +353,7 @@ public class ApprovalAdviseActivity extends AppCompatActivity {
                 approval.setIsapproved(isApproved);
                 approval.setLaid(aid);
                 approval.setOpinion(econtent.getText().toString().trim());
+                Log.e(TAG,approval.toString());
                 //Todo Service
                 LeaveApplicationService service = new LeaveApplicationService();
                 //Todo Service.Method
@@ -362,6 +374,7 @@ public class ApprovalAdviseActivity extends AppCompatActivity {
                             ap.setContent(infoJsonBean.getData().get(i).getReason());
                             ap.setStatus(0);
                             ap.setType(2);
+                            ap.setIsapprove(-2);
                             apDao.insert(ap);
                         }
                         //startActivity(new Intent(MainApprovalActivity.this, MyApprovalActivity.class).putExtra("index",2));
@@ -384,16 +397,16 @@ public class ApprovalAdviseActivity extends AppCompatActivity {
                                 for (j = 0; j < httpResponseObject.getData().getLeaveApplicationApprovedOpinionLists().size(); j++) {
                                     switch (httpResponseObject.getData().getLeaveApplicationApprovedOpinionLists().get(j).getIsapproved()) {
                                         case -2:
-                                            ap.setStatus(-2);
+                                            ap.setIsapprove(-2);
                                             break;
                                         case -1:
-                                            ap.setStatus(-1);
+                                            ap.setIsapprove(-1);
                                             break;
                                         case 0:
-                                            ap.setStatus(0);
+                                            ap.setIsapprove(0);
                                             break;
                                         case 1:
-                                            ap.setStatus(1);
+                                            ap.setIsapprove(1);
                                             break;
                                         default:
                                             break;
@@ -422,31 +435,646 @@ public class ApprovalAdviseActivity extends AppCompatActivity {
     }
 
     private void savebusinessapplicationapproval() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SharedPreferences pref = getSharedPreferences("data",MODE_PRIVATE);
+                String s = pref.getString("sessionid","");
+
+                BusinessTripApplicationApprovedOpinionList approval = new BusinessTripApplicationApprovedOpinionList();
+                approval.setIsapproved(isApproved);
+                approval.setBtaid(aid);
+                approval.setOpinion(econtent.getText().toString().trim());
+                Log.e(TAG,approval.toString());
+                //Todo Service
+                BusinessTripApplicationService service = new BusinessTripApplicationService();
+                //Todo Service.Method
+                StatusAndMsgJsonBean statusAndMsgJsonBean = service.approvedbtapplication(s,approval);
+
+                //ToCheck JsonBean.getStatus()
+                if (statusAndMsgJsonBean.getStatus() == 0) {
+                    ApprovalDao apDao = EntityManager.getInstance().getApprovalDao();
+                    Approval ap = new Approval();
+                    int i, j = 0;
+                    BusinessTripApplicationJsonBean infoJsonBean = service.getbtapplicationunapproved(s); //获取待我审核的申请
+                    Log.e(TAG, infoJsonBean.toString());
+                    if (infoJsonBean.getStatus() == 0) {
+                        apDao.deleteAll();
+                        for (i = 0; i < infoJsonBean.getData().size(); i++) {
+                            ap.setAid( infoJsonBean.getData().get(i).getBtaid());
+                            ap.setSeid(infoJsonBean.getData().get(i).getEid());
+                            ap.setContent(infoJsonBean.getData().get(i).getTask());
+                            ap.setStatus(0);
+                            ap.setType(3);
+                            ap.setIsapprove(-2);
+                            apDao.insert(ap);
+                        }
+                        //startActivity(new Intent(MainApprovalActivity.this, MyApprovalActivity.class).putExtra("index",2));
+                    } else {
+                        Looper.prepare();//解决子线程弹toast问题
+                        Toast.makeText(getApplicationContext(), infoJsonBean.getMsg(), Toast.LENGTH_SHORT).show();
+                        Looper.loop();// 进入loop中的循环，查看消息队列
+                    }
+                    infoJsonBean = service.getbtapplicationapproved(s); //获取我已经审核的申请
+                    Log.e(TAG, infoJsonBean.toString());
+                    if (infoJsonBean.getStatus() == 0) {
+                        for (i = 0; i < infoJsonBean.getData().size(); i++) {
+                            BusinessTripApplicationHttpResponseObject httpResponseObject = service.getbtapplicationinfo(s,infoJsonBean.getData().get(i).getBtaid());
+                            if(httpResponseObject.getStatus()==0) {
+                                ap.setAid(infoJsonBean.getData().get(i).getBtaid());
+                                ap.setSeid(infoJsonBean.getData().get(i).getEid());
+                                ap.setContent(infoJsonBean.getData().get(i).getTask());
+                                ap.setStatus(1);
+                                ap.setType(3);
+                                for (j = 0; j < httpResponseObject.getData().getBusinessTripApplicationApprovedOpinionLists().size(); j++) {
+                                    switch (httpResponseObject.getData().getBusinessTripApplicationApprovedOpinionLists().get(j).getIsapproved()) {
+                                        case -2:
+                                            ap.setIsapprove(-2);
+                                            break;
+                                        case -1:
+                                            ap.setIsapprove(-1);
+                                            break;
+                                        case 0:
+                                            ap.setIsapprove(0);
+                                            break;
+                                        case 1:
+                                            ap.setIsapprove(1);
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                                apDao.insert(ap);
+                            }
+                        }
+                        Looper.prepare();//解决子线程弹toast问题
+                        Toast.makeText(getApplicationContext(),"保存成功，正在返回我的审批列表", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(ApprovalAdviseActivity.this, MyApprovalActivity.class).putExtra("index",3));
+                        Looper.loop();// 进入loop中的循环，查看消息队列
+                    } else {
+                        Looper.prepare();//解决子线程弹toast问题
+                        Toast.makeText(getApplicationContext(),infoJsonBean .getMsg(), Toast.LENGTH_SHORT).show();
+                        Looper.loop();// 进入loop中的循环，查看消息队列
+                    }
+                } else {
+                    Looper.prepare();//解决子线程弹toast问题
+                    Toast.makeText(getApplicationContext(),statusAndMsgJsonBean.getMsg(), Toast.LENGTH_SHORT).show();
+                    Looper.loop();// 进入loop中的循环，查看消息队列
+                }
+            }
+        }).start();
 
     }
 
     private void savemeetingapplicationapproval() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
+                String s = pref.getString("sessionid", "");
 
+                MeetingApplication approval = new MeetingApplication();
+                approval.setIsapproved(isApproved);
+                approval.setMaid(aid);
+                approval.setOpinion(econtent.getText().toString().trim());
+                Log.e(TAG, approval.toString());
+                //Todo Service
+                MeetingApplicationService service = new MeetingApplicationService();
+                //Todo Service.Method
+                StatusAndMsgJsonBean statusAndMsgJsonBean = service.approveApplication(s, approval);
+
+                //ToCheck JsonBean.getStatus()
+                if (statusAndMsgJsonBean.getStatus() == 0) {
+                    ApprovalDao apDao = EntityManager.getInstance().getApprovalDao();
+                    Approval ap = new Approval();
+                    int i, j = 0;
+                    StatusAndDataHttpResponseObject<ArrayList<MeetingApplication>> infoJsonBean = service.getApplicationIunapproved(s); //获取待我审核的申请
+                    Log.e(TAG, infoJsonBean.toString());
+                    if (infoJsonBean.getStatus() == 0) {
+                        apDao.deleteAll();
+                        for (i = 0; i < infoJsonBean.getData().size(); i++) {
+                            ap.setAid(infoJsonBean.getData().get(i).getMaid());
+                            ap.setSeid(infoJsonBean.getData().get(i).getEid());
+                            ap.setContent(infoJsonBean.getData().get(i).getTheme());
+                            ap.setStatus(0);
+                            ap.setType(4);
+                            ap.setIsapprove(-2);
+                            apDao.insert(ap);
+                        }
+                        //startActivity(new Intent(MainApprovalActivity.this, MyApprovalActivity.class).putExtra("index",2));
+                    } else {
+                        Looper.prepare();//解决子线程弹toast问题
+                        Toast.makeText(getApplicationContext(), "获取待审批会议申请数据失败", Toast.LENGTH_SHORT).show();
+                        Looper.loop();// 进入loop中的循环，查看消息队列
+                    }
+                    infoJsonBean = service.getApplicationIapproved(s); //获取我已经审核的申请
+                    Log.e(TAG, infoJsonBean.toString());
+                    if (infoJsonBean.getStatus() == 0) {
+                        for (i = 0; i < infoJsonBean.getData().size(); i++) {
+                            ap.setAid(infoJsonBean.getData().get(i).getMaid());
+                            ap.setSeid(infoJsonBean.getData().get(i).getEid());
+                            ap.setContent(infoJsonBean.getData().get(i).getTheme());
+                            ap.setStatus(1);
+                            ap.setType(4);
+                            switch (infoJsonBean.getData().get(i).getIsapproved()) {
+                                case -2:
+                                    ap.setIsapprove(-2);
+                                    break;
+                                case -1:
+                                    ap.setIsapprove(-1);
+                                    break;
+                                case 0:
+                                    ap.setIsapprove(0);
+                                    break;
+                                case 1:
+                                    ap.setIsapprove(1);
+                                    break;
+                                default:
+                                    break;
+                            }
+                            apDao.insert(ap);
+                        }
+                        startActivity(new Intent(ApprovalAdviseActivity.this, MyApprovalActivity.class).putExtra("index", 4));
+                    } else {
+                        Looper.prepare();//解决子线程弹toast问题
+                        Toast.makeText(getApplicationContext(), "获取已审批会议申请数据失败", Toast.LENGTH_SHORT).show();
+                        Looper.loop();// 进入loop中的循环，查看消息队列
+                    }
+                }
+            }
+            }).start();
     }
 
     private void savedimissionapplicationapproval() {
-        
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SharedPreferences pref = getSharedPreferences("data",MODE_PRIVATE);
+                String s = pref.getString("sessionid","");
+
+                LeaveOfficeApplicationApprovedOpinion approval = new LeaveOfficeApplicationApprovedOpinion();
+                approval.setIsapproved(isApproved);
+                approval.setLoaid(aid);
+                approval.setOpinion(econtent.getText().toString().trim());
+                Log.e(TAG,approval.toString());
+                //Todo Service
+                LeaveOfficeApplicationService service = new LeaveOfficeApplicationService();
+                //Todo Service.Method
+                StatusAndMsgJsonBean statusAndMsgJsonBean = service.approveApplication(s,approval);
+
+                //ToCheck JsonBean.getStatus()
+                if (statusAndMsgJsonBean.getStatus() == 0) {
+                    ApprovalDao apDao = EntityManager.getInstance().getApprovalDao();
+                    Approval ap = new Approval();
+                    int i, j = 0;
+                    StatusAndDataHttpResponseObject<ArrayList<LeaveOfficeApplication>> infoJsonBean = service.getApplicationIunapproved(s); //获取待我审核的申请
+                    Log.e(TAG, infoJsonBean.toString());
+                    if (infoJsonBean.getStatus() == 0) {
+                        apDao.deleteAll();
+                        for (i = 0; i < infoJsonBean.getData().size(); i++) {
+                            ap.setAid( infoJsonBean.getData().get(i).getLoaid());
+                            ap.setSeid(infoJsonBean.getData().get(i).getEid());
+                            ap.setContent(infoJsonBean.getData().get(i).getReason());
+                            ap.setStatus(0);
+                            ap.setType(5);
+                            ap.setIsapprove(-2);
+                            apDao.insert(ap);
+                        }
+                        //startActivity(new Intent(MainApprovalActivity.this, MyApprovalActivity.class).putExtra("index",2));
+                    } else {
+                        Looper.prepare();//解决子线程弹toast问题
+                        Toast.makeText(getApplicationContext(), "获取待审批离职申请数据失败", Toast.LENGTH_SHORT).show();
+                        Looper.loop();// 进入loop中的循环，查看消息队列
+                    }
+                    infoJsonBean = service.getApplicationIapproved(s); //获取我已经审核的申请
+                    Log.e(TAG, infoJsonBean.toString());
+                    if (infoJsonBean.getStatus() == 0) {
+                        for (i = 0; i < infoJsonBean.getData().size(); i++) {
+                            StatusAndDataHttpResponseObject<LeaveOfficeApplicationJsonBean> httpResponseObject = service.getApplicationInfo(s,infoJsonBean.getData().get(i).getLoaid());
+                            if(httpResponseObject.getStatus()==0) {
+                                ap.setAid(infoJsonBean.getData().get(i).getLoaid());
+                                ap.setSeid(infoJsonBean.getData().get(i).getEid());
+                                ap.setContent(infoJsonBean.getData().get(i).getReason());
+                                ap.setStatus(1);
+                                ap.setType(5);
+                                for (j = 0; j < httpResponseObject.getData().getLeaveOfficeApplicationApprovedOpinionList().size(); j++) {
+                                    switch (httpResponseObject.getData().getLeaveOfficeApplicationApprovedOpinionList().get(j).getIsapproved()) {
+                                        case -2:
+                                            ap.setIsapprove(-2);
+                                            break;
+                                        case -1:
+                                            ap.setIsapprove(-1);
+                                            break;
+                                        case 0:
+                                            ap.setIsapprove(0);
+                                            break;
+                                        case 1:
+                                            ap.setIsapprove(1);
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                                apDao.insert(ap);
+                            }
+                        }
+                        Looper.prepare();//解决子线程弹toast问题
+                        Toast.makeText(getApplicationContext(),"保存成功，正在返回我的审批列表", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(ApprovalAdviseActivity.this, MyApprovalActivity.class).putExtra("index",5));
+                        Looper.loop();// 进入loop中的循环，查看消息队列
+                    } else {
+                        Looper.prepare();//解决子线程弹toast问题
+                        Toast.makeText(getApplicationContext(),"获取已审批离职申请数据失败", Toast.LENGTH_SHORT).show();
+                        Looper.loop();// 进入loop中的循环，查看消息队列
+                    }
+                } else {
+                    Looper.prepare();//解决子线程弹toast问题
+                    Toast.makeText(getApplicationContext(),statusAndMsgJsonBean.getMsg(), Toast.LENGTH_SHORT).show();
+                    Looper.loop();// 进入loop中的循环，查看消息队列
+                }
+            }
+        }).start();
     }
 
     private void saveregularapplicationapproval() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SharedPreferences pref = getSharedPreferences("data",MODE_PRIVATE);
+                String s = pref.getString("sessionid","");
 
+                FulltimeApplicationApprovedOpinion approval = new FulltimeApplicationApprovedOpinion();
+                approval.setIsapproved(isApproved);
+                approval.setFaid(aid);
+                approval.setOpinion(econtent.getText().toString().trim());
+                Log.e(TAG,approval.toString());
+                //Todo Service
+                FulltimeApplicationService service = new FulltimeApplicationService();
+                //Todo Service.Method
+                StatusAndMsgJsonBean statusAndMsgJsonBean = service.approveApplication(s,approval);
+
+                //ToCheck JsonBean.getStatus()
+                if (statusAndMsgJsonBean.getStatus() == 0) {
+                    ApprovalDao apDao = EntityManager.getInstance().getApprovalDao();
+                    Approval ap = new Approval();
+                    int i, j = 0;
+                    StatusAndDataHttpResponseObject<ArrayList<FulltimeApplication>> infoJsonBean = service.getApplicationIunapproved(s); //获取待我审核的申请
+                    Log.e(TAG, infoJsonBean.toString());
+                    if (infoJsonBean.getStatus() == 0) {
+                        apDao.deleteAll();
+                        for (i = 0; i < infoJsonBean.getData().size(); i++) {
+                            ap.setAid( infoJsonBean.getData().get(i).getFaid());
+                            ap.setSeid(infoJsonBean.getData().get(i).getEid());
+                            ap.setContent(infoJsonBean.getData().get(i).getPersonalSummary());
+                            ap.setStatus(0);
+                            ap.setType(6);
+                            ap.setIsapprove(-2);
+                            apDao.insert(ap);
+                        }
+                        //startActivity(new Intent(MainApprovalActivity.this, MyApprovalActivity.class).putExtra("index",2));
+                    } else {
+                        Looper.prepare();//解决子线程弹toast问题
+                        Toast.makeText(getApplicationContext(), "获取待审批转正申请数据失败", Toast.LENGTH_SHORT).show();
+                        Looper.loop();// 进入loop中的循环，查看消息队列
+                    }
+                    infoJsonBean = service.getApplicationIapproved(s); //获取我已经审核的申请
+                    Log.e(TAG, infoJsonBean.toString());
+                    if (infoJsonBean.getStatus() == 0) {
+                        for (i = 0; i < infoJsonBean.getData().size(); i++) {
+                            StatusAndDataHttpResponseObject<FulltimeApplicationInfoJsonBean> httpResponseObject = service.getApplicationInfo(s,infoJsonBean.getData().get(i).getFaid());
+                            if(httpResponseObject.getStatus()==0) {
+                                ap.setAid(infoJsonBean.getData().get(i).getFaid());
+                                ap.setSeid(infoJsonBean.getData().get(i).getEid());
+                                ap.setContent(infoJsonBean.getData().get(i).getPersonalSummary());
+                                ap.setStatus(1);
+                                ap.setType(6);
+                                for (j = 0; j < httpResponseObject.getData().getFulltimeApplicationApprovedOpinionList().size(); j++) {
+                                    switch (httpResponseObject.getData().getFulltimeApplicationApprovedOpinionList().get(j).getIsapproved()) {
+                                        case -2:
+                                            ap.setIsapprove(-2);
+                                            break;
+                                        case -1:
+                                            ap.setIsapprove(-1);
+                                            break;
+                                        case 0:
+                                            ap.setIsapprove(0);
+                                            break;
+                                        case 1:
+                                            ap.setIsapprove(1);
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                                apDao.insert(ap);
+                            }
+                        }
+                        Looper.prepare();//解决子线程弹toast问题
+                        Toast.makeText(getApplicationContext(),"保存成功，正在返回我的审批列表", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(ApprovalAdviseActivity.this, MyApprovalActivity.class).putExtra("index",6));
+                        Looper.loop();// 进入loop中的循环，查看消息队列
+                    } else {
+                        Looper.prepare();//解决子线程弹toast问题
+                        Toast.makeText(getApplicationContext(),"获取已审批转正申请数据失败", Toast.LENGTH_SHORT).show();
+                        Looper.loop();// 进入loop中的循环，查看消息队列
+                    }
+                } else {
+                    Looper.prepare();//解决子线程弹toast问题
+                    Toast.makeText(getApplicationContext(),statusAndMsgJsonBean.getMsg(), Toast.LENGTH_SHORT).show();
+                    Looper.loop();// 进入loop中的循环，查看消息队列
+                }
+            }
+        }).start();
     }
 
     private void saveadjustapplicationapproval() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SharedPreferences pref = getSharedPreferences("data",MODE_PRIVATE);
+                String s = pref.getString("sessionid","");
 
+                JobTransferApplicationApprovedOpinion approval = new JobTransferApplicationApprovedOpinion();
+                approval.setIsapproved(isApproved);
+                approval.setJtaid(aid);
+                approval.setOpinion(econtent.getText().toString().trim());
+                Log.e(TAG,approval.toString());
+                //Todo Service
+                JobTransferApplicationService service = new JobTransferApplicationService();
+                //Todo Service.Method
+                StatusAndMsgJsonBean statusAndMsgJsonBean = service.approveApplication(s,approval);
+
+                //ToCheck JsonBean.getStatus()
+                if (statusAndMsgJsonBean.getStatus() == 0) {
+                    ApprovalDao apDao = EntityManager.getInstance().getApprovalDao();
+                    Approval ap = new Approval();
+                    int i, j = 0;
+                    StatusAndDataHttpResponseObject<ArrayList<JobTransferApplication>> infoJsonBean = service.getApplicationIunapproved(s); //获取待我审核的申请
+                    Log.e(TAG, infoJsonBean.toString());
+                    if (infoJsonBean.getStatus() == 0) {
+                        apDao.deleteAll();
+                        for (i = 0; i < infoJsonBean.getData().size(); i++) {
+                            ap.setAid( infoJsonBean.getData().get(i).getJtaid());
+                            ap.setSeid(infoJsonBean.getData().get(i).getEid());
+                            ap.setContent(infoJsonBean.getData().get(i).getReason());
+                            ap.setStatus(0);
+                            ap.setType(7);
+                            ap.setIsapprove(-2);
+                            apDao.insert(ap);
+                        }
+                        //startActivity(new Intent(MainApprovalActivity.this, MyApprovalActivity.class).putExtra("index",2));
+                    } else {
+                        Looper.prepare();//解决子线程弹toast问题
+                        Toast.makeText(getApplicationContext(), "获取待审批调岗申请数据失败", Toast.LENGTH_SHORT).show();
+                        Looper.loop();// 进入loop中的循环，查看消息队列
+                    }
+                    infoJsonBean = service.getApplicationIapproved(s); //获取我已经审核的申请
+                    Log.e(TAG, infoJsonBean.toString());
+                    if (infoJsonBean.getStatus() == 0) {
+                        for (i = 0; i < infoJsonBean.getData().size(); i++) {
+                            StatusAndDataHttpResponseObject<JobTransferApplicationInfoJsonBean> httpResponseObject = service.getApplicationInfo(s,infoJsonBean.getData().get(i).getJtaid());
+                            if(httpResponseObject.getStatus()==0) {
+                                ap.setAid(infoJsonBean.getData().get(i).getJtaid());
+                                ap.setSeid(infoJsonBean.getData().get(i).getEid());
+                                ap.setContent(infoJsonBean.getData().get(i).getReason());
+                                ap.setStatus(1);
+                                ap.setType(7);
+                                for (j = 0; j < httpResponseObject.getData().getJobTransferApplicationApprovedOpinionList().size(); j++) {
+                                    switch (httpResponseObject.getData().getJobTransferApplicationApprovedOpinionList().get(j).getIsapproved()) {
+                                        case -2:
+                                            ap.setIsapprove(-2);
+                                            break;
+                                        case -1:
+                                            ap.setIsapprove(-1);
+                                            break;
+                                        case 0:
+                                            ap.setIsapprove(0);
+                                            break;
+                                        case 1:
+                                            ap.setIsapprove(1);
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                                apDao.insert(ap);
+                            }
+                        }
+                        Looper.prepare();//解决子线程弹toast问题
+                        Toast.makeText(getApplicationContext(),"保存成功，正在返回我的审批列表", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(ApprovalAdviseActivity.this, MyApprovalActivity.class).putExtra("index",7));
+                        Looper.loop();// 进入loop中的循环，查看消息队列
+                    } else {
+                        Looper.prepare();//解决子线程弹toast问题
+                        Toast.makeText(getApplicationContext(),"获取已审批调岗申请数据失败", Toast.LENGTH_SHORT).show();
+                        Looper.loop();// 进入loop中的循环，查看消息队列
+                    }
+                } else {
+                    Looper.prepare();//解决子线程弹toast问题
+                    Toast.makeText(getApplicationContext(),statusAndMsgJsonBean.getMsg(), Toast.LENGTH_SHORT).show();
+                    Looper.loop();// 进入loop中的循环，查看消息队列
+                }
+            }
+        }).start();
     }
 
     private void saverecruitmentapplicationapproval() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SharedPreferences pref = getSharedPreferences("data",MODE_PRIVATE);
+                String s = pref.getString("sessionid","");
 
+                RecruitmentApplicationApprovedOpinion approval = new RecruitmentApplicationApprovedOpinion();
+                approval.setIsapproved(isApproved);
+                approval.setRaid(aid);
+                approval.setOpinion(econtent.getText().toString().trim());
+                Log.e(TAG,approval.toString());
+                //Todo Service
+                RecruitmentApplicationService service = new RecruitmentApplicationService();
+                //Todo Service.Method
+                StatusAndMsgJsonBean statusAndMsgJsonBean = service.approveApplication(s,approval);
+
+                //ToCheck JsonBean.getStatus()
+                if (statusAndMsgJsonBean.getStatus() == 0) {
+                    ApprovalDao apDao = EntityManager.getInstance().getApprovalDao();
+                    Approval ap = new Approval();
+                    int i, j = 0;
+                    StatusAndDataHttpResponseObject<ArrayList<RecruitmentApplication>> infoJsonBean = service.getApplicationIunapproved(s); //获取待我审核的申请
+                    Log.e(TAG, infoJsonBean.toString());
+                    if (infoJsonBean.getStatus() == 0) {
+                        apDao.deleteAll();
+                        for (i = 0; i < infoJsonBean.getData().size(); i++) {
+                            StatusAndDataHttpResponseObject<RecruitmentApplicationInfoJsonBean> applcaitoninfo = service.getApplicationInfo(s, infoJsonBean.getData().get(i).getRaid());
+                            if (applcaitoninfo.getStatus() == 0) {
+                                ap.setAid(infoJsonBean.getData().get(i).getRaid());
+                                ap.setSeid(infoJsonBean.getData().get(i).getEid());
+                                ap.setContent(applcaitoninfo.getData().getRecruitmentApplicationItem().getPositionDescribe());
+                                ap.setStatus(0);
+                                ap.setType(8);
+                                ap.setIsapprove(-2);
+                                apDao.insert(ap);
+                            } else {
+                                Looper.prepare();//解决子线程弹toast问题
+                                Toast.makeText(getApplicationContext(), "获取待审批招聘申请数据失败", Toast.LENGTH_SHORT).show();
+                                Looper.loop();// 进入loop中的循环，查看消息队列
+                                break;
+                            }
+                        }
+                        //startActivity(new Intent(MainApprovalActivity.this, MyApprovalActivity.class).putExtra("index",8));
+                    } else {
+                        Looper.prepare();//解决子线程弹toast问题
+                        Toast.makeText(getApplicationContext(), "获取待审批招聘申请数据失败", Toast.LENGTH_SHORT).show();
+                        Looper.loop();// 进入loop中的循环，查看消息队列
+                    }
+                    infoJsonBean = service.getApplicationIapproved(s); //获取我已经审核的申请
+                    Log.e(TAG, infoJsonBean.toString());
+                    if (infoJsonBean.getStatus() == 0) {
+                        for (i = 0; i < infoJsonBean.getData().size(); i++) {
+                            StatusAndDataHttpResponseObject<RecruitmentApplicationInfoJsonBean> applcaitoninfo = service.getApplicationInfo(s, infoJsonBean.getData().get(i).getRaid());
+                            if (applcaitoninfo.getStatus() == 0) {
+                                StatusAndDataHttpResponseObject<RecruitmentApplicationInfoJsonBean> httpResponseObject = service.getApplicationInfo(s, infoJsonBean.getData().get(i).getRaid());
+                                if (httpResponseObject.getStatus() == 0) {
+                                    ap.setAid(infoJsonBean.getData().get(i).getRaid());
+                                    ap.setSeid(infoJsonBean.getData().get(i).getEid());
+                                    ap.setContent(applcaitoninfo.getData().getRecruitmentApplicationItem().getPositionDescribe());
+                                    ap.setStatus(1);
+                                    ap.setType(8);
+                                    for (j = 0; j < httpResponseObject.getData().getRecruitmentApplicationApprovedOpinions().size(); j++) {
+                                        switch (httpResponseObject.getData().getRecruitmentApplicationApprovedOpinions().get(j).getIsapproved()) {
+                                            case -2:
+                                                ap.setIsapprove(-2);
+                                                break;
+                                            case -1:
+                                                ap.setIsapprove(-1);
+                                                break;
+                                            case 0:
+                                                ap.setIsapprove(0);
+                                                break;
+                                            case 1:
+                                                ap.setIsapprove(1);
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                    }
+                                    apDao.insert(ap);
+                                } else {
+                                    Looper.prepare();//解决子线程弹toast问题
+                                    Toast.makeText(getApplicationContext(), "获取已审批申请详情数据失败", Toast.LENGTH_SHORT).show();
+                                    Looper.loop();// 进入loop中的循环，查看消息队列
+                                }
+                            } else {
+                                Looper.prepare();//解决子线程弹toast问题
+                                Toast.makeText(getApplicationContext(), "获取已审批招聘申请数据失败", Toast.LENGTH_SHORT).show();
+                                Looper.loop();// 进入loop中的循环，查看消息队列
+                                break;
+                            }
+                        }
+                    } else {
+                        Looper.prepare();//解决子线程弹toast问题
+                        Toast.makeText(getApplicationContext(), "获取已审批离职申请数据失败", Toast.LENGTH_SHORT).show();
+                        Looper.loop();// 进入loop中的循环，查看消息队列
+                    }
+                    startActivity(new Intent(ApprovalAdviseActivity.this, MyApprovalActivity.class).putExtra("index",8));
+                }else {
+                        Looper.prepare();//解决子线程弹toast问题
+                        Toast.makeText(getApplicationContext(), statusAndMsgJsonBean.getMsg(), Toast.LENGTH_SHORT).show();
+                        Looper.loop();// 进入loop中的循环，查看消息队列
+                    }
+            }
+        }).start();
     }
 
     private void savenoticceapproval() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SharedPreferences pref = getSharedPreferences("data",MODE_PRIVATE);
+                String s = pref.getString("sessionid","");
 
+                AnnouncementApprovedOpinionList approval = new AnnouncementApprovedOpinionList();
+                approval.setIsapproved(isApproved);
+                approval.setAid(aid);
+                approval.setOpinion(econtent.getText().toString().trim());
+                Log.e(TAG,approval.toString());
+                //Todo Service
+                AnnouncementService service = new AnnouncementService();
+                //Todo Service.Method
+                StatusJsonBean statusAndMsgJsonBean = service.approved_annoucements(s,approval);
+
+                //ToCheck JsonBean.getStatus()
+                if (statusAndMsgJsonBean.getStatus() == 0) {
+                    ApprovalDao apDao = EntityManager.getInstance().getApprovalDao();
+                    Approval ap = new Approval();
+                    int i, j = 0;
+                    AnnouncementJsonBean infoJsonBean = service.get_unapprovedannoucement(s); //获取待我审核的申请
+                    Log.e(TAG, infoJsonBean.toString());
+                    if (infoJsonBean.getStatus() == 0) {
+                        apDao.deleteAll();
+                        for (i = 0; i < infoJsonBean.getData().size(); i++) {
+                            ap.setAid( infoJsonBean.getData().get(i).getAid());
+                            ap.setSeid(infoJsonBean.getData().get(i).getEid());
+                            ap.setContent(infoJsonBean.getData().get(i).getContent());
+                            ap.setStatus(0);
+                            ap.setType(9);
+                            ap.setIsapprove(-2);
+                            apDao.insert(ap);
+                        }
+                        //startActivity(new Intent(MainApprovalActivity.this, MyApprovalActivity.class).putExtra("index",2));
+                    } else {
+                        Looper.prepare();//解决子线程弹toast问题
+                        Toast.makeText(getApplicationContext(), "获取待审批公告数据失败", Toast.LENGTH_SHORT).show();
+                        Looper.loop();// 进入loop中的循环，查看消息队列
+                    }
+                    infoJsonBean = service.get_approvedannoucement(s); //获取我已经审核的申请
+                    Log.e(TAG, infoJsonBean.toString());
+                    if (infoJsonBean.getStatus() == 0) {
+                        for (i = 0; i < infoJsonBean.getData().size(); i++) {
+                            StatusAndDataHttpResponseObject<AnnouncementInfoJsonBean> httpResponseObject = service.get_annoucementinfo(s,infoJsonBean.getData().get(i).getAid());
+                            if(httpResponseObject.getStatus()==0) {
+                                ap.setAid(infoJsonBean.getData().get(i).getAid());
+                                ap.setSeid(infoJsonBean.getData().get(i).getEid());
+                                ap.setContent(infoJsonBean.getData().get(i).getContent());
+                                ap.setStatus(1);
+                                ap.setType(9);
+                                for (j = 0; j < httpResponseObject.getData().getAnnouncementApprovedOpinionList().size(); j++) {
+                                    switch (httpResponseObject.getData().getAnnouncementApprovedOpinionList().get(j).getIsapproved()) {
+                                        case -2:
+                                            ap.setIsapprove(-2);
+                                            break;
+                                        case -1:
+                                            ap.setIsapprove(-1);
+                                            break;
+                                        case 0:
+                                            ap.setIsapprove(0);
+                                            break;
+                                        case 1:
+                                            ap.setIsapprove(1);
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                                apDao.insert(ap);
+                            }
+                        }
+                        Looper.prepare();//解决子线程弹toast问题
+                        Toast.makeText(getApplicationContext(),"保存成功，正在返回我的审批列表", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(ApprovalAdviseActivity.this, MyApprovalActivity.class).putExtra("index",9));
+                        Looper.loop();// 进入loop中的循环，查看消息队列
+                    } else {
+                        Looper.prepare();//解决子线程弹toast问题
+                        Toast.makeText(getApplicationContext(),"获取已审批公告数据失败", Toast.LENGTH_SHORT).show();
+                        Looper.loop();// 进入loop中的循环，查看消息队列
+                    }
+                } else {
+                    Looper.prepare();//解决子线程弹toast问题
+                    Toast.makeText(getApplicationContext(),"保存失败，请重试", Toast.LENGTH_SHORT).show();
+                    Looper.loop();// 进入loop中的循环，查看消息队列
+                }
+            }
+        }).start();
     }
 
 
@@ -482,7 +1110,7 @@ public class ApprovalAdviseActivity extends AppCompatActivity {
                         DepartmentInfo departmentInfo =contactInfos.get(i).getDepartment();
                         departmentInfoDao.insert(departmentInfo);
                         Log.d(TAG,"contactInfos.get(i).getEmpContactList().size():"+contactInfos.get(i).getEmpContactList().size());
-                        for(int j=0;j<contactInfos.get(i).getEmpContactList().size();i++){
+                        for(int j=0;j<contactInfos.get(i).getEmpContactList().size();j++){
                             if(contactInfos.get(i).getEmpContactList().get(j).getEmployee()!=null) {
                                 Log.d(TAG,"contactInfos.get(i).getEmpContactList().get(j).getEmployee()"+contactInfos.get(i).getEmpContactList().get(j).getEmployee().toString());
                                 contactInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getEmployee());

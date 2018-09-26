@@ -203,7 +203,7 @@ public class DisposedApprovalActivity extends Fragment {
 
             View childAt =   addlistView.getChildAt(i);
             tstatus = (TextView)childAt.findViewById(R.id.status);
-            switch (approvalList.get(i).getStatus()){
+            switch (approvalList.get(i).getIsapprove()){
                 case -1:
                     tstatus.setText("不同意");
                     tstatus.setTextColor(getResources().getColor(R.color.tv_refuse));
@@ -214,11 +214,11 @@ public class DisposedApprovalActivity extends Fragment {
                     break;
                 case 0:
                     tstatus.setText("审核中");
-                    tstatus.setTextColor(getResources().getColor(R.color.list_glide));
+                    tstatus.setTextColor(getResources().getColor(R.color.tv_gray));
                     break;
                 case -2:
                     tstatus.setText("审核中");
-                    tstatus.setTextColor(getResources().getColor(R.color.list_glide));
+                    tstatus.setTextColor(getResources().getColor(R.color.tv_gray));
                     break;
                 default:
                     tstatus.setText("");
@@ -291,11 +291,10 @@ public class DisposedApprovalActivity extends Fragment {
                         DepartmentInfo departmentInfo =contactInfos.get(i).getDepartment();
                         departmentInfoDao.insert(departmentInfo);
                         Log.d(TAG,"contactInfos.get(i).getEmpContactList().size():"+contactInfos.get(i).getEmpContactList().size());
-                        for(int j=0;j<contactInfos.get(i).getEmpContactList().size();i++){
+                        for(int j=0;j<contactInfos.get(i).getEmpContactList().size();j++){
                             if(contactInfos.get(i).getEmpContactList().get(j).getEmployee()!=null) {
                                 Log.d(TAG,"contactInfos.get(i).getEmpContactList().get(j).getEmployee()"+contactInfos.get(i).getEmpContactList().get(j).getEmployee().toString());
                                 contactInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getEmployee());
-                                dutyInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getPosition());
                             }
                         }
                     }
@@ -358,7 +357,6 @@ public class DisposedApprovalActivity extends Fragment {
                             if(contactInfos.get(i).getEmpContactList().get(j).getEmployee()!=null) {
                                 Log.d(TAG,"contactInfos.get(i).getEmpContactList().get(j).getEmployee()"+contactInfos.get(i).getEmpContactList().get(j).getEmployee().toString());
                                 contactInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getEmployee());
-                                dutyInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getPosition());
                             }
                         }
                     }
@@ -421,7 +419,6 @@ public class DisposedApprovalActivity extends Fragment {
                             if(contactInfos.get(i).getEmpContactList().get(j).getEmployee()!=null) {
                                 Log.d(TAG,"contactInfos.get(i).getEmpContactList().get(j).getEmployee()"+contactInfos.get(i).getEmpContactList().get(j).getEmployee().toString());
                                 contactInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getEmployee());
-                                dutyInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getPosition());
                             }
                         }
                     }
@@ -484,7 +481,6 @@ public class DisposedApprovalActivity extends Fragment {
                             if(contactInfos.get(i).getEmpContactList().get(j).getEmployee()!=null) {
                                 Log.d(TAG,"contactInfos.get(i).getEmpContactList().get(j).getEmployee()"+contactInfos.get(i).getEmpContactList().get(j).getEmployee().toString());
                                 contactInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getEmployee());
-                                dutyInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getPosition());
                             }
                         }
                     }
@@ -542,12 +538,22 @@ public class DisposedApprovalActivity extends Fragment {
                         Log.d("departmentinfo", contactInfos.get(i).getDepartment().toString());
                         DepartmentInfo departmentInfo =contactInfos.get(i).getDepartment();
                         departmentInfoDao.insert(departmentInfo);
+                        DutyInfoJsonBean dutyInfoJsonBean = userInfoService.getPosition(departmentInfo.getDcid());
+                        if(dutyInfoJsonBean.getStatus()==0){
+                            ArrayList<DutyInfo> dutyInfos = dutyInfoJsonBean.getData();
+                            for(int k=0;k<dutyInfos.size();k++){
+                                dutyInfoDao.insert(dutyInfos.get(k));
+                            }
+                        }else{
+                            Looper.prepare();//解决子线程弹toast问题
+                            Toast.makeText(mContext, dutyInfoJsonBean.getMsg(), Toast.LENGTH_SHORT).show();
+                            Looper.loop();// 进入loop中的循环，查看消息队列
+                        }
                         Log.d(TAG,"contactInfos.get(i).getEmpContactList().size():"+contactInfos.get(i).getEmpContactList().size());
                         for(int j=0;j<contactInfos.get(i).getEmpContactList().size();j++){
                             if(contactInfos.get(i).getEmpContactList().get(j).getEmployee()!=null) {
                                 Log.d(TAG,"contactInfos.get(i).getEmpContactList().get(j).getEmployee()"+contactInfos.get(i).getEmpContactList().get(j).getEmployee().toString());
                                 contactInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getEmployee());
-                                dutyInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getPosition());
                             }
                         }
                     }
@@ -564,7 +570,7 @@ public class DisposedApprovalActivity extends Fragment {
                     startActivity( new Intent(mContext, DimissionInfoActivity.class)
                             .putExtra("ap",ap)
                             .putExtra("index",1)
-                            .putParcelableArrayListExtra("aaol",list));
+                            .putParcelableArrayListExtra("list",list));
                 } else {
                     Looper.prepare();//解决子线程弹toast问题
                     Toast.makeText(mContext,"获取离职申请数据失败", Toast.LENGTH_SHORT).show();
@@ -605,12 +611,22 @@ public class DisposedApprovalActivity extends Fragment {
                         Log.d("departmentinfo", contactInfos.get(i).getDepartment().toString());
                         DepartmentInfo departmentInfo =contactInfos.get(i).getDepartment();
                         departmentInfoDao.insert(departmentInfo);
+                        DutyInfoJsonBean dutyInfoJsonBean = userInfoService.getPosition(departmentInfo.getDcid());
+                        if(dutyInfoJsonBean.getStatus()==0){
+                            ArrayList<DutyInfo> dutyInfos = dutyInfoJsonBean.getData();
+                            for(int k=0;k<dutyInfos.size();k++){
+                                dutyInfoDao.insert(dutyInfos.get(k));
+                            }
+                        }else{
+                            Looper.prepare();//解决子线程弹toast问题
+                            Toast.makeText(mContext, dutyInfoJsonBean.getMsg(), Toast.LENGTH_SHORT).show();
+                            Looper.loop();// 进入loop中的循环，查看消息队列
+                        }
                         Log.d(TAG,"contactInfos.get(i).getEmpContactList().size():"+contactInfos.get(i).getEmpContactList().size());
                         for(int j=0;j<contactInfos.get(i).getEmpContactList().size();j++){
                             if(contactInfos.get(i).getEmpContactList().get(j).getEmployee()!=null) {
                                 Log.d(TAG,"contactInfos.get(i).getEmpContactList().get(j).getEmployee()"+contactInfos.get(i).getEmpContactList().get(j).getEmployee().toString());
                                 contactInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getEmployee());
-                                dutyInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getPosition());
                             }
                         }
                     }
@@ -627,7 +643,7 @@ public class DisposedApprovalActivity extends Fragment {
                     startActivity( new Intent(mContext, RegularWorkerInfoActivity.class)
                             .putExtra("ap",ap)
                             .putExtra("index",1)
-                            .putParcelableArrayListExtra("aaol",list));
+                            .putParcelableArrayListExtra("list",list));
                 } else {
                     Looper.prepare();//解决子线程弹toast问题
                     Toast.makeText(mContext,"获取转正申请数据失败", Toast.LENGTH_SHORT).show();
@@ -700,7 +716,7 @@ public class DisposedApprovalActivity extends Fragment {
                     startActivity( new Intent(mContext, AdjustPostInfoActivity.class)
                             .putExtra("ap",ap)
                             .putExtra("index",1)
-                            .putParcelableArrayListExtra("aaol",list));
+                            .putParcelableArrayListExtra("list",list));
                 } else {
                     Looper.prepare();//解决子线程弹toast问题
                     Toast.makeText(mContext,"获取调岗申请数据失败", Toast.LENGTH_SHORT).show();
@@ -775,7 +791,7 @@ public class DisposedApprovalActivity extends Fragment {
                             .putExtra("ap",ap)
                             .putExtra("apitem",apitem)
                             .putExtra("index",1)
-                            .putParcelableArrayListExtra("aaol",list));
+                            .putParcelableArrayListExtra("list",list));
                 } else {
                     Looper.prepare();//解决子线程弹toast问题
                     Toast.makeText(mContext,"获取招聘申请数据失败", Toast.LENGTH_SHORT).show();
@@ -845,9 +861,9 @@ public class DisposedApprovalActivity extends Fragment {
                     AnnouncementInfo ap = aaol.getAnnouncement();
                     ArrayList<AnnouncementApprovedOpinionList> list = aaol.getAnnouncementApprovedOpinionList();
                     startActivity( new Intent(mContext, NoticeInfoActivity.class)
-                            .putExtra("ap",ap)
+                            .putExtra("notice",ap)
                             .putExtra("index",1)
-                            .putParcelableArrayListExtra("aaol",list));
+                            .putParcelableArrayListExtra("list",list));
                 } else {
                     Looper.prepare();//解决子线程弹toast问题
                     Toast.makeText(mContext,"获取公告数据失败", Toast.LENGTH_SHORT).show();
