@@ -125,93 +125,124 @@
         android:orientation="vertical"
         android:layout_marginBottom="@dimen/dp_1">
 
-            <HorizontalScrollView
-                android:id="@+id/huadong"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:gravity="center"
-                android:scrollbars="none"
-                android:layout_marginTop="@dimen/dp_20"
-                android:layout_marginBottom="@dimen/dp_20">
+        <!--<HorizontalScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent">
 
-            <RadioGroup
-                android:id="@+id/radioGroup1"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
+                <com.oliveoa.view.AdhibitionGridView
+                    android:id="@+id/gridview"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:gravity="center"
+                    android:numColumns="auto_fit"
+                    android:scrollbars="none"
+                    android:stretchMode="spacingWidthUniform"/>
+            </LinearLayout>
+        </HorizontalScrollView>-->
+         <HorizontalScrollView
+             android:id="@+id/huadong"
+             android:layout_width="fill_parent"
+             android:layout_height="fill_parent"
+             android:gravity="center"
+             android:scrollbars="none"
+             android:layout_marginTop="@dimen/dp_20"
+             android:layout_marginBottom="@dimen/dp_20">
+             <LinearLayout
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content">
 
-                <RadioButton
-                    android:id="@+id/home_application"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:button="@null"
-                    android:layout_marginLeft="@dimen/dp_20"
-                    android:drawablePadding="@dimen/dp_6"
-                    android:drawableTop="@drawable/ic_menu_application"
-                    android:text="我的申请" />
-                <RadioButton
-                    android:id="@+id/home_schedule"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:button="@null"
-                    android:layout_marginLeft="@dimen/dp_20"
-                    android:drawablePadding="@dimen/dp_6"
-                    android:drawableTop="@drawable/ic_menu_notify"
-                    android:text="工作日程" />
-                <RadioButton
-                    android:id="@+id/home_appravol"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:button="@null"
-                    android:layout_marginLeft="@dimen/dp_20"
-                    android:drawablePadding="@dimen/dp_6"
-                    android:drawableTop="@drawable/ic_menu_examine"
-                    android:text="审批" />
-                <RadioButton
-                    android:id="@+id/home_document"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:button="@null"
-                    android:layout_marginLeft="@dimen/dp_20"
-                    android:drawablePadding="@dimen/dp_6"
-                    android:drawableTop="@drawable/ic_menu_official"
-                    android:text="公文管理" />
-                <RadioButton
-                    android:id="@+id/home_meeting"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:button="@null"
-                    android:layout_marginLeft="@dimen/dp_20"
-                    android:drawablePadding="@dimen/dp_6"
-                    android:drawableTop="@drawable/ic_menu_meeting"
-                    android:text="会议管理" />
-                <RadioButton
-                    android:id="@+id/home_note"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:layout_marginLeft="@dimen/dp_20"
-                    android:layout_marginRight="@dimen/dp_20"
-                    android:drawablePadding="@dimen/dp_6"
-                    android:drawableTop="@drawable/ic_menu_note"
-                    android:text="便签" />
+                 <com.oliveoa.view.AdhibitionGridView
+                     android:id="@+id/gridview"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:gravity="center"
+                     android:numColumns="auto_fit"
+                     android:scrollbars="none"
+                     android:columnWidth="@dimen/dp_90"
+                     android:stretchMode="columnWidth"/>
+             </LinearLayout>
 
-            </RadioGroup>
-            </HorizontalScrollView>
+         <!--<RadioGroup
+             android:id="@+id/radioGroup1"
+             android:layout_width="fill_parent"
+             android:layout_height="wrap_content"
+             android:gravity="center"
+             android:orientation="horizontal">
+
+             <RadioButton
+                 android:id="@+id/home_application"
+                 android:layout_width="0dp"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:gravity="center"
+                 android:button="@null"
+                 android:layout_marginLeft="@dimen/dp_20"
+                 android:drawablePadding="@dimen/dp_6"
+                 android:drawableTop="@drawable/ic_menu_application"
+                 android:text="我的申请" />
+             <RadioButton
+                 android:id="@+id/home_schedule"
+                 android:layout_width="0dp"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:gravity="center"
+                 android:button="@null"
+                 android:layout_marginLeft="@dimen/dp_20"
+                 android:drawablePadding="@dimen/dp_6"
+                 android:drawableTop="@drawable/ic_menu_notify"
+                 android:text="工作日程" />
+             <RadioButton
+                 android:id="@+id/home_appravol"
+                 android:layout_width="0dp"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:gravity="center"
+                 android:button="@null"
+                 android:layout_marginLeft="@dimen/dp_20"
+                 android:drawablePadding="@dimen/dp_6"
+                 android:drawableTop="@drawable/ic_menu_examine"
+                 android:text="审批" />
+             <RadioButton
+                 android:id="@+id/home_document"
+                 android:layout_width="0dp"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:gravity="center"
+                 android:button="@null"
+                 android:layout_marginLeft="@dimen/dp_20"
+                 android:drawablePadding="@dimen/dp_6"
+                 android:drawableTop="@drawable/ic_menu_official"
+                 android:text="公文管理" />
+             <RadioButton
+                 android:id="@+id/home_meeting"
+                 android:layout_width="0dp"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:gravity="center"
+                 android:button="@null"
+                 android:layout_marginLeft="@dimen/dp_20"
+                 android:drawablePadding="@dimen/dp_6"
+                 android:drawableTop="@drawable/ic_menu_meeting"
+                 android:text="会议管理" />
+             <RadioButton
+                 android:id="@+id/home_note"
+                 android:layout_width="0dp"
+                 android:layout_height="wrap_content"
+                 android:layout_weight="1"
+                 android:button="@null"
+                 android:gravity="center"
+                 android:layout_marginLeft="@dimen/dp_20"
+                 android:layout_marginRight="@dimen/dp_20"
+                 android:drawablePadding="@dimen/dp_6"
+                 android:drawableTop="@drawable/ic_menu_note"
+                 android:text="便签" />
+
+         </RadioGroup>-->
+         </HorizontalScrollView>
     </LinearLayout>
 
             //消息

@@ -11,6 +11,7 @@ import com.oliveoa.jsonbean.StatusJsonBean;
 
 import java.lang.reflect.Type;
 
+import com.oliveoa.pojo.AnnouncementApprovedOpinionList;
 import com.oliveoa.pojo.AnnouncementInfo;
 import com.oliveoa.util.DateFormat;
 
@@ -70,14 +71,14 @@ public class AnnouncementService {
      *   Description： 审核公告
      *   @Author： Erica
      */
-     public StatusJsonBean approved_annoucements(String s, AnnouncementInfo announcementInfo){
+     public StatusJsonBean approved_annoucements(String s, AnnouncementApprovedOpinionList announcementInfo){
            try {
                        DateFormat dateFormat = new DateFormat();
                        OkHttpClient client = new OkHttpClient();
                        FormBody body = new FormBody.Builder()
                                .add("aid",announcementInfo.getAid())
                                .add("isApproved", String.valueOf(announcementInfo.getIsapproved()))
-                               .add("opinion",announcementInfo.getContent())
+                               .add("opinion",announcementInfo.getOpinion())
                                .build();
 
                        Request request = new Request.Builder()
