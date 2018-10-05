@@ -34,6 +34,8 @@ import com.oliveoa.pojo.MeetingApplicationAndStatus;
 import com.oliveoa.pojo.MeetingMember;
 import com.oliveoa.pojo.Message;
 import com.oliveoa.pojo.NoteInfo;
+import com.oliveoa.pojo.OfficialDocument;
+import com.oliveoa.pojo.OfficialDocumentIssued;
 import com.oliveoa.pojo.OvertimeApplication;
 import com.oliveoa.pojo.OvertimeApplicationApprovedOpinionList;
 import com.oliveoa.pojo.RecruitmentApplicationApprovedOpinion;
@@ -70,6 +72,8 @@ import com.oliveoa.greendao.MeetingApplicationAndStatusDao;
 import com.oliveoa.greendao.MeetingMemberDao;
 import com.oliveoa.greendao.MessageDao;
 import com.oliveoa.greendao.NoteInfoDao;
+import com.oliveoa.greendao.OfficialDocumentDao;
+import com.oliveoa.greendao.OfficialDocumentIssuedDao;
 import com.oliveoa.greendao.OvertimeApplicationDao;
 import com.oliveoa.greendao.OvertimeApplicationApprovedOpinionListDao;
 import com.oliveoa.greendao.RecruitmentApplicationApprovedOpinionDao;
@@ -115,6 +119,8 @@ public class DaoSession extends AbstractDaoSession {
     private final DaoConfig meetingMemberDaoConfig;
     private final DaoConfig messageDaoConfig;
     private final DaoConfig noteInfoDaoConfig;
+    private final DaoConfig officialDocumentDaoConfig;
+    private final DaoConfig officialDocumentIssuedDaoConfig;
     private final DaoConfig overtimeApplicationDaoConfig;
     private final DaoConfig overtimeApplicationApprovedOpinionListDaoConfig;
     private final DaoConfig recruitmentApplicationApprovedOpinionDaoConfig;
@@ -151,6 +157,8 @@ public class DaoSession extends AbstractDaoSession {
     private final MeetingMemberDao meetingMemberDao;
     private final MessageDao messageDao;
     private final NoteInfoDao noteInfoDao;
+    private final OfficialDocumentDao officialDocumentDao;
+    private final OfficialDocumentIssuedDao officialDocumentIssuedDao;
     private final OvertimeApplicationDao overtimeApplicationDao;
     private final OvertimeApplicationApprovedOpinionListDao overtimeApplicationApprovedOpinionListDao;
     private final RecruitmentApplicationApprovedOpinionDao recruitmentApplicationApprovedOpinionDao;
@@ -243,6 +251,12 @@ public class DaoSession extends AbstractDaoSession {
         noteInfoDaoConfig = daoConfigMap.get(NoteInfoDao.class).clone();
         noteInfoDaoConfig.initIdentityScope(type);
 
+        officialDocumentDaoConfig = daoConfigMap.get(OfficialDocumentDao.class).clone();
+        officialDocumentDaoConfig.initIdentityScope(type);
+
+        officialDocumentIssuedDaoConfig = daoConfigMap.get(OfficialDocumentIssuedDao.class).clone();
+        officialDocumentIssuedDaoConfig.initIdentityScope(type);
+
         overtimeApplicationDaoConfig = daoConfigMap.get(OvertimeApplicationDao.class).clone();
         overtimeApplicationDaoConfig.initIdentityScope(type);
 
@@ -296,6 +310,8 @@ public class DaoSession extends AbstractDaoSession {
         meetingMemberDao = new MeetingMemberDao(meetingMemberDaoConfig, this);
         messageDao = new MessageDao(messageDaoConfig, this);
         noteInfoDao = new NoteInfoDao(noteInfoDaoConfig, this);
+        officialDocumentDao = new OfficialDocumentDao(officialDocumentDaoConfig, this);
+        officialDocumentIssuedDao = new OfficialDocumentIssuedDao(officialDocumentIssuedDaoConfig, this);
         overtimeApplicationDao = new OvertimeApplicationDao(overtimeApplicationDaoConfig, this);
         overtimeApplicationApprovedOpinionListDao = new OvertimeApplicationApprovedOpinionListDao(overtimeApplicationApprovedOpinionListDaoConfig, this);
         recruitmentApplicationApprovedOpinionDao = new RecruitmentApplicationApprovedOpinionDao(recruitmentApplicationApprovedOpinionDaoConfig, this);
@@ -332,6 +348,8 @@ public class DaoSession extends AbstractDaoSession {
         registerDao(MeetingMember.class, meetingMemberDao);
         registerDao(Message.class, messageDao);
         registerDao(NoteInfo.class, noteInfoDao);
+        registerDao(OfficialDocument.class, officialDocumentDao);
+        registerDao(OfficialDocumentIssued.class, officialDocumentIssuedDao);
         registerDao(OvertimeApplication.class, overtimeApplicationDao);
         registerDao(OvertimeApplicationApprovedOpinionList.class, overtimeApplicationApprovedOpinionListDao);
         registerDao(RecruitmentApplicationApprovedOpinion.class, recruitmentApplicationApprovedOpinionDao);
@@ -370,6 +388,8 @@ public class DaoSession extends AbstractDaoSession {
         meetingMemberDaoConfig.clearIdentityScope();
         messageDaoConfig.clearIdentityScope();
         noteInfoDaoConfig.clearIdentityScope();
+        officialDocumentDaoConfig.clearIdentityScope();
+        officialDocumentIssuedDaoConfig.clearIdentityScope();
         overtimeApplicationDaoConfig.clearIdentityScope();
         overtimeApplicationApprovedOpinionListDaoConfig.clearIdentityScope();
         recruitmentApplicationApprovedOpinionDaoConfig.clearIdentityScope();
@@ -483,6 +503,14 @@ public class DaoSession extends AbstractDaoSession {
 
     public NoteInfoDao getNoteInfoDao() {
         return noteInfoDao;
+    }
+
+    public OfficialDocumentDao getOfficialDocumentDao() {
+        return officialDocumentDao;
+    }
+
+    public OfficialDocumentIssuedDao getOfficialDocumentIssuedDao() {
+        return officialDocumentIssuedDao;
     }
 
     public OvertimeApplicationDao getOvertimeApplicationDao() {

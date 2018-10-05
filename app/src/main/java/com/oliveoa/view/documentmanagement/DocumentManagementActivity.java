@@ -1,19 +1,27 @@
 package com.oliveoa.view.documentmanagement;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.oliveoa.common.StatusAndMsgAndDataHttpResponseObject;
+import com.oliveoa.controller.DocumentService;
+import com.oliveoa.pojo.OfficialDocument;
+import com.oliveoa.pojo.OfficialDocumentIssued;
 import com.oliveoa.view.R;
 import com.oliveoa.view.TabLayoutBottomActivity;
 import com.oliveoa.view.myapplication.AddApplicationActivity;
 import com.oliveoa.view.myapplication.RecruitmentActivity;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -85,26 +93,44 @@ public class DocumentManagementActivity extends AppCompatActivity {
     }
 
     private void addDraft() {
-        Intent intent = new Intent(DocumentManagementActivity.this, DraftActivity.class);
-        startActivity(intent);
-        finish();
+           new Thread(new Runnable() {
+                       @Override
+                       public void run() {
+                           SharedPreferences pref = getSharedPreferences("data",MODE_PRIVATE);
+                           String s = pref.getString("sessionid","");
+                         
+                           //Todo Service
+                           DocumentService service = new DocumentService();
+                           //Todo Service.Method
+                           StatusAndMsgAndDataHttpResponseObject<ArrayList<OfficialDocument>> statusAndMsgAndDataHttpResponseObject = service.getdocumentIDraft(s);
+                           //ToCheck JsonBean.getStatus()
+                           if (statusAndMsgAndDataHttpResponseObject.getStatus() == 0) {
+                               //Log.i("DOCUMENT=",statusAndMsgAndDataHttpResponseObject.getData().toString());
+                               Intent intent = new Intent(DocumentManagementActivity.this, DraftActivity.class);
+                               intent.putParcelableArrayListExtra("list",statusAndMsgAndDataHttpResponseObject.getData());
+                               startActivity(intent);
+                               finish();
+                           } else {
+                               Looper.prepare();//解决子线程弹toast问题
+                               Toast.makeText(getApplicationContext(),statusAndMsgAndDataHttpResponseObject.getMsg(), Toast.LENGTH_SHORT).show();
+                               Looper.loop();// 进入loop中的循环，查看消息队列
+                           }
+                       }
+                   }).start();
+
 
     }
 
     private void addNuclearDraft() {
-        Intent intent = new Intent(DocumentManagementActivity.this, NuclearDraftActivity.class);
-        intent.getIntExtra("index",0);
-        startActivity(intent);
-        finish();
-
+         Intent intent = new Intent(DocumentManagementActivity.this, NuclearDraftActivity.class);
+         startActivity(intent);
+         finish();
     }
 
     private void addIssue() {
-        Intent intent = new Intent(DocumentManagementActivity.this, IssueActivity.class);
-        intent.getIntExtra("index",0);
-        startActivity(intent);
-        finish();
-
+                    Intent intent = new Intent(DocumentManagementActivity.this,IssueActivity.class);
+                    startActivity(intent);
+                    finish();
     }
 
     private void addReceive() {

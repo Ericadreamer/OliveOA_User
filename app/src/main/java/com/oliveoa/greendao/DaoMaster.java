@@ -47,6 +47,8 @@ public class DaoMaster extends AbstractDaoMaster {
         MeetingMemberDao.createTable(db, ifNotExists);
         MessageDao.createTable(db, ifNotExists);
         NoteInfoDao.createTable(db, ifNotExists);
+        OfficialDocumentDao.createTable(db, ifNotExists);
+        OfficialDocumentIssuedDao.createTable(db, ifNotExists);
         OvertimeApplicationDao.createTable(db, ifNotExists);
         OvertimeApplicationApprovedOpinionListDao.createTable(db, ifNotExists);
         RecruitmentApplicationApprovedOpinionDao.createTable(db, ifNotExists);
@@ -86,6 +88,8 @@ public class DaoMaster extends AbstractDaoMaster {
         MeetingMemberDao.dropTable(db, ifExists);
         MessageDao.dropTable(db, ifExists);
         NoteInfoDao.dropTable(db, ifExists);
+        OfficialDocumentDao.dropTable(db, ifExists);
+        OfficialDocumentIssuedDao.dropTable(db, ifExists);
         OvertimeApplicationDao.dropTable(db, ifExists);
         OvertimeApplicationApprovedOpinionListDao.dropTable(db, ifExists);
         RecruitmentApplicationApprovedOpinionDao.dropTable(db, ifExists);
@@ -139,6 +143,8 @@ public class DaoMaster extends AbstractDaoMaster {
         registerDaoClass(MeetingMemberDao.class);
         registerDaoClass(MessageDao.class);
         registerDaoClass(NoteInfoDao.class);
+        registerDaoClass(OfficialDocumentDao.class);
+        registerDaoClass(OfficialDocumentIssuedDao.class);
         registerDaoClass(OvertimeApplicationDao.class);
         registerDaoClass(OvertimeApplicationApprovedOpinionListDao.class);
         registerDaoClass(RecruitmentApplicationApprovedOpinionDao.class);

@@ -6,7 +6,7 @@ android {
     compileSdkVersion 26
     defaultConfig {
         applicationId "com.example.erica.oliveoa_user"
-        minSdkVersion 15
+        minSdkVersion 17
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -97,4 +97,9 @@ dependencies {
     implementation 'org.greenrobot:greendao-generator:3.2.0'
     implementation files('libs/library-1.0.2-sources.jar')
     implementation 'com.belerweb:pinyin4j:2.5.1'
+    implementation 'org.greenrobot:greendao:3.2.0'
+    /*implementation 'com.github.zhouxu88:OkHttp3_MultiFile:v1.0'
+    implementation 'com.zhy:okhttputils:2.6.2'*/
+    implementation 'com.github.Othershe:DUtil:1.1.1'
+
 }

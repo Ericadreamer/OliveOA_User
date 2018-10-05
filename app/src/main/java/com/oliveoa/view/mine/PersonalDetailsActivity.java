@@ -67,6 +67,9 @@ public class PersonalDetailsActivity extends AppCompatActivity {
         tmail = (TextView) findViewById(R.id.mail);
         taddress = (TextView) findViewById(R.id.address);
         tedit = (TextView) findViewById(R.id.edit);
+        if(index==0){
+            tedit.setVisibility(View.GONE);
+        }
 
         initData();
 

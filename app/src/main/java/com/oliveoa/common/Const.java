@@ -111,23 +111,23 @@ public class Const {
     public static final String RECRUITMENT_SUBMIT_SEARCH =HOSTPATH+"/oliveoa/employee/application/get_recruitment_application_Isubmit.do";
 
     //公文流转
-    public static final  String DOCUMENTFLOW_DRAFT = HOSTPATH+"/oliveoa/employee/documentflow/draft.do"; //拟稿
-    public static final  String DOCUMENTFLOW_IDRAFTED_SEARCH = HOSTPATH+"/oliveoa/employee/documentflow/get_document_Idraft.do";//获取我拟稿的
-    public static final  String DOCUMENTFLOW_NEEDNUCLEAR = HOSTPATH+"/oliveoa/employee/documentflow/get_document_need_nuclear.do";//获取待核稿的
-    public static final  String DOCUMENTFLOW_NUCLEAR = HOSTPATH+"/oliveoa/employee/documentflow/nuclear.do";//核稿
-    public static final  String DOCUMENTFLOW_NUCLEARED_SEARCH = HOSTPATH+"/oliveoa/employee/documentflow/get_document_done_nuclear.do";//获取已经核稿的
-    public static final  String DOCUMENTFLOW_NEEDISSUE_SEARCH = HOSTPATH+"/oliveoa/employee/documentflow/get_document_need_Issue.do";//获取待签发的
-    public static final  String DOCUMENTFLOW_ISSUE = HOSTPATH+"/oliveoa/employee/documentflow/issue.do";//签发
-    public static final  String DOCUMENTFLOW_ISSUEED_SEARCH = HOSTPATH+"/oliveoa/employee/documentflow/get_document_done_Issue.do";//获取已经签发的
-    public static final  String DOCUMENTFLOW_NEEDRECEIVE_SEARCH = HOSTPATH+"/oliveoa/employee/documentflow/get_document_need_receive.do";//获取待签收的
-    public static final  String DOCUMENTFLOW_RECEIVE = HOSTPATH+"/oliveoa/employee/documentflow/receive.do";//签收
-    public static final  String DOCUMENTFLOW_RECEIVEED_SEARCH = HOSTPATH+"/oliveoa/employee/documentflow/get_document_received.do";//获取已经签收
-    public static final  String DOCUMENTFLOW_NEEDREAD_SEARCH = HOSTPATH+"/oliveoa/employee/documentflow/get_document_need_read.do";//获取待办理的
-    public static final  String DOCUMENTFLOW_READ = HOSTPATH+"/oliveoa/employee/documentflow/read.do";//办理公文
-    public static final  String DOCUMENTFLOW_READED_SEARCH = HOSTPATH+"/oliveoa/employee/documentflow/get_document_have_read.do";//获取已经办理的
-    public static final  String DOCUMENTFLOW_GETDETAILS = HOSTPATH+"/oliveoa/employee/documentflow/get_document_details.do";//获取公文详情
-    public static final  String DOCUMENTFLOW_GETALL = HOSTPATH+"/oliveoa/employee/documentflow/get_document_list.do";//获取全部公文
-    public static final  String DOCUMENTFLOW_DOWNLOAD = HOSTPATH+"/oliveoa/employee/documentflow/download.do";//下载文件接口
+    public static final  String DOCUMENTFLOW_DRAFT = HOSTPATH+"/oliveoa/documentflow/draft.do"; //拟稿
+    public static final  String DOCUMENTFLOW_IDRAFTED_SEARCH = HOSTPATH+"/oliveoa/documentflow/get_document_Idraft.do";//获取我拟稿的
+    public static final  String DOCUMENTFLOW_NEEDNUCLEAR = HOSTPATH+"/oliveoa/documentflow/get_document_need_nuclear.do";//获取待核稿的
+    public static final  String DOCUMENTFLOW_NUCLEAR = HOSTPATH+"/oliveoa/documentflow/nuclear.do";//核稿
+    public static final  String DOCUMENTFLOW_NUCLEARED_SEARCH = HOSTPATH+"/oliveoa/documentflow/get_document_done_nuclear.do";//获取已经核稿的
+    public static final  String DOCUMENTFLOW_NEEDISSUE_SEARCH = HOSTPATH+"/oliveoa/documentflow/get_document_need_Issue.do";//获取待签发的
+    public static final  String DOCUMENTFLOW_ISSUE = HOSTPATH+"/oliveoa/documentflow/issue.do";//签发
+    public static final  String DOCUMENTFLOW_ISSUEED_SEARCH = HOSTPATH+"/oliveoa/documentflow/get_document_done_Issue.do";//获取已经签发的
+    public static final  String DOCUMENTFLOW_NEEDRECEIVE_SEARCH = HOSTPATH+"/oliveoa/documentflow/get_document_need_receive.do";//获取待签收的
+    public static final  String DOCUMENTFLOW_RECEIVE = HOSTPATH+"/oliveoa/documentflow/receive.do";//签收
+    public static final  String DOCUMENTFLOW_RECEIVEED_SEARCH = HOSTPATH+"/oliveoa/documentflow/get_document_received.do";//获取已经签收
+    public static final  String DOCUMENTFLOW_NEEDREAD_SEARCH = HOSTPATH+"/oliveoa/documentflow/get_document_need_read.do";//获取待办理的
+    public static final  String DOCUMENTFLOW_READ = HOSTPATH+"/oliveoa/documentflow/read.do";//办理公文
+    public static final  String DOCUMENTFLOW_READED_SEARCH = HOSTPATH+"/oliveoa/documentflow/get_document_have_read.do";//获取已经办理的
+    public static final  String DOCUMENTFLOW_GETDETAILS = HOSTPATH+"/oliveoa/documentflow/get_document_details.do";//获取公文详情
+    public static final  String DOCUMENTFLOW_GETALL = HOSTPATH+"/oliveoa/documentflow/get_document_list.do";//获取全部公文
+    public static final  String DOCUMENTFLOW_DOWNLOAD = HOSTPATH+"/oliveoa/documentflow/download.do?odid=";//下载文件接口
 
 
 

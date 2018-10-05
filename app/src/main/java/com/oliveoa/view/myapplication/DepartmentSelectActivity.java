@@ -15,16 +15,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.oliveoa.controller.UserInfoService;
+import com.oliveoa.greendao.ApproveNumberDao;
 import com.oliveoa.greendao.ContactInfoDao;
 import com.oliveoa.greendao.DepartmentAndDutyDao;
 import com.oliveoa.greendao.DepartmentInfoDao;
+import com.oliveoa.greendao.OfficialDocumentDao;
 import com.oliveoa.jsonbean.DutyInfoJsonBean;
+import com.oliveoa.pojo.ApproveNumber;
 import com.oliveoa.pojo.ContactInfo;
 import com.oliveoa.pojo.DepartmentAndDuty;
 import com.oliveoa.pojo.DepartmentInfo;
 import com.oliveoa.pojo.DutyInfo;
+import com.oliveoa.pojo.OfficialDocument;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
+import com.oliveoa.view.documentmanagement.IssueDocumentActivity;
 import com.oliveoa.view.mine.PersonalDetailsEditActivity;
 
 import java.util.ArrayList;
@@ -52,6 +57,9 @@ public class DepartmentSelectActivity extends AppCompatActivity {
     private DepartmentInfoDao departmentInfoDao;
     private ContactInfoDao contactInfoDao;
     private ContactInfo contactInfo;
+    private List<ApproveNumber> approveNumber;
+    private ApproveNumberDao approveNumberDao;
+
     //private RecruitmentApplicationItemDao rpdaoitem;
 
 
@@ -60,7 +68,7 @@ public class DepartmentSelectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_department_select);
 
-        index = getIntent().getIntExtra("index",index);//调岗0，招聘1,个人资料修改2
+        index = getIntent().getIntExtra("index",index);//调岗0，招聘1,个人资料修改2，3公文签发
 
         initData();
     }
@@ -72,8 +80,13 @@ public class DepartmentSelectActivity extends AppCompatActivity {
         departmentInfoDao = EntityManager.getInstance().getDepartmentInfo();
         departmentInfos = departmentInfoDao.queryBuilder().list();
         dpdt = new DepartmentAndDuty();
+        approveNumberDao = EntityManager.getInstance().getApproveNumberDao();
+
         if(index==2){
               contactInfo = contactInfoDao.queryBuilder().unique();
+        }
+        if(index==3){
+            approveNumber = approveNumberDao.queryBuilder().list();
         }
         if(departmentInfos!=null){
             initview();
@@ -104,6 +117,9 @@ public class DepartmentSelectActivity extends AppCompatActivity {
                 }
                 if(index==2) {
                     dialog.setMessage("是否确定退出选择,直接返回个人资料修改创建页面？");
+                }
+                if(index==3) {
+                    dialog.setMessage("是否确定退出选择,直接返回签发公文页面？");
                 }
                 dialog.setCancelable(false);
                 dialog.setNegativeButton("是", new DialogInterface.OnClickListener() {
@@ -167,6 +183,18 @@ public class DepartmentSelectActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
+        if(index==3){
+            OfficialDocumentDao officialDocumentDao = EntityManager.getInstance().getOfficialDocumentDao();
+            OfficialDocument officialDocument = officialDocumentDao.queryBuilder().unique();
+            if(officialDocument!=null) {
+                Log.i(TAG,officialDocument.toString());
+                Intent intent = new Intent(DepartmentSelectActivity.this, IssueDocumentActivity.class);
+                intent.putExtra("info",officialDocument);
+                intent.putExtra("index", 1);
+                startActivity(intent);
+                finish();
+            }
+        }
 
     }
 
@@ -197,10 +225,40 @@ public class DepartmentSelectActivity extends AppCompatActivity {
                     if(index==2)  {  //个人资料修改选择
                         userinfo(tname);
                     }
+                    if(index==3)  {  //签发部门选择
+                        issueDepartment(tname);
+                    }
                     }
             });
         }
     }
+    /**
+     *   MethodName  issueDepartment(TextView tname){
+     *   Description 签发部门
+     *   @Author Erica
+     */
+    public void issueDepartment(TextView tname){
+        for(int i=0;i<departmentInfos.size();i++){
+            Log.e(TAG,departmentInfos.get(i).getName()+tname.getText().toString());
+            if(tname.getText().toString().equals(departmentInfos.get(i).getName())) {
+                if(approveNumber!=null) {
+                    ApproveNumber dp = new ApproveNumber();
+                    dp.setId(departmentInfos.get(i).getDcid());
+                    Log.e(TAG, departmentInfos.get(i).getDcid());
+                    approveNumber.add(dp);
+                    approveNumberDao.deleteAll();
+                    for(int j =0;j<approveNumber.size();j++) {
+                        approveNumberDao.insert(approveNumber.get(j));
+                    }
+                    back();
+                }
+                break;
+            }
+        }
+    }
+
+
+
     /**
      *   MethodName  userinfo(TextView tname)
      *   Description 个人资料修改

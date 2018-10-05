@@ -5,9 +5,11 @@ import android.content.SharedPreferences;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.oliveoa.common.ContactHttpResponseObject;
+import com.oliveoa.controller.MessageService;
 import com.oliveoa.controller.UserInfoService;
 import com.oliveoa.greendao.AnnouncementApprovedOpinionListDao;
 import com.oliveoa.greendao.AnnouncementInfoDao;
@@ -20,6 +22,7 @@ import com.oliveoa.greendao.DepartmentInfoDao;
 import com.oliveoa.greendao.DutyInfoDao;
 import com.oliveoa.greendao.MeetingApplicationAndStatusDao;
 import com.oliveoa.greendao.MeetingApplicationDao;
+import com.oliveoa.greendao.MessageDao;
 import com.oliveoa.greendao.NoteInfoDao;
 import com.oliveoa.greendao.UserInfoDao;
 import com.oliveoa.jsonbean.BusinessTripApplicationInfoJsonBean;
@@ -27,6 +30,7 @@ import com.oliveoa.jsonbean.ContactJsonBean;
 import com.oliveoa.jsonbean.DutyInfoJsonBean;
 import com.oliveoa.jsonbean.EmpContactListJsonBean;
 import com.oliveoa.jsonbean.LeaveApplicationInfoJsonBean;
+import com.oliveoa.jsonbean.MessageJsonbean;
 import com.oliveoa.jsonbean.OvertimeApplicationJsonBean;
 import com.oliveoa.jsonbean.UserLoginJsonBean;
 import com.oliveoa.pojo.BusinessTripApplication;
@@ -69,6 +73,9 @@ public class LoadingViewActivity extends AppCompatActivity {
     private MeetingApplicationAndStatusDao meetingApplicationAndStatusDao;
     private NoteInfoDao noteInfoDao;
     private UserInfoDao userInfoDao;
+    private MessageDao messageDao;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +105,7 @@ public class LoadingViewActivity extends AppCompatActivity {
         meetingApplicationAndStatusDao = EntityManager.getInstance().getMeetingApplicationAndStatusDao();
        // noteInfoDao = EntityManager.getInstance().getNoteInfoDao();
         userInfoDao = EntityManager.getInstance().getUserInfoDao();
+        messageDao = EntityManager.getInstance().getMessageInfo();
 
         announcementInfoDao.deleteAll();//公告
         contactInfoDao.deleteAll();
@@ -109,6 +117,7 @@ public class LoadingViewActivity extends AppCompatActivity {
         departmentAndDutyDao.deleteAll();
         meetingApplicationAndStatusDao.deleteAll();
         userInfoDao.deleteAll();
+        messageDao.deleteAll();
 
 
         new Thread(new Runnable() {
@@ -177,19 +186,19 @@ public class LoadingViewActivity extends AppCompatActivity {
                     Looper.loop();// 进入loop中的循环，查看消息队列
                 }
                 //消息详情
-//                MessageService messageService = new MessageService();
-//                MessageJsonbean messageJsonbean = messageService.getMessagebyme(s,0);
-//                if (messageJsonbean.getStatus()==0) {
-//                    messages = messageJsonbean.getData();
-//                    Log.d("message", messages.toString());
-//                    for (int i=0;i<messages.size();i++){
-//                        messageDao.insert(messages.get(i));
-//                    }
-//                }else{
-//                    Looper.prepare();//解决子线程弹toast问题
-//                    Toast.makeText(getApplicationContext(), "网络错误，获取个人信息失败", Toast.LENGTH_SHORT).show();
-//                    Looper.loop();// 进入loop中的循环，查看消息队列
-//                }
+                MessageService messageService = new MessageService();
+                MessageJsonbean messageJsonbean = messageService.getMessagetome(s,0);
+                if (messageJsonbean.getStatus()==0) {
+                    messages = messageJsonbean.getData();
+                    Log.d("message", messages.toString());
+                    for (int i=0;i<messages.size();i++){
+                        messageDao.insert(messages.get(i));
+                    }
+                }else{
+                    Looper.prepare();//解决子线程弹toast问题
+                    Toast.makeText(getApplicationContext(), "网络错误，获取个人信息失败", Toast.LENGTH_SHORT).show();
+                    Looper.loop();// 进入loop中的循环，查看消息队列
+                }
 
                /* AnnouncementService announcementService = new AnnouncementService();
                 AnnouncementJsonBean announcementJsonBean = announcementService.get_published_annoucements(s);

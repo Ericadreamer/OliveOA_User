@@ -13,8 +13,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.oliveoa.greendao.ContactInfoDao;
+import com.oliveoa.pojo.ContactInfo;
+import com.oliveoa.pojo.OfficialDocument;
+import com.oliveoa.pojo.OfficialDocumentCirculread;
+import com.oliveoa.pojo.OfficialDocumentIssued;
+import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -22,14 +29,18 @@ public class ReadInfoActivity extends AppCompatActivity {
     private ImageView back;
     private TextView ttitle,tcontent,issuePerson,readReport;
     private Button btn_download;
+    private OfficialDocument officialDocument;
+    private OfficialDocumentCirculread officialDocumentCirculread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read_info);
 
+        officialDocument = getIntent().getParcelableExtra("info");
+        officialDocumentCirculread = getIntent().getParcelableExtra("read");
         initView();
-        initData();
+
     }
 
     private void initView() {
@@ -39,7 +50,7 @@ public class ReadInfoActivity extends AppCompatActivity {
         issuePerson = (TextView) findViewById(R.id.issue_person);
         readReport = (TextView) findViewById(R.id.report);
         btn_download = (Button) findViewById(R.id.download);
-
+        initData();
 
         //点击事件
         back.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
@@ -82,7 +93,16 @@ public class ReadInfoActivity extends AppCompatActivity {
     }
 
     public void initData() {
-
+        ttitle.setText(officialDocument.getTitle());
+        tcontent.setText(officialDocument.getContent());
+        ContactInfoDao contactInfoDao = EntityManager.getInstance().getContactInfo();
+        ContactInfo contactInfo = contactInfoDao.queryBuilder().where(ContactInfoDao.Properties.Eid.eq(officialDocument.getIssuedEid())).unique();
+        if(contactInfo!=null){
+            issuePerson.setText(contactInfo.getName());
+        }else{
+            issuePerson.setText("无");
+        }
+        readReport.setText(officialDocumentCirculread.getReport());
     }
 
     @Override

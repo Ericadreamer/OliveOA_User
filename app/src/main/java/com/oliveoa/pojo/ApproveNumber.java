@@ -5,7 +5,7 @@ import org.greenrobot.greendao.annotation.Keep;
 
 @Entity
 @Keep
-public class ApproveNumber {
+public class ApproveNumber {  //审批人、会议参加人、签发部门
     public String id;
 
 

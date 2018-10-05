@@ -27,6 +27,8 @@ import com.oliveoa.greendao.MeetingApplicationDao;
 import com.oliveoa.greendao.MeetingMemberDao;
 import com.oliveoa.greendao.MessageDao;
 import com.oliveoa.greendao.NoteInfoDao;
+import com.oliveoa.greendao.OfficialDocumentDao;
+import com.oliveoa.greendao.OfficialDocumentIssuedDao;
 import com.oliveoa.greendao.OvertimeApplicationApprovedOpinionListDao;
 import com.oliveoa.greendao.OvertimeApplicationDao;
 import com.oliveoa.greendao.RecruitmentApplicationApprovedOpinionDao;
@@ -34,6 +36,7 @@ import com.oliveoa.greendao.RecruitmentApplicationItemDao;
 import com.oliveoa.greendao.UserInfoDao;
 import com.oliveoa.greendao.WorkDetailDao;
 import com.oliveoa.greendao.WorkdetailAndStatusDao;
+import com.oliveoa.pojo.OfficialDocumentCirculread;
 
 public class EntityManager {
     private static EntityManager entityManager;
@@ -71,6 +74,9 @@ public class EntityManager {
     public UserInfoDao userInfoDao;
     public ApprovalDao approvalDao;
     public WorkdetailAndStatusDao workdetailAndStatusDao;
+    public OfficialDocumentDao officialDocumentDao;
+    public OfficialDocumentCirculread officialDocumentCirculread;
+    public OfficialDocumentIssuedDao officialDocumentIssuedDao;
 
     /**
      * 创建User表实例
@@ -331,6 +337,11 @@ public class EntityManager {
     public WorkdetailAndStatusDao getWorkdetailAndStatusDao(){
         workdetailAndStatusDao = DaoManager.getInstance().getSession().getWorkdetailAndStatusDao();
         return workdetailAndStatusDao;
+    }
+
+    public OfficialDocumentDao getOfficialDocumentDao(){
+        officialDocumentDao = DaoManager.getInstance().getSession().getOfficialDocumentDao();
+        return officialDocumentDao;
     }
 
 

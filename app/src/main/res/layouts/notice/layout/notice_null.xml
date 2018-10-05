@@ -19,14 +19,14 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:text="还没有公告信息哦"
+            android:text="还没有相关信息哦"
             android:textAlignment="center"
             android:textColor="@color/textcolor" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:text="点击右下角发布公告吧"
+            android:text="点击“+”添加吧"
             android:textAlignment="center"
             android:textColor="@color/textcolor" />
     </LinearLayout>

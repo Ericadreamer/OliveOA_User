@@ -389,6 +389,7 @@
         <activity android:name=".documentmanagement.ReadInfoActivity"
             android:exported="true"
             android:theme="@style/HomeTheme"></activity>
+        <service android:name=".documentmanagement.DownloadService" />
     </application>
 
 </manifest>

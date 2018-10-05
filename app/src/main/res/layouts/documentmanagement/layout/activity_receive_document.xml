@@ -93,7 +93,6 @@
                         android:background="@null"
                         android:gravity="center_vertical|start"
                         android:lineSpacingExtra="6dp"
-                        android:singleLine="true"
                         android:textColor="@color/textcolor"
                         android:textColorHint="#898989"
                         android:textSize="@dimen/text_size_normal" />
@@ -127,8 +126,7 @@
                         android:background="@null"
                         android:gravity="center_vertical|start"
                         android:lineSpacingExtra="6dp"
-                        android:singleLine="true"
-                        android:textColor="@color/textcolor"
+                       android:textColor="@color/textcolor"
                         android:textColorHint="#898989"
                         android:textSize="@dimen/text_size_normal" />
                 </LinearLayout>
@@ -159,7 +157,6 @@
                         android:layout_weight="1"
                         android:background="@null"
                         android:gravity="center_vertical|end"
-                        android:singleLine="true"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/text_size_normal"
                         android:layout_marginRight="@dimen/dp_20"/>
@@ -208,7 +205,17 @@
                         android:layout_marginRight="@dimen/dp_20"
                         android:src="@drawable/ic_next" />
                 </LinearLayout>
-
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:id="@+id/approve_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                    </LinearLayout>
+                </LinearLayout>
                 //下载附件
 
                 <LinearLayout

@@ -2,6 +2,8 @@ package com.oliveoa.view.myapplication;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,12 +14,16 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.oliveoa.Adapter.MyBaseExpandableListAdapter;
+import com.oliveoa.common.ContactHttpResponseObject;
+import com.oliveoa.controller.UserInfoService;
 import com.oliveoa.greendao.ApproveNumberDao;
 import com.oliveoa.greendao.ContactInfoDao;
 import com.oliveoa.greendao.DepartmentInfoDao;
 import com.oliveoa.greendao.JobTransferApplicationDao;
 import com.oliveoa.greendao.MeetingApplicationDao;
+import com.oliveoa.greendao.OfficialDocumentDao;
 import com.oliveoa.greendao.WorkDetailDao;
+import com.oliveoa.jsonbean.ContactJsonBean;
 import com.oliveoa.pojo.ApproveNumber;
 import com.oliveoa.pojo.ContactInfo;
 import com.oliveoa.pojo.DepartmentInfo;
@@ -25,12 +31,16 @@ import com.oliveoa.pojo.Group;
 import com.oliveoa.pojo.Item;
 import com.oliveoa.pojo.JobTransferApplication;
 import com.oliveoa.pojo.MeetingApplication;
+import com.oliveoa.pojo.OfficialDocument;
 import com.oliveoa.pojo.WorkDetail;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
+import com.oliveoa.view.documentmanagement.DraftAddActivity;
+import com.oliveoa.view.documentmanagement.ReceiveDocumentActivity;
 import com.oliveoa.view.notice.AddNoticeActivity;
 import com.oliveoa.view.workschedule.ProtocolWorkActivity;
 import com.oliveoa.view.workschedule.WorkAllocationActivity;
+import com.oliveoa.widget.LoadingDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,12 +75,14 @@ public class SelectPersonApprovingActivity extends AppCompatActivity {
     private MeetingApplicationDao meetingApplicationDao;
     private JobTransferApplicationDao jobTransferApplicationDao;
     private WorkDetailDao workDetailDao;
+    private OfficialDocumentDao officialDocumentDao;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_person_approving);
 
-        index = getIntent().getIntExtra("index",index);//1-9添加审批人：加班、请假、出差、会议、离职、转正、调岗、招聘、物品；10选择调岗员工;11公告添加审批人;12工作拟定批阅人;13工作分配对象
+        index = getIntent().getIntExtra("index",index);//1-9添加审批人：加班、请假、出差、会议、离职、转正、调岗、招聘、物品；10选择调岗员工;11公告添加审批人;12工作拟定批阅人;13工作分配对象;14选择核稿人;15选择发布人;16签收公文办理人
         Log.e("IDDEX=", String.valueOf(index));
         initData();
     }
@@ -138,6 +150,7 @@ public class SelectPersonApprovingActivity extends AppCompatActivity {
                 public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                     approveNumberDao = EntityManager.getInstance().getApproveNumberDao();
                     meetingApplicationDao = EntityManager.getInstance().getMeetingApplicationDao();
+                    officialDocumentDao = EntityManager.getInstance().getOfficialDocumentDao();
                     Log.i(TAG, "被点击的员工Eid：" + iData.get(groupPosition).get(childPosition).getiEid());
                     mid = iData.get(groupPosition).get(childPosition).getiEid();
                     if (index == 0) {
@@ -175,6 +188,26 @@ public class SelectPersonApprovingActivity extends AppCompatActivity {
                        ap.setId(mid);
                        approveNumberDao.insert(ap);
                        back();
+                    }else if(index==14){
+                        OfficialDocument officialDocument = new OfficialDocument();
+                        officialDocument = officialDocumentDao.queryBuilder().unique();
+                        if(officialDocument!=null){
+                            officialDocument.setNuclearDraftEid(mid);
+                            officialDocumentDao.deleteAll();
+                            officialDocumentDao.insert(officialDocument);
+                            Log.e(TAG,officialDocument.toString());
+                            back();
+                        }
+                    }else if(index==15){
+                        OfficialDocument officialDocument = new OfficialDocument();
+                        officialDocument = officialDocumentDao.queryBuilder().unique();
+                        if(officialDocument!=null){
+                            officialDocument.setIssuedEid(mid);
+                            officialDocumentDao.deleteAll();
+                            officialDocumentDao.insert(officialDocument);
+                            Log.e(TAG,officialDocument.toString());
+                            back();
+                        }
                     }else {
                         ApproveNumber ap = approveNumberDao.queryBuilder().where(ApproveNumberDao.Properties.Id.eq(mid)).unique();
                         if (ap == null) {
@@ -280,6 +313,76 @@ public class SelectPersonApprovingActivity extends AppCompatActivity {
             intent.putExtra("index", 1);
             startActivity(intent);
             finish();
+        }
+        if(index==14) {
+            Intent intent = new Intent(SelectPersonApprovingActivity.this, DraftAddActivity.class);
+            intent.putExtra("index", 1);
+            startActivity(intent);
+            finish();
+        }
+        if(index==15) {
+            Intent intent = new Intent(SelectPersonApprovingActivity.this, DraftAddActivity.class);
+            intent.putExtra("index", 1);
+            startActivity(intent);
+            finish();
+        }
+        if(index==16) {
+            LoadingDialog loadingDialog = new LoadingDialog(SelectPersonApprovingActivity.this, "正在加载数据", true);
+            loadingDialog.show();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
+                    String s = pref.getString("sessionid", "");
+
+                    //Todo Service
+                    UserInfoService userInfoService = new UserInfoService();
+                    //Todo Service.Method
+                    ContactHttpResponseObject contactHttpResponseObject = userInfoService.contact(s);
+
+                    departmentInfoDao = EntityManager.getInstance().getDepartmentInfo();
+                    ContactInfoDao contactInfoDao = EntityManager.getInstance().getContactInfo();
+                    departmentInfoDao.deleteAll();
+                    contactInfoDao.deleteAll();
+
+                    //ToCheck JsonBean.getStatus()
+                    if (contactHttpResponseObject.getStatus() == 0) {
+                        ArrayList<ContactJsonBean> contactInfos = contactHttpResponseObject.getData();
+                        Log.d("userinfo", contactInfos.toString());
+                        if (contactInfos.size() == 0) {
+                            Looper.prepare();//解决子线程弹toast问题
+                            Toast.makeText(getApplicationContext(), "该公司未创建更多的部门和员工", Toast.LENGTH_SHORT).show();
+                            Looper.loop();// 进入loop中的循环，查看消息队列
+                        } else {
+                            for (int i = 0; i < contactInfos.size(); i++) {
+                                Log.d("departmentinfo", contactInfos.get(i).getDepartment().toString());
+                                DepartmentInfo departmentInfo = contactInfos.get(i).getDepartment();
+                                departmentInfoDao.insert(departmentInfo);
+                                Log.d(TAG, "contactInfos.get(i).getEmpContactList().size():" + contactInfos.get(i).getEmpContactList().size());
+                                for (int j = 0; j < contactInfos.get(i).getEmpContactList().size(); j++) {
+                                    if (contactInfos.get(i).getEmpContactList().get(j).getEmployee() != null) {
+                                        Log.d(TAG, "contactInfos.get(i).getEmpContactList().get(" + j + ").getEmployee()" + contactInfos.get(i).getEmpContactList().get(j).getEmployee().toString());
+                                        contactInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getEmployee());
+                                    }
+                                }
+                            }
+                            OfficialDocumentDao officialDocumentDao = EntityManager.getInstance().getOfficialDocumentDao();
+                            OfficialDocument officialDocument = officialDocumentDao.queryBuilder().unique();
+                            if (officialDocument != null) {
+                                Intent intent = new Intent(SelectPersonApprovingActivity.this, ReceiveDocumentActivity.class);
+                                intent.putExtra("info", officialDocument);
+                                intent.putExtra("index", 1);
+                                startActivity(intent);
+                                finish();
+                            }
+                        }
+                    } else {
+                        Looper.prepare();//解决子线程弹toast问题
+                        Toast.makeText(getApplicationContext(), contactHttpResponseObject.getMsg(), Toast.LENGTH_SHORT).show();
+                        Looper.loop();// 进入loop中的循7环，查看消息队列
+                    }
+                }
+            }).start();
         }
     }
 

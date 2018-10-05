@@ -63,7 +63,39 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+                //拟稿人
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="1dp"
+                    android:background="#fff"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:gravity="center|left"
+                        android:text="拟稿人"
+                        android:textColor="@color/tv_gray_deep"
+                        android:textSize="@dimen/text_size_normal" />
+
+                    <TextView
+                        android:id="@+id/deid"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:background="@null"
+                        android:gravity="center_vertical|start"
+                        android:lineSpacingExtra="6dp"
+                        android:textColor="@color/textcolor"
+                        android:textColorHint="#898989"
+                        android:textSize="@dimen/text_size_normal" />
+                </LinearLayout>
                 //公文标题
 
                 <LinearLayout
@@ -93,7 +125,6 @@
                         android:background="@null"
                         android:gravity="center_vertical|start"
                         android:lineSpacingExtra="6dp"
-                        android:singleLine="true"
                         android:textColor="@color/textcolor"
                         android:textColorHint="#898989"
                         android:textSize="@dimen/text_size_normal" />
@@ -127,12 +158,46 @@
                         android:background="@null"
                         android:gravity="center_vertical|start"
                         android:lineSpacingExtra="6dp"
-                        android:singleLine="true"
                         android:textColor="@color/textcolor"
                         android:textColorHint="#898989"
                         android:textSize="@dimen/text_size_normal" />
                 </LinearLayout>
-
+                //是否同意
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_40"
+                    android:orientation="horizontal"
+                    android:background="#fff"
+                    android:layout_marginBottom="@dimen/dp_1"
+                    android:layout_marginTop="@dimen/dp_10">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="是否同意"
+                        android:gravity="center|left"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:textSize="@dimen/text_size_normal"
+                        android:textColor="@color/tv_gray_deep" />
+                    <TextView
+                        android:id="@+id/isapproval"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:hint="请选择是否同意"
+                        android:gravity="center|end"
+                        android:textSize="@dimen/text_size_normal"
+                        android:textColor="@color/colorPrimary"
+                        android:layout_marginRight="@dimen/dp_20"/>
+                    <ImageView
+                        android:id="@+id/inext"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/ic_next"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="@dimen/dp_20"
+                        android:onClick="onOptionPicker"/>
+                </LinearLayout>
                 //核稿意见
 
                 <LinearLayout
@@ -140,8 +205,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="1dp"
                     android:background="#fff"
-                    android:orientation="vertical"
-                    android:layout_marginTop="@dimen/dp_10">
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -164,7 +228,6 @@
                         android:gravity="center_vertical|start"
                         android:inputType="textMultiLine"
                         android:lineSpacingExtra="6dp"
-                        android:singleLine="true"
                         android:textColor="@color/textcolor"
                         android:textColorHint="#898989"
                         android:hint="请输入核稿意见"

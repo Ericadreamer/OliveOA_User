@@ -16,8 +16,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.oliveoa.pojo.OfficialDocument;
 import com.oliveoa.view.R;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -34,17 +36,16 @@ public class NuclearDraftActivity extends AppCompatActivity {
     private NuclearPagerAdapter mAdapter;
     private ViewPager mViewPager;
     private int index = 0;
+    private ArrayList<OfficialDocument> undo;
+    private ArrayList<OfficialDocument> did;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nuclear_draft);
 
-        index = getIntent().getIntExtra("index",index);
-        Log.d("INDEX=", String.valueOf(index));
-
         initView();
-        initData();
+
     }
 
     public void initView() {
@@ -55,6 +56,7 @@ public class NuclearDraftActivity extends AppCompatActivity {
 
         mAdapter = new NuclearPagerAdapter(getSupportFragmentManager());
 
+        initData();
         mViewPager = (ViewPager) findViewById(R.id.info_viewpager);
         mViewPager.setAdapter(mAdapter);
         mViewPager.setCurrentItem(index);

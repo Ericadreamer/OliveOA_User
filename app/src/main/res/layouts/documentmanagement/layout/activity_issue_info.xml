@@ -62,7 +62,40 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+                //拟稿人
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="1dp"
+                    android:background="#fff"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:gravity="center|left"
+                        android:text="拟稿人"
+                        android:textColor="@color/tv_gray_deep"
+                        android:textSize="@dimen/text_size_normal" />
+
+                    <TextView
+                        android:id="@+id/deid"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:background="@null"
+                        android:gravity="center_vertical|start"
+                        android:lineSpacingExtra="6dp"
+                        android:singleLine="true"
+                        android:textColor="@color/textcolor"
+                        android:textColorHint="#898989"
+                        android:textSize="@dimen/text_size_normal" />
+                </LinearLayout>
                 //公文标题
 
                 <LinearLayout
@@ -92,7 +125,6 @@
                         android:background="@null"
                         android:gravity="center_vertical|start"
                         android:lineSpacingExtra="6dp"
-                        android:singleLine="true"
                         android:textColor="@color/textcolor"
                         android:textColorHint="#898989"
                         android:textSize="@dimen/text_size_normal" />
@@ -126,7 +158,6 @@
                         android:background="@null"
                         android:gravity="center_vertical|start"
                         android:lineSpacingExtra="6dp"
-                        android:singleLine="true"
                         android:textColor="@color/textcolor"
                         android:textColorHint="#898989"
                         android:textSize="@dimen/text_size_normal" />
@@ -140,17 +171,68 @@
                     android:background="#fff"
                     android:orientation="vertical"
                     android:layout_marginTop="@dimen/dp_10">
-
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/dp_20"
+                        android:layout_marginBottom="@dimen/dp_1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/dp_20"
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:layout_marginBottom="@dimen/dp_10"
+                            android:gravity="center|left"
+                            android:text="核稿人"
+                            android:textColor="@color/tv_gray_deep"
+                            android:textSize="@dimen/text_size_normal" />
+
+                        <TextView
+                            android:id="@+id/neid"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp_20"
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:layout_marginBottom="@dimen/dp_10"
+                            android:background="@null"
+                            android:gravity="center_vertical|start"
+                            android:lineSpacingExtra="6dp"
+                            android:textColor="@color/textcolor"
+                            android:textColorHint="#898989"
+                            android:textSize="@dimen/text_size_normal" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dp_10"
-                        android:gravity="center|left"
-                        android:text="核稿意见"
-                        android:textColor="@color/tv_gray_deep"
-                        android:textSize="@dimen/text_size_normal" />
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:layout_marginRight="@dimen/dp_20"
+                        android:layout_gravity="fill_horizontal"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:text="核稿意见"
+                            android:textColor="@color/tv_gray_deep"
+                            android:textSize="@dimen/text_size_normal" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"/>
+
+                        <TextView
+                            android:id="@+id/Nuclearisapproval"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="end"
+                            android:text="同意"
+                            android:textColor="@color/tv_gray_deep"
+                            android:textSize="@dimen/text_size_normal" />
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/nuclear_advise"
@@ -161,7 +243,6 @@
                         android:background="@null"
                         android:gravity="center_vertical|start"
                         android:lineSpacingExtra="6dp"
-                        android:singleLine="true"
                         android:textColor="@color/textcolor"
                         android:textColorHint="#898989"
                         android:textSize="@dimen/text_size_normal" />
@@ -175,18 +256,36 @@
                     android:background="#fff"
                     android:orientation="vertical"
                     android:layout_marginTop="@dimen/dp_10">
-
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/dp_20"
                         android:layout_marginTop="@dimen/dp_10"
-                        android:gravity="center|left"
-                        android:text="签发意见"
-                        android:textColor="@color/tv_gray_deep"
-                        android:textSize="@dimen/text_size_normal" />
+                        android:layout_marginLeft="@dimen/dp_20"
+                        android:layout_marginRight="@dimen/dp_20"
+                        android:layout_gravity="fill_horizontal"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="start"
+                            android:text="签发意见"
+                            android:textColor="@color/tv_gray_deep"
+                            android:textSize="@dimen/text_size_normal" />
 
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"/>
+
+                        <TextView
+                            android:id="@+id/Issueisapproval"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="同意"
+                            android:gravity="end"
+                            android:textColor="@color/tv_gray_deep"
+                            android:textSize="@dimen/text_size_normal" />
+                    </LinearLayout>
                     <TextView
                         android:id="@+id/issue_advise"
                         android:layout_width="wrap_content"
@@ -196,7 +295,6 @@
                         android:background="@null"
                         android:gravity="center_vertical|start"
                         android:lineSpacingExtra="6dp"
-                        android:singleLine="true"
                         android:textColor="@color/textcolor"
                         android:textColorHint="#898989"
                         android:textSize="@dimen/text_size_normal" />
@@ -205,35 +303,35 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/dp_1"
                     android:background="#fff"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:layout_marginTop="@dimen/dp_10">
-
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="20dp"
-                        android:text="签发部门"
-                        android:textColor="@color/tv_gray_deep"
-                        android:textSize="@dimen/text_size_normal" />
-
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp_20"
+                            android:layout_marginTop="@dimen/dp_12"
+                            android:gravity="start"
+                            android:text="签发部门"
+                            android:textColor="@color/tv_gray_deep"
+                            android:textSize="@dimen/text_size_normal" />
                     <TextView
                         android:id="@+id/department"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:layout_margin="@dimen/dp_20"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:background="@null"
                         android:gravity="center_vertical|end"
-                        android:singleLine="true"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/textcolor"
+                        android:textColorHint="#898989"
                         android:textSize="@dimen/text_size_normal"
                         android:layout_marginRight="@dimen/dp_20"/>
 
                 </LinearLayout>
+
                 //下载附件
 
                 <LinearLayout

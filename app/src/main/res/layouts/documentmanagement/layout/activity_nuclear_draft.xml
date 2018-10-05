@@ -69,7 +69,6 @@
 
         <android.support.v4.view.ViewPager
             android:id="@+id/info_viewpager"
-            android:layout_marginTop="@dimen/dp_55"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             />
