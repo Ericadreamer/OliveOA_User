@@ -165,7 +165,7 @@ public class BusinessUndisposedActivity extends AppCompatActivity {
                                 }
                             }
                             Looper.prepare();//解决子线程弹toast问题
-                            Toast.makeText(getApplicationContext(),"保存成功，正在返回我的审批列表", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getApplicationContext(),"保存成功，正在返回我的审批列表", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(BusinessUndisposedActivity.this, MyApprovalActivity.class).putExtra("index",3));
                             Looper.loop();// 进入loop中的循环，查看消息队列
                         } else {

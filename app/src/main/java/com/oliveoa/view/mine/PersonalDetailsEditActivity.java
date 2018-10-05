@@ -188,6 +188,7 @@ public class PersonalDetailsEditActivity extends AppCompatActivity {
             ContactHttpResponseObject contactHttpResponseObject = userInfoService.contact(s);
             if(contactHttpResponseObject.getStatus()==0){
                 ArrayList<ContactJsonBean> contactJsonBean = contactHttpResponseObject.getData();
+                contactInfoDao.deleteAll();
                 for(int i =0;i<contactJsonBean.size();i++){
                     for(int j=0;j<contactJsonBean.get(i).getEmpContactList().size();j++){
                         contactInfoDao.insert(contactJsonBean.get(i).getEmpContactList().get(j).getEmployee());
@@ -196,6 +197,7 @@ public class PersonalDetailsEditActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(PersonalDetailsEditActivity.this, PersonalDetailsActivity.class);
                 intent.putExtra("ci",userLoginJsonBean.getData());
+                intent.putExtra("index",2);
                 startActivity(intent);
                 finish();
             }else{

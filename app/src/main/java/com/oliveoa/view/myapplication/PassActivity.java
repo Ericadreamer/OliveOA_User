@@ -644,7 +644,6 @@ public class PassActivity extends Fragment {
                             if(contactInfos.get(i).getEmpContactList().get(j).getEmployee()!=null) {
                                 Log.d(TAG,"contactInfos.get(i).getEmpContactList().get(j).getEmployee()"+contactInfos.get(i).getEmpContactList().get(j).getEmployee().toString());
                                 contactInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getEmployee());
-                                dutyInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getPosition());
                             }
                         }
                     }
@@ -718,7 +717,6 @@ public class PassActivity extends Fragment {
                             if(contactInfos.get(i).getEmpContactList().get(j).getEmployee()!=null) {
                                 Log.d(TAG,"contactInfos.get(i).getEmpContactList().get(j).getEmployee()"+contactInfos.get(i).getEmpContactList().get(j).getEmployee().toString());
                                 contactInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getEmployee());
-                                dutyInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getPosition());
                             }
                         }
                     }

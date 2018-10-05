@@ -1079,7 +1079,7 @@ public class ApprovalAdviseActivity extends AppCompatActivity {
 
 
     private void getovertimeapplicationinfo() {
-        LoadingDialog loadingDialog  = new LoadingDialog(getApplicationContext(),"正在加载数据",true);
+        LoadingDialog loadingDialog  = new LoadingDialog(ApprovalAdviseActivity.this,"正在加载数据",true);
         loadingDialog.show();
         new Thread(new Runnable() {
             @Override
@@ -1141,7 +1141,7 @@ public class ApprovalAdviseActivity extends AppCompatActivity {
     }
 
     private void getleaveapplicationinfo() {
-        LoadingDialog loadingDialog  = new LoadingDialog(getApplicationContext(),"正在加载数据",true);
+        LoadingDialog loadingDialog  = new LoadingDialog(ApprovalAdviseActivity.this,"正在加载数据",true);
         loadingDialog.show();
         new Thread(new Runnable() {
             @Override
@@ -1203,7 +1203,7 @@ public class ApprovalAdviseActivity extends AppCompatActivity {
     }
 
     private void getbusinessapplicationinfo() {
-        LoadingDialog loadingDialog  = new LoadingDialog(getApplicationContext(),"正在加载数据",true);
+        LoadingDialog loadingDialog  = new LoadingDialog(ApprovalAdviseActivity.this,"正在加载数据",true);
         loadingDialog.show();
         new Thread(new Runnable() {
             @Override
@@ -1265,7 +1265,7 @@ public class ApprovalAdviseActivity extends AppCompatActivity {
     }
 
     private void getmeetingapplicationinfo() {
-        LoadingDialog loadingDialog  = new LoadingDialog(getApplicationContext(),"正在加载数据",true);
+        LoadingDialog loadingDialog  = new LoadingDialog(ApprovalAdviseActivity.this,"正在加载数据",true);
         loadingDialog.show();
         new Thread(new Runnable() {
             @Override
@@ -1327,7 +1327,7 @@ public class ApprovalAdviseActivity extends AppCompatActivity {
     }
 
     private void getdimissionapplicationinfo() {
-        LoadingDialog loadingDialog  = new LoadingDialog(getApplicationContext(),"正在加载数据",true);
+        LoadingDialog loadingDialog  = new LoadingDialog(ApprovalAdviseActivity.this,"正在加载数据",true);
         loadingDialog.show();
         new Thread(new Runnable() {
             @Override
@@ -1389,7 +1389,7 @@ public class ApprovalAdviseActivity extends AppCompatActivity {
     }
 
     private void getregularapplicationinfo() {
-        LoadingDialog loadingDialog  = new LoadingDialog(getApplicationContext(),"正在加载数据",true);
+        LoadingDialog loadingDialog  = new LoadingDialog(ApprovalAdviseActivity.this,"正在加载数据",true);
         loadingDialog.show();
         new Thread(new Runnable() {
             @Override
@@ -1451,7 +1451,7 @@ public class ApprovalAdviseActivity extends AppCompatActivity {
     }
 
     private void getadjustapplicationinfo() {
-        LoadingDialog loadingDialog  = new LoadingDialog(getApplicationContext(),"正在加载数据",true);
+        LoadingDialog loadingDialog  = new LoadingDialog(ApprovalAdviseActivity.this,"正在加载数据",true);
         loadingDialog.show();
         new Thread(new Runnable() {
             @Override
@@ -1523,7 +1523,7 @@ public class ApprovalAdviseActivity extends AppCompatActivity {
     }
 
     private void getrecruitmentapplicationinfo() {
-        LoadingDialog loadingDialog  = new LoadingDialog(getApplicationContext(),"正在加载数据",true);
+        LoadingDialog loadingDialog  = new LoadingDialog(ApprovalAdviseActivity.this,"正在加载数据",true);
         loadingDialog.show();
         new Thread(new Runnable() {
             @Override
@@ -1596,7 +1596,7 @@ public class ApprovalAdviseActivity extends AppCompatActivity {
         }).start();
     }
     private void getnoticceinfo() {
-        LoadingDialog loadingDialog  = new LoadingDialog(getApplicationContext(),"正在加载数据",true);
+        LoadingDialog loadingDialog  = new LoadingDialog(ApprovalAdviseActivity.this,"正在加载数据",true);
         loadingDialog.show();
         new Thread(new Runnable() {
             @Override

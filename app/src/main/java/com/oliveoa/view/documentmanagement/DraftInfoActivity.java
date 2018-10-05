@@ -67,7 +67,7 @@ public class DraftInfoActivity extends AppCompatActivity{
 
     public DownloadService.DownloadBinder downloadBinder;
 
-    //private String url ="http://1.199.93.153/imtt.dd.qq.com/16891/5FE88135737E977CCCE1A4DAC9FAFFCB.apk";
+    private String url ="http://1.199.93.153/imtt.dd.qq.com/16891/5FE88135737E977CCCE1A4DAC9FAFFCB.apk";
 
     private ServiceConnection connection = new ServiceConnection() {
         @Override
@@ -88,10 +88,15 @@ public class DraftInfoActivity extends AppCompatActivity{
             if (msg.what == 2) {
                 fileName = (String)msg.obj;
                 Log.i(TAG,fileName+"==="+path);
+                downloadBinder.startDownload(
+                        Environment.getExternalStorageDirectory() + "/OliveOA_User/OfficialsDocument/",
+                        fileName,
+                        path,
+                        (int) System.currentTimeMillis());
             }
         }
     };
-    Handler handler1 = new Handler() {
+  /*  Handler handler1 = new Handler() {
         public void handleMessage(Message msg) {
             if (msg.what == 1) {
                 long filesize = (long)msg.obj;
@@ -104,7 +109,7 @@ public class DraftInfoActivity extends AppCompatActivity{
                         filesize);
             }
         }
-    };
+    };*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -184,16 +189,17 @@ public class DraftInfoActivity extends AppCompatActivity{
                                fileName = new String(fileName.getBytes("ISO-8859-1"), "GBK");
                                fileName = URLDecoder.decode(fileName.substring(fileName.indexOf("filename=") + 9), "UTF-8");
                                Log.i(getClass().getSimpleName(), "文件名为：" + fileName);
-                               Log.i(getPackageName(),"size="+con.getHeaderField("Accept-Length"));
-                               long totalsize = Long.parseLong(con.getHeaderField("Accept-Length"));
+                               Log.i(getPackageName(),"size="+con.getHeaderField("Content-Length"));
+                               Log.i(getPackageName(),"size="+con.getContentLength());
+
                                Message msg = handler.obtainMessage();
                                msg.what = 2;
                                msg.obj = fileName;
                                handler.sendMessage(msg);
-                               Message msg1 = handler.obtainMessage();
+                              /* Message msg1 = handler.obtainMessage();
                                msg1.what = 1;
-                               msg1.obj = totalsize;
-                               handler1.sendMessage(msg1);
+                               //msg1.obj = totalsize;
+                               handler1.sendMessage(msg1);*/
 
                            } catch (MalformedURLException e) {
                                e.printStackTrace();

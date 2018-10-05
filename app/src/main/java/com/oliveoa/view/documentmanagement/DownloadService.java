@@ -38,7 +38,7 @@ public class DownloadService extends Service {
     private DownloadBinder mBinder = new DownloadBinder();
 
     public class DownloadBinder extends Binder {
-        public void startDownload(String path, final String name, String url, final int notifyId, final long filesize) {
+        public void startDownload(String path, final String name, String url, final int notifyId) {
             DUtil.init(mContext)
                     .path(path)
                     .name(name)
@@ -48,13 +48,13 @@ public class DownloadService extends Service {
                     .start(new SimpleDownloadCallback() {
                         @Override
                         public void onStart(long currentSize, long totalSize, float progress) {
+                            System.out.println("start");
                             NotificationUtil.createProgressNotification(mContext, name, "没有附件需要下载", R.mipmap.ic_launcher, notifyId);
                         }
 
                         @Override
                         public void onProgress(long currentSize, long totalSize, float progress) {
-
-                            if(totalSize==-1){
+                           /* if(totalSize==-1){
                                 //System.out.println(totalSize);
                                 System.out.println(filesize);
                                 double progress1 =currentSize*1.0/ filesize*100.f;
@@ -62,10 +62,9 @@ public class DownloadService extends Service {
                                 DecimalFormat df = new DecimalFormat("0.00");
                                 df.setRoundingMode(RoundingMode.HALF_UP);
                                 progress = Float.parseFloat((df.format(progress1)));
-
                                 System.out.println(progress1+"");
-                            }
-                            //System.out.println(currentSize+"==  "+totalSize+"=="+progress);
+                            }*/
+                            System.out.println(currentSize+"==  "+totalSize+"=="+progress);
                             NotificationUtil.updateNotification(notifyId, progress);
                         }
 
@@ -81,12 +80,30 @@ public class DownloadService extends Service {
                                 e.printStackTrace();
                             }
                             //customDialog(file.getAbsolutePath());
-                            openfile();
+                            openfile(file.getPath());
+                        }
+
+                        @Override
+                        public void onCancel() {
+                            System.out.println("cancel");
+                            super.onCancel();
                         }
 
                         @Override
                         public void onWait() {
+                            System.out.println("wait");
+                        }
 
+                        @Override
+                        public void onPause() {
+                            System.out.println("pause");
+                            super.onPause();
+                        }
+
+                        @Override
+                        public void onError(String error) {
+                            System.out.println(error);
+                            super.onError(error);
                         }
                     });
         }
@@ -113,6 +130,7 @@ public class DownloadService extends Service {
             }
             return -1;
         }
+
     }
 
     @Nullable
@@ -135,7 +153,7 @@ public class DownloadService extends Service {
     /**
      * 自定义对话框
      */
-    private void customDialog(String saveurl) {
+    private void customDialog(final String saveurl) {
         final Dialog dialog = new Dialog( getBaseContext(),R.style.Theme_AppCompat_Light_Dialog);
         View view = View.inflate(mContext, R.layout.dialog_normal, null);
         TextView cancel = (TextView) view.findViewById(R.id.cancel);
@@ -162,15 +180,15 @@ public class DownloadService extends Service {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openfile();
+                openfile(saveurl);
             }
         });
        dialog.show();
     }
-    private  void openfile(){
+    private  void openfile(String path){
         try {
             FileNameMap fileNameMap = URLConnection.getFileNameMap();
-            String path = "/mnt/test/TB_DRAWING.xls";
+            //String path = "/mnt/test/TB_DRAWING.xls";
             File file = new File(path);
             String type = fileNameMap.getContentTypeFor(path);
             //                  解决部分三星手机无法获取到类型的问题
