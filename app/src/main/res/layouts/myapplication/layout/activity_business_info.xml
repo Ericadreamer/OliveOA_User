@@ -152,7 +152,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_marginTop="@dimen/dp_10"
-                        android:layout_marginBottom="@dimen/dp_20">
+                        android:layout_marginBottom="@dimen/dp_5">
                         <TextView
                             android:id="@+id/time"
                             android:layout_width="0dp"
@@ -162,15 +162,16 @@
                             android:text="2018/06/10 19:00-2018/06/10 22:00"
                             android:textSize="@dimen/text_size_normal"
                             android:textColor="@color/colorPrimary"
-                            android:layout_marginLeft="@dimen/dp_20"
+                            android:layout_marginLeft="@dimen/dp_22"
                             android:lineSpacingExtra="6dp"/>
                     </LinearLayout>
                     //出差时间
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginBottom="@dimen/dp_5">
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:layout_marginBottom="@dimen/dp_20">
 
                         <TextView
                             android:layout_width="100dp"
@@ -179,18 +180,20 @@
                             android:text="出差地点"
                             android:textSize="@dimen/text_size_normal"
                             android:textColor="@color/tv_gray_deep"
-                            android:layout_marginLeft="@dimen/dp_22" />
+                            android:layout_marginLeft="@dimen/dp_22"
+                            />
                         <TextView
                             android:id="@+id/business_place"
                             android:layout_width="0dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="center|right"
-                            android:text="北京"
+                            android:text="行政楼第二会议室"
                             android:textSize="@dimen/text_size_normal"
                             android:singleLine="true"
                             android:textColor="@color/colorPrimary"
                             android:layout_marginRight="@dimen/dp_20"
+                            android:lineSpacingExtra="6dp"
                             />
 
                     </LinearLayout>

@@ -129,13 +129,15 @@
                     //会议主题
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:orientation="horizontal">
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:layout_marginBottom="@dimen/dp_10">
 
                         <TextView
                             android:layout_width="100dp"
                             android:layout_height="match_parent"
-                            android:gravity="center|left"
+                            android:gravity="left"
                             android:text="会议主题"
                             android:textSize="@dimen/text_size_normal"
                             android:textColor="@color/tv_gray_deep"
@@ -144,15 +146,14 @@
                         <TextView
                             android:id="@+id/meeting_topic"
                             android:layout_width="0dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="center|right"
-                            android:singleLine="true"
-                            android:text="论如何按用户心情变换手机主题"
+                            android:text="论如何按用户心情变换手机主题论如何按用户心情变换手机主题"
                             android:textSize="@dimen/text_size_normal"
                             android:textColor="@color/colorPrimary"
                             android:layout_marginRight="@dimen/dp_20"
-                            />
+                            android:lineSpacingExtra="6dp"/>
 
                     </LinearLayout>
 
@@ -175,13 +176,12 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
-                        android:orientation="horizontal"
-                        android:layout_marginBottom="@dimen/dp_12">
+                        android:orientation="horizontal">
                         <TextView
                             android:id="@+id/meeting_time"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_marginLeft="@dimen/dp_20"
+                            android:layout_marginLeft="@dimen/dp_22"
                             android:layout_weight="1"
                             android:gravity="center|left"
                             android:text="2018/06/10 19:00-2018/06/10 22:00"
@@ -191,9 +191,10 @@
                     //会议地点
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginBottom="@dimen/dp_12">
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:layout_marginBottom="@dimen/dp_20">
 
                         <TextView
                             android:layout_width="100dp"
@@ -207,7 +208,7 @@
                         <TextView
                             android:id="@+id/meeting_place"
                             android:layout_width="0dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="center|right"
                             android:text="行政楼第二会议室"
@@ -215,6 +216,7 @@
                             android:singleLine="true"
                             android:textColor="@color/colorPrimary"
                             android:layout_marginRight="@dimen/dp_20"
+                            android:lineSpacingExtra="6dp"
                             />
 
                     </LinearLayout>

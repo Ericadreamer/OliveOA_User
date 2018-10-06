@@ -1,64 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/approval_list"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dp_70"
-    android:layout_marginBottom="@dimen/dp_2"
-    android:background="#fff"
+    android:layout_height="wrap_content"
     android:clickable="true"
     android:orientation="horizontal">
 
-    <ImageView
-        android:layout_width="@dimen/dp_40"
-        android:layout_height="@dimen/dp_40"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="@dimen/dp_20"
-        android:src="@drawable/meeting" />
-
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="@dimen/dp_70"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/meeting_topic"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dp_20"
-            android:layout_marginTop="@dimen/dp_8"
-            android:layout_weight="1"
-            android:gravity="center|left"
-            android:text="会议主题"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/dp_16" />
-
-        <TextView
-            android:id="@+id/time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp_6"
-            android:layout_marginLeft="@dimen/dp_20"
-            android:layout_weight="1"
-            android:gravity="center|left"
-            android:singleLine="true"
-            android:text="更新时间" />
-    </LinearLayout>
-
-    <!--<LinearLayout
-        android:layout_width="100dp"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/type"
+        android:id="@+id/approval_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginRight="@dimen/dp_20"
-        android:layout_marginTop="@dimen/dp_8"
-        android:gravity="end"
-        android:text="09/01"
-        android:textSize="@dimen/dp_14" />
-    </LinearLayout>-->
+        android:layout_height="65dp"
+        android:background="#fff"
+        android:layout_marginBottom="@dimen/dp_1"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_20"
+            android:src="@drawable/meeting" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_70"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/meeting_topic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_6"
+                android:layout_weight="1"
+                android:gravity="center|left"
+                android:text="会议主题"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/dp_16" />
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:layout_weight="1"
+                android:gravity="center|left"
+                android:singleLine="true"
+                android:text="更新时间" />
+        </LinearLayout>
+
+        <!--<LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/type"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/dp_20"
+            android:layout_marginTop="@dimen/dp_8"
+            android:gravity="end"
+            android:text="09/01"
+            android:textSize="@dimen/dp_14" />
+        </LinearLayout>-->
+    </LinearLayout>
 </LinearLayout>
 

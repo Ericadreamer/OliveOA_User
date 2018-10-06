@@ -130,15 +130,16 @@
                             android:text="2018/8/20 10:00"
                             android:textSize="@dimen/text_size_normal"
                             android:textColor="@color/colorPrimary"
-                            android:layout_marginLeft="@dimen/dp_20"
+                            android:layout_marginLeft="@dimen/dp_22"
                             />
                     </LinearLayout>
                     //会议地点
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginBottom="@dimen/dp_5">
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:layout_marginBottom="@dimen/dp_20">
 
                         <TextView
                             android:layout_width="100dp"
@@ -152,7 +153,7 @@
                         <TextView
                             android:id="@+id/meeting_place"
                             android:layout_width="0dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="center|right"
                             android:text="行政楼第二会议室"
@@ -160,6 +161,7 @@
                             android:singleLine="true"
                             android:textColor="@color/colorPrimary"
                             android:layout_marginRight="@dimen/dp_20"
+                            android:lineSpacingExtra="6dp"
                             />
 
                     </LinearLayout>

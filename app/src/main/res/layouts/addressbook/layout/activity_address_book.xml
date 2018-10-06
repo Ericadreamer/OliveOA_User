@@ -12,7 +12,7 @@
     //部门
 
     <LinearLayout
-        android:id="@+id/departmet"
+        android:id="@+id/department"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"

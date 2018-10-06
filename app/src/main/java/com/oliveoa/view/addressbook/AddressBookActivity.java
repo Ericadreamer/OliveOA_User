@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.oliveoa.greendao.ContactInfoDao;
@@ -24,9 +25,10 @@ import java.util.List;
 public class AddressBookActivity extends Fragment {
 
     private ExpandableListView exlist_staff;
-    private ImageView next;
+    //private ImageView next;
     private Context mContext;
     private View rootview;
+    private LinearLayout ldepartment;
 
     private ListView listView;
     private SideBar sideBar;
@@ -46,7 +48,8 @@ public class AddressBookActivity extends Fragment {
     }
 
     public void initView() {
-        next = (ImageView) rootview.findViewById(R.id.inext);
+        //next = (ImageView) rootview.findViewById(R.id.inext);
+        ldepartment = (LinearLayout) rootview.findViewById(R.id.department);
         listView = (ListView) rootview.findViewById(R.id.listView);
         sideBar = (SideBar) rootview.findViewById(R.id.side_bar);
         sideBar.setOnStrSelectCallBack(new SideBar.ISideBarSelectCallBack() {
@@ -61,7 +64,7 @@ public class AddressBookActivity extends Fragment {
             }
         });
 
-        next.setOnClickListener(new View.OnClickListener() {
+        ldepartment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, DepartmentEmployeeActivity.class);

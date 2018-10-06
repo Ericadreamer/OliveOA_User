@@ -57,159 +57,159 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#fff">
+            android:background="#fff"
+            android:layout_marginBottom="@dimen/dp_1">
 
             <GridView
                 android:id="@+id/gridview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_20"
                 android:columnWidth="@dimen/dp_70"
                 android:gravity="center"
-                android:numColumns="3"
                 android:horizontalSpacing="6dp"
-                android:verticalSpacing="6dp"
+                android:numColumns="3"
                 android:stretchMode="columnWidth"
-                android:layout_marginTop="@dimen/dp_20"
-                android:layout_marginBottom="@dimen/dp_20">
+                android:verticalSpacing="6dp">
 
             </GridView>
         </LinearLayout>
 
-            <LinearLayout
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!--<LinearLayout
+                android:id="@+id/radio_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#fff"
                 android:orientation="vertical">
 
-                <!--<LinearLayout
-                    android:id="@+id/radio_button"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#fff"
-                    android:orientation="vertical">
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="@dimen/dp_20"
+                    android:layout_marginTop="@dimen/dp_20">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+
+                    <RadioButton
+                        android:id="@+id/protocol_work"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginBottom="@dimen/dp_20"
-                        android:layout_marginTop="@dimen/dp_20">
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:drawablePadding="@dimen/dp_6"
+                        android:drawableTop="@drawable/protocol_work_pic"
+                        android:gravity="center"
+                        android:text="工作拟定" />
 
+                    <RadioButton
+                        android:id="@+id/leadership_approval"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:drawablePadding="@dimen/dp_6"
+                        android:drawableTop="@drawable/leadership_approval_pic"
+                        android:gravity="center"
+                        android:text="领导批阅" />
 
-                        <RadioButton
-                            android:id="@+id/protocol_work"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:button="@null"
-                            android:drawablePadding="@dimen/dp_6"
-                            android:drawableTop="@drawable/protocol_work_pic"
-                            android:gravity="center"
-                            android:text="工作拟定" />
+                    <RadioButton
+                        android:id="@+id/allocation"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:button="@null"
+                        android:drawablePadding="@dimen/dp_6"
+                        android:drawableTop="@drawable/allocation_pic"
+                        android:gravity="center"
+                        android:text="工作分配" />
 
-                        <RadioButton
-                            android:id="@+id/leadership_approval"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:button="@null"
-                            android:drawablePadding="@dimen/dp_6"
-                            android:drawableTop="@drawable/leadership_approval_pic"
-                            android:gravity="center"
-                            android:text="领导批阅" />
-
-                        <RadioButton
-                            android:id="@+id/allocation"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:button="@null"
-                            android:drawablePadding="@dimen/dp_6"
-                            android:drawableTop="@drawable/allocation_pic"
-                            android:gravity="center"
-                            android:text="工作分配" />
-
-
-                    </LinearLayout>
-                </LinearLayout>-->
-
-                //我的工作
-                <!--<TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="@dimen/dp_10"
-                    android:layout_marginLeft="@dimen/dp_20"
-                    android:gravity="left"
-                    android:text="我的工作"
-                    android:textColor="@color/tv_gray_deep"
-                    android:textSize="@dimen/dp_16" />-->
-
-                <!--顶部tab标签容器-->
-                <android.support.design.widget.TabLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tab_layout"
-                    android:background="@color/white"
-                    app:tabIndicatorColor="@color/tab_tv_selected"
-                    app:tabSelectedTextColor="@color/tab_tv_selected"
-                    app:tabTextColor="@color/tv_gray_deep"
-                    android:elevation="@dimen/dp_3"
-                    app:tabMode="fixed">
-                </android.support.design.widget.TabLayout>
-
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/info_viewpager"
-                    android:layout_marginTop="@dimen/dp_6"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/dp_3"
-                    android:layout_marginRight="@dimen/dp_3"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-                <!--<LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp_35"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="@dimen/dp_1"
-                    android:orientation="horizontal">
-                    <View
-                        android:layout_width="@dimen/dp_5"
-                        android:layout_height="35dp"
-                        android:layout_gravity="center_horizontal"
-                        android:background="@color/colorPrimary"
-                        android:layout_marginLeft="@dimen/dp_8"/>
-                    <TextView
-                        android:id="@+id/show"
-                        android:layout_width="@dimen/dp_80"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="@dimen/dp_15"
-                        android:background="@null"
-                        android:gravity="center_vertical|left"
-                        android:singleLine="true"
-                        android:textColor="@color/tv_gray_deep"
-                        android:textColorHint="#898989"
-                        android:textSize="16sp"
-                        android:text="我的工作"/>
 
                 </LinearLayout>
+            </LinearLayout>-->
 
-                //我的工作列表
-                <LinearLayout
-                    android:id="@+id/my_work_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical" />
-                //没有更多数据了
+            //我的工作
+            <!--<TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:gravity="left"
+                android:text="我的工作"
+                android:textColor="@color/tv_gray_deep"
+                android:textSize="@dimen/dp_16" />-->
+
+            <!--顶部tab标签容器-->
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:elevation="@dimen/dp_3"
+                app:tabIndicatorColor="@color/tab_tv_selected"
+                app:tabMode="fixed"
+                app:tabSelectedTextColor="@color/tab_tv_selected"
+                app:tabTextColor="@color/tv_gray_deep"></android.support.design.widget.TabLayout>
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/info_viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/dp_3"
+                android:layout_marginRight="@dimen/dp_3"
+                android:layout_marginTop="@dimen/dp_6"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+            <!--<LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_35"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/dp_1"
+                android:orientation="horizontal">
+                <View
+                    android:layout_width="@dimen/dp_5"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@color/colorPrimary"
+                    android:layout_marginLeft="@dimen/dp_8"/>
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:layout_marginBottom="@dimen/dp_10"
-                    android:gravity="center"
-                    android:text="没有更多数据了"
-                    android:textColor="@color/tv_gray_lit"
-                    android:textSize="14sp" />-->
+                    android:id="@+id/show"
+                    android:layout_width="@dimen/dp_80"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/dp_15"
+                    android:background="@null"
+                    android:gravity="center_vertical|left"
+                    android:singleLine="true"
+                    android:textColor="@color/tv_gray_deep"
+                    android:textColorHint="#898989"
+                    android:textSize="16sp"
+                    android:text="我的工作"/>
 
             </LinearLayout>
+
+            //我的工作列表
+            <LinearLayout
+                android:id="@+id/my_work_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" />
+            //没有更多数据了
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginBottom="@dimen/dp_10"
+                android:gravity="center"
+                android:text="没有更多数据了"
+                android:textColor="@color/tv_gray_lit"
+                android:textSize="14sp" />-->
+
+        </LinearLayout>
 
     </LinearLayout>
 
