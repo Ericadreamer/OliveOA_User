@@ -130,4 +130,5 @@ public class NoticeActivity extends Fragment {
             return COUNT;
         }
     }
+
 }

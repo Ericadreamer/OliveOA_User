@@ -470,4 +470,5 @@ public class WorkAllocationActivity extends AppCompatActivity {
             System.exit(0);
         }
     }
+
 }
