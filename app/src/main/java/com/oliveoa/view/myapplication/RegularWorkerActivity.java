@@ -90,14 +90,7 @@ public class RegularWorkerActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(index==1){
-                    if(eps!=null){
-                        approveNumberDao.deleteAll();
-                    }
-                }
-                Intent intent = new Intent(RegularWorkerActivity.this, MainApplicationActivity.class);
-                startActivity(intent);
-                finish();
+                back();
                 //Toast.makeText(mContext, "你点击了返回", Toast.LENGTH_SHORT).show();
             }
         });
@@ -128,6 +121,17 @@ public class RegularWorkerActivity extends AppCompatActivity {
             addViewItem(null);
         }
 
+    }
+
+    private void back() {
+        if(index==1){
+            if(eps!=null){
+                approveNumberDao.deleteAll();
+            }
+        }
+        Intent intent = new Intent(RegularWorkerActivity.this, MainApplicationActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 
@@ -257,8 +261,9 @@ public class RegularWorkerActivity extends AppCompatActivity {
                         FulltimeApplicationService service = new FulltimeApplicationService();
                         StatusAndMsgJsonBean statusAndMsgJsonBean = service.submitApplication(s,application,eps.toString());
                         if (statusAndMsgJsonBean.getStatus() == 0) {
+                           back();
                             Looper.prepare();
-                            Toast.makeText(getApplicationContext(), "添加成功！点击返回键返回主页", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "添加成功！", Toast.LENGTH_LONG).show();
                             Looper.loop();
                         } else {
                             Looper.prepare();
@@ -382,41 +387,45 @@ public class RegularWorkerActivity extends AppCompatActivity {
 
     //截止日期选择
     public void onYearMonthDayPicker2(View view) {
-        final DatePicker picker = new DatePicker(this);
-        picker.setCanceledOnTouchOutside(true);
-        picker.setUseWeight(true);
-        picker.setTitleText("离职日期选择");
-        picker.setTopPadding(ConvertUtils.toPx(this, 10));
-        picker.setRangeEnd(2111, 1, 30);
-        //picker.setRangeStart(2018, 8, 1);
-        picker.setRangeStart(Integer.parseInt(tStartDate.getText().toString().trim().substring(0,4)), Integer.parseInt(tStartDate.getText().toString().trim().substring(5,7)), Integer.parseInt(tStartDate.getText().toString().trim().substring(8,10)));
+        if(!tStartDate.getText().toString().equals("")) {
+            final DatePicker picker = new DatePicker(this);
+            picker.setCanceledOnTouchOutside(true);
+            picker.setUseWeight(true);
+            picker.setTitleText("离职日期选择");
+            picker.setTopPadding(ConvertUtils.toPx(this, 10));
+            picker.setRangeEnd(2111, 1, 30);
+            //picker.setRangeStart(2018, 8, 1);
+            picker.setRangeStart(Integer.parseInt(tStartDate.getText().toString().trim().substring(0, 4)), Integer.parseInt(tStartDate.getText().toString().trim().substring(5, 7)), Integer.parseInt(tStartDate.getText().toString().trim().substring(8, 10)));
 
 //        picker.setSelectedItem(2050, 10, 14);
-        picker.setResetWhileWheel(false);
-        picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
-            @Override
-            public void onDatePicked(String year, String month, String day) {
-                tEndDate.setText(year + "-" + month + "-" + day);
-                // showToast(year + "-" + month + "-" + day);
-            }
-        });
-        picker.setOnWheelListener(new DatePicker.OnWheelListener() {
-            @Override
-            public void onYearWheeled(int index, String year) {
-                picker.setTitleText(year + "-" + picker.getSelectedMonth() + "-" + picker.getSelectedDay());
-            }
+            picker.setResetWhileWheel(false);
+            picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
+                @Override
+                public void onDatePicked(String year, String month, String day) {
+                    tEndDate.setText(year + "-" + month + "-" + day);
+                    // showToast(year + "-" + month + "-" + day);
+                }
+            });
+            picker.setOnWheelListener(new DatePicker.OnWheelListener() {
+                @Override
+                public void onYearWheeled(int index, String year) {
+                    picker.setTitleText(year + "-" + picker.getSelectedMonth() + "-" + picker.getSelectedDay());
+                }
 
-            @Override
-            public void onMonthWheeled(int index, String month) {
-                picker.setTitleText(picker.getSelectedYear() + "-" + month + "-" + picker.getSelectedDay());
-            }
+                @Override
+                public void onMonthWheeled(int index, String month) {
+                    picker.setTitleText(picker.getSelectedYear() + "-" + month + "-" + picker.getSelectedDay());
+                }
 
-            @Override
-            public void onDayWheeled(int index, String day) {
-                picker.setTitleText(picker.getSelectedYear() + "/" + picker.getSelectedMonth() + "/" + day);
-            }
-        });
-        picker.show();
+                @Override
+                public void onDayWheeled(int index, String day) {
+                    picker.setTitleText(picker.getSelectedYear() + "/" + picker.getSelectedMonth() + "/" + day);
+                }
+            });
+            picker.show();
+        }else{
+            showToast("请选择到岗时间！");
+        }
     }
 
     /**

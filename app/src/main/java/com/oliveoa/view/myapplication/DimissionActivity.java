@@ -90,14 +90,7 @@ public class DimissionActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(index==1){
-                    if(eps!=null){
-                        approveNumberDao.deleteAll();
-                    }
-                }
-                Intent intent = new Intent(DimissionActivity.this, MainApplicationActivity.class);
-                startActivity(intent);
-                finish();
+                back();
                 //Toast.makeText(mContext, "你点击了返回", Toast.LENGTH_SHORT).show();
             }
         });
@@ -128,6 +121,17 @@ public class DimissionActivity extends AppCompatActivity {
             addViewItem(null);
         }
 
+    }
+
+    private void back() {
+        if(index==1){
+            if(eps!=null){
+                approveNumberDao.deleteAll();
+            }
+        }
+        Intent intent = new Intent(DimissionActivity.this, MainApplicationActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 
@@ -251,8 +255,9 @@ public class DimissionActivity extends AppCompatActivity {
                             LeaveOfficeApplicationService service = new LeaveOfficeApplicationService();
                             StatusAndMsgJsonBean statusAndMsgJsonBean = service.submitApplication(s, application, eps.toString());
                             if (statusAndMsgJsonBean.getStatus() == 0) {
+                                back();
                                 Looper.prepare();
-                                Toast.makeText(getApplicationContext(), "添加成功！点击返回键返回主页", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "添加成功！", Toast.LENGTH_LONG).show();
                                 Looper.loop();
                             } else {
                                 Looper.prepare();

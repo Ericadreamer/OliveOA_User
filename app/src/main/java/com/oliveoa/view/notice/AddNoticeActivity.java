@@ -278,8 +278,9 @@ public class AddNoticeActivity extends AppCompatActivity {
                             AnnouncementService service = new AnnouncementService();
                             StatusAndMsgJsonBean statusAndMsgJsonBean = service.submit_annoucements(s,announcementInfo,eps.toString());
                             if (statusAndMsgJsonBean.getStatus() == 0) {
+                                back();
                                 Looper.prepare();
-                                Toast.makeText(getApplicationContext(), "添加成功！点击返回键返回主页", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "添加成功！", Toast.LENGTH_LONG).show();
                                 Looper.loop();
                             } else {
                                 Looper.prepare();

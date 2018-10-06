@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.oliveoa.greendao.ContactInfoDao;
 import com.oliveoa.pojo.ContactInfo;
@@ -21,6 +23,8 @@ import com.oliveoa.view.R;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class AddressBookActivity extends Fragment {
 
@@ -79,12 +83,15 @@ public class AddressBookActivity extends Fragment {
         ContactInfoDao contactInfoDao = EntityManager.getInstance().getContactInfo();
         List<ContactInfo> contactInfos = contactInfoDao.queryBuilder().list();
         list = new ArrayList<>();
-        for(int i = 0;i<contactInfos.size();i++){
-            list.add(new User(contactInfos.get(i).getName(),contactInfos.get(i).getEid()));
+        for (int i = 0; i < contactInfos.size(); i++) {
+            list.add(new User(contactInfos.get(i).getName(), contactInfos.get(i).getEid()));
 
         }
         Collections.sort(list); // 对list进行排序，需要让User实现Comparable接口重写compareTo方法
         SortAdapter adapter = new SortAdapter(getActivity(), list);
         listView.setAdapter(adapter);
     }
-    }
+
+
+}
+

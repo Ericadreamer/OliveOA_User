@@ -283,7 +283,7 @@ public class RegularWorkerInfoActivity extends AppCompatActivity {
                     Log.e(TAG,"tname="+tname.getText().toString());
                     String epname =tname.getText().toString().trim();
                     Application application = new Application();
-                    application.setDescribe(ap.getPersonalSummary());
+                    application.setDescribe(list.get(finalI).getOpinion());
                     if(index==1){
                         application.setType(16);
                     }else{

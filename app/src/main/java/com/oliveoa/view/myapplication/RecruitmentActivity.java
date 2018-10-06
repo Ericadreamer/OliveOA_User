@@ -85,15 +85,7 @@ public class RecruitmentActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(index==1){
-                    if(eps!=null){
-                        approveNumberDao.deleteAll();
-                        departmentAndDutyDao.deleteAll();
-                    }
-                }
-                Intent intent = new Intent(RecruitmentActivity.this,MainApplicationActivity.class);
-                startActivity(intent);
-                finish();
+                back();
                 //Toast.makeText(mContext, "你点击了返回", Toast.LENGTH_SHORT).show();
             }
         });
@@ -143,6 +135,18 @@ public class RecruitmentActivity extends AppCompatActivity {
         if(index==1){
             addViewItem(null);
         }
+    }
+
+    private void back() {
+        if(index==1){
+            if(eps!=null){
+                approveNumberDao.deleteAll();
+                departmentAndDutyDao.deleteAll();
+            }
+        }
+        Intent intent = new Intent(RecruitmentActivity.this,MainApplicationActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void initData() {
@@ -324,8 +328,8 @@ public class RecruitmentActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "信息不得为空！", Toast.LENGTH_SHORT).show();
             } else if (departmentAndDuty.getDcid() == null || departmentAndDuty.getPcid() == null || departmentAndDuty.getDcid().equals("") || departmentAndDuty.getPcid().equals("")) {
                 Toast.makeText(getApplicationContext(), "请选择目标岗位！", Toast.LENGTH_SHORT).show();
-            }else if(Integer.parseInt(eSalary.getText().toString().trim())<=0||Integer.parseInt(eQuantity.getText().toString().trim())<=0){
-                Toast.makeText(getApplicationContext(), "工资和人数数额需大于0", Toast.LENGTH_SHORT).show();
+            }else if(Integer.parseInt(eQuantity.getText().toString().trim())<=0){
+                Toast.makeText(getApplicationContext(), "人数数额需大于0", Toast.LENGTH_SHORT).show();
             } else {
                 application.setNumber(Integer.valueOf(eQuantity.getText().toString().trim()));
                 application.setSalary(eSalary.getText().toString().trim());
@@ -347,8 +351,9 @@ public class RecruitmentActivity extends AppCompatActivity {
                             RecruitmentApplicationService service = new RecruitmentApplicationService();
                             StatusAndMsgJsonBean statusAndMsgJsonBean = service.submitApplication(s, application,departmentAndDuty.getDcid(),eps.toString());
                             if (statusAndMsgJsonBean.getStatus() == 0) {
+                                back();
                                 Looper.prepare();
-                                Toast.makeText(getApplicationContext(), "添加成功！点击返回键返回主页", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "添加成功！", Toast.LENGTH_LONG).show();
                                 Looper.loop();
                             } else {
                                 Looper.prepare();

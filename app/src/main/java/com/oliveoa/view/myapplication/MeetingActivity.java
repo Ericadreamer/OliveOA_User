@@ -117,14 +117,7 @@ public class MeetingActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(index==1){
-                    if(eps!=null){
-                        approveNumberDao.deleteAll();
-                    }
-                }
-                Intent intent = new Intent(MeetingActivity.this, MainApplicationActivity.class);
-                startActivity(intent);
-                finish();
+                back();
                 //Toast.makeText(mContext, "你点击了返回", Toast.LENGTH_SHORT).show();
             }
         });
@@ -143,6 +136,17 @@ public class MeetingActivity extends AppCompatActivity {
         if(index==1||index==2){
             addViewItem(null);//参会
         }
+    }
+
+    private void back() {
+        if(index==1){
+            if(eps!=null){
+                approveNumberDao.deleteAll();
+            }
+        }
+        Intent intent = new Intent(MeetingActivity.this, MainApplicationActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void initData() {
@@ -387,8 +391,9 @@ public class MeetingActivity extends AppCompatActivity {
                         Log.e(TAG,application.getAeid());
                         StatusAndMsgJsonBean statusAndMsgJsonBean = service.submitApplication(s,application,eps.toString());
                         if (statusAndMsgJsonBean.getStatus() == 0) {
+                            back();
                             Looper.prepare();
-                            Toast.makeText(getApplicationContext(), "添加成功！点击返回键返回主页", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "添加成功!", Toast.LENGTH_LONG).show();
                             Looper.loop();
                         } else {
                             Looper.prepare();
@@ -523,54 +528,58 @@ public class MeetingActivity extends AppCompatActivity {
 
     //年月日时分选择器
     public void onYearMonthDayTimePicker2(View view) {
-        Log.e("starttime==",tstartTime.getText().toString());
-        Log.e("starttime==",tstartTime.getText().toString().trim().substring(0,4));
-        Log.e("starttime==",tstartTime.getText().toString().trim().substring(5,7));
-        Log.e("starttime==",tstartTime.getText().toString().trim().substring(8,10));
-        Log.e("starttime==", String.valueOf(Integer.parseInt(tstartTime.getText().toString().trim().substring(11,13))+1));
-        //Log.e("starttime==",String.valueOf(Integer.parseInt(tstartTime.getText().toString().trim().substring(14,16))));
-        DateTimePicker picker = new DateTimePicker(this, DateTimePicker.HOUR_24);
-        picker.setDateRangeStart(Integer.parseInt(tstartTime.getText().toString().trim().substring(0,4)), Integer.parseInt(tstartTime.getText().toString().trim().substring(5,7)), Integer.parseInt(tstartTime.getText().toString().trim().substring(8,10)));
-        picker.setDateRangeEnd(2025, 12, 31);
-        picker.setTimeRangeStart(0,0);
-        picker.setTimeRangeEnd(23, 59);
-        int hour = Integer.parseInt(tstartTime.getText().toString().trim().substring(11,13));
-        if(hour<23){
-            hour++;
-        }
-        picker.setSelectedItem(
-                Integer.parseInt(tstartTime.getText().toString().trim().substring(0,4)),
-                Integer.parseInt(tstartTime.getText().toString().trim().substring(5,7)),
-                Integer.parseInt(tstartTime.getText().toString().trim().substring(8,10)),
-                hour,
-                Integer.parseInt(tstartTime.getText().toString().trim().substring(14,16))
-        );
-        // picker.setTopLineColor(0x99FF0000);
-        picker.setDividerColor(Color.rgb(0, 178, 238));//设置分割线的颜色
-        picker.setLabelTextColor(Color.GRAY);  //年月日时分单位字体颜色
-        picker.setTopLineColor(Color.GRAY);  //顶部横线颜色
-        picker.setSubmitTextSize(16); //确定文字大小
-        picker.setCancelTextSize(16); //取消文字大小
-        picker.setTitleTextColor(Color.BLACK); //标题文字颜色
-        picker.setTitleText("年月日时分选择");  //标题文字
-        picker.setOnDateTimePickListener(new DateTimePicker.OnYearMonthDayTimePickListener() {
-            @Override
-            public void onDateTimePicked(String year, String month, String day, String hour, String minute) {
-                if (tstartTime.getText().toString().trim().substring(0,4).equals(year)
-                        &&tstartTime.getText().toString().trim().substring(5,7).equals(month)
-                        &&tstartTime.getText().toString().trim().substring(8,10).equals(day)){
-                    if(Integer.parseInt(hour)<=Integer.parseInt(tstartTime.getText().toString().trim().substring(11,13))){
-                        showToast("结束时间不得早于开始时间，请重新选择！");
-                    }else{
-                        tendTime.setText(year+"-"+month+"-"+day + " " + hour + ":" + minute);
-                    }
-                }else{
-                    tendTime.setText(year+"-"+month+"-"+day + " " + hour + ":" + minute);
-                }
-                //showToast(year + "-" + month + "-" + day + " " + hour + ":" + minute);
+        if(!tstartTime.getText().toString().equals("")) {
+            Log.e("starttime==", tstartTime.getText().toString());
+            Log.e("starttime==", tstartTime.getText().toString().trim().substring(0, 4));
+            Log.e("starttime==", tstartTime.getText().toString().trim().substring(5, 7));
+            Log.e("starttime==", tstartTime.getText().toString().trim().substring(8, 10));
+            Log.e("starttime==", String.valueOf(Integer.parseInt(tstartTime.getText().toString().trim().substring(11, 13)) + 1));
+            //Log.e("starttime==",String.valueOf(Integer.parseInt(tstartTime.getText().toString().trim().substring(14,16))));
+            DateTimePicker picker = new DateTimePicker(this, DateTimePicker.HOUR_24);
+            picker.setDateRangeStart(Integer.parseInt(tstartTime.getText().toString().trim().substring(0, 4)), Integer.parseInt(tstartTime.getText().toString().trim().substring(5, 7)), Integer.parseInt(tstartTime.getText().toString().trim().substring(8, 10)));
+            picker.setDateRangeEnd(2025, 12, 31);
+            picker.setTimeRangeStart(0, 0);
+            picker.setTimeRangeEnd(23, 59);
+            int hour = Integer.parseInt(tstartTime.getText().toString().trim().substring(11, 13));
+            if (hour < 23) {
+                hour++;
             }
-        });
-        picker.show();
+            picker.setSelectedItem(
+                    Integer.parseInt(tstartTime.getText().toString().trim().substring(0, 4)),
+                    Integer.parseInt(tstartTime.getText().toString().trim().substring(5, 7)),
+                    Integer.parseInt(tstartTime.getText().toString().trim().substring(8, 10)),
+                    hour,
+                    Integer.parseInt(tstartTime.getText().toString().trim().substring(14, 16))
+            );
+            // picker.setTopLineColor(0x99FF0000);
+            picker.setDividerColor(Color.rgb(0, 178, 238));//设置分割线的颜色
+            picker.setLabelTextColor(Color.GRAY);  //年月日时分单位字体颜色
+            picker.setTopLineColor(Color.GRAY);  //顶部横线颜色
+            picker.setSubmitTextSize(16); //确定文字大小
+            picker.setCancelTextSize(16); //取消文字大小
+            picker.setTitleTextColor(Color.BLACK); //标题文字颜色
+            picker.setTitleText("年月日时分选择");  //标题文字
+            picker.setOnDateTimePickListener(new DateTimePicker.OnYearMonthDayTimePickListener() {
+                @Override
+                public void onDateTimePicked(String year, String month, String day, String hour, String minute) {
+                    if (tstartTime.getText().toString().trim().substring(0, 4).equals(year)
+                            && tstartTime.getText().toString().trim().substring(5, 7).equals(month)
+                            && tstartTime.getText().toString().trim().substring(8, 10).equals(day)) {
+                        if (Integer.parseInt(hour) <= Integer.parseInt(tstartTime.getText().toString().trim().substring(11, 13))) {
+                            showToast("结束时间不得早于开始时间，请重新选择！");
+                        } else {
+                            tendTime.setText(year + "-" + month + "-" + day + " " + hour + ":" + minute);
+                        }
+                    } else {
+                        tendTime.setText(year + "-" + month + "-" + day + " " + hour + ":" + minute);
+                    }
+                    //showToast(year + "-" + month + "-" + day + " " + hour + ":" + minute);
+                }
+            });
+            picker.show();
+        }else{
+            showToast("请选择开始时间！");
+        }
     }
 
 

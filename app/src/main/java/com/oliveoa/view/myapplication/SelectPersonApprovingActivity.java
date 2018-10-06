@@ -22,6 +22,7 @@ import com.oliveoa.greendao.DepartmentInfoDao;
 import com.oliveoa.greendao.JobTransferApplicationDao;
 import com.oliveoa.greendao.MeetingApplicationDao;
 import com.oliveoa.greendao.OfficialDocumentDao;
+import com.oliveoa.greendao.UserInfoDao;
 import com.oliveoa.greendao.WorkDetailDao;
 import com.oliveoa.jsonbean.ContactJsonBean;
 import com.oliveoa.pojo.ApproveNumber;
@@ -32,6 +33,7 @@ import com.oliveoa.pojo.Item;
 import com.oliveoa.pojo.JobTransferApplication;
 import com.oliveoa.pojo.MeetingApplication;
 import com.oliveoa.pojo.OfficialDocument;
+import com.oliveoa.pojo.UserInfo;
 import com.oliveoa.pojo.WorkDetail;
 import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
@@ -76,6 +78,7 @@ public class SelectPersonApprovingActivity extends AppCompatActivity {
     private JobTransferApplicationDao jobTransferApplicationDao;
     private WorkDetailDao workDetailDao;
     private OfficialDocumentDao officialDocumentDao;
+    private UserInfoDao userInfoDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +90,7 @@ public class SelectPersonApprovingActivity extends AppCompatActivity {
         initData();
     }
     public void initData(){
+        userInfoDao = EntityManager.getInstance().getUserInfoDao();
         employeeInfoDao = EntityManager.getInstance().getContactInfo();
         departmentInfoDao =EntityManager.getInstance().getDepartmentInfo();
         jobTransferApplicationDao = EntityManager.getInstance().getJobTransferApplicationDao();
@@ -154,14 +158,22 @@ public class SelectPersonApprovingActivity extends AppCompatActivity {
                     Log.i(TAG, "被点击的员工Eid：" + iData.get(groupPosition).get(childPosition).getiEid());
                     mid = iData.get(groupPosition).get(childPosition).getiEid();
                     if (index == 0) {
-                        MeetingApplication application = new MeetingApplication();
-                        application = meetingApplicationDao.queryBuilder().unique();
-                        Log.e(TAG,application.toString());
-                        if (application != null) {
-                            application.setAeid(mid);
-                            meetingApplicationDao.deleteAll();
-                            meetingApplicationDao.insert(application);
-                            back();
+                        UserInfo userInfo = userInfoDao.queryBuilder().unique();
+                        if(userInfo!=null) {
+                            Log.i(TAG,userInfo.toString());
+                            if(!mid.equals(userInfo.getEid())) {
+                                MeetingApplication application = new MeetingApplication();
+                                application = meetingApplicationDao.queryBuilder().unique();
+                                Log.e(TAG, application.toString());
+                                if (application != null) {
+                                    application.setAeid(mid);
+                                    meetingApplicationDao.deleteAll();
+                                    meetingApplicationDao.insert(application);
+                                    back();
+                                }
+                            }else{
+                                Toast.makeText(getApplicationContext(), "提示：审批人不得选自己，请选择其他审批人！", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }else if(index==10){
                         JobTransferApplication jobTransferApplication = new JobTransferApplication();
@@ -173,49 +185,100 @@ public class SelectPersonApprovingActivity extends AppCompatActivity {
                             back();
                         }
                     }else if(index==12){
-                        WorkDetail workDetail = new WorkDetail();
-                        workDetail = workDetailDao.queryBuilder().unique();
-                        if(workDetail!=null){
-                            workDetail.setAeid(mid);
-                            workDetailDao.deleteAll();
-                            workDetailDao.insert(workDetail);
-                            Log.e(TAG,workDetail.toString());
-                            back();
+                        UserInfo userInfo = userInfoDao.queryBuilder().unique();
+                        if(userInfo!=null) {
+                            Log.i(TAG, userInfo.toString());
+                            if (!mid.equals(userInfo.getEid())) {
+                                WorkDetail workDetail = new WorkDetail();
+                                workDetail = workDetailDao.queryBuilder().unique();
+                                if (workDetail != null) {
+                                    workDetail.setAeid(mid);
+                                    workDetailDao.deleteAll();
+                                    workDetailDao.insert(workDetail);
+                                    Log.e(TAG, workDetail.toString());
+                                    back();
+                                }
+                            }else{
+                                Toast.makeText(getApplicationContext(), "提示：审批人不得选自己，请选择其他审批人！", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }else if(index==13){
-                       approveNumberDao.deleteAll();
-                       ApproveNumber ap = new ApproveNumber();
-                       ap.setId(mid);
-                       approveNumberDao.insert(ap);
-                       back();
+                        UserInfo userInfo = userInfoDao.queryBuilder().unique();
+                        if(userInfo!=null) {
+                            Log.i(TAG, userInfo.toString());
+                            if (!mid.equals(userInfo.getEid())) {
+                                approveNumberDao.deleteAll();
+                                ApproveNumber ap = new ApproveNumber();
+                                ap.setId(mid);
+                                approveNumberDao.insert(ap);
+                                back();
+                            }else {
+                                Toast.makeText(getApplicationContext(), "提示：工作分配对象不得选自己，请选择其他审批人！", Toast.LENGTH_SHORT).show();
+                            }
+                         }
                     }else if(index==14){
-                        OfficialDocument officialDocument = new OfficialDocument();
-                        officialDocument = officialDocumentDao.queryBuilder().unique();
-                        if(officialDocument!=null){
-                            officialDocument.setNuclearDraftEid(mid);
-                            officialDocumentDao.deleteAll();
-                            officialDocumentDao.insert(officialDocument);
-                            Log.e(TAG,officialDocument.toString());
-                            back();
+                        UserInfo userInfo = userInfoDao.queryBuilder().unique();
+                        if(userInfo!=null) {
+                            Log.i(TAG, userInfo.toString());
+                            if (!mid.equals(userInfo.getEid())) {
+                                OfficialDocument officialDocument = new OfficialDocument();
+                                officialDocument = officialDocumentDao.queryBuilder().unique();
+                                if (officialDocument != null) {
+                                    officialDocument.setNuclearDraftEid(mid);
+                                    officialDocumentDao.deleteAll();
+                                    officialDocumentDao.insert(officialDocument);
+                                    Log.e(TAG, officialDocument.toString());
+                                    back();
+                                }
+                            }else{
+                                Toast.makeText(getApplicationContext(), "提示：核稿人不得选自己，请选择其他审批人！", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }else if(index==15){
-                        OfficialDocument officialDocument = new OfficialDocument();
-                        officialDocument = officialDocumentDao.queryBuilder().unique();
-                        if(officialDocument!=null){
-                            officialDocument.setIssuedEid(mid);
-                            officialDocumentDao.deleteAll();
-                            officialDocumentDao.insert(officialDocument);
-                            Log.e(TAG,officialDocument.toString());
-                            back();
+                        UserInfo userInfo = userInfoDao.queryBuilder().unique();
+                        if(userInfo!=null) {
+                            Log.i(TAG, userInfo.toString());
+                            if (!mid.equals(userInfo.getEid())) {
+                                OfficialDocument officialDocument = new OfficialDocument();
+                                officialDocument = officialDocumentDao.queryBuilder().unique();
+                                if (officialDocument != null) {
+                                    officialDocument.setIssuedEid(mid);
+                                    officialDocumentDao.deleteAll();
+                                    officialDocumentDao.insert(officialDocument);
+                                    Log.e(TAG, officialDocument.toString());
+                                    back();
+                                }
+                            }else{
+                                Toast.makeText(getApplicationContext(), "提示：签发人不得选自己，请选择其他审批人！", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }else {
+
                         ApproveNumber ap = approveNumberDao.queryBuilder().where(ApproveNumberDao.Properties.Id.eq(mid)).unique();
                         if (ap == null) {
-                            approveNumber.setId(mid);
-                            approveNumberDao.insert(approveNumber);
-                            back();
+                            if(index==4) {
+                                approveNumber.setId(mid);
+                                approveNumberDao.insert(approveNumber);
+                                back();
+                            }else{
+                                UserInfo userInfo = userInfoDao.queryBuilder().unique();
+                                if(userInfo!=null) {
+                                    Log.i(TAG, userInfo.toString());
+                                    if (!mid.equals(userInfo.getEid())) {
+                                        approveNumber.setId(mid);
+                                        approveNumberDao.insert(approveNumber);
+                                        back();
+                                    }else{
+                                        Toast.makeText(getApplicationContext(), "提示：审批人不得选自己，请选择其他审批人！", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            }
                         } else {
-                            Toast.makeText(getApplicationContext(), "提示：该审批人已被选择，请选择其他审批人！", Toast.LENGTH_SHORT).show();
+                            if(index!=4) {
+                                Toast.makeText(getApplicationContext(), "提示：该审批人已被选择，请选择其他审批人！", Toast.LENGTH_SHORT).show();
+                            }else{
+                                Toast.makeText(getApplicationContext(), "提示：该参会人已被选择，请选择其他参会人！", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }    //Log.i(TAG, "被点击的员工Eid：" + approveNumber.toString());
                     return false;

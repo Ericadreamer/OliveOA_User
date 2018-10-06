@@ -78,7 +78,6 @@ public class WorkAllocationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_work_allocation);
         index = getIntent().getIntExtra("index",index);//0为列表 1为员工选择
         initView();
-        initView();
     }
 
     private void initView() {
@@ -318,8 +317,16 @@ public class WorkAllocationActivity extends AppCompatActivity {
                         WorkDetailService service = new WorkDetailService();
                         StatusAndMsgJsonBean statusAndMsgJsonBean = service.managework(approveNumbers.toString(),s,issueWork);
                         if (statusAndMsgJsonBean.getStatus() == 0) {
+                            if(index==1){
+                                if(ep!=null){
+                                    approveNumberDao.deleteAll();
+                                }
+                            }
+                            LoadingDialog loadingDialog  = new LoadingDialog(WorkAllocationActivity.this,"正在加载数据",true);
+                            loadingDialog.show();
+                            back();
                             Looper.prepare();
-                            Toast.makeText(getApplicationContext(), "分配工作成功！点击返回键返回工作日程", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "分配工作成功！", Toast.LENGTH_SHORT).show();
                             Looper.loop();
                         } else {
                             Looper.prepare();
@@ -384,46 +391,53 @@ public class WorkAllocationActivity extends AppCompatActivity {
 
     //结束时间
     public void onYearMonthDayPicker2(View view) {
-        final DatePicker picker = new DatePicker(this);
-        picker.setCanceledOnTouchOutside(true);
-        picker.setUseWeight(true);
-        picker.setTopPadding(ConvertUtils.toPx(this, 10));
-        picker.setRangeEnd(2111, 12, 31);
-        picker.setRangeStart(Integer.parseInt(tstartTime.getText().toString().trim().substring(0,4)), Integer.parseInt(tstartTime.getText().toString().trim().substring(5,7)), Integer.parseInt(tstartTime.getText().toString().trim().substring(8,10)));
-        //picker.setSelectedItem(2050, 10, 14);
-        picker.setResetWhileWheel(false);
-        picker.setLabelTextColor(Color.GRAY);
-        picker.setTopLineColor(Color.GRAY);
-        picker.setSubmitTextSize(16);
-        picker.setCancelTextSize(16);
-        picker.setTitleTextColor(Color.BLACK);
-        picker.setTitleText("选择结束时间");
-        picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
-            @Override
-            public void onDatePicked(String year, String month, String day) {
-                tendTime.setText(year + "-" + month + "-" + day);
-                // showToast(year + "-" + month + "-" + day);
-            }
-        });
-        picker.setOnWheelListener(new DatePicker.OnWheelListener() {
-            @Override
-            public void onYearWheeled(int index, String year) {
-                picker.setTitleText(year + "-" + picker.getSelectedMonth() + "-" + picker.getSelectedDay());
-            }
+        if(!tstartTime.getText().toString().equals("")) {
+            final DatePicker picker = new DatePicker(this);
+            picker.setCanceledOnTouchOutside(true);
+            picker.setUseWeight(true);
+            picker.setTopPadding(ConvertUtils.toPx(this, 10));
+            picker.setRangeEnd(2111, 12, 31);
+            picker.setRangeStart(Integer.parseInt(tstartTime.getText().toString().trim().substring(0, 4)), Integer.parseInt(tstartTime.getText().toString().trim().substring(5, 7)), Integer.parseInt(tstartTime.getText().toString().trim().substring(8, 10)));
+            //picker.setSelectedItem(2050, 10, 14);
+            picker.setResetWhileWheel(false);
+            picker.setLabelTextColor(Color.GRAY);
+            picker.setTopLineColor(Color.GRAY);
+            picker.setSubmitTextSize(16);
+            picker.setCancelTextSize(16);
+            picker.setTitleTextColor(Color.BLACK);
+            picker.setTitleText("选择结束时间");
+            picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
+                @Override
+                public void onDatePicked(String year, String month, String day) {
+                    tendTime.setText(year + "-" + month + "-" + day);
+                    // showToast(year + "-" + month + "-" + day);
+                }
+            });
+            picker.setOnWheelListener(new DatePicker.OnWheelListener() {
+                @Override
+                public void onYearWheeled(int index, String year) {
+                    picker.setTitleText(year + "-" + picker.getSelectedMonth() + "-" + picker.getSelectedDay());
+                }
 
-            @Override
-            public void onMonthWheeled(int index, String month) {
-                picker.setTitleText(picker.getSelectedYear() + "-" + month + "-" + picker.getSelectedDay());
-            }
+                @Override
+                public void onMonthWheeled(int index, String month) {
+                    picker.setTitleText(picker.getSelectedYear() + "-" + month + "-" + picker.getSelectedDay());
+                }
 
-            @Override
-            public void onDayWheeled(int index, String day) {
-                picker.setTitleText(picker.getSelectedYear() + "-" + picker.getSelectedMonth() + "-" + day);
-            }
-        });
-        picker.show();
+                @Override
+                public void onDayWheeled(int index, String day) {
+                    picker.setTitleText(picker.getSelectedYear() + "-" + picker.getSelectedMonth() + "-" + day);
+                }
+            });
+            picker.show();
+        }else{
+            showToast("请选择开始时间！");
+        }
     }
-
+    //重写showToast
+    private void showToast(String s) {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+    }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 

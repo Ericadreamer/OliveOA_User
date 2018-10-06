@@ -352,7 +352,6 @@ private LoadingDialog loadingDialog;
         }).start();
     }
 
-
     private void backMyBusinessApproval() {
         new Thread(new Runnable() {
             @Override
@@ -426,7 +425,6 @@ private LoadingDialog loadingDialog;
             }
         }).start();
     }
-
 
     private void backMyMeetingApproval() {
         new Thread(new Runnable() {

@@ -233,7 +233,7 @@ public class DraftAddActivity extends AppCompatActivity {
             }else if(uploadfile==null) {
                 Toast.makeText(DraftAddActivity.this,"请上传公文附件",Toast.LENGTH_SHORT).show();
             }else {
-                LoadingDialog loadingDialog = new LoadingDialog(DraftAddActivity.this, "正在上传文件，请稍候……", true);
+                final LoadingDialog loadingDialog = new LoadingDialog(DraftAddActivity.this, "正在上传文件，请稍候……", true);
                 loadingDialog.show();
                 new Thread(new Runnable() {
                     @Override
@@ -247,6 +247,8 @@ public class DraftAddActivity extends AppCompatActivity {
                         StatusAndMsgJsonBean statusAndMsgJsonBean = service.documentDraft(s, officialDocument, uploadfile);
                         //ToCheck JsonBean.getStatus()
                         if (statusAndMsgJsonBean.getStatus() == 0) {
+                            loadingDialog.cancel();
+                            back();
                             Looper.prepare();//解决子线程弹toast问题
                             Toast.makeText(getApplicationContext(), statusAndMsgJsonBean.getMsg(), Toast.LENGTH_SHORT).show();
                             Looper.loop();// 进入loop中的循环，查看消息队列

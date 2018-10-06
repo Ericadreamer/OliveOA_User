@@ -100,15 +100,7 @@ public class AdjustPostActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(index==1){
-                    if(eps!=null){
-                        approveNumberDao.deleteAll();
-                        departmentAndDutyDao.deleteAll();
-                    }
-                }
-                Intent intent = new Intent(AdjustPostActivity.this, MainApplicationActivity.class);
-                startActivity(intent);
-                finish();
+                back();
                 //Toast.makeText(mContext, "你点击了返回", Toast.LENGTH_SHORT).show();
             }
         });
@@ -180,6 +172,18 @@ public class AdjustPostActivity extends AppCompatActivity {
             addViewItem(null);
         }
 
+    }
+
+    private void back() {
+        if(index==1){
+            if(eps!=null){
+                approveNumberDao.deleteAll();
+                departmentAndDutyDao.deleteAll();
+            }
+        }
+        Intent intent = new Intent(AdjustPostActivity.this, MainApplicationActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void initData() {
@@ -434,8 +438,9 @@ public class AdjustPostActivity extends AppCompatActivity {
                            JobTransferApplicationService service = new JobTransferApplicationService();
                            StatusAndMsgJsonBean statusAndMsgJsonBean = service.submitApplication(s, application, eps.toString());
                            if (statusAndMsgJsonBean.getStatus() == 0) {
+                               back();
                                Looper.prepare();
-                               Toast.makeText(getApplicationContext(), "添加成功！点击返回键返回主页", Toast.LENGTH_SHORT).show();
+                               Toast.makeText(getApplicationContext(), "添加成功！", Toast.LENGTH_LONG).show();
                                Looper.loop();
                            } else {
                                Looper.prepare();
