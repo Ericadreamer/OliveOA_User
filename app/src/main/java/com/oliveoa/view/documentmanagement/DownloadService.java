@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Binder;
+import android.os.Environment;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -21,9 +22,9 @@ import android.widget.Toast;
 import com.oliveoa.util.NotificationUtil;
 import com.oliveoa.util.ScreenSizeUtils;
 import com.oliveoa.view.R;
-import com.othershe.dutil.DUtil;
-import com.othershe.dutil.callback.SimpleDownloadCallback;
-import com.othershe.dutil.download.DownloadManger;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.FileCallBack;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -32,6 +33,9 @@ import java.net.FileNameMap;
 import java.net.URLConnection;
 import java.text.DecimalFormat;
 
+import okhttp3.Call;
+import okhttp3.Request;
+
 public class DownloadService extends Service {
     private Context mContext;
 
@@ -39,7 +43,45 @@ public class DownloadService extends Service {
 
     public class DownloadBinder extends Binder {
         public void startDownload(String path, final String name, String url, final int notifyId) {
-            DUtil.init(mContext)
+           OkHttpUtils//
+                    .get()//
+                    .url(url)//
+                    .build()//
+                    .execute(new FileCallBack( path, name)//
+                    {
+                        @Override
+                        public void onBefore(Request request, int id) {
+                            super.onBefore(request, id);
+                            NotificationUtil.createProgressNotification(mContext, name, "没有附件需要下载", R.mipmap.ic_launcher, notifyId);
+                        }
+
+                        @Override
+                        public void onError(Call call, Exception e, int id) {
+                           System.out.println( "onError :" + e.getMessage());
+                        }
+
+                        @Override
+                        public void onResponse(File response, int id) {
+                            NotificationUtil.cancelNotification(notifyId);
+                            Toast.makeText(mContext, "下载完成", Toast.LENGTH_SHORT).show();
+                            System.out.println( "onResponse :" + response.getAbsolutePath());
+                            //customDialog(response.getAbsolutePath());
+                            openfile(response.getAbsolutePath());
+                        }
+
+                        @Override
+                        public void inProgress(float progress, long total, int id) {
+                            super.inProgress(progress, total, id);
+                            DecimalFormat df = new DecimalFormat("0.00");
+                            df.setRoundingMode(RoundingMode.HALF_UP);
+                            progress = Float.parseFloat((df.format(progress)));
+                            System.out.println(progress+"==  "+total+"=="+id);
+
+                            NotificationUtil.updateNotification(notifyId, progress*100);
+
+                        }
+                    });
+            /*DUtil.init(mContext)
                     .path(path)
                     .name(name)
                     .url(url)
@@ -54,7 +96,7 @@ public class DownloadService extends Service {
 
                         @Override
                         public void onProgress(long currentSize, long totalSize, float progress) {
-                           /* if(totalSize==-1){
+                             if(totalSize==-1){
                                 //System.out.println(totalSize);
                                 System.out.println(filesize);
                                 double progress1 =currentSize*1.0/ filesize*100.f;
@@ -63,7 +105,8 @@ public class DownloadService extends Service {
                                 df.setRoundingMode(RoundingMode.HALF_UP);
                                 progress = Float.parseFloat((df.format(progress1)));
                                 System.out.println(progress1+"");
-                            }*/
+                            }
+
                             System.out.println(currentSize+"==  "+totalSize+"=="+progress);
                             NotificationUtil.updateNotification(notifyId, progress);
                         }
@@ -105,31 +148,31 @@ public class DownloadService extends Service {
                             System.out.println(error);
                             super.onError(error);
                         }
-                    });
+                    });*/
         }
 
-        public void pauseDownload(String url) {
-            DownloadManger.getInstance(mContext).pause(url);
+       /* public void pauseDownload(String url) {
+            //DownloadManger.getInstance(mContext).pause(url);
         }
 
         public void resumeDownload(String url) {
-            DownloadManger.getInstance(mContext).resume(url);
+           // DownloadManger.getInstance(mContext).resume(url);
         }
 
         public void cancelDownload(String url) {
-            DownloadManger.getInstance(mContext).cancel(url);
+            //DownloadManger.getInstance(mContext).cancel(url);
         }
 
         public void restartDownload(String url) {
-            DownloadManger.getInstance(mContext).restart(url);
+           // DownloadManger.getInstance(mContext).restart(url);
         }
 
         public float getProgress(String url) {
-            if (DownloadManger.getInstance(mContext).getCurrentData(url) != null) {
+           *//* if (DownloadManger.getInstance(mContext).getCurrentData(url) != null) {
                 return DownloadManger.getInstance(mContext).getCurrentData(url).getPercentage();
-            }
+            }*//*
             return -1;
-        }
+        }*/
 
     }
 
@@ -150,11 +193,12 @@ public class DownloadService extends Service {
         return super.onStartCommand(intent, flags, startId);
     }
 
-    /**
+    /*
      * 自定义对话框
      */
+
     private void customDialog(final String saveurl) {
-        final Dialog dialog = new Dialog( getBaseContext(),R.style.Theme_AppCompat_Light_Dialog);
+        final Dialog dialog = new Dialog(this,R.style.Theme_AppCompat_Light_Dialog);
         View view = View.inflate(mContext, R.layout.dialog_normal, null);
         TextView cancel = (TextView) view.findViewById(R.id.cancel);
         TextView confirm = (TextView) view.findViewById(R.id.confirm);

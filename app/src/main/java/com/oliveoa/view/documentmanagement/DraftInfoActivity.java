@@ -29,6 +29,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.litesuits.common.service.NotificationService;
 import com.oliveoa.common.Const;
 import com.oliveoa.common.StatusAndMsgAndDataHttpResponseObject;
 import com.oliveoa.controller.DocumentService;
@@ -36,9 +37,12 @@ import com.oliveoa.greendao.ContactInfoDao;
 import com.oliveoa.pojo.ContactInfo;
 import com.oliveoa.pojo.OfficialDocument;
 import com.oliveoa.util.EntityManager;
+import com.oliveoa.util.NotificationUtil;
 import com.oliveoa.util.ScreenSizeUtils;
 import com.oliveoa.view.R;
 import com.oliveoa.widget.LoadingDialog;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.FileCallBack;
 
 import java.io.File;
 import java.io.IOException;
@@ -51,6 +55,9 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import okhttp3.Call;
+import okhttp3.Request;
 
 import static java.lang.Integer.parseInt;
 
@@ -65,7 +72,7 @@ public class DraftInfoActivity extends AppCompatActivity{
 
     private Context mContext;
 
-    public DownloadService.DownloadBinder downloadBinder;
+    DownloadService.DownloadBinder downloadBinder;
 
     private String url ="http://1.199.93.153/imtt.dd.qq.com/16891/5FE88135737E977CCCE1A4DAC9FAFFCB.apk";
 
@@ -83,7 +90,7 @@ public class DraftInfoActivity extends AppCompatActivity{
 
     private String fileName;
     private String path;
-    Handler handler = new Handler() {
+   Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             if (msg.what == 2) {
                 fileName = (String)msg.obj;
@@ -192,7 +199,7 @@ public class DraftInfoActivity extends AppCompatActivity{
                                Log.i(getPackageName(),"size="+con.getHeaderField("Content-Length"));
                                Log.i(getPackageName(),"size="+con.getContentLength());
 
-                               Message msg = handler.obtainMessage();
+                              Message msg = handler.obtainMessage();
                                msg.what = 2;
                                msg.obj = fileName;
                                handler.sendMessage(msg);

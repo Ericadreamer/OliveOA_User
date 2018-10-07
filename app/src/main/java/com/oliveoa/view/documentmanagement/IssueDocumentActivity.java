@@ -1,12 +1,16 @@
 package com.oliveoa.view.documentmanagement;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
 import android.support.v7.app.AlertDialog;
@@ -27,6 +31,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.oliveoa.common.Const;
 import com.oliveoa.common.ContactHttpResponseObject;
 import com.oliveoa.common.StatusAndMsgAndDataHttpResponseObject;
 import com.oliveoa.controller.DocumentService;
@@ -51,6 +56,12 @@ import com.oliveoa.view.myapplication.AdjustPostActivity;
 import com.oliveoa.view.myapplication.DepartmentSelectActivity;
 import com.oliveoa.widget.LoadingDialog;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -82,6 +93,38 @@ public class IssueDocumentActivity extends AppCompatActivity {
     private TextView tname; //approve_item信息，tname为审批人名称
     private ImageView delete;
 
+    DownloadService.DownloadBinder downloadBinder;
+
+    private String url ="http://1.199.93.153/imtt.dd.qq.com/16891/5FE88135737E977CCCE1A4DAC9FAFFCB.apk";
+
+    private ServiceConnection connection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            downloadBinder = (DownloadService.DownloadBinder) service;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+
+        }
+    };
+
+    private String fileName;
+    private String path;
+    Handler handler = new Handler() {
+        public void handleMessage(Message msg) {
+            if (msg.what == 2) {
+                fileName = (String)msg.obj;
+                Log.i(TAG,fileName+"==="+path);
+                downloadBinder.startDownload(
+                        Environment.getExternalStorageDirectory() + "/OliveOA_User/OfficialsDocument/",
+                        fileName,
+                        path,
+                        (int) System.currentTimeMillis());
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +135,10 @@ public class IssueDocumentActivity extends AppCompatActivity {
         index = getIntent().getIntExtra("index",index);//列表0，选择1
         Log.e("IDDEX=", String.valueOf(index));
 
+        path = Const.DOCUMENTFLOW_DOWNLOAD + officialDocument.getOdid();
+        //path = "http://1.199.93.153/imtt.dd.qq.com/16891/5FE88135737E977CCCE1A4DAC9FAFFCB.apk";
+        Intent intent = new Intent(mContext, DownloadService.class);
+        bindService(intent, connection, BIND_AUTO_CREATE);
         initView();
 
     }
@@ -238,7 +285,41 @@ public class IssueDocumentActivity extends AppCompatActivity {
 
     }
 
-    public void download() {
+    private void download() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                URL murl = null;
+                String fileName ="";
+                try {
+                    //获取文件名
+                    murl = new URL(path);
+                    URLConnection con = murl.openConnection();
+                    fileName = con.getHeaderField("Content-Disposition");
+                    fileName = new String(fileName.getBytes("ISO-8859-1"), "GBK");
+                    fileName = URLDecoder.decode(fileName.substring(fileName.indexOf("filename=") + 9), "UTF-8");
+                    Log.i(getClass().getSimpleName(), "文件名为：" + fileName);
+                    Log.i(getPackageName(),"size="+con.getHeaderField("Content-Length"));
+                    Log.i(getPackageName(),"size="+con.getContentLength());
+
+                    Message msg = handler.obtainMessage();
+                    msg.what = 2;
+                    msg.obj = fileName;
+                    handler.sendMessage(msg);
+                              /* Message msg1 = handler.obtainMessage();
+                               msg1.what = 1;
+                               //msg1.obj = totalsize;
+                               handler1.sendMessage(msg1);*/
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
 
     }
 

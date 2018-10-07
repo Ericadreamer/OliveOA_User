@@ -243,14 +243,19 @@ public class DepartmentSelectActivity extends AppCompatActivity {
             if(tname.getText().toString().equals(departmentInfos.get(i).getName())) {
                 if(approveNumber!=null) {
                     ApproveNumber dp = new ApproveNumber();
-                    dp.setId(departmentInfos.get(i).getDcid());
-                    Log.e(TAG, departmentInfos.get(i).getDcid());
-                    approveNumber.add(dp);
-                    approveNumberDao.deleteAll();
-                    for(int j =0;j<approveNumber.size();j++) {
-                        approveNumberDao.insert(approveNumber.get(j));
+                    dp = approveNumberDao.queryBuilder().where(ApproveNumberDao.Properties.Id.eq(departmentInfos.get(i).getDcid())).unique();
+                    if(dp==null) {
+                        dp.setId(departmentInfos.get(i).getDcid());
+                        Log.e(TAG, departmentInfos.get(i).getDcid());
+                        approveNumber.add(dp);
+                        approveNumberDao.deleteAll();
+                        for (int j = 0; j < approveNumber.size(); j++) {
+                            approveNumberDao.insert(approveNumber.get(j));
+                        }
+                        back();
+                    }else{
+                        Toast.makeText(getApplicationContext(), "提示：签发部门不得重复选择，请选择其他签发部门！", Toast.LENGTH_SHORT).show();
                     }
-                    back();
                 }
                 break;
             }
