@@ -207,9 +207,10 @@ public class DocumentService {
                     .post(body)
                     .build();
             Response response = client.newCall(request).execute();
-            //System.out.println(response.body().string());
+            //System.out.println(response.string());
 
             String json = response.body().string();
+            System.out.println(json);
             Gson gson = new Gson();
             Type type = new TypeToken<StatusAndMsgJsonBean>() {
             }.getType();
