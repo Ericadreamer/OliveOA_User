@@ -143,6 +143,7 @@ public class MeetingActivity extends AppCompatActivity {
             if(eps!=null){
                 approveNumberDao.deleteAll();
             }
+            applicationDao.deleteAll();
         }
         Intent intent = new Intent(MeetingActivity.this, MainApplicationActivity.class);
         startActivity(intent);
@@ -200,6 +201,9 @@ public class MeetingActivity extends AppCompatActivity {
                     }
                 });
             }
+        }
+        if(index==0){
+            approveNumberDao.deleteAll();
         }
         if(index==1||index==2) {
             eps = approveNumberDao.queryBuilder().list();

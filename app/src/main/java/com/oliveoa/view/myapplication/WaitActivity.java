@@ -250,6 +250,17 @@ public class WaitActivity extends Fragment {
                         Log.d("departmentinfo", contactInfos.get(i).getDepartment().toString());
                         DepartmentInfo departmentInfo =contactInfos.get(i).getDepartment();
                         departmentInfoDao.insert(departmentInfo);
+                        DutyInfoJsonBean dutyInfoJsonBean = userInfoService.getPosition(departmentInfo.getDcid());
+                        if(dutyInfoJsonBean.getStatus()==0){
+                            ArrayList<DutyInfo> dutyInfos = dutyInfoJsonBean.getData();
+                            for(int k=0;k<dutyInfos.size();k++){
+                                dutyInfoDao.insert(dutyInfos.get(k));
+                            }
+                        }else{
+                            Looper.prepare();//解决子线程弹toast问题
+                            Toast.makeText(mContext, dutyInfoJsonBean.getMsg(), Toast.LENGTH_SHORT).show();
+                            Looper.loop();// 进入loop中的循环，查看消息队列
+                        }
                         Log.d(TAG,"contactInfos.get(i).getEmpContactList().size():"+contactInfos.get(i).getEmpContactList().size());
                         for(int j=0;j<contactInfos.get(i).getEmpContactList().size();j++){
                             if(contactInfos.get(i).getEmpContactList().get(j).getEmployee()!=null) {
@@ -312,12 +323,22 @@ public class WaitActivity extends Fragment {
                         Log.d("departmentinfo", contactInfos.get(i).getDepartment().toString());
                         DepartmentInfo departmentInfo =contactInfos.get(i).getDepartment();
                         departmentInfoDao.insert(departmentInfo);
+                        DutyInfoJsonBean dutyInfoJsonBean = userInfoService.getPosition(departmentInfo.getDcid());
+                        if(dutyInfoJsonBean.getStatus()==0){
+                            ArrayList<DutyInfo> dutyInfos = dutyInfoJsonBean.getData();
+                            for(int k=0;k<dutyInfos.size();k++){
+                                dutyInfoDao.insert(dutyInfos.get(k));
+                            }
+                        }else{
+                            Looper.prepare();//解决子线程弹toast问题
+                            Toast.makeText(mContext, dutyInfoJsonBean.getMsg(), Toast.LENGTH_SHORT).show();
+                            Looper.loop();// 进入loop中的循环，查看消息队列
+                        }
                         Log.d(TAG,"contactInfos.get(i).getEmpContactList().size():"+contactInfos.get(i).getEmpContactList().size());
                         for(int j=0;j<contactInfos.get(i).getEmpContactList().size();j++){
                             if(contactInfos.get(i).getEmpContactList().get(j).getEmployee()!=null) {
                                 Log.d(TAG,"contactInfos.get(i).getEmpContactList().get(j).getEmployee()"+contactInfos.get(i).getEmpContactList().get(j).getEmployee().toString());
                                 contactInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getEmployee());
-                                dutyInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getPosition());
                             }
                         }
                     }
@@ -375,12 +396,22 @@ public class WaitActivity extends Fragment {
                         Log.d("departmentinfo", contactInfos.get(i).getDepartment().toString());
                         DepartmentInfo departmentInfo =contactInfos.get(i).getDepartment();
                         departmentInfoDao.insert(departmentInfo);
+                        DutyInfoJsonBean dutyInfoJsonBean = userInfoService.getPosition(departmentInfo.getDcid());
+                        if(dutyInfoJsonBean.getStatus()==0){
+                            ArrayList<DutyInfo> dutyInfos = dutyInfoJsonBean.getData();
+                            for(int k=0;k<dutyInfos.size();k++){
+                                dutyInfoDao.insert(dutyInfos.get(k));
+                            }
+                        }else{
+                            Looper.prepare();//解决子线程弹toast问题
+                            Toast.makeText(mContext, dutyInfoJsonBean.getMsg(), Toast.LENGTH_SHORT).show();
+                            Looper.loop();// 进入loop中的循环，查看消息队列
+                        }
                         Log.d(TAG,"contactInfos.get(i).getEmpContactList().size():"+contactInfos.get(i).getEmpContactList().size());
                         for(int j=0;j<contactInfos.get(i).getEmpContactList().size();j++){
                             if(contactInfos.get(i).getEmpContactList().get(j).getEmployee()!=null) {
                                 Log.d(TAG,"contactInfos.get(i).getEmpContactList().get(j).getEmployee()"+contactInfos.get(i).getEmpContactList().get(j).getEmployee().toString());
                                 contactInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getEmployee());
-                                dutyInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getPosition());
                             }
                         }
                     }
@@ -438,12 +469,22 @@ public class WaitActivity extends Fragment {
                         Log.d("departmentinfo", contactInfos.get(i).getDepartment().toString());
                         DepartmentInfo departmentInfo =contactInfos.get(i).getDepartment();
                         departmentInfoDao.insert(departmentInfo);
+                        DutyInfoJsonBean dutyInfoJsonBean = userInfoService.getPosition(departmentInfo.getDcid());
+                        if(dutyInfoJsonBean.getStatus()==0){
+                            ArrayList<DutyInfo> dutyInfos = dutyInfoJsonBean.getData();
+                            for(int k=0;k<dutyInfos.size();k++){
+                                dutyInfoDao.insert(dutyInfos.get(k));
+                            }
+                        }else{
+                            Looper.prepare();//解决子线程弹toast问题
+                            Toast.makeText(mContext, dutyInfoJsonBean.getMsg(), Toast.LENGTH_SHORT).show();
+                            Looper.loop();// 进入loop中的循环，查看消息队列
+                        }
                         Log.d(TAG,"contactInfos.get(i).getEmpContactList().size():"+contactInfos.get(i).getEmpContactList().size());
                         for(int j=0;j<contactInfos.get(i).getEmpContactList().size();j++){
                             if(contactInfos.get(i).getEmpContactList().get(j).getEmployee()!=null) {
                                 Log.d(TAG,"contactInfos.get(i).getEmpContactList().get(j).getEmployee()"+contactInfos.get(i).getEmpContactList().get(j).getEmployee().toString());
                                 contactInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getEmployee());
-                                dutyInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getPosition());
                             }
                         }
                     }
@@ -501,12 +542,22 @@ public class WaitActivity extends Fragment {
                         Log.d("departmentinfo", contactInfos.get(i).getDepartment().toString());
                         DepartmentInfo departmentInfo =contactInfos.get(i).getDepartment();
                         departmentInfoDao.insert(departmentInfo);
+                        DutyInfoJsonBean dutyInfoJsonBean = userInfoService.getPosition(departmentInfo.getDcid());
+                        if(dutyInfoJsonBean.getStatus()==0){
+                            ArrayList<DutyInfo> dutyInfos = dutyInfoJsonBean.getData();
+                            for(int k=0;k<dutyInfos.size();k++){
+                                dutyInfoDao.insert(dutyInfos.get(k));
+                            }
+                        }else{
+                            Looper.prepare();//解决子线程弹toast问题
+                            Toast.makeText(mContext, dutyInfoJsonBean.getMsg(), Toast.LENGTH_SHORT).show();
+                            Looper.loop();// 进入loop中的循环，查看消息队列
+                        }
                         Log.d(TAG,"contactInfos.get(i).getEmpContactList().size():"+contactInfos.get(i).getEmpContactList().size());
                         for(int j=0;j<contactInfos.get(i).getEmpContactList().size();j++){
                             if(contactInfos.get(i).getEmpContactList().get(j).getEmployee()!=null) {
                                 Log.d(TAG,"contactInfos.get(i).getEmpContactList().get(j).getEmployee()"+contactInfos.get(i).getEmpContactList().get(j).getEmployee().toString());
                                 contactInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getEmployee());
-                                dutyInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getPosition());
                             }
                         }
                     }
@@ -565,12 +616,22 @@ public class WaitActivity extends Fragment {
                         Log.d("departmentinfo", contactInfos.get(i).getDepartment().toString());
                         DepartmentInfo departmentInfo =contactInfos.get(i).getDepartment();
                         departmentInfoDao.insert(departmentInfo);
+                        DutyInfoJsonBean dutyInfoJsonBean = userInfoService.getPosition(departmentInfo.getDcid());
+                        if(dutyInfoJsonBean.getStatus()==0){
+                            ArrayList<DutyInfo> dutyInfos = dutyInfoJsonBean.getData();
+                            for(int k=0;k<dutyInfos.size();k++){
+                                dutyInfoDao.insert(dutyInfos.get(k));
+                            }
+                        }else{
+                            Looper.prepare();//解决子线程弹toast问题
+                            Toast.makeText(mContext, dutyInfoJsonBean.getMsg(), Toast.LENGTH_SHORT).show();
+                            Looper.loop();// 进入loop中的循环，查看消息队列
+                        }
                         Log.d(TAG,"contactInfos.get(i).getEmpContactList().size():"+contactInfos.get(i).getEmpContactList().size());
                         for(int j=0;j<contactInfos.get(i).getEmpContactList().size();j++){
                             if(contactInfos.get(i).getEmpContactList().get(j).getEmployee()!=null) {
                                 Log.d(TAG,"contactInfos.get(i).getEmpContactList().get(j).getEmployee()"+contactInfos.get(i).getEmpContactList().get(j).getEmployee().toString());
                                 contactInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getEmployee());
-                                dutyInfoDao.insert(contactInfos.get(i).getEmpContactList().get(j).getPosition());
                             }
                         }
                     }

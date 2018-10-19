@@ -471,10 +471,7 @@ public class IssueDocumentActivity extends AppCompatActivity {
                             }
                         }).start();
                     }
-
-
             }
-
     }
 
     //单项选择器
