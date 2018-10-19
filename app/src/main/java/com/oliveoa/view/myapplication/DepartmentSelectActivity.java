@@ -241,15 +241,16 @@ public class DepartmentSelectActivity extends AppCompatActivity {
      */
     public void issueDepartment(TextView tname){
         for(int i=0;i<departmentInfos.size();i++){
-            Log.e(TAG,departmentInfos.get(i).getName()+tname.getText().toString());
+            Log.e(TAG,departmentInfos.get(i).getName()+"-----"+tname.getText().toString()+"------"+departmentInfos.get(i).getDcid());
             if(tname.getText().toString().equals(departmentInfos.get(i).getName())) {
                 if(approveNumber!=null) {
                     ApproveNumber dp = new ApproveNumber();
                     dp = approveNumberDao.queryBuilder().where(ApproveNumberDao.Properties.Id.eq(departmentInfos.get(i).getDcid())).unique();
                     if(dp==null) {
-                        dp.setId(departmentInfos.get(i).getDcid());
+                        ApproveNumber temp = new ApproveNumber();
                         Log.e(TAG, departmentInfos.get(i).getDcid());
-                        approveNumber.add(dp);
+                        temp.setId(departmentInfos.get(i).getDcid());
+                        approveNumber.add(temp);
                         approveNumberDao.deleteAll();
                         for (int j = 0; j < approveNumber.size(); j++) {
                             approveNumberDao.insert(approveNumber.get(j));

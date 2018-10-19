@@ -165,6 +165,7 @@ public class IssueDocumentActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
             @Override
             public void onClick(View view) {
+                approveNumberDao.deleteAll();
                 Intent intent = new Intent(IssueDocumentActivity.this, IssueActivity.class);
                 intent.putExtra("index", 0);
                 startActivity(intent);
@@ -400,11 +401,8 @@ public class IssueDocumentActivity extends AppCompatActivity {
             if (TextUtils.isEmpty(tissueAdvise.getText().toString().trim()) || TextUtils.isEmpty(tIssuestatus.getText().toString().trim())) {
                 Toast.makeText(getApplicationContext(), "信息不得为空！", Toast.LENGTH_SHORT).show();
             } else {
-                if(index!=1&&list==null) {
-                    ApproveNumber approveNumber = new ApproveNumber();
-                    list.add(approveNumber);
-                }
-                    Log.i(TAG,list.toString());
+                    //Log.i(TAG,list.toString());
+                    officialDocument.setIssuedOpinion(tissueAdvise.getText().toString().trim());
                     switch (tIssuestatus.getText().toString().trim()) {
                         case "同意":
                             officialDocument.setIssuedIsapproved(1);
@@ -415,27 +413,65 @@ public class IssueDocumentActivity extends AppCompatActivity {
                         default:
                             break;
                     }
-                    officialDocument.setIssuedOpinion(tissueAdvise.getText().toString().trim());
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            //读取SharePreferences的cookies
-                            SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
-                            String s = pref.getString("sessionid", "");
+                    if(officialDocument.getIssuedIsapproved()==1&&index==0&&list==null){
+                        Toast.makeText(getApplicationContext(), "请选择签发部门", Toast.LENGTH_SHORT).show();
+                    }
 
-                            DocumentService service = new DocumentService();
-                            StatusAndMsgJsonBean statusAndMsgJsonBean = service.documentIssue(s, officialDocument,list.toString());
-                            if (statusAndMsgJsonBean.getStatus() == 0) {
-                                Looper.prepare();
-                                Toast.makeText(getApplicationContext(), "签发成功！点击返回键返回待签发工作列表", Toast.LENGTH_SHORT).show();
-                                Looper.loop();
-                            } else {
-                                Looper.prepare();
-                                Toast.makeText(getApplicationContext(), statusAndMsgJsonBean.getMsg(), Toast.LENGTH_SHORT).show();
-                                Looper.loop();
+                    if(officialDocument.getIssuedIsapproved()==1&&index==1&&list!=null){
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                //读取SharePreferences的cookies
+                                SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
+                                String s = pref.getString("sessionid", "");
+
+                                DocumentService service = new DocumentService();
+                                StatusAndMsgJsonBean statusAndMsgJsonBean = service.documentIssue(s, officialDocument,list.toString());
+                                if (statusAndMsgJsonBean.getStatus() == 0) {
+                                    approveNumberDao.deleteAll();
+                                    Intent intent = new Intent(IssueDocumentActivity.this, IssueActivity.class);
+                                    intent.putExtra("index", 0);
+                                    startActivity(intent);
+                                    finish();
+                                    Looper.prepare();
+                                    Toast.makeText(getApplicationContext(), "签发成功！", Toast.LENGTH_SHORT).show();
+                                    Looper.loop();
+                                } else {
+                                    Looper.prepare();
+                                    Toast.makeText(getApplicationContext(), statusAndMsgJsonBean.getMsg(), Toast.LENGTH_SHORT).show();
+                                    Looper.loop();
+                                }
                             }
-                        }
-                    }).start();
+                        }).start();
+                    }
+                    if(officialDocument.getIssuedIsapproved()==-1){
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                //读取SharePreferences的cookies
+                                SharedPreferences pref = getSharedPreferences("data", MODE_PRIVATE);
+                                String s = pref.getString("sessionid", "");
+
+                                DocumentService service = new DocumentService();
+                                StatusAndMsgJsonBean statusAndMsgJsonBean = service.documentIssue(s, officialDocument,"");
+                                if (statusAndMsgJsonBean.getStatus() == 0) {
+                                    approveNumberDao.deleteAll();
+                                    Intent intent = new Intent(IssueDocumentActivity.this, IssueActivity.class);
+                                    intent.putExtra("index", 0);
+                                    startActivity(intent);
+                                    finish();
+                                    Looper.prepare();
+                                    Toast.makeText(getApplicationContext(), "签发成功！", Toast.LENGTH_SHORT).show();
+                                    Looper.loop();
+                                } else {
+                                    Looper.prepare();
+                                    Toast.makeText(getApplicationContext(), statusAndMsgJsonBean.getMsg(), Toast.LENGTH_SHORT).show();
+                                    Looper.loop();
+                                }
+                            }
+                        }).start();
+                    }
+
 
             }
 

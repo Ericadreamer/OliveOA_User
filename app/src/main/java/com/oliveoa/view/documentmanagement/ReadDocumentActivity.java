@@ -16,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.oliveoa.greendao.ApproveNumberDao;
+import com.oliveoa.util.EntityManager;
 import com.oliveoa.view.R;
 import com.oliveoa.view.notice.MySubmissionActivity;
 import com.oliveoa.view.notice.NoticeActivity;
@@ -67,6 +69,8 @@ public class ReadDocumentActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {  //点击返回键，返回主页
             @Override
             public void onClick(View view) {
+                ApproveNumberDao approveNumberDao = EntityManager.getInstance().getApproveNumberDao();
+                approveNumberDao.deleteAll();
                 Intent intent = new Intent(ReadDocumentActivity.this, DocumentManagementActivity.class);
                 startActivity(intent);
                 finish();
