@@ -103,6 +103,9 @@ public class MyMeetingActivity extends AppCompatActivity {
         refusebundle.putString("application","");
        //正在参与
         QueryBuilder qb = applicationDao.queryBuilder();
+        ap = qb.list();
+        Log.e(TAG,"ALL<Application> ap = "+ap.toString());
+
         qb.where(MeetingApplicationAndStatusDao.Properties.Status.eq(1));
         ap =  qb.list();
         ArrayList ap1 =(ArrayList<MeetingApplicationAndStatus>) ap;

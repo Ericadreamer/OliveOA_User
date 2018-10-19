@@ -400,7 +400,10 @@ public class IssueDocumentActivity extends AppCompatActivity {
             if (TextUtils.isEmpty(tissueAdvise.getText().toString().trim()) || TextUtils.isEmpty(tIssuestatus.getText().toString().trim())) {
                 Toast.makeText(getApplicationContext(), "信息不得为空！", Toast.LENGTH_SHORT).show();
             } else {
-                if(index==1&&list!=null) {
+                if(index!=1&&list==null) {
+                    ApproveNumber approveNumber = new ApproveNumber();
+                    list.add(approveNumber);
+                }
                     Log.i(TAG,list.toString());
                     switch (tIssuestatus.getText().toString().trim()) {
                         case "同意":
@@ -433,9 +436,7 @@ public class IssueDocumentActivity extends AppCompatActivity {
                             }
                         }
                     }).start();
-                }else{
-                    Toast.makeText(getApplicationContext(), "请选择签发部门", Toast.LENGTH_SHORT).show();
-                }
+
             }
 
     }

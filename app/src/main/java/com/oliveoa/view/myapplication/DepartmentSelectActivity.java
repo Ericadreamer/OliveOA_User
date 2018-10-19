@@ -69,7 +69,7 @@ public class DepartmentSelectActivity extends AppCompatActivity {
         setContentView(R.layout.activity_department_select);
 
         index = getIntent().getIntExtra("index",index);//调岗0，招聘1,个人资料修改2，3公文签发
-
+        Log.i(TAG,"INDEX=="+index);
         initData();
     }
 
@@ -79,6 +79,7 @@ public class DepartmentSelectActivity extends AppCompatActivity {
         contactInfoDao = EntityManager.getInstance().getContactInfo();
         departmentInfoDao = EntityManager.getInstance().getDepartmentInfo();
         departmentInfos = departmentInfoDao.queryBuilder().list();
+        Log.i(TAG,"打印部门列表:"+departmentInfos.toString());
         dpdt = new DepartmentAndDuty();
         approveNumberDao = EntityManager.getInstance().getApproveNumberDao();
 
@@ -88,6 +89,7 @@ public class DepartmentSelectActivity extends AppCompatActivity {
         if(index==3){
             approveNumber = approveNumberDao.queryBuilder().list();
         }
+
         if(departmentInfos!=null){
             initview();
         }else{

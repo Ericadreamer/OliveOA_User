@@ -78,7 +78,8 @@ public class ApprovedInfoActivity extends AppCompatActivity {
     private String TAG = this.getClass().getSimpleName();
     private ApplicationDao applicationDao;
     private Application application;
-private LoadingDialog loadingDialog;
+    private LoadingDialog loadingDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

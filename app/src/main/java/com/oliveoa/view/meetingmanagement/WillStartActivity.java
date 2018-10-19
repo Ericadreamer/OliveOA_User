@@ -61,7 +61,7 @@ public class WillStartActivity extends Fragment {
 
     private void initView() {
         tvtip = (TextView)rootview.findViewById(R.id.tvtip);
-        addlistView = (LinearLayout) rootview.findViewById(R.id.my_work_list);
+        addlistView = (LinearLayout) rootview.findViewById(R.id.my_meeting_list);
         addViewItem(null);
     }
 
@@ -158,7 +158,6 @@ public class WillStartActivity extends Fragment {
                 View applicationview = View.inflate(mContext, R.layout.my_meeting_list, null);
                 addlistView.addView(applicationview);
                 InitDataViewItem();
-
             }
             sortViewItem();
 

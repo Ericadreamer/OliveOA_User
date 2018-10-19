@@ -442,12 +442,12 @@ public class AdhibitionActivity extends Fragment {
 
                 MeetingApplicationService service = new MeetingApplicationService();
                 MeetingApplicationAndStatusDao meetingApplicationAndStatusDao = EntityManager.getInstance().getMeetingApplicationAndStatusDao();
+                meetingApplicationAndStatusDao.deleteAll();
                 MeetingApplicationAndStatus application = new MeetingApplicationAndStatus();
                 DateFormat dateFormat = new DateFormat();
                 int i, j = 0;
                 StatusAndDataHttpResponseObject<ArrayList<MeetingApplication>> arrayListStatusAndDataHttpResponseObject = service.getApplicationIdoing(s);
                 if (arrayListStatusAndDataHttpResponseObject.getStatus() == 0) {
-                    meetingApplicationAndStatusDao.deleteAll();
                     for (i = 0; i < arrayListStatusAndDataHttpResponseObject.getData().size(); i++) {
                         StatusAndDataHttpResponseObject<MeetingApplicationInfoJsonBean> statusAndDataHttpResponseObject = service.getApplicationInfo(s, arrayListStatusAndDataHttpResponseObject.getData().get(i).getMaid());
                         if (statusAndDataHttpResponseObject.getStatus() == 0) {
@@ -460,7 +460,7 @@ public class AdhibitionActivity extends Fragment {
                             application.setStatus(1);
                         }
                         meetingApplicationAndStatusDao.insert(application);
-                        //Log.e(TAG,"application["+i+"]-------"+application.toString());
+                        Log.e(TAG,"doing - application["+i+"]-------"+application.toString());
                     }
                     //startActivity(new Intent(getActivity(), MyApplicationActivity.class));
                 } else {
@@ -470,7 +470,6 @@ public class AdhibitionActivity extends Fragment {
                 }
                 arrayListStatusAndDataHttpResponseObject = service.getApplicationIwilldo(s);
                 if (arrayListStatusAndDataHttpResponseObject.getStatus() == 0) {
-                    meetingApplicationAndStatusDao.deleteAll();
                     for (i = 0; i < arrayListStatusAndDataHttpResponseObject.getData().size(); i++) {
                         StatusAndDataHttpResponseObject<MeetingApplicationInfoJsonBean> statusAndDataHttpResponseObject = service.getApplicationInfo(s, arrayListStatusAndDataHttpResponseObject.getData().get(i).getMaid());
                         if (statusAndDataHttpResponseObject.getStatus() == 0) {
@@ -481,10 +480,9 @@ public class AdhibitionActivity extends Fragment {
                             application.setMaid(aaol.getMeetingApplication().getMaid());
                             application.setTheme(aaol.getMeetingApplication().getTheme());
                             application.setStatus(2);
-
                         }
                         meetingApplicationAndStatusDao.insert(application);
-                        //Log.e(TAG,"application["+i+"]-------"+application.toString());
+                        Log.e(TAG,"willdo-application["+i+"]-------"+application.toString());
                     }
                 } else {
                     Looper.prepare();//解决子线程弹toast问题
@@ -493,7 +491,6 @@ public class AdhibitionActivity extends Fragment {
                 }
                 arrayListStatusAndDataHttpResponseObject = service.getApplicationIdone(s);
                 if (arrayListStatusAndDataHttpResponseObject.getStatus() == 0) {
-                    meetingApplicationAndStatusDao.deleteAll();
                     for (i = 0; i < arrayListStatusAndDataHttpResponseObject.getData().size(); i++) {
                         StatusAndDataHttpResponseObject<MeetingApplicationInfoJsonBean> statusAndDataHttpResponseObject = service.getApplicationInfo(s, arrayListStatusAndDataHttpResponseObject.getData().get(i).getMaid());
                         if (statusAndDataHttpResponseObject.getStatus() == 0) {
@@ -506,7 +503,7 @@ public class AdhibitionActivity extends Fragment {
                             application.setStatus(3);
                         }
                         meetingApplicationAndStatusDao.insert(application);
-                        //Log.e(TAG,"application["+i+"]-------"+application.toString());
+                        Log.e(TAG,"done-application["+i+"]-------"+application.toString());
                     }
                     startActivity(new Intent(getActivity(), MyMeetingActivity.class));
                 } else {
